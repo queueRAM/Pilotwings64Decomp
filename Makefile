@@ -116,7 +116,7 @@ else
 endif
 
 SPLAT       ?= python3 -m splat split
-SPLAT_YAML  ?= $(TARGET).$(VERSION).yaml
+SPLAT_YAML  ?= config/$(VERSION)/$(TARGET).$(VERSION).yaml
 SPLAT_FLAGS ?=
 
 CRC := $(Q)$(TOOLS_DIR)/n64crc build/$(TARGET).$(VERSION).z64 #Recalculating the CRC
@@ -200,7 +200,8 @@ dirs:
 check: .baserom.$(VERSION).ok
 
 verify: $(ROM_Z64)
-	$(Q)sha1sum -c wr64.us.sha1
+	$(Q)md5sum $(ROM_Z64)
+	$(Q)md5sum -c config/$(VERSION)/$(TARGET).$(VERSION).md5
 
 no_verify: $(ROM_Z64)
 	$(Q)echo "Skipping SHA1SUM check!"
