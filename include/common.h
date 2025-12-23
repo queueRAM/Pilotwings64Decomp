@@ -1,7 +1,8 @@
-#ifndef SUPERMAN64_COMMON_H
-#define SUPERMAN64_COMMON_H
+#ifndef PILOTWINGS64_COMMON_H
+#define PILOTWINGS64_COMMON_H
 
 #include <ultra64.h>
+#include "macros.h"
 
-#endif // SUPERMAN64_COMMON_H
+#endif // PILOTWINGS64_COMMON_H
 
