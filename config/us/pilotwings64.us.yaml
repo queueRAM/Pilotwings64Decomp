@@ -205,7 +205,8 @@ segments:
       - [0x46480, c, kernel/code_46480]
 
       - [0x464E0, textbin, rspboot]
-      - [0x465B0, textbin, f3d]
+      - [0x465B0, textbin, f3dex]
+      - [0x479E0, textbin, aspMain]
 
       - [0x475B0, data]
       - [0x479E0, data]
