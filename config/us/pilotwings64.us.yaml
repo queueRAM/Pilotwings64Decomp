@@ -334,7 +334,6 @@ segments:
       - [0x51B70, rodata]
 
   - name: app
-    exclusive_ram_id: overlay
     type: code
     start: 0x51E30
     vram: 0x802CA900
