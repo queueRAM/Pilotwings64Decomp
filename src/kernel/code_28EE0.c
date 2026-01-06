@@ -106,7 +106,7 @@ void Mat4_SetUnk1(Mtx_t mat) {
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_UnkOp2.s")
 void Mat4_UnkOp2(Mtx4F_t mat, float arg1, float arg2, float arg3) {
-    void *unused1, *unused2; // for stack
+    float unused1, unused2; // for stack
     Mtx4F_t tmpmat;
     tmpmat[0][0] = mat[0][0];
     tmpmat[0][1] = mat[0][1];
@@ -127,8 +127,29 @@ void Mat4_UnkOp2(Mtx4F_t mat, float arg1, float arg2, float arg3) {
     Mat4_Copy(mat, tmpmat);
 }
 
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_UnkOp3.s")
+void Mat4_UnkOp3(Mtx4F_t mat, float arg1, float arg2, float arg3) {
+    float unused1, unused2; // for stack
+    Mtx4F_t scaled;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_UnkOp3.s")
+    scaled[0][0] = mat[0][0] * arg1;
+    scaled[0][1] = mat[0][1] * arg1;
+    scaled[0][2] = mat[0][2] * arg1;
+    scaled[0][3] = mat[0][3] * arg1;
+    scaled[1][0] = mat[1][0] * arg2;
+    scaled[1][1] = mat[1][1] * arg2;
+    scaled[1][2] = mat[1][2] * arg2;
+    scaled[1][3] = mat[1][3] * arg2;
+    scaled[2][0] = mat[2][0] * arg3;
+    scaled[2][1] = mat[2][1] * arg3;
+    scaled[2][2] = mat[2][2] * arg3;
+    scaled[2][3] = mat[2][3] * arg3;
+    scaled[3][0] = mat[3][0];
+    scaled[3][1] = mat[3][1];
+    scaled[3][2] = mat[3][2];
+    scaled[3][3] = mat[3][3];
+    Mat4_Copy(mat, scaled);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/func_80229878.s")
 
