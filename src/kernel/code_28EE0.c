@@ -123,8 +123,7 @@ void Mat4_UnkOp4(Mtx4F_t mat, Vec3F_t vec1, Vec3F_t vec2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/func_80229AA0.s")
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_SetUnk2.s")
-void Mat4_SetUnk2(Mtx4F_t mat, float arg1, float arg2, float arg3, float arg4, float arg5, float arg6)
-{
+void Mat4_SetUnk2(Mtx4F_t mat, float arg1, float arg2, float arg3, float arg4, float arg5, float arg6) {
     float two5 = 2.0f * arg5;
     mat[0][0] = two5 / (arg2 - arg1);
     mat[1][1] = two5 / (arg4 - arg3);
@@ -146,8 +145,7 @@ void Mat4_SetUnk2(Mtx4F_t mat, float arg1, float arg2, float arg3, float arg4, f
 }
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_SetUnk3.s")
-void Mat4_SetUnk3(Mtx4F_t mat, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
-{
+void Mat4_SetUnk3(Mtx4F_t mat, float arg1, float arg2, float arg3, float arg4) {
     float tmp21 = arg2 - arg1;
     float tmp43 = arg4 - arg3;
     mat[0][0] = 2.0f / tmp21;
@@ -168,4 +166,15 @@ void Mat4_SetUnk3(Mtx4F_t mat, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
     mat[3][3] = 1.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_SetUnk4.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_SetUnk4.s")
+void Mat4_SetUnk4(Mtx4F_t mat, float arg1, float arg2, float arg3, float arg4) {
+    mat[0][0] = 1.0f - (2.0f * (arg2 * arg2 + arg3 * arg3));
+    mat[0][1] = 2.0f * (arg1 * arg2 - arg3 * arg4);
+    mat[0][2] = 2.0f * (arg3 * arg1 + arg2 * arg4);
+    mat[1][0] = 2.0f * (arg1 * arg2 + arg3 * arg4);
+    mat[1][1] = 1.0f - (2.0f * (arg3 * arg3 + arg1 * arg1));
+    mat[1][2] = 2.0f * (arg2 * arg3 - arg1 * arg4);
+    mat[2][0] = 2.0f * (arg3 * arg1 - arg2 * arg4);
+    mat[2][1] = 2.0f * (arg2 * arg3 + arg1 * arg4);
+    mat[2][2] = 1.0f - (2.0f * (arg2 * arg2 + arg1 * arg1));
+}
