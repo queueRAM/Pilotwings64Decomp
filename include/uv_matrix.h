@@ -21,7 +21,15 @@ void Mat4_Copy(Mtx4F_t m_dst, Mtx4F_t m_src);
 void Mat3_Copy(Mtx4F_t m_dst, Mtx4F_t m_src);
 void Mat4_SetIdentity(Mtx4F_t mat);
 void Mat4_SetUnk1(Mtx_t mat);
+
+// matrix multiplication: m_dst = mat1 x mat2
+// if m_dst is either mat1 or mat2, uses stack matrix
 void Mat4_MultOp1(Mtx4F_t m_dst, Mtx4F_t mat1, Mtx4F_t mat2);
+
+// matrix multiplication: m_dst = mat2 x mat1
+// if m_dst is either mat1 or mat2, uses stack matrix
+void Mat4_MultOp2(Mtx4F_t m_dst, Mtx4F_t mat1, Mtx4F_t mat2);
+
 void Mat4_UnkOp2(Mtx4F_t mat, float arg1, float arg2, float arg3);
 void Mat4_UnkOp3(Mtx4F_t mat, float arg1, float arg2, float arg3);
 void Mat4_UnkOp4(Mtx4F_t mat, Vec3F_t vec1, Vec3F_t vec2);
