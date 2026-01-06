@@ -178,7 +178,76 @@ void Mat4_MultOp2(Mtx4F_t m_dst, Mtx4F_t mat1, Mtx4F_t mat2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_UnkOp1.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_UnkOp1.s")
+void Mat4_UnkOp1(Mtx4F_t mat, float arg1, char axis) {
+    float sp6C;
+    float fv0;
+    float unused1;
+    float unused2;
+    Mtx4F_t m_scratch;
+
+    if (arg1 != 0.0f) {
+        sp6C = func_80229EC0(arg1);
+        fv0 = func_8022A080(arg1);
+        switch (axis) {
+            case 'x':
+                m_scratch[0][0] = mat[0][0];
+                m_scratch[0][1] = mat[0][1];
+                m_scratch[0][2] = mat[0][2];
+                m_scratch[0][3] = mat[0][3];
+                m_scratch[1][0] = (fv0 * mat[1][0]) + (sp6C * mat[2][0]);
+                m_scratch[1][1] = (fv0 * mat[1][1]) + (sp6C * mat[2][1]);
+                m_scratch[1][2] = (fv0 * mat[1][2]) + (sp6C * mat[2][2]);
+                m_scratch[1][3] = (fv0 * mat[1][3]) + (sp6C * mat[2][3]);
+                m_scratch[2][0] = (fv0 * mat[2][0]) - (sp6C * mat[1][0]);
+                m_scratch[2][1] = (fv0 * mat[2][1]) - (sp6C * mat[1][1]);
+                m_scratch[2][2] = (fv0 * mat[2][2]) - (sp6C * mat[1][2]);
+                m_scratch[2][3] = (fv0 * mat[2][3]) - (sp6C * mat[1][3]);
+                m_scratch[3][0] = mat[3][0];
+                m_scratch[3][1] = mat[3][1];
+                m_scratch[3][2] = mat[3][2];
+                m_scratch[3][3] = mat[3][3];
+                break;
+            case 'y':
+                m_scratch[0][0] = (fv0 * mat[0][0]) - (sp6C * mat[2][0]);
+                m_scratch[0][1] = (fv0 * mat[0][1]) - (sp6C * mat[2][1]);
+                m_scratch[0][2] = (fv0 * mat[0][2]) - (sp6C * mat[2][2]);
+                m_scratch[0][3] = (fv0 * mat[0][3]) - (sp6C * mat[2][3]);
+                m_scratch[1][0] = mat[1][0];
+                m_scratch[1][1] = mat[1][1];
+                m_scratch[1][2] = mat[1][2];
+                m_scratch[1][3] = mat[1][3];
+                m_scratch[2][0] = (sp6C * mat[0][0]) + (fv0 * mat[2][0]);
+                m_scratch[2][1] = (sp6C * mat[0][1]) + (fv0 * mat[2][1]);
+                m_scratch[2][2] = (sp6C * mat[0][2]) + (fv0 * mat[2][2]);
+                m_scratch[2][3] = (sp6C * mat[0][3]) + (fv0 * mat[2][3]);
+                m_scratch[3][0] = mat[3][0];
+                m_scratch[3][1] = mat[3][1];
+                m_scratch[3][2] = mat[3][2];
+                m_scratch[3][3] = mat[3][3];
+                break;
+            case 'z':
+                m_scratch[0][0] = (fv0 * mat[0][0]) + (sp6C * mat[1][0]);
+                m_scratch[0][1] = (fv0 * mat[0][1]) + (sp6C * mat[1][1]);
+                m_scratch[0][2] = (fv0 * mat[0][2]) + (sp6C * mat[1][2]);
+                m_scratch[0][3] = (fv0 * mat[0][3]) + (sp6C * mat[1][3]);
+                m_scratch[1][0] = (fv0 * mat[1][0]) - (sp6C * mat[0][0]);
+                m_scratch[1][1] = (fv0 * mat[1][1]) - (sp6C * mat[0][1]);
+                m_scratch[1][2] = (fv0 * mat[1][2]) - (sp6C * mat[0][2]);
+                m_scratch[1][3] = (fv0 * mat[1][3]) - (sp6C * mat[0][3]);
+                m_scratch[2][0] = mat[2][0];
+                m_scratch[2][1] = mat[2][1];
+                m_scratch[2][2] = mat[2][2];
+                m_scratch[2][3] = mat[2][3];
+                m_scratch[3][0] = mat[3][0];
+                m_scratch[3][1] = mat[3][1];
+                m_scratch[3][2] = mat[3][2];
+                m_scratch[3][3] = mat[3][3];
+                break;
+        }
+        Mat4_Copy(mat, m_scratch);
+    }
+}
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_UnkOp2.s")
 void Mat4_UnkOp2(Mtx4F_t mat, float arg1, float arg2, float arg3) {
