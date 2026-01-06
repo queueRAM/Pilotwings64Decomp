@@ -46,7 +46,25 @@ void Mat3_Copy(Mtx4F_t m_dst, Mtx4F_t m_src) {
     m_dst[2][2] = m_src[2][2];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_Init.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_Init.s")
+void Mat4_Init(Mtx *mat, Mtx init) {
+    mat->m[0][0] = init.m[0][0];
+    mat->m[0][1] = init.m[0][1];
+    mat->m[0][2] = init.m[0][2];
+    mat->m[0][3] = init.m[0][3];
+    mat->m[1][0] = init.m[1][0];
+    mat->m[1][1] = init.m[1][1];
+    mat->m[1][2] = init.m[1][2];
+    mat->m[1][3] = init.m[1][3];
+    mat->m[2][0] = init.m[2][0];
+    mat->m[2][1] = init.m[2][1];
+    mat->m[2][2] = init.m[2][2];
+    mat->m[2][3] = init.m[2][3];
+    mat->m[3][0] = init.m[3][0];
+    mat->m[3][1] = init.m[3][1];
+    mat->m[3][2] = init.m[3][2];
+    mat->m[3][3] = init.m[3][3];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/func_80228180.s")
 

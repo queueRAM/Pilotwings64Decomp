@@ -19,6 +19,7 @@ typedef union {
 
 void Mat4_Copy(Mtx4F_t m_dst, Mtx4F_t m_src);
 void Mat3_Copy(Mtx4F_t m_dst, Mtx4F_t m_src);
+void Mat4_Init(Mtx *mat, Mtx init);
 void Mat4_SetIdentity(Mtx4F_t mat);
 void Mat4_SetUnk1(Mtx_t mat);
 
