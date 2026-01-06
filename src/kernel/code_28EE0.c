@@ -145,6 +145,27 @@ void Mat4_SetUnk2(Mtx4F_t mat, float arg1, float arg2, float arg3, float arg4, f
     mat[0][1] = 0.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_SetUnk3.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_SetUnk3.s")
+void Mat4_SetUnk3(Mtx4F_t mat, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
+{
+    float tmp21 = arg2 - arg1;
+    float tmp43 = arg4 - arg3;
+    mat[0][0] = 2.0f / tmp21;
+    mat[1][1] = 2.0f / tmp43;
+    mat[2][2] = -1.0f;
+    mat[3][0] = -(arg2 + arg1) / tmp21;
+    mat[3][1] = -(arg4 + arg3) / tmp43;
+    mat[0][1] = 0.0f;
+    mat[0][2] = 0.0f;
+    mat[0][3] = 0.0f;
+    mat[1][0] = 0.0f;
+    mat[1][2] = 0.0f;
+    mat[1][3] = 0.0f;
+    mat[2][0] = 0.0f;
+    mat[2][1] = 0.0f;
+    mat[2][3] = 0.0f;
+    mat[3][2] = 0.0f;
+    mat[3][3] = 1.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_28EE0/Mat4_SetUnk4.s")
