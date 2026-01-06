@@ -183,7 +183,7 @@ Mat4_UnkOp3         = 0x80229798; // type:func
 Mat4_Init           = 0x802280F8; // type:func
 Mat4_Copy           = 0x80228028; // type:func
 Mat3_Copy           = 0x802280AC; // type:func
-Mat3_UnkOp1         = 0x80229A04; // type:func
+Mat4_UnkOp4         = 0x80229A04; // type:func
 
 SqrtF               = 0x80229EA0; // type:func
 Length2D            = 0x8022A208; // type:func
@@ -208,5 +208,3 @@ hsound_callback     = 0x8030A390; // type:func
 snd_makedev         = 0x8033F860; // type:func
 snd_event           = 0x8033FB44; // type:func
 snd_getpilot        = 0x8033FBCC; // type:func
-
-

@@ -5,6 +5,7 @@
 #include <uv_util.h>
 
 typedef float Mtx4F_t[4][4];
+typedef float Vec3F_t[3];
 
 typedef union {
     Mtx4F_t mf;
@@ -22,4 +23,3 @@ void Mat4_SetIdentity(Mtx4F_t arg0);
 void Mat4_SetUnk1(Mtx_t mat);
 
 #endif // PILOTWINGS64_UV_MATRIX
-
