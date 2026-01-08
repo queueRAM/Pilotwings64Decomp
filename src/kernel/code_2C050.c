@@ -5,9 +5,9 @@
 #define RDP_DONE_MSG    668
 #define PRE_NMI_MSG     669
 
-extern u8 gScRspStatus;
-extern u8 gScRdpStatus;
-extern OSMesgQueue gScMsgQ;
+extern u8 gSchedRspStatus;
+extern u8 gSchedRdpStatus;
+extern OSMesgQueue gSchedMsgQ;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2C050/func_8022B0A0.s")
 
@@ -24,11 +24,11 @@ void _uvScDlistRecover(void) {
     _uvDebugPrintf("Recovered from a bad display list\n");
 
     IO_WRITE(SP_STATUS_REG, 0x2902);
-    if (gScRspStatus != 0) {
-        osSendMesg(&gScMsgQ, (OSMesg)RSP_DONE_MSG, 0);
+    if (gSchedRspStatus != 0) {
+        osSendMesg(&gSchedMsgQ, (OSMesg)RSP_DONE_MSG, 0);
     }
-    if (gScRdpStatus != 0) {
-        osSendMesg(&gScMsgQ, (OSMesg)RDP_DONE_MSG, 0);
+    if (gSchedRdpStatus != 0) {
+        osSendMesg(&gSchedMsgQ, (OSMesg)RDP_DONE_MSG, 0);
     }
 }
 
@@ -52,7 +52,7 @@ void _uvScMain(void* arg0) {
     msg = NULL;
 
     while (1) {
-        osRecvMesg(&gScMsgQ, &msg, 1);
+        osRecvMesg(&gSchedMsgQ, &msg, 1);
 
         switch ((int)msg) {
         case VIDEO_MSG:

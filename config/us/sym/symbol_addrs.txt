@@ -226,9 +226,28 @@ gRenderThreadStack  = 0x802BBC90;
 gAppThread          = 0x802C3398;
 gAppThreadStack     = 0x802C1C90;
 
-gScRspStatus        = 0x802B9C69;
-gScRdpStatus        = 0x802B9C6A;
-gScMsgQ             = 0x802C38E8;
+gAppRomStart        = 0x00051E30;
+gAppRomEnd          = 0x000DE720;
+
+gNmiAsserted        = 0x802B9C80;
+
+gPiMgrCmdQ          = 0x802C3340;
+gPiMgrCmdBuf        = 0x802C3320;
+
+gPiDmaQ             = 0x802C32C0;
+gPiDmaBuf           = 0x802C32BC;
+gPiDmaBlockReq      = 0x802C32A8;
+
+gSiContQ            = 0x802C32E8;
+gSiContBuf          = 0x802C32D8;
+gSiContStatus       = 0x802C3358;
+gSiContPattern      = 0x802C3394;
+
+gSchedInst          = 0x802C38A8;
+gSchedStack         = 0x802C5BA8;
+gSchedRspStatus     = 0x802B9C69;
+gSchedRdpStatus     = 0x802B9C6A;
+gSchedMsgQ          = 0x802C38E8;
 
 osViModeTable       = 0x8024B7D0;
 

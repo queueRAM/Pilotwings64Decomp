@@ -1,11 +1,44 @@
+#include <uv_graphics.h>
 #include <uv_memory.h>
 #include <uv_sched.h>
+#include <PR/os_internal.h>
 
+void Thread_App(void* arg);
+void Thread_Kernel(void* arg);
+void Thread_Render(void* arg);
+void app_entrypoint(s32);                              /* extern */
+void uvSetVideoMode(void);
+void func_8022E558(void);                                  /* extern */
+
+extern OSSched gSchedInst;
 extern OSThread gAppThread;
 extern OSThread gRenderThread;
 
-extern s32 gRenderThreadStack;
-extern s32 gAppThreadStack;
+extern s32 gSchedStack[];
+extern s32 gRenderThreadStack[];
+extern s32 gAppThreadStack[];
+
+extern s32 D_80249200;
+extern OSMesgQueue gPiDmaQ;
+extern OSMesgQueue gSiContQ;
+extern OSMesgQueue D_802C3300;
+extern OSMesgQueue gPiMgrCmdQ;
+extern OSMesgQueue D_802C3B50;
+extern OSMesgQueue D_802C3B90;
+
+extern OSMesg gPiDmaBuf[];
+extern OSMesg gPiMgrCmdBuf[];
+extern OSMesg gSiContBuf[];
+extern OSMesg D_802C3318[];
+extern OSMesg D_802C3B68[];
+
+extern OSContStatus gSiContStatus;
+extern u8 gSiContPattern;
+
+extern OSIoMesg gPiDmaBlockReq;
+extern s32 gNmiAsserted;
+extern s32 D_802C32A4;
+extern s32 D_802C331C;
 
 s32 func_8022E2D4(s32 arg0);
 void func_8022E2DC(char arg0);
@@ -22,15 +55,10 @@ s32 func_8022E2D4(s32 arg0) {
 }
 
 // #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2EEA0/func_8022E2DC.s")
-extern s32 D_80249200;
-extern OSMesgQueue D_802C32C0;
-extern OSMesgQueue D_802C3B50;
-extern OSMesgQueue D_802C3B90;
-
 void func_8022E2DC(char arg0) {
     switch (arg0) {                              
     case 0:
-        osRecvMesg(&D_802C32C0, NULL, 1);
+        osRecvMesg(&gPiDmaQ, NULL, 1);
         return;
     case 2:
         osRecvMesg(&D_802C3B50, NULL, 1);
@@ -43,21 +71,17 @@ void func_8022E2DC(char arg0) {
 }
 
 // #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2EEA0/uvSetVideoMode.s")
-extern OSSched D_802C38A8;
-extern OSMesg D_802C3B68;
-extern s32 D_802C5BA8;
-
 void uvSetVideoMode(void) {
     s32 viMode;
 
-    osCreateMesgQueue(&D_802C3B90, &D_802C3B68, 0xA);
+    osCreateMesgQueue(&D_802C3B90, D_802C3B68, 0xA);
     switch (osTvType) {
     case 0:  viMode = 0x10; _uvDebugPrintf("PAL video mode\n"); break;
     case 1:  viMode = 0x02; _uvDebugPrintf("NTSC video mode\n"); break;
     default: viMode = 0x10; _uvDebugPrintf("PAL video mode\n"); break;
     }
-    _uvScCreateScheduler(&D_802C38A8, &D_802C5BA8, 0x7F, viMode, 1);
-    _uvScAddClient(&D_802C38A8, (OSScClient*)&D_802C5BA8, &D_802C3B50);
+    _uvScCreateScheduler(&gSchedInst, gSchedStack, 0x7F, viMode, 1);
+    _uvScAddClient(&gSchedInst, (OSScClient*)gSchedStack, &D_802C3B50);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2EEA0/bootproc.s")
@@ -65,20 +89,12 @@ void uvSetVideoMode(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2EEA0/func_8022E558.s")
 
 // #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2EEA0/Thread_Render.s")
-OSThread* __osGetActiveQueue(void);                         /* extern */
-void func_8022E558(void);                                  /* extern */
-void uvGfxBegin(void);                                     /* extern */
-void uvGfxEnd(void);                                       /* extern */
-extern OSMesgQueue D_802C3300;
-extern void* D_802C3318;
-extern s32 D_802C331C;
-
-void Thread_Render(void* arg0) {
+void Thread_Render(void* arg) {
     void* sp1C;
 
     sp1C = NULL;
-    osCreateMesgQueue(&D_802C3300, &D_802C3318, 1);
-    osSetEventMesg(0xCU, &D_802C3300, (void* )0x10);
+    osCreateMesgQueue(&D_802C3300, D_802C3318, 1);
+    osSetEventMesg(OS_EVENT_FAULT, &D_802C3300, (void* )0x10);
     osRecvMesg(&D_802C3300, &sp1C, 1);
     D_802C331C = __osGetActiveQueue()->context.pc;
     while (1) {
@@ -89,36 +105,26 @@ void Thread_Render(void* arg0) {
 }
 
 // #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2EEA0/Thread_App.s")
-void app_entrypoint(s32);                              /* extern */
-extern u8 D_51E30;
+extern u8 gAppRomStart;
+extern u8 gAppRomEnd;
 extern s32 D_802CA900;
 extern u8 D_803571F0;
 extern u8 D_803805E0;
-extern u8 D_DE720;
 
-void Thread_App(void *arg0) {
-    _uvMediaCopy(&D_802CA900, &D_51E30, &D_DE720 - &D_51E30);
+void Thread_App(void *arg) {
+    _uvMediaCopy(&D_802CA900, &gAppRomStart, &gAppRomEnd - &gAppRomStart);
     uvMemSet(&D_803571F0, 0, &D_803805E0 - &D_803571F0);
-    app_entrypoint(arg0);
+    app_entrypoint(arg);
 }
 
 // #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2EEA0/Thread_Kernel.s")
-void Thread_App(void*);                             /* extern */
-void Thread_Render(void*);                          /* extern */
-void uvSetVideoMode(void);                                 /* extern */
-extern s32 D_802C32A4;
-extern void* D_802C32BC;
-extern OSMesgQueue D_802C32C0;
-extern void* D_802C3320;
-extern OSMesgQueue D_802C3340;
-
-void Thread_Kernel(void* arg0) {
-    osCreatePiManager(0x96, &D_802C3340, &D_802C3320, 8);
-    osCreateMesgQueue(&D_802C32C0, &D_802C32BC, 1);
-    osCreateThread(&gRenderThread, 0, Thread_Render, NULL, &gRenderThreadStack, 0xFA);
+void Thread_Kernel(void* arg) {
+    osCreatePiManager(OS_PRIORITY_PIMGR, &gPiMgrCmdQ, gPiMgrCmdBuf, 8);
+    osCreateMesgQueue(&gPiDmaQ, gPiDmaBuf, 1);
+    osCreateThread(&gRenderThread, 0, Thread_Render, NULL, gRenderThreadStack, 0xFA);
     osStartThread(&gRenderThread);
     uvSetVideoMode();
-    osCreateThread(&gAppThread, 6, Thread_App, arg0, &gAppThreadStack, 0xA);
+    osCreateThread(&gAppThread, 6, Thread_App, arg, gAppThreadStack, 0xA);
     if (D_802C32A4 == 0) {
         osStartThread(&gAppThread);
     }
@@ -127,11 +133,6 @@ void Thread_Kernel(void* arg0) {
 }
 
 // #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2EEA0/func_8022EA80.s")
-extern OSMesg D_802C32D8;
-extern OSMesgQueue D_802C32E8;
-extern OSContStatus D_802C3358;
-extern u8 D_802C3394;
-
 u8 func_8022EA80(void) {
     u8 temp;
     OSMesg sp68;
@@ -142,10 +143,10 @@ u8 func_8022EA80(void) {
     osCreateMesgQueue(&sp50, &sp68, 2);
     osSetTimer(&sp30, 0x1388, 0, &sp50, &sp68);
     osRecvMesg(&sp50, &sp2C, 1);
-    osCreateMesgQueue(&D_802C32E8, &D_802C32D8, 3);
-    osSetEventMesg(5U, &D_802C32E8, (void* )0x33333333);
-    osContInit(&D_802C32E8, &D_802C3394, &D_802C3358);
-    temp = D_802C3394;
+    osCreateMesgQueue(&gSiContQ, gSiContBuf, 3);
+    osSetEventMesg(OS_EVENT_SI, &gSiContQ, (void* )0x33333333);
+    osContInit(&gSiContQ, &gSiContPattern, &gSiContStatus);
+    temp = gSiContPattern;
     return temp;
 }
 
@@ -156,13 +157,9 @@ void _uvDebugPrintf(char *fmt, ...) {
 }
 
 // #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2EEA0/_uvDMA.s")
-extern s32 D_802B9C80;
-extern OSIoMesg D_802C32A8;
-extern OSMesgQueue D_802C32C0;
-
 void _uvDMA(void* vAddr, u32 devAddr, u32 nbytes) {
     s32 dest = vAddr;
-    if (D_802B9C80 == 0) {
+    if (gNmiAsserted == 0) {
         if (dest % 8) {
             _uvDebugPrintf("_uvDMA: RAM address not 8 byte aligned 0x%x\n", dest);
             return;
@@ -179,7 +176,7 @@ void _uvDMA(void* vAddr, u32 devAddr, u32 nbytes) {
             nbytes = (nbytes + 1) & ~1;
         }
         osWritebackDCache((void* )dest, (s32)nbytes);
-        osPiStartDma(&D_802C32A8, 0, 0, devAddr, (void*) dest, nbytes, &D_802C32C0);
+        osPiStartDma(&gPiDmaBlockReq, 0, 0, devAddr, (void*) dest, nbytes, &gPiDmaQ);
         osInvalDCache((void*)dest, (s32)nbytes);
         func_8022E2DC(0);
     }
