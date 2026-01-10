@@ -252,5 +252,11 @@ gSchedRdpStatus     = 0x802B9C6A;
 gSchedRingIdx       = 0x802B9C78;
 gSchedMsgQ          = 0x802C38E8;
 
+gGfxStateStack      = 0x802B48C8;
+gGfxStateStackIdx   = 0x802B4948;
+gGfxStateStackData  = 0x80299268;
+
 osViModeTable       = 0x8024B7D0;
+osViModeNtscLan1    = 0x8024C4A0;
+osViModePalLan1     = 0x8024C4F0;
 
