@@ -32,6 +32,8 @@ void uvEmitterInitTable(void);
 void uvEmitterInit(uvaEmitter_t*);
 u8 uvEmitterLookup(void);
 void uvEmitterFromModel(u8 obj_id, u8 mdl_id);
+void uvEmitterSetMatrix(u8 obj_id, Mtx4F_t msrc);
+void uvEmitterGetMatrix(u8 obj_id, Mtx4F_t mdst);
 
 void _uvaUpdateVoice(u8 obj_id);
 void _uvaStopVoice(u8 voice_id);

@@ -2,10 +2,10 @@
 #define PILOTWINGS64_UV_MATRIX
 
 #include <ultra64.h>
+#include <uv_math.h>
 #include <uv_util.h>
 
 typedef float Mtx4F_t[4][4];
-typedef float Vec3F_t[3];
 
 typedef union {
     Mtx4F_t mf;
@@ -43,3 +43,4 @@ float func_80229EC0(float);
 float func_8022A080(float);
 
 #endif // PILOTWINGS64_UV_MATRIX
+

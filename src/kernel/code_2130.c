@@ -91,9 +91,19 @@ void uvEmitterFromModel(u8 obj_id, u8 mdl_id) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2130/func_802013F8.s")
+// #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2130/func_802013F8.s")
+void uvEmitterSetMatrix(u8 obj_id, Mtx4F_t msrc) {
+    if (obj_id < 0xFF) {
+        Mat4_Copy(gSndEmitterTable[obj_id].m1, msrc);
+    }
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2130/func_80201444.s")
+// #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2130/func_80201444.s")
+void uvEmitterGetMatrix(u8 obj_id, Mtx4F_t mdst) {
+    if (obj_id < 0xFF) {
+        Mat4_Copy(mdst, gSndEmitterTable[obj_id].m1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2130/func_80201494.s")
 

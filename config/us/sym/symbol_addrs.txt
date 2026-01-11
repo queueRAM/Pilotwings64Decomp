@@ -19,6 +19,8 @@ uvEmitterInitTable  = 0x8020119C; // type:func
 uvEmitterInit       = 0x802011F0; // type:func
 uvEmitterLookup     = 0x802012B8; // type:func
 uvEmitterFromModel  = 0x80201348; // type:func
+uvEmitterSetMatrix  = 0x802013F8; // type:func
+uvEmitterGetMatrix  = 0x80201444; // type:func
 uvEmitterProp       = 0x8020170C; // type:func
 uvEmitterTrigger    = 0x80201904; // type:func
 uvEmitterRelease    = 0x80201968; // type:func
@@ -169,6 +171,19 @@ uvSprtFromBitmap    = 0x80230668; // type:func
 uvSprtSetBlit       = 0x80230E68; // type:func
 uvSprtProps         = 0x80231158; // type:func
 mio0_decompress     = 0x80231A20; // type:func
+
+uvRandSeed          = 0x802315E0; // type:func
+uvRandF             = 0x80231740; // type:func
+uvAbs               = 0x80231798; // type:func
+uvVec3Len           = 0x802317B0; // type:func
+uvVec2Dot           = 0x802317F0; // type:func
+uvVec3Dot           = 0x80231814; // type:func
+uvVec3Copy          = 0x80231844; // type:func
+uvVec3ScalarProj    = 0x80231860; // type:func
+uvVec3Cross         = 0x802318A8; // type:func
+uvVec3Add           = 0x80231900; // type:func
+uvVec3Mul           = 0x80231934; // type:func
+uvVec3Normal        = 0x80231960; // type:func
 
 uvPathPoseLine      = 0x8031EAD0; // type:func
 
