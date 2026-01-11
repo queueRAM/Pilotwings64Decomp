@@ -229,12 +229,6 @@ gRenderThreadStack  = 0x802BBC90;
 gAppThread          = 0x802C3398;
 gAppThreadStack     = 0x802C1C90;
 
-gAppRomStart        = 0x00051E30;
-gAppRomEnd          = 0x000DE720;
-
-gAppBssStart        = 0x803571F0;
-gAppBssEnd          = 0x803805E0;
-
 gNmiAsserted        = 0x802B9C80;
 
 gPiMgrCmdQ          = 0x802C3340;

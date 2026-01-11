@@ -12,6 +12,11 @@ void app_entrypoint(s32);                              /* extern */
 void uvSetVideoMode(void);
 void func_8022E558(void);                                  /* extern */
 
+extern u8 app_ROM_START[];
+extern u8 app_ROM_END[];
+extern u8 app_BSS_START[];
+extern u8 app_BSS_END[];
+
 extern OSSched gSchedInst;
 extern OSThread gAppThread;
 extern OSThread gRenderThread;
@@ -107,14 +112,9 @@ void Thread_Render(void* arg) {
 }
 
 // #pragma GLOBAL_ASM("asm/nonmatchings/kernel/main/Thread_App.s")
-extern u8 gAppRomStart;
-extern u8 gAppRomEnd;
-extern u8 gAppBssStart;
-extern u8 gAppBssEnd;
-
 void Thread_App(void *arg) {
-    _uvMediaCopy((void*)app_firstfunc, &gAppRomStart, &gAppRomEnd - &gAppRomStart);
-    uvMemSet(&gAppBssStart, 0, &gAppBssEnd - &gAppBssStart);
+    _uvMediaCopy((void*)app_firstfunc, app_ROM_START, app_ROM_END - app_ROM_START);
+    uvMemSet(app_BSS_START, 0, app_BSS_END - app_BSS_START);
     app_entrypoint(arg);
 }
 
