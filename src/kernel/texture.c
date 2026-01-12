@@ -5,9 +5,9 @@
 // forward declarations
 void* _uvExpandTexture(void*);
 void* _uvExpandTextureCpy(void*);
-void* _uvExpandTextureImg(u8*);
+void* _uvExpandTextureImg(void*);
 void* func_80219270(s32);
-void func_80225394(void* dst, u8** ptr, s32 size);
+void func_80225394(void* dst, void** ptr, s32 size);
 void* func_80225470(void*);
 void* func_802254B0(void*);
 void* func_802255A0(void*);
@@ -101,28 +101,34 @@ void* func_80224A90(u32 tag, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/uvMemLoadDS.s")
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80225394.s")
-void func_80225394(void* dst, u8** ptr, s32 size) {
+void func_80225394(void* dst, void** ptr, s32 size) {
     switch (size) {
         case 1:
             *(s8*)dst = uvMemRead(*ptr, size);
-            *ptr += 1;
+            *(u8**)ptr += 1;
             break;
         case 2:
             *(s16*)dst = uvMemRead(*ptr, size);
-            *ptr += 2;
+            *(u8**)ptr += 2;
             break;
         case 4:
             *(s32*)dst = uvMemRead(*ptr, size);
-            *ptr += 4;
+            *(u8**)ptr += 4;
             break;
         default:
             _uvMediaCopy(dst, *ptr, size);
-            *ptr += size;
+            *(u8**)ptr += size;
             break;
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80225470.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80225470.s")
+void* func_80225470(void* arg0) {
+    void* ret;
+    ret = (void*)_uvMemAlloc(4, 4);
+    func_80225394(ret, &arg0, 4);
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802254B0.s")
 
@@ -135,7 +141,7 @@ void func_80225394(void* dst, u8** ptr, s32 size) {
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/_uvExpandTexture.s")
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/_uvExpandTextureImg.s")
-void* _uvExpandTextureImg(u8* arg0) {
+void* _uvExpandTextureImg(void* arg0) {
     void* retBuf;
     u16 sp32;
     u16 size;
