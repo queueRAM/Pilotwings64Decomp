@@ -7,6 +7,7 @@ void* func_802255A0(void*);
 void* func_802256B8(void*);
 void* func_80225FBC(void*);
 void* func_80226FD0(void*);
+void* func_802270BC(void*);
 void* func_80227260(void*);
 void* _uvExpandTextureCpy(void*);
 void* _uvExpandTextureImg(void*);
@@ -16,6 +17,7 @@ extern u32 D_802B5A34[];
 extern u32 D_802B5C34[];
 extern u32 D_802B6404;
 extern u32 D_802B6484;
+extern u32 D_802B6494;
 extern u32 D_802B64BC;
 extern u32 D_802B64E4;
 extern u32 D_802B6A34[];
@@ -157,7 +159,21 @@ void* func_80227AA0(s32 arg0) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227B5C.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227B5C.s")
+void* func_80227B5C(s32 arg0) {
+    s32 idx;
+    s32 sp28;
+    void* sp24;
+    void* ret;
+
+    ret = NULL;
+    idx = func_80223E80(D_802B6494);
+    if (func_80224170(idx, &sp28, &sp24, 'COMM', arg0, 1) != 0) { // 0x434F4D4D
+        ret = func_802270BC(sp24);
+    }
+    func_80223F30(idx);
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227BD4.s")
 
