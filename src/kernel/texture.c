@@ -64,6 +64,11 @@ typedef struct {
     Unk802270BC_48 *unk28;
 } Unk802270BC_2C;
 
+typedef struct {
+    s32 tag;
+    s32 size;
+} UVBlockHeader;
+
 // forward declarations
 void* _uvExpandTexture(void*);
 void* _uvExpandTextureCpy(void*);
@@ -91,6 +96,10 @@ void* func_80227D34(s32);
 void* func_80227DE4(s32);
 void* uvJanimLoad(s32);
 
+// ROM offsets for file system data
+extern u8 D_DE720[];
+extern u8 D_DF5B0[];
+
 extern u8 initialize_emu_text_0000[];
 extern u32 D_802B53F4[];
 extern u32 D_802B5A34[];
@@ -104,7 +113,81 @@ extern u32 D_802B6A34[];
 extern u32 D_802B6E2C;
 extern u32 D_802B892C;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802246A0.s")
+
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802246A0.s")
+void func_802246A0(void) {
+    s32 sp64;
+    s32 temp_v0;
+    u32 sp5C;
+    void* sp58;
+    u32 var_a1;
+    u8* romOffset;
+    s32 var_v0; // tag
+    UVBlockHeader* var_a0;
+
+    uvMemSet(&gUVBlockCounts, 0, sizeof(gUVBlockCounts));
+    sp64 = func_80223E80(D_DE720);
+    romOffset = D_DF5B0;
+
+    while ((var_v0 = func_80223F7C(sp64, &sp5C, &sp58, 1)) != 0) {
+        if (var_v0 == 'TABL') { // 0x5441424C
+            for (var_a1 = 0, var_a0 = (UVBlockHeader*)sp58; var_a1 < sp5C; var_a1 += 8, var_a0++) {
+                switch (var_a0->tag) {
+                    case 0:
+                        break;
+                    case 'UVSY': // 0x55565359
+                        gUVBlockOffsets.UVSY = romOffset;
+                        break;
+                    case 'UVAN': // 0x5556414E
+                        gUVBlockOffsets.UVAN[gUVBlockCounts.UVAN++] = romOffset;
+                        break;
+                    case 'UVFT': // 0x55564654
+                        gUVBlockOffsets.UVFT[gUVBlockCounts.UVFT++] = romOffset;
+                        break;
+                    case 'UVBT': // 0x55564254
+                        gUVBlockOffsets.UVBT[gUVBlockCounts.UVBT++] = romOffset;
+                        break;
+                    case 'UVMD': // 0x55564D44
+                        gUVBlockOffsets.UVMD[gUVBlockCounts.UVMD++] = romOffset;
+                        break;
+                    case 'UVCT': // 0x55564354
+                        gUVBlockOffsets.UVCT[gUVBlockCounts.UVCT++] = romOffset;
+                        break;
+                    case 'UVTX': // 0x55565458
+                        gUVBlockOffsets.UVTX[gUVBlockCounts.UVTX++] = romOffset;
+                        break;
+                    case 'UVEN': // 0x5556454E
+                        gUVBlockOffsets.UVEN[gUVBlockCounts.UVEN++] = romOffset;
+                        break;
+                    case 'UVLT': // 0x55564C54
+                        gUVBlockOffsets.UVLT[gUVBlockCounts.UVLT++] = romOffset;
+                        break;
+                    case 'UVLV': // 0x55564C56
+                        gUVBlockOffsets.UVLV[gUVBlockCounts.UVLV++] = romOffset;
+                        break;
+                    case 'UVSQ': // 0x55565351
+                        gUVBlockOffsets.UVSQ[gUVBlockCounts.UVSQ++] = romOffset;
+                        break;
+                    case 'UVTR': // 0x55565452
+                        gUVBlockOffsets.UVTR[gUVBlockCounts.UVTR++] = romOffset;
+                        break;
+                    case 'UVTP': // 0x55565450
+                        gUVBlockOffsets.UVTP[gUVBlockCounts.UVTP++] = romOffset;
+                        break;
+                    case 'UVSX': // 0x55565358
+                        gUVBlockOffsets.UVSX[gUVBlockCounts.UVSX++] = romOffset;
+                        break;
+                    default:
+                        gUVBlockOffsets.unk1838[gUVBlockCounts.unk1C++] = romOffset;
+                        break;
+                }
+                romOffset += var_a0->size;
+            }
+        }
+    }
+    func_80223F30(sp64);
+    uvLevelInit();
+}
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80224A90.s")
 void* func_80224A90(u32 tag, s32 arg1) {
