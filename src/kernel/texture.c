@@ -9,6 +9,7 @@ void* func_80225FBC(void*);
 void* func_80226FD0(void*);
 void* func_802270BC(void*);
 void* func_80227260(void*);
+void* _uvExpandTexture(void*);
 void* _uvExpandTextureCpy(void*);
 void* _uvExpandTextureImg(void*);
 
@@ -175,7 +176,24 @@ void* func_80227B5C(s32 arg0) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227BD4.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227BD4.s")
+void* func_80227BD4(s32 arg0) {
+    s32 idx;
+    s32 tag;
+    u32 sp34;
+    void* sp30;
+    void* ret;
+
+    idx = func_80223E80(D_802B5C34[arg0]);
+    while ((tag = func_80223F7C(idx, &sp34, &sp30, 1)) != 0) {
+        if (tag == 'COMM') { // 0x434F4D4D
+            if (1) {} // fakematch
+            ret = _uvExpandTexture(sp30);
+        }
+    }
+    func_80223F30(idx);
+    return ret;
+}
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227C84.s")
 void* func_80227C84(s32 arg0) {
