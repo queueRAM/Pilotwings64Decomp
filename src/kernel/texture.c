@@ -8,9 +8,11 @@ void* func_802256B8(void*);
 void* func_80225FBC(void*);
 void* func_80227260(void*);
 void* _uvExpandTextureCpy(void*);
+void* _uvExpandTextureImg(void*);
 
 extern u32 D_802B53F4[];
 extern u32 D_802B5A34[];
+extern u32 D_802B5C34[];
 extern u32 D_802B6404;
 extern u32 D_802B6484;
 extern u32 D_802B64BC;
@@ -105,17 +107,17 @@ void* func_80227938(s32 arg0) {
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227A28.s")
 void* func_80227A28(s32 arg0) {
-    s32 sp2C;
+    s32 idx;
     s32 sp28;
     void* sp24;
     void* ret;
 
     ret = NULL;
-    sp2C = func_80223E80(D_802B6484);
-    if (func_80224170(sp2C, &sp28, &sp24, 'COMM', arg0, 1) != 0) { // 0x434F4D4D
+    idx = func_80223E80(D_802B6484);
+    if (func_80224170(idx, &sp28, &sp24, 'COMM', arg0, 1) != 0) { // 0x434F4D4D
         ret = func_80225470(sp24);
     }
-    func_80223F30(sp2C);
+    func_80223F30(idx);
     return ret;
 }
 
@@ -143,7 +145,25 @@ void* func_80227AA0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227BD4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227C84.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227C84.s")
+void* func_80227C84(s32 arg0) {
+    s32 idx;
+    s32 tag;
+    u32 sp34;
+    void* sp30;
+    void* ret;
+
+    idx = func_80223E80(D_802B5C34[arg0]);
+
+    while ((tag = func_80223F7C(idx, &sp34, &sp30, 1)) != 0) {
+        if (tag == 'COMM') { // 0x434F4D4D
+            if (1) {} // fakematch
+            ret = _uvExpandTextureImg(sp30);
+        }
+    }
+    func_80223F30(idx);
+    return ret;
+}
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227D34.s")
 void* func_80227D34(s32 arg0) {
@@ -166,17 +186,17 @@ void* func_80227D34(s32 arg0) {
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227DE4.s")
 void* func_80227DE4(s32 arg0) {
-    s32 sp2C;
+    s32 idx;
     s32 sp28;
     void* sp24;
     void* ret;
 
     ret = NULL;
-    sp2C = func_80223E80(D_802B64BC);
-    if (func_80224170(sp2C, &sp28, &sp24, 'COMM', arg0, 1) != 0) { // 0x434F4D4D
+    idx = func_80223E80(D_802B64BC);
+    if (func_80224170(idx, &sp28, &sp24, 'COMM', arg0, 1) != 0) { // 0x434F4D4D
         ret = func_802255A0(sp24);
     }
-    func_80223F30(sp2C);
+    func_80223F30(idx);
     return ret;
 }
 
