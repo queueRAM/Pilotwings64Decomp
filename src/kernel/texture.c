@@ -1,14 +1,16 @@
 #include "common.h"
 #include <uv_graphics.h>
 
-void* func_802256B8(void*);
 void* func_80225470(void*);
 void* func_802254B0(void*);
+void* func_802256B8(void*);
 void* func_80225FBC(void*);
+void* func_80227260(void*);
 void* _uvExpandTextureCpy(void*);
 
 extern u32 D_802B53F4[];
 extern u32 D_802B5A34[];
+extern u32 D_802B6A34[];
 extern u32 D_802B6404;
 extern u32 D_802B6484;
 extern u32 D_802B64E4;
@@ -141,7 +143,24 @@ void* func_80227AA0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227C84.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227D34.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227D34.s")
+void* func_80227D34(s32 arg0) {
+    s32 idx;
+    s32 tag;
+    u32 sp3C;
+    void* sp38;
+    void* ret;
+
+    idx = func_80223E80(D_802B6A34[arg0]);
+    while ((tag = func_80223F7C(idx, &sp3C, &sp38, 0)) != 0) {
+        if (tag == 'COMM') { // 0x434F4D4D
+            if (1) {} // fakematch
+            ret = func_80227260(sp38);
+        }
+    }
+    func_80223F30(idx);
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227DE4.s")
 
