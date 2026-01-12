@@ -2,8 +2,8 @@
 #include <uv_matrix.h>
 
 extern s32 gRandLcgState;
-extern s32 gRandluxState1;
-extern s32 gRandluxState2;
+extern s32 gRanluxState1;
+extern s32 gRanluxState2;
 
 void uvRandSeed(s32 seed) {
     gRandLcgState = seed;
@@ -13,17 +13,17 @@ f32 uvRandF_RANLUX(void) {
     ldiv_t result;
     s32 var_v1;
 
-    result = ldiv(gRandluxState1, 0xD1A4);
-    gRandluxState1 = (result.rem * 0x9C4E) - (result.quot * 0x2FB3);
-    if (gRandluxState1 < 0) {
-        gRandluxState1 = gRandluxState1 + 0x7FFFFFAB;
+    result = ldiv(gRanluxState1, 0xD1A4);
+    gRanluxState1 = (result.rem * 0x9C4E) - (result.quot * 0x2FB3);
+    if (gRanluxState1 < 0) {
+        gRanluxState1 = gRanluxState1 + 0x7FFFFFAB;
     }
-    result = ldiv(gRandluxState2, 0xCE26);
-    gRandluxState2 = (result.rem * 0x9EF4) - (result.quot * 0xECF);
-    if (gRandluxState2 < 0) {
-        gRandluxState2 = gRandluxState2 + 0x7FFFFF07;
+    result = ldiv(gRanluxState2, 0xCE26);
+    gRanluxState2 = (result.rem * 0x9EF4) - (result.quot * 0xECF);
+    if (gRanluxState2 < 0) {
+        gRanluxState2 = gRanluxState2 + 0x7FFFFF07;
     }
-    var_v1 = gRandluxState1 - gRandluxState2;
+    var_v1 = gRanluxState1 - gRanluxState2;
     if (var_v1 <= 0) {
         var_v1 += 0x7FFFFFAA;
     }

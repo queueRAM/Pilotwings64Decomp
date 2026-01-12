@@ -242,8 +242,8 @@ app_firstfunc       = 0x802CA900; // type:func
 // Data
 
 gRandLcgState       = 0x8024B2C0;
-gRandluxState1      = 0x8024B2C4;
-gRandluxState2      = 0x8024B2C8;
+gRanluxState1       = 0x8024B2C4;
+gRanluxState2       = 0x8024B2C8;
 
 gKernelThread       = 0x802C36F8;
 gKernelThreadStack  = 0x802BDC90;
