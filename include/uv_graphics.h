@@ -10,6 +10,6 @@ void uvGfxEnd(void);
 s32 uvGfxGetCnt(u32 arg0);
 void uvGfxStatePush(void);
 void uvGfxStatePop(void);
+void func_8022427C(u32 arg0);
 
 #endif // PILOTWINGS64_UV_GRAPHICS
-

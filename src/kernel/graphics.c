@@ -1,4 +1,5 @@
 #include <uv_graphics.h>
+#include <uv_memory.h>
 
 typedef struct UnkStruct_gfx_8b {
     s32 unk0;
@@ -6,10 +7,10 @@ typedef struct UnkStruct_gfx_8b {
 } UnkStruct_gfx_8b_t;
 
 typedef struct UnkStruct_gfx_16b {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    s32 unkC;
+    u32 unk0;
+    u32 unk4;
+    u32 unk8;
+    u32 unkC;
 } UnkStruct_gfx_16b_t;
 
 extern s32 D_80249230;
@@ -155,6 +156,29 @@ void func_80223BF4(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvCopyFrameBuf.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80223E80.s")
+// https://decomp.me/scratch/7Pq01
+/*
+s32 func_80223E80(u32 addr) {
+    UnkStruct_gfx_16b_t *ptr;
+    s32 idx;
+
+    for (idx = 0; idx != 1; idx++) {
+        if (D_802B5300[idx].unk0 == 0) {
+            break;
+        }
+    }
+    ptr = &D_802B5300[idx];
+    if (idx == 1) {
+        _uvDebugPrintf("Ran out of IFF file ids.  (IFF_NIFFS==%d)", 1);
+        return -1;
+    }
+    ptr->unk0 = addr;
+    ptr->unk8 = (u32)uvMemRead(addr + 4, 4) + 8;
+    ptr->unk4 = (u32)uvMemRead(addr + 8, 4);
+    func_8022427C(idx);
+    return idx;
+}
+*/
 
 // #pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80223F30.s")
 void func_80223F30(s32 arg0) {
@@ -178,7 +202,6 @@ s32 func_80223F68(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80224170.s")
 
 // #pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_8022427C.s")
-void func_8022427C(s32 arg0) {
+void func_8022427C(u32 arg0) {
     D_802B530C[arg0].unk0 = 0xC;
 }
-

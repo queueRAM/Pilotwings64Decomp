@@ -43,7 +43,7 @@ extern u8 D_803805E0;
 extern u8 initialize_emu_text_0000[];
 
 extern void func_80223B80(void);
-extern s32 func_80223E80(s32);
+extern s32 func_80223E80(u32);
 extern s32 func_80223F30(s32);
 extern s32 func_80223F7C(s32, u32*, void**, s32);
 extern void func_80230954(void);
@@ -380,7 +380,7 @@ void uvLevelInit(void) {
     uvMemSet(initialize_emu_text_0000, 0, 0x160C);
     uvMemSet(D_802B6E30, 0, 0x7D0);
     myfree();
-    temp_v0 = func_80223E80((s32) D_802B53F0);
+    temp_v0 = func_80223E80(D_802B53F0);
 
     while ((var_v0 = func_80223F7C(temp_v0, &length, &source, 0)) != 0) {
         if (var_v0 == 'COMM') { // 0x434F4D4D
