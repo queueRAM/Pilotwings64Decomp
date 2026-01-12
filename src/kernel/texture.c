@@ -44,6 +44,26 @@ typedef struct {
     u16* unk8;
 } Unk80226FD0_C;
 
+typedef struct {
+    s32 unk0[16];
+    s32 unk40;
+    u8 unk44;
+    u8 unk45;
+    u8 unk46;
+    u8 unk47;
+} Unk802270BC_48;
+
+typedef struct {
+    s32 unk0[6];
+    u8 unk18;
+    u8 unk19;
+    u16 unk1A;
+    s32 unk1C;
+    s32 unk20;
+    s32 unk24;
+    Unk802270BC_48 *unk28;
+} Unk802270BC_2C;
+
 // forward declarations
 void* _uvExpandTexture(void*);
 void* _uvExpandTextureCpy(void*);
@@ -71,6 +91,7 @@ void* func_80227D34(s32);
 void* func_80227DE4(s32);
 void* uvJanimLoad(s32);
 
+extern u8 initialize_emu_text_0000[];
 extern u32 D_802B53F4[];
 extern u32 D_802B5A34[];
 extern u32 D_802B5C34[];
@@ -284,7 +305,39 @@ void* func_80226FD0(void* arg0) {
     return temp_s2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802270BC.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802270BC.s")
+void* func_802270BC(void* arg0) {
+    Unk802270BC_48 *ptr;
+    Unk802270BC_2C* temp_v0;
+    s32 count;
+    s32 idx;
+    u8 sp47;
+    u16 sp44;
+
+    temp_v0 = (Unk802270BC_2C*)_uvMemAlloc(sizeof(Unk802270BC_2C), 4);
+    func_80225394(&temp_v0->unk0, &arg0, 0x18);
+    func_80225394(&temp_v0->unk18, &arg0, 1);
+    func_80225394(&temp_v0->unk19, &arg0, 1);
+    func_80225394(&temp_v0->unk1C, &arg0, 4);
+    func_80225394(&temp_v0->unk20, &arg0, 4);
+    func_80225394(&temp_v0->unk24, &arg0, 4);
+    count = temp_v0->unk18 * temp_v0->unk19;
+    temp_v0->unk28 = (Unk802270BC_48*)_uvMemAlloc(count * sizeof(Unk802270BC_48), 4);
+
+    for(idx = 0; idx < count; idx++) {
+        ptr = &temp_v0->unk28[idx];
+        func_80225394(&sp47, &arg0, 1);
+        if (sp47 == 0) {
+            uvMemSet(ptr->unk0, 0, 0x48);
+        } else {
+            func_80225394(&ptr->unk0, &arg0, 0x40);
+            func_80225394(&ptr->unk44, &arg0, 1);
+            func_80225394(&sp44, &arg0, 2);
+            ptr->unk40 = *(s32*)(initialize_emu_text_0000 + (sp44 * 4) + 0x70C);
+        }
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227260.s")
 
