@@ -5,9 +5,9 @@
 // forward declarations
 void* _uvExpandTexture(void*);
 void* _uvExpandTextureCpy(void*);
-void* _uvExpandTextureImg(void*);
+void* _uvExpandTextureImg(u8*);
 void* func_80219270(s32);
-void func_80225394(u16*, void*, s32);
+void func_80225394(void* dst, u8** ptr, s32 size);
 void* func_80225470(void*);
 void* func_802254B0(void*);
 void* func_802255A0(void*);
@@ -44,14 +44,14 @@ extern u32 D_802B892C;
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802246A0.s")
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80224A90.s")
-void* func_80224A90(u32 arg0, s32 arg1) {
+void* func_80224A90(u32 tag, s32 arg1) {
     void* ret;
 
     ret = NULL;
     _uvJumpHeap(&D_802B892C);
     do {
         if (1) {} // fakematch
-        switch (arg0) {
+        switch (tag) {
             case 'UVSQ': // 0x55565351
                 ret = func_80227DE4(arg1);
                 break;
@@ -100,7 +100,27 @@ void* func_80224A90(u32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/uvMemLoadDS.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80225394.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80225394.s")
+void func_80225394(void* dst, u8** ptr, s32 size) {
+    switch (size) {
+        case 1:
+            *(s8*)dst = uvMemRead(*ptr, size);
+            *ptr += 1;
+            break;
+        case 2:
+            *(s16*)dst = uvMemRead(*ptr, size);
+            *ptr += 2;
+            break;
+        case 4:
+            *(s32*)dst = uvMemRead(*ptr, size);
+            *ptr += 4;
+            break;
+        default:
+            _uvMediaCopy(dst, *ptr, size);
+            *ptr += size;
+            break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80225470.s")
 
@@ -115,7 +135,7 @@ void* func_80224A90(u32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/_uvExpandTexture.s")
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/_uvExpandTextureImg.s")
-void* _uvExpandTextureImg(void* arg0) {
+void* _uvExpandTextureImg(u8* arg0) {
     void* retBuf;
     u16 sp32;
     u16 size;
