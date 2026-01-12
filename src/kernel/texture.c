@@ -2,8 +2,10 @@
 #include <uv_graphics.h>
 
 void *func_802256B8(void*);
+s32 _uvExpandTextureCpy(s32);
 
 extern u32 D_802B53F4[];
+extern u32 D_802B64E4;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802246A0.s")
 
@@ -41,7 +43,21 @@ extern u32 D_802B53F4[];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802278C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227938.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227938.s")
+s32 func_80227938(s32 arg0) {
+    s32 idx;
+    s32 sp28;
+    s32 sp24;
+    s32 ret;
+
+    ret = 0;
+    idx = func_80223E80(D_802B64E4);
+    if (func_80224170(idx, &sp28, &sp24, 'COMM', arg0, 1) != 0) { // 0x434F4D4D
+        ret = _uvExpandTextureCpy(sp24);
+    }
+    func_80223F30(idx);
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802279B0.s")
 
