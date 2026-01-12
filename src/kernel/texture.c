@@ -1,6 +1,12 @@
 #include "common.h"
 #include <uv_graphics.h>
+#include <uv_memory.h>
 
+// forward declarations
+void* _uvExpandTexture(void*);
+void* _uvExpandTextureCpy(void*);
+void* _uvExpandTextureImg(void*);
+void* func_80219270(s32);
 void* func_80225470(void*);
 void* func_802254B0(void*);
 void* func_802255A0(void*);
@@ -9,9 +15,18 @@ void* func_80225FBC(void*);
 void* func_80226FD0(void*);
 void* func_802270BC(void*);
 void* func_80227260(void*);
-void* _uvExpandTexture(void*);
-void* _uvExpandTextureCpy(void*);
-void* _uvExpandTextureImg(void*);
+void* func_80227804(s32);
+void* func_802278C0(s32);
+void* func_80227938(s32);
+void* func_802279B0(s32);
+void* func_80227A28(s32);
+void* func_80227AA0(s32);
+void* func_80227B5C(s32);
+void* func_80227BD4(s32);
+void* func_80227C84(s32);
+void* func_80227D34(s32);
+void* func_80227DE4(s32);
+void* uvJanimLoad(s32);
 
 extern u32 D_802B53F4[];
 extern u32 D_802B5A34[];
@@ -23,10 +38,62 @@ extern u32 D_802B64BC;
 extern u32 D_802B64E4;
 extern u32 D_802B6A34[];
 extern u32 D_802B6E2C;
+extern u32 D_802B892C;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802246A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80224A90.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80224A90.s")
+void* func_80224A90(u32 arg0, s32 arg1) {
+    void* ret;
+
+    ret = NULL;
+    _uvJumpHeap(&D_802B892C);
+    do {
+        if (1) {} // fakematch
+        switch (arg0) {
+            case 'UVSQ': // 0x55565351
+                ret = func_80227DE4(arg1);
+                break;
+            case 'UVEN': // 0x5556454E
+                ret = func_802278C0(arg1);
+                break;
+            case 'UVTR': // 0x55565452
+                ret = func_80227B5C(arg1);
+                break;
+            case 'UVCT': // 0x55564354
+                ret = func_80227804(arg1);
+                break;
+            case 'UVLV': // 0x55564C56
+                ret = func_80227938(arg1);
+                break;
+            case 'UVMD': // 0x55564D44
+                ret = func_80227AA0(arg1);
+                break;
+            case 'UVTX': // 0x55565458
+                ret = func_80227BD4(arg1);
+                break;
+            case 'UVTI': // 0x55565449
+                ret = func_80227C84(arg1);
+                break;
+            case 'UVLT': // 0x55564C54
+                ret = func_80227A28(arg1);
+                break;
+            case 'UVAN': // 0x5556414E
+                ret = uvJanimLoad(arg1);
+                break;
+            case 'UVFT': // 0x55564654
+                ret = func_80219270(arg1);
+                break;
+            case 'UVBT': // 0x55564254
+                ret = func_80227D34(arg1);
+                break;
+            case 'UVTP': // 0x55565450
+                ret = func_802279B0(arg1);
+                break;
+        }
+    } while (_uvJumpHeap(&D_802B892C) == 0);
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/uvMemLoadPal.s")
 
