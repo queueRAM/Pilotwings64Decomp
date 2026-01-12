@@ -19,6 +19,24 @@ typedef struct {
     s32 unk38;
 } Unk80219270_3C;
 
+typedef struct {
+    s16 unk0;
+    u8 unk2;
+    u8 pad;
+    s32 unk4;
+} Unk802255A0_8;
+
+typedef struct {
+    u8 count;
+    u8 pad[3];
+    Unk802255A0_8* unk4;
+    u8 unk8;
+    u8 unk9;
+    u8 unkA;
+    u8 unkB;
+    s32 unkC;
+} Unk802255A0_10;
+
 // forward declarations
 void* _uvExpandTexture(void*);
 void* _uvExpandTextureCpy(void*);
@@ -170,7 +188,30 @@ void* func_802254B0(void* arg0) {
     return temp_v0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802255A0.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802255A0.s")
+void* func_802255A0(void* arg0) {
+    u16 var_s0;
+    u8 count;
+    Unk802255A0_8* temp_s3;
+    Unk802255A0_10* temp_v0;
+
+    func_80225394(&count, &arg0, 1);
+    temp_s3 = (Unk802255A0_8*)_uvMemAlloc(count * 8, 4);
+
+    for(var_s0 = 0; var_s0 < (s32) count; var_s0++) {
+        func_80225394(&temp_s3[var_s0].unk0, &arg0, 2);
+        func_80225394(&temp_s3[var_s0].unk4, &arg0, 4);
+        temp_s3[var_s0].unk2 = 0xFF;
+    }
+
+    temp_v0 = (Unk802255A0_10*)_uvMemAlloc(0x10, 4);
+    func_80225394(&temp_v0->unk8, &arg0, 1);
+    func_80225394(&temp_v0->unk9, &arg0, 1);
+    func_80225394(&temp_v0->unkC, &arg0, 4);
+    temp_v0->unk4 = temp_s3;
+    temp_v0->count = count;
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802256B8.s")
 
@@ -198,7 +239,7 @@ void* _uvExpandTextureImg(void* arg0) {
     func_80225394(&sp28, &arg0, 4);
     func_80225394(&sp2C, &arg0, 4);
     func_80225394(&sp28, &arg0, 4);
-    retBuf = _uvMemAlloc(size, 8);
+    retBuf = (void*)_uvMemAlloc(size, 8);
     _uvMediaCopy(retBuf, arg0, size);
     return retBuf;
 }
