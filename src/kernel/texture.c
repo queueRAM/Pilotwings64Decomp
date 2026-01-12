@@ -7,6 +7,7 @@ void* _uvExpandTexture(void*);
 void* _uvExpandTextureCpy(void*);
 void* _uvExpandTextureImg(void*);
 void* func_80219270(s32);
+void func_80225394(u16*, void*, s32);
 void* func_80225470(void*);
 void* func_802254B0(void*);
 void* func_802255A0(void*);
@@ -113,7 +114,30 @@ void* func_80224A90(u32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/_uvExpandTexture.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/_uvExpandTextureImg.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/_uvExpandTextureImg.s")
+void* _uvExpandTextureImg(void* arg0) {
+    void* retBuf;
+    u16 sp32;
+    u16 size;
+    u16 sp2E;
+    u16 sp2C;
+    u16 sp2A;
+    u16 sp28;
+
+    func_80225394(&size, &arg0, 2);
+    if (size >= 0x1001) {
+        _uvDebugPrintf("_uvExpandTextureImg: txt image too big %d bytes (4096 max)\n", size);
+        size = 0x1000;
+    }
+    func_80225394(&sp32, &arg0, 2);
+    func_80225394(&sp2C, &arg0, 4);
+    func_80225394(&sp28, &arg0, 4);
+    func_80225394(&sp2C, &arg0, 4);
+    func_80225394(&sp28, &arg0, 4);
+    retBuf = _uvMemAlloc(size, 8);
+    _uvMediaCopy(retBuf, arg0, size);
+    return retBuf;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/_uvExpandTextureCpy.s")
 
