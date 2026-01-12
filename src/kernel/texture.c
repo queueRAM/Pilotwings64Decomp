@@ -2,9 +2,11 @@
 #include <uv_graphics.h>
 
 void *func_802256B8(void*);
-s32 _uvExpandTextureCpy(s32);
+void *func_80225470(void*);
+void *_uvExpandTextureCpy(void*);
 
 extern u32 D_802B53F4[];
+extern u32 D_802B6484;
 extern u32 D_802B64E4;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802246A0.s")
@@ -44,11 +46,11 @@ extern u32 D_802B64E4;
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802278C0.s")
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227938.s")
-s32 func_80227938(s32 arg0) {
+void *func_80227938(s32 arg0) {
     s32 idx;
     s32 sp28;
-    s32 sp24;
-    s32 ret;
+    void *sp24;
+    void *ret;
 
     ret = 0;
     idx = func_80223E80(D_802B64E4);
@@ -61,17 +63,31 @@ s32 func_80227938(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_802279B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227A28.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227A28.s")
+s32 func_80227A28(s32 arg0) {
+    s32 sp2C;
+    s32 sp28;
+    void *sp24;
+    s32 ret;
+
+    ret = 0;
+    sp2C = func_80223E80(D_802B6484);
+    if (func_80224170(sp2C, &sp28, &sp24, 'COMM', arg0, 1) != 0) { // 0x434F4D4D
+        ret = func_80225470(sp24);
+    }
+    func_80223F30(sp2C);
+    return ret;
+}
 
 //#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227AA0.s")
-s32 func_80227AA0(s32 arg0) {
+void *func_80227AA0(s32 arg0) {
     s32 temp_v0;
     s32 tag;
     u32 sp3C;
     void* sp38;
-    s32 ret;
+    void* ret;
 
-    ret = 0;
+    ret = NULL;
     temp_v0 = func_80223E80(D_802B53F4[arg0]);
     while ((tag = func_80223F7C(temp_v0, &sp3C, &sp38, 1)) != 0) {
         if (tag == 'COMM') { // 0x434F4D4D
