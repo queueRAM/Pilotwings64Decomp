@@ -19,7 +19,6 @@ typedef struct {
 
 extern u8 kernel_TEXT_START[];
 
-extern u32 D_802B53C0;
 extern Struct802B53C8 D_802B53C8;
 extern u32 D_802B53F0;
 
@@ -373,7 +372,7 @@ void uvLevelInit(void) {
     D_802B8930 = osMemSize + 0x80000000;
     D_802B8824 = 0;
     D_802B8828 = 0;
-    D_802B53C0 = 0;
+    D_802B53C0 = NULL;
     D_802B8934 = 0;
     func_8022A47C();
     uvMemSet(initialize_emu_text_0000, 0, 0x160C);

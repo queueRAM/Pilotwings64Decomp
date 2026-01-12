@@ -138,7 +138,19 @@ void* func_80224A90(u32 tag, s32 arg1) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/uvMemLoadPal.s")
+//#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/uvMemLoadPal.s")
+void uvMemLoadPal(s32 arg0) {
+    u32 temp_v0;
+
+    if (arg0 == 0xFFFF) {
+       D_802B53C0 = NULL;
+    } else {
+        D_802B53C0 = func_80224A90('UVTP', arg0); // 0x55565450
+        if (D_802B53C0 == NULL) {
+            _uvDebugPrintf("uvMemLoadPal: palette %d not in dbase\n", arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/uvMemLoadDS.s")
 

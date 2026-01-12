@@ -4,6 +4,8 @@
 #include <ultra64.h>
 #include <uv_util.h>
 
+extern void* D_802B53C0;
+
 void uvMemInitBlocks(void);
 
 void func_8022A47C(void);
