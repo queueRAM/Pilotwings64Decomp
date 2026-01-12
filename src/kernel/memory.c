@@ -1,5 +1,6 @@
 #include <uv_common.h>
 #include <uv_memory.h>
+#include <uv_graphics.h>
 
 typedef struct {
     u32 start;
@@ -44,8 +45,6 @@ extern u8 initialize_emu_text_0000[];
 
 extern void func_80223B80(void);
 extern s32 func_80223E80(u32);
-extern s32 func_80223F30(s32);
-extern s32 func_80223F7C(s32, u32*, void**, s32);
 extern void func_80230954(void);
 extern void myfree(void);
 
