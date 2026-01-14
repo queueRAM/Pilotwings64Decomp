@@ -1,14 +1,14 @@
+#include <PR/os_internal.h>
 #include <uv_graphics.h>
 #include <uv_memory.h>
 #include <uv_sched.h>
-#include <PR/os_internal.h>
 
 void Thread_App(void* arg);
 void Thread_Kernel(void* arg);
 void Thread_Render(void* arg);
-void app_entrypoint(s32); /* extern */
+void app_entrypoint(s32);
 void uvSetVideoMode(void);
-void func_8022E558(void); /* extern */
+void func_8022E558(void);
 
 extern u8 app_ROM_START[];
 extern u8 app_ROM_END[];
@@ -179,4 +179,3 @@ void _uvDMA(void* vAddr, u32 devAddr, u32 nbytes) {
 void _uvAssertMsg(char* expr, char* filename, s32 line) {
     _uvDebugPrintf("%s:%d  %s\n", filename, line, expr);
 }
-

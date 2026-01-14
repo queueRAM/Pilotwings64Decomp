@@ -288,13 +288,13 @@ void Mat4_UnkOp3(Mtx4F_t mat, float arg1, float arg2, float arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/matrix/Mat4_UnkOp4.s")
 
-void Mat4_UnkOp5(Mtx4F_t mat, Vec3F_t vec1, Vec3F_t vec2) {
-    float tmp0 = vec2[0];
-    float tmp1 = vec2[1];
-    float tmp2 = vec2[2];
-    vec1[0] = tmp0 * mat[0][0] + tmp1 * mat[1][0] + tmp2 * mat[2][0] + mat[3][0];
-    vec1[1] = tmp0 * mat[0][1] + tmp1 * mat[1][1] + tmp2 * mat[2][1] + mat[3][1];
-    vec1[2] = tmp0 * mat[0][2] + tmp1 * mat[1][2] + tmp2 * mat[2][2] + mat[3][2];
+void Mat4_UnkOp5(Mtx4F_t mat, Vec3F_t* vec1, Vec3F_t* vec2) {
+    float tmp0 = vec2->f[0];
+    float tmp1 = vec2->f[1];
+    float tmp2 = vec2->f[2];
+    vec1->f[0] = tmp0 * mat[0][0] + tmp1 * mat[1][0] + tmp2 * mat[2][0] + mat[3][0];
+    vec1->f[1] = tmp0 * mat[0][1] + tmp1 * mat[1][1] + tmp2 * mat[2][1] + mat[3][1];
+    vec1->f[2] = tmp0 * mat[0][2] + tmp1 * mat[1][2] + tmp2 * mat[2][2] + mat[3][2];
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/matrix/func_80229AA0.s")

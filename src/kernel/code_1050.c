@@ -47,4 +47,3 @@ void func_80200308(u16 arg0) {
     uvEmitterFlush(arg0);
     uvaSeqSetVol(D_80250EC4[arg0].unk[0]);
 }
-

@@ -1,5 +1,5 @@
-#include <uv_sched.h>
 #include <uv_clocks.h>
+#include <uv_sched.h>
 
 #define VIDEO_MSG 666
 #define RSP_DONE_MSG 667
@@ -289,11 +289,9 @@ void _uvScHandleRetrace(void) {
             _uvScRunGfx();
         }
         var_s0 = gSchedInst.clientList;
-        if (var_s0 != NULL) {
-            do {
-                osSendMesg(var_s0->msgQ, &gSchedInst, 0);
-                var_s0 = var_s0->next;
-            } while (var_s0 != NULL);
+        while (var_s0 != NULL) {
+            osSendMesg(var_s0->msgQ, &gSchedInst, 0);
+            var_s0 = var_s0->next;
         }
     }
 }

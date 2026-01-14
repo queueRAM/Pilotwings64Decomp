@@ -1,4 +1,5 @@
 #include <uv_common.h>
+#include <uv_graphics.h>
 #include <uv_memory.h>
 #include <uv_graphics.h>
 
@@ -11,6 +12,11 @@ typedef struct {
     u32 unk0;
     u32 unk4;
 } Struct802B8880;
+
+typedef struct {
+    float unk0;
+    u16 unk4;
+} Struct802B53C8;
 
 extern u8 kernel_TEXT_START[];
 
@@ -306,7 +312,7 @@ void* _uvMemGetScratch(u32 size) {
     if (size >= 0x25800) {
         _uvDebugPrintf("_uvMemGetScratch: size too big ( %d bytes )\n", size);
     } else {
-        // clang-format off: returns need to be on same line to match reordering
+        // clang-format off:returns need to be on same line to match reordering
         if (D_802B8920[0] == 0) {
             D_802B8920[0] = 1; return 0x803DA800;
         } else if (D_802B8920[1] == 0) {
@@ -368,6 +374,6 @@ void uvLevelInit(void) {
     }
 }
 
-void _uvMemAllocAlign8(u32 size) {
-    _uvMemAlloc(size, 8);
+s32 _uvMemAllocAlign8(u32 size) {
+    return _uvMemAlloc(size, 8);
 }

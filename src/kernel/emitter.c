@@ -1,3 +1,4 @@
+#include <macros.h>
 #include <uv_audio.h>
 
 extern ALSndPlayer* gSndPlayer;
@@ -35,18 +36,18 @@ void uvEmitterInit(uvaEmitter_t* obj) {
     obj->unk98 = 0;
     obj->state = 0;
 
-    obj->m2[0][0] = 0.0f;
-    obj->m2[0][1] = 0.0f;
-    obj->m2[0][2] = 0.0f;
-    obj->m2[0][3] = 0.0f;
+    obj->unk40.x = 0.0f;
+    obj->unk40.y = 0.0f;
+    obj->unk40.z = 0.0f;
 
-    obj->m2[1][0] = 0.0f;
-    obj->m2[1][1] = 0.0f;
+    obj->unk4C.x = 0.0f;
+    obj->unk4C.y = 0.0f;
+    obj->unk4C.z = 0.0f;
 
-    obj->m2[3][0] = 1.0f;
-    obj->m2[3][1] = 1.0f;
-    obj->m2[3][2] = 0.0f;
-    obj->m2[3][3] = 0.0f;
+    obj->unk70.x = 1.0f;
+    obj->unk70.y = 1.0f;
+    obj->unk70.z = 0.0f;
+    obj->unk70.w = 0.0f;
 
     obj->unk80 = 0.0f;
     obj->unk84 = 0.0f;
@@ -94,7 +95,31 @@ void uvEmitterGetMatrix(u8 obj_id, Mtx4F_t mdst) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/emitter/func_80201494.s")
+void func_80201494(u8 arg0, Vec3F_t arg1, Vec3F_t arg4) {
+    Vec3F_t sp44;
+    f32 temp_fv0;
+    uvaEmitter_t* temp_s0;
+
+    if (arg0 >= 0xFF) {
+        return;
+    }
+
+    temp_s0 = &gSndEmitterTable[arg0];
+    uvVec3Copy(&temp_s0->unk40, &arg1);
+    uvVec3Copy(&temp_s0->unk4C, &arg4);
+    temp_s0->unk64.x = (temp_s0->unk4C.x + temp_s0->unk40.x) * 0.5f;
+    temp_s0->unk64.y = (temp_s0->unk4C.y + temp_s0->unk40.y) * 0.5f;
+    temp_s0->unk64.z = (temp_s0->unk4C.z + temp_s0->unk40.z) * 0.5f;
+    sp44.z = temp_s0->unk4C.x - temp_s0->unk40.x;
+    sp44.y = temp_s0->unk4C.y - temp_s0->unk40.y;
+    sp44.x = temp_s0->unk4C.z - temp_s0->unk40.z;
+    temp_fv0 = SqrtF(SQ(sp44.z) + SQ(sp44.y) + SQ(sp44.x));
+    if (temp_fv0 != 0.0f) {
+        temp_s0->unk58.x = sp44.z / temp_fv0;
+        temp_s0->unk58.y = sp44.y / temp_fv0;
+        temp_s0->unk58.z = sp44.x / temp_fv0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/emitter/func_802015D8.s")
 
@@ -173,4 +198,3 @@ void _uvaStatus(u8 obj_id) {
     osSyncPrintf("priority   = %d\n", obj->priority);
     osSyncPrintf("state      = %d\n", obj->state);
 }
-

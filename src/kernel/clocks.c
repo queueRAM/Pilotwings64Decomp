@@ -29,4 +29,3 @@ void func_80206150(s32 clk_id) {
     temp_v0->unk4 = (s32)D_80263470;
     temp_v0->unk0 = (s32)D_80263474;
 }
-

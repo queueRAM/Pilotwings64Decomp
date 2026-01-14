@@ -23,4 +23,3 @@ void func_8034D548(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_D4290/func_8034DF58.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_D4290/func_8034DFC4.s")
-
