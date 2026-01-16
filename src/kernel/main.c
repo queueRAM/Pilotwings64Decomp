@@ -32,6 +32,7 @@ void uvSetVideoMode(void);
 void func_8022E558(void);
 
 void func_80204930(void);
+void func_8020F9F4(void);
 void func_80217398(void);
 void func_802242A0(void);
 void func_80218700(void);
@@ -193,7 +194,7 @@ s32 uvSysInit(s32 arg0) {
     func_802246A0();
     func_80204930();
     func_80218700();
-    __osInitialize_emu();
+    func_8020F9F4();
     func_80217398();
     func_802242A0();
     func_80218BA0();
