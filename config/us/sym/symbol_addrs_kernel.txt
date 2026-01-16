@@ -220,6 +220,6 @@ uvMat4UnkOp3        = 0x80229798; // type:func
 uvMat4UnkOp4        = 0x80229878; // type:func
 uvMat4UnkOp5        = 0x80229A04; // type:func
 uvMat4SetUnk2       = 0x80229C10; // type:func
-uvMat4SetUnk3       = 0x80229CD4; // type:func
+uvMat4Viewport      = 0x80229CD4; // type:func
 uvMat4SetUnk4       = 0x80229D78; // type:func
 

@@ -290,7 +290,7 @@ void func_8022E558(void) {
     uvGfxStatePush();
     uvGfxSetFlags(0x000FFF);
     uvGfxClearFlags(0xB00000);
-    uvMat4SetUnk3(sp74, 0.0f, 320.0f, 0.0f, 240.0f);
+    uvMat4Viewport(sp74, 0.0f, 320.0f, 0.0f, 240.0f);
     func_80222100(sp74);
     uvMat4SetIdentity(sp74);
     func_80221A78(sp74);
