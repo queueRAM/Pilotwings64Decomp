@@ -42,8 +42,6 @@ s32 uvControllerCheckInserted(s32 contIdx) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/controller/D_8024DF40.s")
-
 s32 uvIOUpdate(void) {
     s32 i;
     s32 fakematch1;
