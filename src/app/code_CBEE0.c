@@ -8,7 +8,8 @@ typedef struct {
     u8 unk41C;
     u8 unk41D;
     u8 unk41E;
-    u8 unk41F[0xA];
+    u8 unk41F;
+    u8 unk420[0x9];
     u8 unk429;
     u8 unk42A;
     u8 unk42B;
@@ -16,7 +17,8 @@ typedef struct {
     s32 unk438;
     s32 unk43C;
     s32 unk440;
-    u8 unk444[0x28];
+    s32 unk444;
+    u8 unk448[0x24];
     s32 unk46C;
     s32 unk470;
     s32 unk474;
@@ -162,7 +164,10 @@ u8 func_80345B3C(s32* arg0) {
     return D_8035078C->unk42B;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345B5C.s")
+u8 func_80345B5C(s32* arg0) {
+    *arg0 = D_8035078C->unk444;
+    return D_8035078C->unk41F;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345B7C.s")
 
