@@ -71,7 +71,8 @@ typedef struct {
 extern Unk8035078C *D_8035078C;
 extern Unk80362690 *D_80362690;
 
-extern Unk803798E0 D_803798E0[12][5][7];
+extern Unk803798E0 D_803798E0[][5][7];
+extern u8 D_8037A604; // part of some struct?
 extern Unk8037AA88 D_8037AA88[];
 
 void func_80323364(void);
@@ -277,7 +278,9 @@ void func_803462D4(u16 idx) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_8034633C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80346364.s")
+u8 func_80346364(void) {
+    return D_8037A604;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80346370.s")
 
