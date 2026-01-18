@@ -2,7 +2,9 @@
 #include <uv_memory.h>
 
 typedef struct {
-    u8 unk0[0x41C];
+    u8 unk0[0x10];
+    s32 unk10;
+    u8 unk14[0x408];
     u8 unk41C;
     u8 unk41D;
     u8 unk41E[0x1A];
@@ -131,7 +133,9 @@ u8 func_80345ACC(s32* arg0) {
     return D_8035078C->unk41D;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345AEC.s")
+s32* func_80345AEC(void) {
+    return &D_8035078C->unk10;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345AFC.s")
 
