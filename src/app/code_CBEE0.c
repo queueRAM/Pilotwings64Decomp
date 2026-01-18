@@ -215,7 +215,10 @@ u8 func_80345C1C(s32* arg0) {
     return D_8035078C->unk425;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345C3C.s")
+u8 func_80345C3C(s32* arg0) {
+    *arg0 = D_8035078C->unk460;
+    return D_8035078C->unk426;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345C5C.s")
 
