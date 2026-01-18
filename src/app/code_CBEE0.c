@@ -2,12 +2,29 @@
 #include <uv_memory.h>
 
 typedef struct {
+    void *unk0;
+    u8 unk4[0xA];
+    u16 unkE;
+    s32 unk10;
+    u8 unk14[0x78];
+} Unk80362690;
+
+typedef struct {
     s32 unk0;
     s32 unk4;
     u8 unk8;
 } Unk803798E0;
 
+extern Unk80362690 *D_80362690;
+
 extern Unk803798E0 D_803798E0[12][5][7];
+
+void func_80323364(void);
+void func_802D22D8(void);
+void func_802CAF50(void);
+void func_80309868(void);
+void func_802D28D8(void);
+void func_802FAFF0(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_803449B0.s")
 
@@ -79,7 +96,19 @@ s32 func_80344EF0(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_803456D8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345A24.s")
+void func_80345A24(void) {
+    u16 sp1E;
+
+    sp1E = D_80362690[D_80362690[1].unk10].unkE;
+    func_80323364();
+    if ((sp1E != 3) && (sp1E != 4)) {
+        func_802D22D8();
+    }
+    func_802CAF50();
+    func_80309868();
+    func_802D28D8();
+    func_802FAFF0();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345AAC.s")
 
