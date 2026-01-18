@@ -1,8 +1,15 @@
 #include "common.h"
 
+extern u8 D_803798E8[];
+
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_803449B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80344CD0.s")
+s32 func_80344CD0(s32 arg0, s32 arg1, s32 arg2) {
+    if (D_803798E8[(arg0 * 0x1A4) + (arg1 * 0x54) + (arg2 * 0xC)] == 0xFF) {
+        return 0;
+    }
+    return 1;
+}
 
 // performs toupper() on an array of characters
 void strToUpper(char* str, s32 length) {
