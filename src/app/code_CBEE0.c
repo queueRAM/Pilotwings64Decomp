@@ -270,4 +270,7 @@ void func_80345CC0(f32* arg0, f32* arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80346468.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80346474.s")
+u8 func_80346474(s32* arg0) {
+    *arg0 = D_8035078C->unk470;
+    return D_8035078C->unk42A;
+}
