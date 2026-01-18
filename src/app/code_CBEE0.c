@@ -1,11 +1,18 @@
 #include "common.h"
+#include <uv_memory.h>
 
-extern u8 D_803798E8[];
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    u8 unk8;
+} Unk803798E0;
+
+extern Unk803798E0 D_803798E0[12][5][7];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_803449B0.s")
 
 s32 func_80344CD0(s32 arg0, s32 arg1, s32 arg2) {
-    if (D_803798E8[(arg0 * 0x1A4) + (arg1 * 0x54) + (arg2 * 0xC)] == 0xFF) {
+    if (D_803798E0[arg0][arg1][arg2].unk8 == 0xFF) {
         return 0;
     }
     return 1;
@@ -22,7 +29,23 @@ void strToUpper(char* str, s32 length) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80344E0C.s")
+s32 func_80344E0C(s32 arg0, s32 arg1, s32 arg2, char* arg3, char* arg4) {
+    u8 sp48[0x28];
+    u8 sp20[0x28];
+    Unk803798E0* sp18;
+
+    sp18 = &D_803798E0[arg0][arg1][arg2];
+    if (sp18->unk8 == 0xFF) {
+        return 0;
+    }
+    _uvMediaCopy(&sp48, (void*)sp18->unk0, 0x28);
+    _uvMediaCopy(arg3, arg3, 0x28);
+    _uvMediaCopy(&sp20, (void*)sp18->unk4, 0x28);
+    _uvMediaCopy(arg4, &sp20, 0x28);
+    strToUpper(arg3, 0x28);
+    strToUpper(arg4, 0x28);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80344EF0.s")
 
