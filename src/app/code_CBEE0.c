@@ -2,6 +2,13 @@
 #include <uv_memory.h>
 
 typedef struct {
+    u8 unk0[0x41C];
+    u8 unk41C;
+    u8 unk[0x1B];
+    s32 unk438;
+} Unk8035078C;
+
+typedef struct {
     void *unk0;
     u8 unk4[0xA];
     u16 unkE;
@@ -15,6 +22,7 @@ typedef struct {
     u8 unk8;
 } Unk803798E0;
 
+extern Unk8035078C *D_8035078C;
 extern Unk80362690 *D_80362690;
 
 extern Unk803798E0 D_803798E0[12][5][7];
@@ -110,7 +118,11 @@ void func_80345A24(void) {
     func_802FAFF0();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345AAC.s")
+// likely getting a pointer to data and returning count
+u8 func_80345AAC(s32* arg0) {
+    *arg0 = D_8035078C->unk438;
+    return D_8035078C->unk41C;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345ACC.s")
 
