@@ -74,6 +74,9 @@ extern Unk80362690 *D_80362690;
 
 extern Unk803798E0 D_803798E0[][5][7];
 extern u8 D_8037A604; // part of some struct?
+extern s32 D_8037AA78;
+extern s32 D_8037AA7C;
+extern s32 D_8037AA80;
 extern Unk8037AA88 D_8037AA88[];
 void func_80323364(void);
 void func_802D22D8(void);
@@ -276,7 +279,11 @@ void func_803462D4(u16 idx) {
     _uvMediaCopy((void*)D_8035078C->unk440, src, 0x30);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_8034633C.s")
+void func_8034633C(s16* arg0, s16* arg1, s16* arg2) {
+    *arg0 = (s16)D_8037AA78;
+    *arg1 = (s16)D_8037AA80;
+    *arg2 = (s16)D_8037AA7C;
+}
 
 u8 func_80346364(void) {
     return D_8037A604;
