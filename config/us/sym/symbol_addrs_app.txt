@@ -47,3 +47,5 @@ levelGetTPTS        = 0x8030BD48; // type:func
 levelGetAPTS        = 0x8030BD68; // type:func
 levelGetLPAD        = 0x8030BD88; // type:func
 levelGetBNUS        = 0x8030BDA8; // type:func
+
+strToUpper          = 0x80344D40; // type:func

@@ -4,7 +4,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80344CD0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80344D40.s")
+// performs toupper() on an array of characters
+void strToUpper(char* str, s32 length) {
+    int i;
+
+    for (i = 0; i < length; i++) {
+        if (str[i] >= 'a' && str[i] <= 'z') {
+            str[i] = str[i] - ('a' - 'A');
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80344E0C.s")
 
