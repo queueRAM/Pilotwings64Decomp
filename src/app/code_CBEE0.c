@@ -64,10 +64,15 @@ typedef struct {
     u8 unk8;
 } Unk803798E0;
 
+typedef struct {
+    u8 unk0[0x30];
+} Unk8037AA88;
+
 extern Unk8035078C *D_8035078C;
 extern Unk80362690 *D_80362690;
 
 extern Unk803798E0 D_803798E0[12][5][7];
+extern Unk8037AA88 D_8037AA88[];
 
 void func_80323364(void);
 void func_802D22D8(void);
@@ -260,7 +265,15 @@ void func_80345CC0(f32* arg0, f32* arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345CE4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_803462D4.s")
+void func_803462D4(u16 idx) {
+    Unk8037AA88 *src;
+    if (idx > 3) {
+        _uvDebugPrintf("task_birdpad : level out of valid range [%d] - set to 0\n", idx);
+        idx = 0;
+    }
+    src = &D_8037AA88[idx];
+    _uvMediaCopy((void*)D_8035078C->unk440, src, 0x30);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_8034633C.s")
 
