@@ -47,7 +47,25 @@ s32 func_80344E0C(s32 arg0, s32 arg1, s32 arg2, char* arg3, char* arg4) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80344EF0.s")
+s32 func_80344EF0(s32 arg0, s32 arg1) {
+    s32 count;
+    s32 i;
+
+    count = 0;
+    if (arg0 >= 9) {
+        return 0;
+    }
+    if (arg1 >= 8) {
+        return 0;
+    }
+
+    for (i = 0; i < 5; i++) {
+        if (D_803798E0[arg0][i][arg1].unk8 != 0xFF) {
+            count++;
+        }
+    }
+    return count;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80344FC8.s")
 
