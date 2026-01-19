@@ -72,7 +72,7 @@ extern Unk80362690* D_80362690;
 // likely arrays of structs for level data
 extern s32 gLevelWOBJ;
 extern s32 gLevelLPAD;
-extern s32 gLevelTPTS;
+extern LevelTPTS gLevelTPTS;
 extern LevelTOYS gLevelTOYS;
 extern s32 gLevelAPTS;
 extern s32 gLevelBNUS;
@@ -286,7 +286,7 @@ u8 levelGetWOBJ(void** data) {
     return D_8034F408->countWOBJ;
 }
 
-u8 levelGetTPTS(void** data) {
+u8 levelGetTPTS(LevelTPTS** data) {
     *data = D_8034F408->dataTPTS;
     return D_8034F408->countTPTS;
 }

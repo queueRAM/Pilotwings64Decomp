@@ -1,5 +1,15 @@
 #include "common.h"
+#include <uv_level.h>
+#include <uv_math.h>
+#include <uv_matrix.h>
 #include <uv_memory.h>
+
+typedef struct {
+    s32 unk0[12];
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+} Unk80345464_Arg0;
 
 typedef struct {
     u8 unk0[0x3];
@@ -55,15 +65,22 @@ typedef struct {
 } Unk8035078C;
 
 typedef struct {
+    u8 unk0[0x22C];
+    u8 unk22C;
+} Unk80362690_Unk0_Unk7C; // this could be Unk8035078C
+
+typedef struct {
     void* unk0;
     u16 unk4;
-    u8 unk6[0x8];
+    u16 unk6;
+    u8 unk8[0x6];
     u16 unkE;
     s32 unk10;
     u16 unk14;
     u8 unk16[0x62];
     s32 unk78;
-    u8 unk7C[0x10];
+    Unk80362690_Unk0_Unk7C* unk7C;
+    u8 unk80[0xC];
 } Unk80362690_Unk0;
 
 typedef struct {
@@ -86,6 +103,8 @@ typedef struct {
 typedef struct {
     u8 unk0[0x30];
 } Unk8037AA88;
+
+extern f32 D_8034F850;
 
 extern Unk8035078C* D_8035078C;
 extern u8 D_80350790;
@@ -114,7 +133,7 @@ void func_802D20F0(void);
 void func_802D22B0(void);
 void func_802D22D8(void);
 void func_802D23EC(void);
-void func_802D25AC(s32);
+void func_802D25AC(Unk80345464_Arg0*);
 void func_802D27CC(void);
 void func_802D2850(void);
 void func_802D28D8(void);
@@ -124,18 +143,18 @@ void func_802D3030(void);
 void func_802E1278(void);
 u16 func_802E12B4(void);
 void func_802E15F0(void);
-void func_802E344C(s32);
+void func_802E344C(Unk80345464_Arg0*);
 void func_802E37B0(void);
 void func_802E3A5C(void);
 void func_802E3E6C(void);
 void func_802E3F7C(void);
-void func_802EB424(s32, s32);
+void func_802EB424(Unk80345464_Arg0*, s32);
 void func_802E79D8(void);
 void func_802EB0BC(void);
 void func_802EB3E0(void);
 void func_802EB598(void);
 void func_802EB5E4(void);
-void func_802EDDEC(s32);
+void func_802EDDEC(Unk80345464_Arg0*);
 void func_802F1FA0(void);
 void func_802FAF80(void);
 void func_802FAFF0(void);
@@ -145,19 +164,19 @@ void func_802FB518(void);
 void func_803097E0(void);
 void func_80309868(void);
 void func_80309A64(void);
-void func_80309D64(s32);
+void func_80309D64(Unk80345464_Arg0*);
 void func_80309FFC(void);
 void func_80315474(void);
 void func_80315550(void);
 void func_80316DC0(void);
 void func_80316E40(void);
-void func_80317634(s32);
+void func_80317634(Unk80345464_Arg0*);
 void func_8031776C(void);
 void func_80320810(void);
 void func_803232F0(void);
 void func_80323364(void);
 void func_803239B4(void);
-s32 func_803243D8(s32);
+s32 func_803243D8(Unk80345464_Arg0*);
 void func_80324A34(void);
 s32 func_8032C080(s32);
 void func_8032FAB0(void);
@@ -169,13 +188,14 @@ void func_8033F964(s32);
 void func_8033FCD0(u16);
 void func_80344290(void);
 void func_803442F8(void);
-void func_8034450C(s32);
+void func_8034450C(Unk80345464_Arg0*);
 void func_8034467C(void);
 void func_803453AC(void);
-s32 func_803456D8(s32);
+s32 func_803456D8(Unk80345464_Arg0*);
 void func_80345A24(void);
 Unk8035078C* func_80345CE4(u32);
 u8 func_80346364(void);
+s32 func_80346370(s32);
 void func_803465F0(void);
 void func_8034662C(void);
 void func_8034695C(void);
@@ -185,6 +205,7 @@ void func_8034C848(void);
 void func_8034CD60(void);
 void func_8034D4AC(void);
 void func_8034D548(void);
+void uvChanTerra(u8, s32);
 void wind_render(void);
 
 void func_803449B0(void) {
@@ -449,7 +470,7 @@ void func_803453AC(void) {
     }
 }
 
-s32 func_80345464(s32 arg0, s32 arg1) {
+s32 func_80345464(Unk80345464_Arg0* arg0, s32 arg1) {
     u16 sp1E;
     s32 sp18;
     s32 temp_v0;
@@ -510,7 +531,87 @@ s32 func_80345464(s32 arg0, s32 arg1) {
     return sp18;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_803456D8.s")
+s32 func_803456D8(Unk80345464_Arg0* arg0) {
+    LevelTPTS* sp8C;
+    f32 temp_fv0;
+    u8 temp_v0;
+    u8 var_s1;
+    u8 sp85;
+    Vec3F_t sp78;
+    Vec3F_t sp6C;
+    f32 temp_fv1;
+    s32 temp_v0_2;
+    s32 var_s2;
+    LevelTPTS* temp_s0;
+
+    var_s2 = -1;
+    temp_v0 = levelGetTPTS(&sp8C);
+    if (temp_v0 == 0) {
+        return 0;
+    }
+
+    for (var_s1 = 0; var_s1 < temp_v0; var_s1++) {
+        temp_s0 = &sp8C[var_s1];
+        sp78.x = arg0->unk30 - temp_s0->unk4_X;
+        sp78.y = arg0->unk34 - temp_s0->unk8_Y;
+        sp78.z = arg0->unk38 - temp_s0->unkC_Z;
+        if (uvVec3Len(&sp78) <= temp_s0->unk14) {
+            sp6C.x = func_8022A080((temp_s0->unk10 + 90.0f) * 0.01745329f);
+            sp6C.y = func_80229EC0((temp_s0->unk10 + 90.0f) * 0.01745329f);
+            sp6C.z = 0.0f;
+            temp_fv0 = uvVec3Dot(&sp6C, &sp78);
+            if (temp_fv0 > 0.0f) {
+                temp_s0->unk1C = D_8034F850;
+            } else {
+                temp_s0->unk24 = D_8034F850;
+            }
+            if (temp_s0->unk0 == 0) {
+                if (temp_fv0 > 0.0f) {
+                    var_s2 = temp_s0->unk18;
+                } else {
+                    var_s2 = temp_s0->unk20;
+                }
+                sp85 = var_s1;
+            } else {
+                temp_fv1 = temp_s0->unk1C;
+                if (temp_fv1 > 0.0f) {
+                    if ((temp_s0->unk24 > 0.0f) && (temp_s0->unk24 < temp_fv1)) {
+                        if (temp_fv0 > 0.0f) {
+                            var_s2 = temp_s0->unk18;
+                        } else {
+                            var_s2 = temp_s0->unk20;
+                        }
+                        sp85 = var_s1;
+                    }
+                }
+            }
+        } else {
+            temp_s0->unk24 = 0.0f;
+            temp_s0->unk1C = 0.0f;
+        }
+    }
+    if (var_s2 == -1) {
+        return 0;
+    }
+    D_80362690->unk0[D_80362690->unk9C].unk14 = (u16) var_s2;
+    temp_v0_2 = func_80346370(var_s2);
+    temp_s0 = &sp8C[sp85];
+    uvChanTerra(D_80362690->unk0[D_80362690->unk9C].unk7C->unk22C, temp_v0_2);
+    if (temp_v0_2 != D_80362690->unk0[0].unk6) {
+        D_80362690->unk0[0].unk6 = (u16) temp_v0_2;
+        arg0->unk30 = arg0->unk30 + temp_s0->unk28_X;
+        arg0->unk34 = arg0->unk34 + temp_s0->unk2C_Y;
+        arg0->unk38 = arg0->unk38 + temp_s0->unk30_Z;
+        return 1;
+    }
+    if ((temp_s0->unk18 == -1) || (temp_s0->unk20 == -1)) {
+        arg0->unk30 = arg0->unk30 + temp_s0->unk28_X;
+        arg0->unk34 = arg0->unk34 + temp_s0->unk2C_Y;
+        arg0->unk38 = arg0->unk38 + temp_s0->unk30_Z;
+        return 2;
+    }
+    return 0;
+}
 
 void func_80345A24(void) {
     u16 sp1E;

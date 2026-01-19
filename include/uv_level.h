@@ -3,6 +3,22 @@
 
 #include <PR/ultratypes.h>
 
+typedef struct {
+    u8 unk0;
+    u8 unk1[3];
+    f32 unk4_X;
+    f32 unk8_Y;
+    f32 unkC_Z;
+    f32 unk10;
+    f32 unk14;
+    s32 unk18;
+    f32 unk1C;
+    s32 unk20;
+    f32 unk24;
+    f32 unk28_X;
+    f32 unk2C_Y;
+    f32 unk30_Z;
+} LevelTPTS;
 
 typedef struct {
     s32 unk0[4];
@@ -19,7 +35,7 @@ typedef struct {
     u8 pad7;
     void* dataWOBJ;
     void* dataLPAD;
-    void* dataTPTS;
+    LevelTPTS* dataTPTS;
     LevelTOYS* dataTOYS;
     void* dataAPTS;
     void* dataBNUS;
@@ -32,7 +48,7 @@ void func_8030BA60(void);
 void func_8030BA98(u8 pilot, u8 vehicle);
 void func_8030BD20(void);
 u8 levelGetWOBJ(void** data);
-u8 levelGetTPTS(void** data);
+u8 levelGetTPTS(LevelTPTS** data);
 u8 levelGetAPTS(void** data);
 u8 levelGetLPAD(void** data);
 u8 levelGetBNUS(void** data);
