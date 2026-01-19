@@ -69,7 +69,7 @@ typedef struct {
 } Unk8037AA88;
 
 extern Unk8035078C *D_8035078C;
-extern s8 D_8035079C;
+extern u8 D_8035079C;
 extern u8 D_803507A0;
 extern u8 D_803507A4;
 extern Unk80362690 *D_80362690;
@@ -83,23 +83,32 @@ extern Unk8037AA88 D_8037AA88[];
 
 void func_802CAF50(void);
 void func_802CB094(void);
+void func_802CB35C(void);
 void func_802D22D8(void);
 void func_802D23EC(void);
+void func_802D27CC(void);
 void func_802D28D8(void);
 void func_802D2ACC(void);
+void func_802D3030(void);
 void func_802E1278(void);
 void func_802E3A5C(void);
+void func_802E3E6C(void);
 void func_802EB598(void);
 void func_802EB5E4(void);
 void func_802FAFF0(void);
 void func_802FB22C(void);
+void func_802FB518(void);
 void func_80309868(void);
 void func_80309A64(void);
+void func_80309FFC(void);
 void func_80316E40(void);
 void func_8031776C(void);
 void func_80323364(void);
 void func_803239B4(void);
+void func_80324A34(void);
+void func_803383FC(void);
 void func_803442F8(void);
+void func_8034467C(void);
 void func_803453AC(void);
 void func_8034662C(void);
 void func_80346B84(void);
@@ -199,7 +208,25 @@ void func_8034536C(void) {
     func_802EB5E4();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_803453AC.s")
+void func_803453AC(void) {
+    u16 sp1E;
+
+    sp1E = D_80362690[D_80362690[1].unk10].unkE;
+    if (D_8035079C != 0) {
+        func_80324A34();
+        func_802CB35C();
+        func_8034467C();
+        func_80309FFC();
+        func_802D3030();
+        func_803383FC();
+        func_802E3E6C();
+        func_802FB518();
+        if ((sp1E != 3) && (sp1E != 4)) {
+            func_802D27CC();
+        }
+        D_8035079C = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345464.s")
 
