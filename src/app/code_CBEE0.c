@@ -78,12 +78,17 @@ extern s32 D_8037AA78;
 extern s32 D_8037AA7C;
 extern s32 D_8037AA80;
 extern Unk8037AA88 D_8037AA88[];
-void func_80323364(void);
-void func_802D22D8(void);
 void func_802CAF50(void);
-void func_80309868(void);
+void func_802D22D8(void);
 void func_802D28D8(void);
+void func_802EB5E4(void);
 void func_802FAFF0(void);
+void func_80309868(void);
+void func_8031776C(void);
+void func_80323364(void);
+void func_803453AC(void);
+void func_80346B84(void);
+void func_8034D4AC(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_803449B0.s")
 
@@ -147,7 +152,13 @@ s32 func_80344EF0(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_8034528C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_8034536C.s")
+void func_8034536C(void) {
+    func_803453AC();
+    func_80346B84();
+    func_8034D4AC();
+    func_8031776C();
+    func_802EB5E4();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_803453AC.s")
 
