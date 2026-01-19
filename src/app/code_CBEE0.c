@@ -56,7 +56,10 @@ typedef struct {
     u8 unk6[0x8];
     u16 unkE;
     s32 unk10;
-    u8 unk14[0x78];
+    u8 unk14;
+    u8 unk15[0x63];
+    s32 unk78;
+    u8 unk7C[0x10];
 } Unk80362690;
 
 typedef struct {
@@ -85,35 +88,57 @@ extern Unk8037AA88 D_8037AA88[];
 void func_802CAF50(void);
 void func_802CB094(void);
 void func_802CB35C(void);
+void func_802CB3F8(void);
 void func_802D22D8(void);
 void func_802D23EC(void);
+void func_802D25AC(s32);
 void func_802D27CC(void);
 void func_802D28D8(void);
 void func_802D2ACC(void);
+s32 func_802D2E48(void);
 void func_802D3030(void);
 void func_802E1278(void);
+void func_802E15F0(void);
+void func_802E344C(s32);
 void func_802E3A5C(void);
 void func_802E3E6C(void);
+void func_802E3F7C(void);
+void func_802EB424(s32, s32);
 void func_802EB598(void);
 void func_802EB5E4(void);
+void func_802EDDEC(s32);
 void func_802FAFF0(void);
 void func_802FB22C(void);
+s32 func_802FB308(s32);
 void func_802FB518(void);
 void func_80309868(void);
 void func_80309A64(void);
+void func_80309D64(s32);
 void func_80309FFC(void);
 void func_80316E40(void);
+void func_80317634(s32);
 void func_8031776C(void);
 void func_80323364(void);
 void func_803239B4(void);
+s32 func_803243D8(s32);
 void func_80324A34(void);
+s32 func_8032C080(s32);
 void func_803383FC(void);
+void func_8033F748(s32);
+void func_8033F964(s32);
+void func_8033FCD0(u16);
 void func_803442F8(void);
+void func_8034450C(s32);
 void func_8034467C(void);
 void func_803453AC(void);
+s32 func_803456D8(s32);
+void func_80345A24(void);
+u8 func_80346364(void);
 void func_8034662C(void);
+void func_8034695C(void);
 void func_80346B84(void);
 void func_8034D4AC(void);
+void func_8034D548(void);
 void wind_render(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_803449B0.s")
@@ -229,7 +254,66 @@ void func_803453AC(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345464.s")
+s32 func_80345464(s32 arg0, s32 arg1) {
+    u16 sp1E;
+    s32 sp18;
+    s32 temp_v0;
+
+    sp1E = D_80362690[D_80362690[1].unk10].unkE;
+    sp18 = 0;
+    func_8034695C();
+    func_8034D548();
+    func_802E15F0();
+    func_802CB3F8();
+    func_802E3F7C();
+    func_80317634(arg0);
+    func_8034450C(arg0);
+    func_80309D64(arg0);
+    if ((sp1E != 3) && (sp1E != 4)) {
+        func_802D25AC(arg0);
+    }
+    func_802EB424(arg0, arg1);
+    func_802E344C(arg0);
+    if (func_802D2E48() == 1) {
+        D_803507A4 = 1;
+        sp18 = 1;
+        D_80362690->unkE = 1;
+        if (D_80362690->unkE != 0) {
+            func_8033F748(9);
+            func_8033F964(0);
+            func_8033FCD0(D_80362690->unkE);
+        }
+    }
+    if (func_803243D8(arg0) == 1) {
+        D_803507A4 = 1;
+        sp18 = 1;
+        D_80362690->unkE = 1;
+        if (D_80362690->unkE != 0) {
+            func_8033F748(9);
+            func_8033F964(0);
+            func_8033FCD0(D_80362690->unkE);
+        }
+    }
+    if ((D_80362690[D_80362690[1].unk10].unkE == 5) && (func_802FB308(D_80362690[D_80362690[1].unk10].unk78) == 1)) {
+        sp18 = 1;
+    }
+    temp_v0 = func_803456D8(arg0);
+    switch (temp_v0) {
+    case 1:
+        func_80345A24();
+        func_802EDDEC(arg0);
+        break;
+    case 2:
+        func_802EDDEC(arg0);
+        break;
+    }
+    if ((D_80362690[1].unk14 != 0) && (func_80346364() == 3) && (func_8032C080(0) != 0)) {
+        D_803507A0 = 1;
+        func_803453AC();
+        D_80362690[1].unk14 = 0;
+    }
+    return sp18;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_803456D8.s")
 
