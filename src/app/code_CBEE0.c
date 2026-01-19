@@ -51,7 +51,7 @@ typedef struct {
 } Unk8035078C;
 
 typedef struct {
-    void *unk0;
+    void* unk0;
     u8 unk4[0xA];
     u16 unkE;
     s32 unk10;
@@ -68,11 +68,11 @@ typedef struct {
     u8 unk0[0x30];
 } Unk8037AA88;
 
-extern Unk8035078C *D_8035078C;
+extern Unk8035078C* D_8035078C;
 extern u8 D_8035079C;
 extern u8 D_803507A0;
 extern u8 D_803507A4;
-extern Unk80362690 *D_80362690;
+extern Unk80362690* D_80362690;
 
 extern Unk803798E0 D_803798E0[][5][7];
 extern u8 D_8037A604; // part of some struct?
@@ -347,7 +347,7 @@ void func_80345CC0(f32* arg0, f32* arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345CE4.s")
 
 void func_803462D4(u16 idx) {
-    Unk8037AA88 *src;
+    Unk8037AA88* src;
     if (idx > 3) {
         _uvDebugPrintf("task_birdpad : level out of valid range [%d] - set to 0\n", idx);
         idx = 0;
