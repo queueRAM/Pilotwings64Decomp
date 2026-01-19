@@ -451,6 +451,7 @@ u8 func_80346364(void) {
     return D_8037A604;
 }
 
+// func_80346370 does not initialize the return value `ret`
 #if defined(__clang__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsometimes-uninitialized"
@@ -459,19 +460,18 @@ u8 func_80346364(void) {
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 s32 func_80346370(s32 arg0) {
-    s32 sp1C;
-
+    s32 ret;
     switch (D_80362690[0].unk4) {
     case 3:
         switch (arg0) {
         case 0:
-            sp1C = 1;
+            ret = 1;
             break;
         case 1:
-            sp1C = 2;
+            ret = 2;
             break;
         case 2:
-            sp1C = 7;
+            ret = 7;
             break;
         default:
             _uvDebugPrintf("task : unknown CISLAND terra selection [%d]\n", arg0);
@@ -479,18 +479,18 @@ s32 func_80346370(s32 arg0) {
         }
         break;
     case 5:
-        sp1C = 3;
+        ret = 3;
         break;
     case 1:
-        sp1C = 0;
+        ret = 0;
         break;
     case 10:
         switch (arg0) {
         case 0:
-            sp1C = 7;
+            ret = 7;
             break;
         case 1:
-            sp1C = 8;
+            ret = 8;
             break;
         default:
             _uvDebugPrintf("task : unknown ARCTIC level terra selection [%d]\n", arg0);
@@ -501,7 +501,7 @@ s32 func_80346370(s32 arg0) {
         _uvDebugPrintf("task : unknown level for terra selection [%d]\n", D_80362690[0].unk4);
         break;
     }
-    return sp1C;
+    return ret;
 }
 #if defined(__GNUC__) || defined(__clang__)
 #pragma GCC diagnostic pop
