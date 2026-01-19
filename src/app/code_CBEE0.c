@@ -51,8 +51,9 @@ typedef struct {
 } Unk8035078C;
 
 typedef struct {
-    void* unk0;
-    u8 unk4[0xA];
+    void *unk0;
+    u16 unk4;
+    u8 unk6[0x8];
     u16 unkE;
     s32 unk10;
     u8 unk14[0x78];
@@ -366,7 +367,51 @@ u8 func_80346364(void) {
     return D_8037A604;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80346370.s")
+s32 func_80346370(s32 arg0) {
+    s32 sp1C;
+
+    switch (D_80362690[0].unk4) {
+    case 3:
+        switch (arg0) {
+        case 0:
+            sp1C = 1;
+            break;
+        case 1:
+            sp1C = 2;
+            break;
+        case 2:
+            sp1C = 7;
+            break;
+        default:
+            _uvDebugPrintf("task : unknown CISLAND terra selection [%d]\n", arg0);
+            break;
+        }
+        break;
+    case 5:
+        sp1C = 3;
+        break;
+    case 1:
+        sp1C = 0;
+        break;
+    case 10:
+        switch (arg0) {
+        case 0:
+            sp1C = 7;
+            break;
+        case 1:
+            sp1C = 8;
+            break;
+        default:
+            _uvDebugPrintf("task : unknown ARCTIC level terra selection [%d]\n", arg0);
+            break;
+        }
+        break;
+    default:
+        _uvDebugPrintf("task : unknown level for terra selection [%d]\n", D_80362690[0].unk4);
+        break;
+    }
+    return sp1C;
+}
 
 u8 func_80346468(void) {
     return D_803507A4;
