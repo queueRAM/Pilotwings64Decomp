@@ -2,7 +2,9 @@
 #include <uv_memory.h>
 
 typedef struct {
-    u8 unk0[0x8];
+    u8 unk0[0x3];
+    u8 unk3;
+    u8 unk4[0x4];
     s32 unk8;
     u8 unkC[4];
     s32 unk10;
@@ -51,15 +53,25 @@ typedef struct {
 } Unk8035078C;
 
 typedef struct {
-    void *unk0;
+    void* unk0;
     u16 unk4;
     u8 unk6[0x8];
     u16 unkE;
     s32 unk10;
-    u8 unk14;
-    u8 unk15[0x63];
+    u16 unk14;
+    u8 unk16[0x62];
     s32 unk78;
     u8 unk7C[0x10];
+} Unk80362690_Unk0;
+
+typedef struct {
+    Unk80362690_Unk0 unk0[1];
+    s32 unk8C;
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 unk9C;
+    u8 unkA0;
 } Unk80362690;
 
 typedef struct {
@@ -73,9 +85,14 @@ typedef struct {
 } Unk8037AA88;
 
 extern Unk8035078C* D_8035078C;
+extern u8 D_80350790;
+extern u8 D_80350794;
+extern u8 D_80350798;
 extern u8 D_8035079C;
 extern u8 D_803507A0;
 extern u8 D_803507A4;
+extern u8 D_803507A8[];
+
 extern Unk80362690* D_80362690;
 
 extern Unk803798E0 D_803798E0[][5][7];
@@ -85,58 +102,84 @@ extern s32 D_8037AA7C;
 extern s32 D_8037AA80;
 extern Unk8037AA88 D_8037AA88[];
 
+void func_802CAD00(void);
 void func_802CAF50(void);
 void func_802CB094(void);
 void func_802CB35C(void);
 void func_802CB3F8(void);
+void func_802D20F0(void);
+void func_802D22B0(void);
 void func_802D22D8(void);
 void func_802D23EC(void);
 void func_802D25AC(s32);
 void func_802D27CC(void);
+void func_802D2850(void);
 void func_802D28D8(void);
 void func_802D2ACC(void);
 s32 func_802D2E48(void);
 void func_802D3030(void);
 void func_802E1278(void);
+u16 func_802E12B4(void);
 void func_802E15F0(void);
 void func_802E344C(s32);
+void func_802E37B0(void);
 void func_802E3A5C(void);
 void func_802E3E6C(void);
 void func_802E3F7C(void);
 void func_802EB424(s32, s32);
+void func_802E79D8(void);
+void func_802EB0BC(void);
+void func_802EB3E0(void);
 void func_802EB598(void);
 void func_802EB5E4(void);
 void func_802EDDEC(s32);
+void func_802F1FA0(void);
+void func_802FAF80(void);
 void func_802FAFF0(void);
 void func_802FB22C(void);
 s32 func_802FB308(s32);
 void func_802FB518(void);
+void func_803097E0(void);
 void func_80309868(void);
 void func_80309A64(void);
 void func_80309D64(s32);
 void func_80309FFC(void);
+void func_80315474(void);
+void func_80315550(void);
+void func_80316DC0(void);
 void func_80316E40(void);
 void func_80317634(s32);
 void func_8031776C(void);
+void func_80320810(void);
+void func_803232F0(void);
 void func_80323364(void);
 void func_803239B4(void);
 s32 func_803243D8(s32);
 void func_80324A34(void);
 s32 func_8032C080(s32);
+void func_8032FAB0(void);
+void func_80335B94(void);
+void func_80337DB8(void);
 void func_803383FC(void);
 void func_8033F748(s32);
 void func_8033F964(s32);
 void func_8033FCD0(u16);
+void func_80344290(void);
 void func_803442F8(void);
 void func_8034450C(s32);
 void func_8034467C(void);
 void func_803453AC(void);
 s32 func_803456D8(s32);
 void func_80345A24(void);
+Unk8035078C* func_80345CE4(u8);
 u8 func_80346364(void);
+void func_803465F0(void);
 void func_8034662C(void);
 void func_8034695C(void);
 void func_80346B84(void);
+void func_8034C224(void);
+void func_8034C848(void);
+void func_8034CD60(void);
 void func_8034D4AC(void);
 void func_8034D548(void);
 void wind_render(void);
@@ -199,12 +242,91 @@ s32 func_80344EF0(s32 arg0, s32 arg1) {
     return count;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80344FC8.s")
+// a0: class/level (Beginner/A/B/Pilot | Level | birdman time of day)
+// a1: vehicle (0: hang glider, 1: rocket belt, 2: gyro, 3: cannon ball, 4: sky diving, 5: jumble hopper, 6: birdman)
+// a2: test number (OR birdman time of day)
+s32 func_80344FC8(s32 classIdx, s32 vehicle, s32 testIdx, u16* arg3, u16* arg4, u16* arg5) {
+    u8 tmp8;
+
+    D_8037AA78 = classIdx;
+    D_8037AA80 = vehicle;
+    D_8037AA7C = testIdx;
+
+    if (classIdx > 8) {
+        return 0;
+    }
+    if (vehicle > 7) {
+        return 0;
+    }
+    if (testIdx > 5) {
+        return 0;
+    }
+
+    tmp8 = D_803798E0[classIdx][testIdx][vehicle].unk8;
+    if (tmp8 == 0xFF) {
+        return 0;
+    }
+    D_8035078C = func_80345CE4(tmp8);
+    D_80350790 = (u8)classIdx;
+    D_80350794 = (u8)vehicle;
+    D_80350798 = (u8)testIdx;
+
+    *arg3 = D_803507A8[D_8035078C->unk3];
+    switch (*arg3) {
+    case 3:
+        *arg4 = 1;
+        break;
+    case 5:
+        *arg4 = 3;
+        break;
+    case 1:
+        *arg4 = 0;
+        break;
+    case 10:
+        *arg4 = 7;
+        break;
+    default:
+        _uvDebugPrintf("task load : unknown db level [%d]\n", *arg3);
+        *arg3 = 3;
+        *arg4 = 1;
+        break;
+    }
+
+    func_803465F0();
+    func_803232F0();
+    func_8034CD60();
+    func_802D22B0();
+    func_802CAD00();
+    func_80316DC0();
+    func_80344290();
+    func_803097E0();
+    func_802D2850();
+    func_80337DB8();
+    func_802E37B0();
+    func_8032FAB0();
+    func_802EB3E0();
+    func_802FAF80();
+    func_802E79D8();
+    func_802EB0BC();
+    func_80335B94();
+    func_80315474();
+    func_80315550();
+    func_8034C224();
+    func_802F1FA0();
+    func_802D20F0();
+    func_80320810();
+    func_8034C848();
+    D_8035079C = 1;
+    D_803507A0 = 0;
+    D_80362690->unk0[D_80362690->unk9C].unk14 = 0;
+    *arg5 = func_802E12B4();
+    return 1;
+}
 
 void func_8034528C(void) {
     u16 sp1E;
 
-    sp1E = D_80362690[D_80362690[1].unk10].unkE;
+    sp1E = D_80362690->unk0[D_80362690->unk9C].unkE;
     D_8035079C = 1;
     wind_render();
     func_8034662C();
@@ -237,7 +359,7 @@ void func_8034536C(void) {
 void func_803453AC(void) {
     u16 sp1E;
 
-    sp1E = D_80362690[D_80362690[1].unk10].unkE;
+    sp1E = D_80362690->unk0[D_80362690->unk9C].unkE;
     if (D_8035079C != 0) {
         func_80324A34();
         func_802CB35C();
@@ -259,7 +381,7 @@ s32 func_80345464(s32 arg0, s32 arg1) {
     s32 sp18;
     s32 temp_v0;
 
-    sp1E = D_80362690[D_80362690[1].unk10].unkE;
+    sp1E = D_80362690->unk0[D_80362690->unk9C].unkE;
     sp18 = 0;
     func_8034695C();
     func_8034D548();
@@ -277,24 +399,24 @@ s32 func_80345464(s32 arg0, s32 arg1) {
     if (func_802D2E48() == 1) {
         D_803507A4 = 1;
         sp18 = 1;
-        D_80362690->unkE = 1;
-        if (D_80362690->unkE != 0) {
+        D_80362690->unk0[0].unkE = 1;
+        if (D_80362690->unk0[0].unkE != 0) {
             func_8033F748(9);
             func_8033F964(0);
-            func_8033FCD0(D_80362690->unkE);
+            func_8033FCD0(D_80362690->unk0[0].unkE);
         }
     }
     if (func_803243D8(arg0) == 1) {
         D_803507A4 = 1;
         sp18 = 1;
-        D_80362690->unkE = 1;
-        if (D_80362690->unkE != 0) {
+        D_80362690->unk0[0].unkE = 1;
+        if (D_80362690->unk0[0].unkE != 0) {
             func_8033F748(9);
             func_8033F964(0);
-            func_8033FCD0(D_80362690->unkE);
+            func_8033FCD0(D_80362690->unk0[0].unkE);
         }
     }
-    if ((D_80362690[D_80362690[1].unk10].unkE == 5) && (func_802FB308(D_80362690[D_80362690[1].unk10].unk78) == 1)) {
+    if ((D_80362690->unk0[D_80362690->unk9C].unkE == 5) && (func_802FB308(D_80362690->unk0[D_80362690->unk9C].unk78) == 1)) {
         sp18 = 1;
     }
     temp_v0 = func_803456D8(arg0);
@@ -307,10 +429,10 @@ s32 func_80345464(s32 arg0, s32 arg1) {
         func_802EDDEC(arg0);
         break;
     }
-    if ((D_80362690[1].unk14 != 0) && (func_80346364() == 3) && (func_8032C080(0) != 0)) {
+    if ((D_80362690->unkA0 != 0) && (func_80346364() == 3) && (func_8032C080(0) != 0)) {
         D_803507A0 = 1;
         func_803453AC();
-        D_80362690[1].unk14 = 0;
+        D_80362690->unkA0 = 0;
     }
     return sp18;
 }
@@ -320,7 +442,7 @@ s32 func_80345464(s32 arg0, s32 arg1) {
 void func_80345A24(void) {
     u16 sp1E;
 
-    sp1E = D_80362690[D_80362690[1].unk10].unkE;
+    sp1E = D_80362690->unk0[D_80362690->unk9C].unkE;
     func_80323364();
     if ((sp1E != 3) && (sp1E != 4)) {
         func_802D22D8();
@@ -461,7 +583,7 @@ u8 func_80346364(void) {
 #endif
 s32 func_80346370(s32 arg0) {
     s32 ret;
-    switch (D_80362690[0].unk4) {
+    switch (D_80362690->unk0[0].unk4) {
     case 3:
         switch (arg0) {
         case 0:
@@ -498,7 +620,7 @@ s32 func_80346370(s32 arg0) {
         }
         break;
     default:
-        _uvDebugPrintf("task : unknown level for terra selection [%d]\n", D_80362690[0].unk4);
+        _uvDebugPrintf("task : unknown level for terra selection [%d]\n", D_80362690->unk0[0].unk4);
         break;
     }
     return ret;
