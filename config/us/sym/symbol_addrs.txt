@@ -79,6 +79,6 @@ gLevelClassU8       = 0x80350790;
 gLevelVehicleU8     = 0x80350794;
 gLevelTestU8        = 0x80350798;
 
-gLevelVehicle       = 0x8037AA80;
 gLevelClass         = 0x8037AA78;
 gLevelTest          = 0x8037AA7C;
+gLevelVehicle       = 0x8037AA80;

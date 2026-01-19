@@ -12,57 +12,62 @@ typedef struct {
 } Unk80345464_Arg0;
 
 typedef struct {
-    u8 unk0[0x3];
-    u8 unk3;
-    u8 unk4[0x4];
-    s32 unk8;
-    u8 unkC[4];
-    s32 unk10;
-    u8 unk14[0x18];
-    s32 unk2C;
-    u8 unk30[0x14];
-    f32 unk44;
-    s32 unk48;
-    u8 unk4C[0x3B8];
-    f32 unk404;
-    f32 unk408;
-    u8 unk40C[0x10];
-    u8 unk41C;
-    u8 unk41D;
-    u8 unk41E;
-    u8 unk41F;
-    u8 unk420;
-    u8 unk421;
-    u8 unk422;
-    u8 unk423;
-    u8 unk424;
-    u8 unk425;
-    u8 unk426;
-    u8 unk427;
-    u8 unk428;
-    u8 unk429;
-    u8 unk42A;
-    u8 unk42B;
-    s32 unk42C;
-    s32 unk430;
-    s32 unk434;
-    s32 unk438;
-    s32 unk43C;
-    s32 unk440;
-    s32 unk444;
-    s32 unk448;
-    s32 unk44C;
-    s32 unk450;
-    s32 unk454;
-    s32 unk458;
-    s32 unk45C;
-    s32 unk460;
-    s32 unk464;
-    s32 unk468;
-    s32 unk46C;
-    s32 unk470;
-    s32 unk474;
-} Unk8035078C;
+    struct {
+        u8 unk0;
+        u8 unk1;
+        u8 unk2;
+        u8 unk3;
+        u8 unk4;
+        u8 unk5[0x3];
+        s32 unk8;
+        u8 unkC[4];
+        s32 unk10;
+        u8 unk14[0x18];
+        s32 unk2C;
+        u8 unk30[0x14];
+        f32 unk44;
+        s32 unk48;
+        u8 unk4C[0x3B8];
+        f32 unk404;
+        f32 unk408;
+        u8 unk40C[0x10];
+        u8 unk41C; // count THER
+        u8 unk41D; // count LWIN
+        u8 unk41E; // count TPAD
+        u8 unk41F; // count LPAD
+        u8 unk420; // count LSTP
+        u8 unk421; // count RNGS
+        u8 unk422; // count BALS
+        u8 unk423; // count TARG
+        u8 unk424; // count HPAD
+        u8 unk425; // count BTGT
+        u8 unk426; // count PHTS
+        u8 unk427; // count FALC
+        u8 unk428; // count SDFM
+        u8 unk429; // count CNTG
+        u8 unk42A; // count HOPD
+        u8 unk42B; // count OBSV
+    } unk0; // sub-struct ends here from _uvMediaCopy(,,0x42C)
+    s32 unk42C; // ptr NAME
+    s32 unk430; // ptr INFO
+    s32 unk434; // ptr JPTX
+    s32 unk438; // ptr THER
+    s32 unk43C; // ptr LWIN
+    s32 unk440; // ptr TPAD
+    s32 unk444; // ptr LPAD
+    s32 unk448; // ptr LSTP
+    s32 unk44C; // ptr RNGS
+    s32 unk450; // ptr BALS
+    s32 unk454; // ptr TARG
+    s32 unk458; // ptr HPAD
+    s32 unk45C; // ptr BTGT
+    s32 unk460; // ptr PHTS
+    s32 unk464; // ptr FALC
+    s32 unk468; // ptr SDFM
+    s32 unk46C; // ptr CNTG
+    s32 unk470; // ptr HOPD
+    s32 unk474; // ptr OBSV
+} Unk8037A600;
 
 typedef struct {
     u8 unk0[0x22C];
@@ -106,7 +111,7 @@ typedef struct {
 
 extern f32 D_8034F850;
 
-extern Unk8035078C* D_8035078C;
+extern Unk8037A600* D_8035078C;
 extern u8 gLevelClassU8;
 extern u8 gLevelVehicleU8;
 extern u8 gLevelTestU8;
@@ -118,8 +123,13 @@ extern u8 D_803507A8[];
 extern Unk80362690* D_80362690;
 
 // D_803798E0[classIdx][testIdx][vehicle]
-extern Unk803798E0 D_803798E0[8][5][7];
-extern u8 D_8037A604; // part of some struct?
+extern Unk803798E0 D_803798E0[8][5][7]; // ends 0x8037A600
+
+extern Unk8037A600 D_8037A600;
+// ends 0x8037AA78 based on uvMemSet +0x478
+// sub-struct ends 0x8037AA2C based on _uvMediaCopy +0x42C
+
+// begins 0x8037AA78
 extern s32 gLevelClass;   // code refers "level" | Beg./A/B/Pilot | Bonus Level 1/2/3 | Birdman map
 extern s32 gLevelTest;    // code refers "stage" | Test# within class | Birdman time-of-day
 extern s32 gLevelVehicle; // vehicle selected
@@ -194,7 +204,7 @@ void func_8034467C(void);
 void func_803453AC(void);
 s32 func_803456D8(Unk80345464_Arg0*);
 void func_80345A24(void);
-Unk8035078C* func_80345CE4(u32);
+Unk8037A600* func_80345CE4(u32);
 u8 func_80346364(void);
 s32 func_80346370(s32);
 void func_803465F0(void);
@@ -211,7 +221,7 @@ void wind_render(void);
 
 void func_803449B0(void) {
     s32 classIdx, testIdx, vehIdx;
-    Unk8035078C* temp_v0;
+    Unk8037A600* temp_v0;
     Unk803798E0* temp_s0_2;
     s32 otherI;
     u8 sp88[0x28];
@@ -254,9 +264,9 @@ void func_803449B0(void) {
 
     for (otherI = 0; otherI < 0x3D; otherI++) {
         temp_v0 = func_80345CE4(otherI);
-        classIdx = temp_v0->unk0[0];
-        testIdx = temp_v0->unk0[2];
-        vehIdx = temp_v0->unk0[1];
+        classIdx = temp_v0->unk0.unk0;
+        testIdx = temp_v0->unk0.unk2;
+        vehIdx = temp_v0->unk0.unk1;
         _uvMediaCopy(sp88, (void*)temp_v0->unk42C, 0x28);
         if (classIdx > 7) {
             _uvDebugPrintf("\ntask : level index out of range - current limit %d\n", 7);
@@ -366,7 +376,7 @@ s32 func_80344FC8(s32 classIdx, s32 vehicle, s32 testIdx, u16* arg3, u16* arg4, 
     gLevelVehicleU8 = (u8)vehicle;
     gLevelTestU8 = (u8)testIdx;
 
-    *arg3 = D_803507A8[D_8035078C->unk3];
+    *arg3 = D_803507A8[D_8035078C->unk0.unk3];
     switch (*arg3) {
     case 3:
         *arg4 = 1;
@@ -628,102 +638,115 @@ void func_80345A24(void) {
     func_802FAFF0();
 }
 
-// likely getting a pointer to data and returning count
+// levelGetTHER
 u8 func_80345AAC(s32* arg0) {
     *arg0 = D_8035078C->unk438;
-    return D_8035078C->unk41C;
+    return D_8035078C->unk0.unk41C;
 }
 
+// levelGetLWIN
 u8 func_80345ACC(s32* arg0) {
     *arg0 = D_8035078C->unk43C;
-    return D_8035078C->unk41D;
+    return D_8035078C->unk0.unk41D;
 }
 
 s32* func_80345AEC(void) {
-    return &D_8035078C->unk10;
+    return &D_8035078C->unk0.unk10;
 }
 
+// levelGetTPAD
 u8 func_80345AFC(s32* arg0) {
     *arg0 = D_8035078C->unk440;
-    return D_8035078C->unk41E;
+    return D_8035078C->unk0.unk41E;
 }
 
+// levelGetCNTG
 u8 func_80345B1C(s32* arg0) {
     *arg0 = D_8035078C->unk46C;
-    return D_8035078C->unk429;
+    return D_8035078C->unk0.unk429;
 }
 
+// levelGetOBSV
 u8 func_80345B3C(s32* arg0) {
     *arg0 = D_8035078C->unk474;
-    return D_8035078C->unk42B;
+    return D_8035078C->unk0.unk42B;
 }
 
+// levelGetLPAD
 u8 func_80345B5C(s32* arg0) {
     *arg0 = D_8035078C->unk444;
-    return D_8035078C->unk41F;
+    return D_8035078C->unk0.unk41F;
 }
 
+// levelGetLSTP
 u8 func_80345B7C(s32* arg0) {
     *arg0 = D_8035078C->unk448;
-    return D_8035078C->unk420;
+    return D_8035078C->unk0.unk420;
 }
 
+// levelGetRNGS
 u8 func_80345B9C(s32* arg0) {
     *arg0 = D_8035078C->unk44C;
-    return D_8035078C->unk421;
+    return D_8035078C->unk0.unk421;
 }
 
+// levelGetBALS
 u8 func_80345BBC(s32* arg0) {
     *arg0 = D_8035078C->unk450;
-    return D_8035078C->unk422;
+    return D_8035078C->unk0.unk422;
 }
 
+// levelGetTARG
 u8 func_80345BDC(s32* arg0) {
     *arg0 = D_8035078C->unk454;
-    return D_8035078C->unk423;
+    return D_8035078C->unk0.unk423;
 }
 
+// levelGetHPAD
 u8 func_80345BFC(s32* arg0) {
     *arg0 = D_8035078C->unk458;
-    return D_8035078C->unk424;
+    return D_8035078C->unk0.unk424;
 }
 
+// levelGetBTGT
 u8 func_80345C1C(s32* arg0) {
     *arg0 = D_8035078C->unk45C;
-    return D_8035078C->unk425;
+    return D_8035078C->unk0.unk425;
 }
 
+// levelGetPHTS
 u8 func_80345C3C(s32* arg0) {
     *arg0 = D_8035078C->unk460;
-    return D_8035078C->unk426;
+    return D_8035078C->unk0.unk426;
 }
 
+// levelGetFALC
 u8 func_80345C5C(s32* arg0) {
     if (arg0 != NULL) {
         *arg0 = D_8035078C->unk464;
     }
-    return D_8035078C->unk427;
+    return D_8035078C->unk0.unk427;
 }
 
 s32* func_80345C80(void) {
-    return &D_8035078C->unk48;
+    return &D_8035078C->unk0.unk48;
 }
 
 s32* func_80345C90(void) {
-    return &D_8035078C->unk2C;
+    return &D_8035078C->unk0.unk2C;
 }
 
 f32 func_80345CA0(void) {
-    return D_8035078C->unk44;
+    return D_8035078C->unk0.unk44;
 }
 
 s32* func_80345CB0(void) {
-    return &D_8035078C->unk8;
+    return &D_8035078C->unk0.unk8;
 }
 
 void func_80345CC0(f32* arg0, f32* arg1) {
-    *arg0 = D_8035078C->unk404;
-    *arg1 = D_8035078C->unk408;
+    *arg0 = D_8035078C->unk0.unk404;
+    *arg1 = D_8035078C->unk0.unk408;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345CE4.s")
@@ -745,7 +768,7 @@ void func_8034633C(s16* classIdx, s16* vehIdx, s16* testIdx) {
 }
 
 u8 func_80346364(void) {
-    return D_8037A604;
+    return D_8037A600.unk0.unk4;
 }
 
 // func_80346370 does not initialize the return value `ret`
@@ -808,7 +831,8 @@ u8 func_80346468(void) {
     return D_803507A4;
 }
 
+// levelGetHOPD
 u8 func_80346474(s32* arg0) {
     *arg0 = D_8035078C->unk470;
-    return D_8035078C->unk42A;
+    return D_8035078C->unk0.unk42A;
 }
