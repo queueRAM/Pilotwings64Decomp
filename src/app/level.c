@@ -1,5 +1,6 @@
 #include "common.h"
 #include <PR/ultratypes.h>
+#include <uv_graphics.h>
 #include <uv_level.h>
 #include <uv_memory.h>
 #include <uv_util.h>
@@ -21,7 +22,6 @@ typedef struct {
 
 s32 func_80223E80(s32 addr);
 void func_80223F30(s32 arg0);
-s32 func_80223F7C(s32 idx, u32* sizeOut, void** arg2, s32 arg3);
 s32 func_802314D0(s32, s32, s32);
 void func_802D1A74(void);
 void func_802D1CE8(void);
@@ -310,7 +310,7 @@ LevelObjects* func_8030BDC8(u8 arg0) {
     s32 i;
     s32 idx;  // spC0
     u32 size; // spBC
-    s32 var_v0;
+    u32 tag;
     u8* srcPtr; // spB4
     Unk8030BDC8 sp3C;
     Unk8030BDC8* ptr;
@@ -327,8 +327,8 @@ LevelObjects* func_8030BDC8(u8 arg0) {
     gLevelObjects.dataAPTS = &gLevelAPTS;
     gLevelObjects.dataBNUS = &gLevelBNUS;
 
-    while ((var_v0 = func_80223F7C(idx, &size, (void**)&srcPtr, 1)) != 0) {
-        switch (var_v0) {
+    while ((tag = func_80223F7C(idx, &size, (void**)&srcPtr, 1)) != 0) {
+        switch (tag) {
         case 'ESND': // 0x45534E44
             for (i = 0; i < temp->unk0; i++) {
                 _uvMediaCopy(&sp3C, srcPtr, sizeof(sp3C));
