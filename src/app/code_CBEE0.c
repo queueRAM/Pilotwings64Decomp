@@ -33,7 +33,9 @@ typedef struct {
     u8 unk429;
     u8 unk42A;
     u8 unk42B;
-    u8 unk42C[0xC];
+    s32 unk42C;
+    s32 unk430;
+    s32 unk434;
     s32 unk438;
     s32 unk43C;
     s32 unk440;
@@ -78,6 +80,7 @@ typedef struct {
     s32 unk0;
     s32 unk4;
     u8 unk8;
+    u8 pad9[0x3];
 } Unk803798E0;
 
 typedef struct {
@@ -171,7 +174,7 @@ void func_8034467C(void);
 void func_803453AC(void);
 s32 func_803456D8(s32);
 void func_80345A24(void);
-Unk8035078C* func_80345CE4(u8);
+Unk8035078C* func_80345CE4(u32);
 u8 func_80346364(void);
 void func_803465F0(void);
 void func_8034662C(void);
@@ -184,7 +187,77 @@ void func_8034D4AC(void);
 void func_8034D548(void);
 void wind_render(void);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_803449B0.s")
+void func_803449B0(void) {
+    s32 i, j, k;
+    Unk8035078C* temp_v0;
+    Unk803798E0* temp_s0_2;
+    s32 otherI;
+    u8 sp88[0x28];
+    u8 sp60[0x28];
+
+    func_803465F0();
+    func_803232F0();
+    func_8034CD60();
+    func_802D22B0();
+    func_802CAD00();
+    func_80316DC0();
+    func_80344290();
+    func_803097E0();
+    func_802D2850();
+    func_80337DB8();
+    func_802E37B0();
+    func_802EB3E0();
+    func_8032FAB0();
+    func_802FAF80();
+    func_80335B94();
+    func_802E79D8();
+    func_802EB0BC();
+    func_80315474();
+    func_8034C224();
+    func_80315550();
+    func_802F1FA0();
+    func_802D20F0();
+    func_80320810();
+    func_8034C848();
+
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 5; j++) {
+            for (k = 0; k < 7; k++) {
+                D_803798E0[i][j][k].unk8 = 0xFF;
+                D_803798E0[i][j][k].unk0 = 0;
+                D_803798E0[i][j][k].unk4 = 0;
+            }
+        }
+    }
+
+    for (otherI = 0; otherI < 0x3D; otherI++) {
+        temp_v0 = func_80345CE4(otherI);
+        i = temp_v0->unk0[0];
+        j = temp_v0->unk0[2];
+        k = temp_v0->unk0[1];
+        _uvMediaCopy(sp88, (void*)temp_v0->unk42C, 0x28);
+        if (i > 7) {
+            _uvDebugPrintf("\ntask : level index out of range - current limit %d\n", 7);
+        }
+        if (j > 4) {
+            _uvDebugPrintf("\ntask : stage index out of range - current limit %d\n", 4);
+        }
+        if (k > 6) {
+            _uvDebugPrintf("\ntask : vehicle index out of range - current limit %d\n", 6);
+        }
+        temp_s0_2 = &D_803798E0[i][j][k];
+        if (temp_s0_2->unk8 != 0xFF) {
+            _uvMediaCopy(sp60, (void*)temp_s0_2->unk0, 0x28);
+            _uvDebugPrintf("task : oops! redefining [%s] idx:%d veh:%d stage:%d lev:%d -> [%s]\n", sp60, temp_s0_2->unk8, k, (s32) j, (s32) i, sp88);
+        }
+        temp_s0_2->unk8 = otherI;
+        temp_s0_2->unk0 = temp_v0->unk42C;
+        temp_s0_2->unk4 = temp_v0->unk434;
+        if ((k == 6) && (j == 0)) {
+            _uvMediaCopy(&D_8037AA88[i], (void*)temp_v0->unk440, 0x30);
+        }
+    }
+}
 
 s32 func_80344CD0(s32 arg0, s32 arg1, s32 arg2) {
     if (D_803798E0[arg0][arg1][arg2].unk8 == 0xFF) {
