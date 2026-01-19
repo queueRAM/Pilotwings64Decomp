@@ -107,9 +107,9 @@ typedef struct {
 extern f32 D_8034F850;
 
 extern Unk8035078C* D_8035078C;
-extern u8 D_80350790;
-extern u8 D_80350794;
-extern u8 D_80350798;
+extern u8 gLevelClassU8;
+extern u8 gLevelVehicleU8;
+extern u8 gLevelTestU8;
 extern u8 D_8035079C;
 extern u8 D_803507A0;
 extern u8 D_803507A4;
@@ -117,11 +117,12 @@ extern u8 D_803507A8[];
 
 extern Unk80362690* D_80362690;
 
-extern Unk803798E0 D_803798E0[][5][7];
+// D_803798E0[classIdx][testIdx][vehicle]
+extern Unk803798E0 D_803798E0[8][5][7];
 extern u8 D_8037A604; // part of some struct?
-extern s32 D_8037AA78;
-extern s32 D_8037AA7C;
-extern s32 D_8037AA80;
+extern s32 gLevelClass;   // code refers "level" | Beg./A/B/Pilot | Bonus Level 1/2/3 | Birdman map
+extern s32 gLevelTest;    // code refers "stage" | Test# within class | Birdman time-of-day
+extern s32 gLevelVehicle; // vehicle selected
 extern Unk8037AA88 D_8037AA88[];
 
 void func_802CAD00(void);
@@ -209,7 +210,7 @@ void uvChanTerra(u8, s32);
 void wind_render(void);
 
 void func_803449B0(void) {
-    s32 i, j, k;
+    s32 classIdx, testIdx, vehIdx;
     Unk8035078C* temp_v0;
     Unk803798E0* temp_s0_2;
     s32 otherI;
@@ -241,47 +242,47 @@ void func_803449B0(void) {
     func_80320810();
     func_8034C848();
 
-    for (i = 0; i < 8; i++) {
-        for (j = 0; j < 5; j++) {
-            for (k = 0; k < 7; k++) {
-                D_803798E0[i][j][k].unk8 = 0xFF;
-                D_803798E0[i][j][k].unk0 = 0;
-                D_803798E0[i][j][k].unk4 = 0;
+    for (classIdx = 0; classIdx < 8; classIdx++) {
+        for (testIdx = 0; testIdx < 5; testIdx++) {
+            for (vehIdx = 0; vehIdx < 7; vehIdx++) {
+                D_803798E0[classIdx][testIdx][vehIdx].unk8 = 0xFF;
+                D_803798E0[classIdx][testIdx][vehIdx].unk0 = 0;
+                D_803798E0[classIdx][testIdx][vehIdx].unk4 = 0;
             }
         }
     }
 
     for (otherI = 0; otherI < 0x3D; otherI++) {
         temp_v0 = func_80345CE4(otherI);
-        i = temp_v0->unk0[0];
-        j = temp_v0->unk0[2];
-        k = temp_v0->unk0[1];
+        classIdx = temp_v0->unk0[0];
+        testIdx = temp_v0->unk0[2];
+        vehIdx = temp_v0->unk0[1];
         _uvMediaCopy(sp88, (void*)temp_v0->unk42C, 0x28);
-        if (i > 7) {
+        if (classIdx > 7) {
             _uvDebugPrintf("\ntask : level index out of range - current limit %d\n", 7);
         }
-        if (j > 4) {
+        if (testIdx > 4) {
             _uvDebugPrintf("\ntask : stage index out of range - current limit %d\n", 4);
         }
-        if (k > 6) {
+        if (vehIdx > 6) {
             _uvDebugPrintf("\ntask : vehicle index out of range - current limit %d\n", 6);
         }
-        temp_s0_2 = &D_803798E0[i][j][k];
+        temp_s0_2 = &D_803798E0[classIdx][testIdx][vehIdx];
         if (temp_s0_2->unk8 != 0xFF) {
             _uvMediaCopy(sp60, (void*)temp_s0_2->unk0, 0x28);
-            _uvDebugPrintf("task : oops! redefining [%s] idx:%d veh:%d stage:%d lev:%d -> [%s]\n", sp60, temp_s0_2->unk8, k, (s32) j, (s32) i, sp88);
+            _uvDebugPrintf("task : oops! redefining [%s] idx:%d veh:%d stage:%d lev:%d -> [%s]\n", sp60, temp_s0_2->unk8, vehIdx, (s32) testIdx, (s32) classIdx, sp88);
         }
         temp_s0_2->unk8 = otherI;
         temp_s0_2->unk0 = temp_v0->unk42C;
         temp_s0_2->unk4 = temp_v0->unk434;
-        if ((k == 6) && (j == 0)) {
-            _uvMediaCopy(&D_8037AA88[i], (void*)temp_v0->unk440, 0x30);
+        if ((vehIdx == 6) && (testIdx == 0)) {
+            _uvMediaCopy(&D_8037AA88[classIdx], (void*)temp_v0->unk440, 0x30);
         }
     }
 }
 
-s32 func_80344CD0(s32 arg0, s32 arg1, s32 arg2) {
-    if (D_803798E0[arg0][arg1][arg2].unk8 == 0xFF) {
+s32 func_80344CD0(s32 classIdx, s32 testIdx, s32 vehicle) {
+    if (D_803798E0[classIdx][testIdx][vehicle].unk8 == 0xFF) {
         return 0;
     }
     return 1;
@@ -298,12 +299,12 @@ void strToUpper(char* str, s32 length) {
     }
 }
 
-s32 func_80344E0C(s32 arg0, s32 arg1, s32 arg2, char* arg3, char* arg4) {
+s32 func_80344E0C(s32 classIdx, s32 testIdx, s32 vehicle, char* arg3, char* arg4) {
     u8 sp48[0x28];
     u8 sp20[0x28];
     Unk803798E0* sp18;
 
-    sp18 = &D_803798E0[arg0][arg1][arg2];
+    sp18 = &D_803798E0[classIdx][testIdx][vehicle];
     if (sp18->unk8 == 0xFF) {
         return 0;
     }
@@ -316,35 +317,35 @@ s32 func_80344E0C(s32 arg0, s32 arg1, s32 arg2, char* arg3, char* arg4) {
     return 1;
 }
 
-s32 func_80344EF0(s32 arg0, s32 arg1) {
+s32 func_80344EF0(s32 classIdx, s32 vehicle) {
     s32 count;
     s32 i;
 
     count = 0;
-    if (arg0 >= 9) {
+    if (classIdx >= 9) {
         return 0;
     }
-    if (arg1 >= 8) {
+    if (vehicle >= 8) {
         return 0;
     }
 
     for (i = 0; i < 5; i++) {
-        if (D_803798E0[arg0][i][arg1].unk8 != 0xFF) {
+        if (D_803798E0[classIdx][i][vehicle].unk8 != 0xFF) {
             count++;
         }
     }
     return count;
 }
 
-// a0: class/level (Beginner/A/B/Pilot | Level | birdman time of day)
+// a0: class/level (Beginner/A/B/Pilot | Level | Birdman location)
 // a1: vehicle (0: hang glider, 1: rocket belt, 2: gyro, 3: cannon ball, 4: sky diving, 5: jumble hopper, 6: birdman)
-// a2: test number (OR birdman time of day)
+// a2: test number (OR Birdman time-of-day)
 s32 func_80344FC8(s32 classIdx, s32 vehicle, s32 testIdx, u16* arg3, u16* arg4, u16* arg5) {
     u8 tmp8;
 
-    D_8037AA78 = classIdx;
-    D_8037AA80 = vehicle;
-    D_8037AA7C = testIdx;
+    gLevelClass = classIdx;
+    gLevelVehicle = vehicle;
+    gLevelTest = testIdx;
 
     if (classIdx > 8) {
         return 0;
@@ -361,9 +362,9 @@ s32 func_80344FC8(s32 classIdx, s32 vehicle, s32 testIdx, u16* arg3, u16* arg4, 
         return 0;
     }
     D_8035078C = func_80345CE4(tmp8);
-    D_80350790 = (u8)classIdx;
-    D_80350794 = (u8)vehicle;
-    D_80350798 = (u8)testIdx;
+    gLevelClassU8 = (u8)classIdx;
+    gLevelVehicleU8 = (u8)vehicle;
+    gLevelTestU8 = (u8)testIdx;
 
     *arg3 = D_803507A8[D_8035078C->unk3];
     switch (*arg3) {
@@ -737,10 +738,10 @@ void func_803462D4(u16 idx) {
     _uvMediaCopy((void*)D_8035078C->unk440, src, 0x30);
 }
 
-void func_8034633C(s16* arg0, s16* arg1, s16* arg2) {
-    *arg0 = (s16)D_8037AA78;
-    *arg1 = (s16)D_8037AA80;
-    *arg2 = (s16)D_8037AA7C;
+void func_8034633C(s16* classIdx, s16* vehIdx, s16* testIdx) {
+    *classIdx = (s16)gLevelClass;
+    *vehIdx = (s16)gLevelVehicle;
+    *testIdx = (s16)gLevelTest;
 }
 
 u8 func_80346364(void) {
