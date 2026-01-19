@@ -367,6 +367,13 @@ u8 func_80346364(void) {
     return D_8037A604;
 }
 
+#if defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsometimes-uninitialized"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
 s32 func_80346370(s32 arg0) {
     s32 sp1C;
 
@@ -412,6 +419,9 @@ s32 func_80346370(s32 arg0) {
     }
     return sp1C;
 }
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
 
 u8 func_80346468(void) {
     return D_803507A4;
