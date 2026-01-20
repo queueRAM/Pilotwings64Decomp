@@ -3,6 +3,10 @@
 
 #include <PR/ultratypes.h>
 
+#define MAX_CLASSES  8
+#define MAX_TESTS    5
+#define MAX_VEHICLES 7
+
 typedef struct {
     u8 unk0;
     u8 unk1[3];

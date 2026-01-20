@@ -14,9 +14,9 @@ typedef struct {
 
 typedef struct {
     struct {
-        u8 unk0;
-        u8 unk1;
-        u8 unk2;
+        u8 classNum;
+        u8 vehNum;
+        u8 testNum;
         u8 unk3;
         u8 unk4;
         u8 unk5[0x3];
@@ -124,12 +124,9 @@ extern u8 D_803507AC[];
 
 extern Unk80362690* D_80362690;
 
-// D_803798E0[classIdx][testIdx][vehicle]
-extern Unk803798E0 D_803798E0[8][5][7]; // ends 0x8037A600
+extern Unk803798E0 D_803798E0[MAX_CLASSES][MAX_TESTS][MAX_VEHICLES];
 
 extern Unk8037A600 D_8037A600;
-// ends 0x8037AA78 based on uvMemSet +0x478
-// sub-struct ends 0x8037AA2C based on _uvMediaCopy +0x42C
 
 // begins 0x8037AA78
 extern s32 gLevelClass;   // code refers "level" | Beg./A/B/Pilot | Bonus Level 1/2/3 | Birdman map
@@ -228,7 +225,7 @@ void func_803449B0(void) {
     s32 classIdx, testIdx, vehIdx;
     Unk8037A600* temp_v0;
     Unk803798E0* temp_s0_2;
-    s32 otherI;
+    s32 i;
     u8 sp88[0x28];
     u8 sp60[0x28];
 
@@ -257,9 +254,9 @@ void func_803449B0(void) {
     func_80320810();
     func_8034C848();
 
-    for (classIdx = 0; classIdx < 8; classIdx++) {
-        for (testIdx = 0; testIdx < 5; testIdx++) {
-            for (vehIdx = 0; vehIdx < 7; vehIdx++) {
+    for (classIdx = 0; classIdx < MAX_CLASSES; classIdx++) {
+        for (testIdx = 0; testIdx < MAX_TESTS; testIdx++) {
+            for (vehIdx = 0; vehIdx < MAX_VEHICLES; vehIdx++) {
                 D_803798E0[classIdx][testIdx][vehIdx].unk8 = 0xFF;
                 D_803798E0[classIdx][testIdx][vehIdx].unk0 = 0;
                 D_803798E0[classIdx][testIdx][vehIdx].unk4 = 0;
@@ -267,20 +264,20 @@ void func_803449B0(void) {
         }
     }
 
-    for (otherI = 0; otherI < 0x3D; otherI++) {
-        temp_v0 = func_80345CE4(otherI);
-        classIdx = temp_v0->comm.unk0;
-        testIdx = temp_v0->comm.unk2;
-        vehIdx = temp_v0->comm.unk1;
+    for (i = 0; i < 0x3D; i++) {
+        temp_v0 = func_80345CE4(i);
+        classIdx = temp_v0->comm.classNum;
+        testIdx = temp_v0->comm.testNum;
+        vehIdx = temp_v0->comm.vehNum;
         _uvMediaCopy(sp88, (void*)temp_v0->dataNAME, 0x28);
-        if (classIdx > 7) {
-            _uvDebugPrintf("\ntask : level index out of range - current limit %d\n", 7);
+        if (classIdx >= MAX_CLASSES) {
+            _uvDebugPrintf("\ntask : level index out of range - current limit %d\n", MAX_CLASSES - 1);
         }
-        if (testIdx > 4) {
-            _uvDebugPrintf("\ntask : stage index out of range - current limit %d\n", 4);
+        if (testIdx >= MAX_TESTS) {
+            _uvDebugPrintf("\ntask : stage index out of range - current limit %d\n", MAX_TESTS - 1);
         }
-        if (vehIdx > 6) {
-            _uvDebugPrintf("\ntask : vehicle index out of range - current limit %d\n", 6);
+        if (vehIdx >= MAX_VEHICLES) {
+            _uvDebugPrintf("\ntask : vehicle index out of range - current limit %d\n", MAX_VEHICLES - 1);
         }
         temp_s0_2 = &D_803798E0[classIdx][testIdx][vehIdx];
         if (temp_s0_2->unk8 != 0xFF) {
@@ -288,7 +285,7 @@ void func_803449B0(void) {
             _uvDebugPrintf("task : oops! redefining [%s] idx:%d veh:%d stage:%d lev:%d -> [%s]\n", sp60, temp_s0_2->unk8, vehIdx, (s32)testIdx, (s32)classIdx,
                            sp88);
         }
-        temp_s0_2->unk8 = otherI;
+        temp_s0_2->unk8 = i;
         temp_s0_2->unk0 = temp_v0->dataNAME;
         temp_s0_2->unk4 = temp_v0->dataJPTX;
         if ((vehIdx == 6) && (testIdx == 0)) {
@@ -334,28 +331,25 @@ s32 func_80344E0C(s32 classIdx, s32 testIdx, s32 vehicle, char* arg3, char* arg4
 }
 
 s32 func_80344EF0(s32 classIdx, s32 vehicle) {
-    s32 count;
+    s32 testCount;
     s32 i;
 
-    count = 0;
-    if (classIdx >= 9) {
+    testCount = 0;
+    if (classIdx > MAX_CLASSES) {
         return 0;
     }
-    if (vehicle >= 8) {
+    if (vehicle > MAX_VEHICLES) {
         return 0;
     }
 
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < MAX_TESTS; i++) {
         if (D_803798E0[classIdx][i][vehicle].unk8 != 0xFF) {
-            count++;
+            testCount++;
         }
     }
-    return count;
+    return testCount;
 }
 
-// a0: class/level (Beginner/A/B/Pilot | Level | Birdman location)
-// a1: vehicle (0: hang glider, 1: rocket belt, 2: gyro, 3: cannon ball, 4: sky diving, 5: jumble hopper, 6: birdman)
-// a2: test number (OR Birdman time-of-day)
 s32 func_80344FC8(s32 classIdx, s32 vehicle, s32 testIdx, u16* arg3, u16* arg4, u16* arg5) {
     u8 tmp8;
 
@@ -363,13 +357,13 @@ s32 func_80344FC8(s32 classIdx, s32 vehicle, s32 testIdx, u16* arg3, u16* arg4, 
     gLevelVehicle = vehicle;
     gLevelTest = testIdx;
 
-    if (classIdx > 8) {
+    if (classIdx > MAX_CLASSES) {
         return 0;
     }
-    if (vehicle > 7) {
+    if (vehicle > MAX_VEHICLES) {
         return 0;
     }
-    if (testIdx > 5) {
+    if (testIdx > MAX_TESTS) {
         return 0;
     }
 
