@@ -32,48 +32,48 @@ typedef struct {
         f32 unk404;
         f32 unk408;
         u8 unk40C[0x10];
-        u8 unk41C; // count THER
-        u8 unk41D; // count LWIN
-        u8 unk41E; // count TPAD
-        u8 unk41F; // count LPAD
-        u8 unk420; // count LSTP
-        u8 unk421; // count RNGS
-        u8 unk422; // count BALS
-        u8 unk423; // count TARG
-        u8 unk424; // count HPAD
-        u8 unk425; // count BTGT
-        u8 unk426; // count PHTS
-        u8 unk427; // count FALC
-        u8 unk428; // count SDFM
-        u8 unk429; // count CNTG
-        u8 unk42A; // count HOPD
-        u8 unk42B; // count OBSV
+        u8 countTHER; // count THER
+        u8 countLWIN; // count LWIN
+        u8 countTPAD; // count TPAD
+        u8 countLPAD; // count LPAD
+        u8 countLSTP; // count LSTP
+        u8 countRNGS; // count RNGS
+        u8 countBALS; // count BALS
+        u8 countTARG; // count TARG
+        u8 countHPAD; // count HPAD
+        u8 countBTGT; // count BTGT
+        u8 countPHTS; // count PHTS
+        u8 countFALC; // count FALC
+        u8 countSDFM; // count SDFM
+        u8 countCNTG; // count CNTG
+        u8 countHOPD; // count HOPD
+        u8 countOBSV; // count OBSV
     } comm;
-    void* unk42C; // ptr NAME
-    void* unk430; // ptr INFO
-    void* unk434; // ptr JPTX
-    void* unk438; // ptr THER
-    void* unk43C; // ptr LWIN
-    void* unk440; // ptr TPAD
-    void* unk444; // ptr LPAD
-    void* unk448; // ptr LSTP
-    void* unk44C; // ptr RNGS
-    void* unk450; // ptr BALS
-    void* unk454; // ptr TARG
-    void* unk458; // ptr HPAD
-    void* unk45C; // ptr BTGT
-    void* unk460; // ptr PHTS
-    void* unk464; // ptr FALC
-    void* unk468; // ptr SDFM
-    void* unk46C; // ptr CNTG
-    void* unk470; // ptr HOPD
-    void* unk474; // ptr OBSV
+    void* dataNAME; // ptr NAME
+    void* dataINFO; // ptr INFO
+    void* dataJPTX; // ptr JPTX
+    void* dataTHER; // ptr THER
+    void* dataLWIN; // ptr LWIN
+    void* dataTPAD; // ptr TPAD
+    void* dataLPAD; // ptr LPAD
+    void* dataLSTP; // ptr LSTP
+    void* dataRNGS; // ptr RNGS
+    void* dataBALS; // ptr BALS
+    void* dataTARG; // ptr TARG
+    void* dataHPAD; // ptr HPAD
+    void* dataBTGT; // ptr BTGT
+    void* dataPHTS; // ptr PHTS
+    void* dataFALC; // ptr FALC
+    void* dataSDFM; // ptr SDFM
+    void* dataCNTG; // ptr CNTG
+    void* dataHOPD; // ptr HOPD
+    void* dataOBSV; // ptr OBSV
 } Unk8037A600;
 
 typedef struct {
     u8 unk0[0x22C];
     u8 unk22C;
-} Unk80362690_Unk0_Unk7C; // this could be Unk8035078C
+} Unk80362690_Unk0_Unk7C; // this could be Unk8037A600
 
 typedef struct {
     void* unk0;
@@ -100,8 +100,8 @@ typedef struct {
 } Unk80362690;
 
 typedef struct {
-    s32 unk0;
-    s32 unk4;
+    void* unk0;
+    void* unk4;
     u8 unk8;
     u8 pad9[0x3];
 } Unk803798E0;
@@ -272,7 +272,7 @@ void func_803449B0(void) {
         classIdx = temp_v0->comm.unk0;
         testIdx = temp_v0->comm.unk2;
         vehIdx = temp_v0->comm.unk1;
-        _uvMediaCopy(sp88, (void*)temp_v0->unk42C, 0x28);
+        _uvMediaCopy(sp88, (void*)temp_v0->dataNAME, 0x28);
         if (classIdx > 7) {
             _uvDebugPrintf("\ntask : level index out of range - current limit %d\n", 7);
         }
@@ -285,13 +285,14 @@ void func_803449B0(void) {
         temp_s0_2 = &D_803798E0[classIdx][testIdx][vehIdx];
         if (temp_s0_2->unk8 != 0xFF) {
             _uvMediaCopy(sp60, (void*)temp_s0_2->unk0, 0x28);
-            _uvDebugPrintf("task : oops! redefining [%s] idx:%d veh:%d stage:%d lev:%d -> [%s]\n", sp60, temp_s0_2->unk8, vehIdx, (s32) testIdx, (s32) classIdx, sp88);
+            _uvDebugPrintf("task : oops! redefining [%s] idx:%d veh:%d stage:%d lev:%d -> [%s]\n", sp60, temp_s0_2->unk8, vehIdx, (s32)testIdx, (s32)classIdx,
+                           sp88);
         }
         temp_s0_2->unk8 = otherI;
-        temp_s0_2->unk0 = temp_v0->unk42C;
-        temp_s0_2->unk4 = temp_v0->unk434;
+        temp_s0_2->unk0 = temp_v0->dataNAME;
+        temp_s0_2->unk4 = temp_v0->dataJPTX;
         if ((vehIdx == 6) && (testIdx == 0)) {
-            _uvMediaCopy(&D_8037AA88[classIdx], (void*)temp_v0->unk440, 0x30);
+            _uvMediaCopy(&D_8037AA88[classIdx], (void*)temp_v0->dataTPAD, 0x30);
         }
     }
 }
@@ -609,12 +610,12 @@ s32 func_803456D8(Unk80345464_Arg0* arg0) {
     if (var_s2 == -1) {
         return 0;
     }
-    D_80362690->unk0[D_80362690->unk9C].unk14 = (u16) var_s2;
+    D_80362690->unk0[D_80362690->unk9C].unk14 = (u16)var_s2;
     temp_v0_2 = func_80346370(var_s2);
     temp_s0 = &sp8C[sp85];
     uvChanTerra(D_80362690->unk0[D_80362690->unk9C].unk7C->unk22C, temp_v0_2);
     if (temp_v0_2 != D_80362690->unk0[0].unk6) {
-        D_80362690->unk0[0].unk6 = (u16) temp_v0_2;
+        D_80362690->unk0[0].unk6 = (u16)temp_v0_2;
         arg0->unk30 = arg0->unk30 + temp_s0->unk28_X;
         arg0->unk34 = arg0->unk34 + temp_s0->unk2C_Y;
         arg0->unk38 = arg0->unk38 + temp_s0->unk30_Z;
@@ -643,94 +644,81 @@ void func_80345A24(void) {
     func_802FAFF0();
 }
 
-// levelGetTHER
-u8 func_80345AAC(void** arg0) {
-    *arg0 = D_8035078C->unk438;
-    return D_8035078C->comm.unk41C;
+u8 levelDataGetTHER(void** data) {
+    *data = D_8035078C->dataTHER;
+    return D_8035078C->comm.countTHER;
 }
 
-// levelGetLWIN
-u8 func_80345ACC(void** arg0) {
-    *arg0 = D_8035078C->unk43C;
-    return D_8035078C->comm.unk41D;
+u8 levelDataGetLWIN(void** data) {
+    *data = D_8035078C->dataLWIN;
+    return D_8035078C->comm.countLWIN;
 }
 
 s32* func_80345AEC(void) {
     return &D_8035078C->comm.unk10;
 }
 
-// levelGetTPAD
-u8 func_80345AFC(void** arg0) {
-    *arg0 = D_8035078C->unk440;
-    return D_8035078C->comm.unk41E;
+u8 levelDataGetTPAD(void** data) {
+    *data = D_8035078C->dataTPAD;
+    return D_8035078C->comm.countTPAD;
 }
 
-// levelGetCNTG
-u8 func_80345B1C(void** arg0) {
-    *arg0 = D_8035078C->unk46C;
-    return D_8035078C->comm.unk429;
+u8 levelDataGetCNTG(void** data) {
+    *data = D_8035078C->dataCNTG;
+    return D_8035078C->comm.countCNTG;
 }
 
-// levelGetOBSV
-u8 func_80345B3C(void** arg0) {
-    *arg0 = D_8035078C->unk474;
-    return D_8035078C->comm.unk42B;
+u8 levelDataGetOBSV(void** data) {
+    *data = D_8035078C->dataOBSV;
+    return D_8035078C->comm.countOBSV;
 }
 
-// levelGetLPAD
-u8 func_80345B5C(void** arg0) {
-    *arg0 = D_8035078C->unk444;
-    return D_8035078C->comm.unk41F;
+// TODO: how is this different than levelGetLPAD from level.c?
+u8 levelDataGetLPAD(void** data) {
+    *data = D_8035078C->dataLPAD;
+    return D_8035078C->comm.countLPAD;
 }
 
-// levelGetLSTP
-u8 func_80345B7C(void** arg0) {
-    *arg0 = D_8035078C->unk448;
-    return D_8035078C->comm.unk420;
+u8 levelDataGetLSTP(void** data) {
+    *data = D_8035078C->dataLSTP;
+    return D_8035078C->comm.countLSTP;
 }
 
-// levelGetRNGS
-u8 func_80345B9C(void** arg0) {
-    *arg0 = D_8035078C->unk44C;
-    return D_8035078C->comm.unk421;
+u8 levelDataGetRNGS(void** data) {
+    *data = D_8035078C->dataRNGS;
+    return D_8035078C->comm.countRNGS;
 }
 
-// levelGetBALS
-u8 func_80345BBC(void** arg0) {
-    *arg0 = D_8035078C->unk450;
-    return D_8035078C->comm.unk422;
+u8 levelDataGetBALS(void** data) {
+    *data = D_8035078C->dataBALS;
+    return D_8035078C->comm.countBALS;
 }
 
-// levelGetTARG
-u8 func_80345BDC(void** arg0) {
-    *arg0 = D_8035078C->unk454;
-    return D_8035078C->comm.unk423;
+u8 levelDataGetTARG(void** data) {
+    *data = D_8035078C->dataTARG;
+    return D_8035078C->comm.countTARG;
 }
 
-// levelGetHPAD
-u8 func_80345BFC(void** arg0) {
-    *arg0 = D_8035078C->unk458;
-    return D_8035078C->comm.unk424;
+u8 levelDataGetHPAD(void** data) {
+    *data = D_8035078C->dataHPAD;
+    return D_8035078C->comm.countHPAD;
 }
 
-// levelGetBTGT
-u8 func_80345C1C(void** arg0) {
-    *arg0 = D_8035078C->unk45C;
-    return D_8035078C->comm.unk425;
+u8 levelDataGetBTGT(void** data) {
+    *data = D_8035078C->dataBTGT;
+    return D_8035078C->comm.countBTGT;
 }
 
-// levelGetPHTS
-u8 func_80345C3C(void** arg0) {
-    *arg0 = D_8035078C->unk460;
-    return D_8035078C->comm.unk426;
+u8 levelDataGetPHTS(void** data) {
+    *data = D_8035078C->dataPHTS;
+    return D_8035078C->comm.countPHTS;
 }
 
-// levelGetFALC
-u8 func_80345C5C(void** arg0) {
-    if (arg0 != NULL) {
-        *arg0 = D_8035078C->unk464;
+u8 levelDataGetFALC(void** data) {
+    if (data != NULL) {
+        *data = D_8035078C->dataFALC;
     }
-    return D_8035078C->comm.unk427;
+    return D_8035078C->comm.countFALC;
 }
 
 s32* func_80345C80(void) {
@@ -763,88 +751,88 @@ Unk8037A600* func_80345CE4(u32 arg0) {
     Unk8037A600* dst;
 
     dst = &D_8037A600;
-    sp34 = func_802314D0((s32) D_803507AC[arg0], 2, arg0);
+    sp34 = func_802314D0((s32)D_803507AC[arg0], 2, arg0);
     sp30 = func_80223E80(sp34);
     uvMemSet(&D_8037A600, 0, sizeof(D_8037A600));
 
     while ((tag = func_80223F7C(sp30, &sp2C, &sp24, 2)) != 0) {
         switch (tag) {
         case 'JPTX': // 0x4A505458
-            dst->unk434 = sp24;
+            dst->dataJPTX = sp24;
             break;
         case 'NAME': // 0x4E414D45
-            dst->unk42C = sp24;
+            dst->dataNAME = sp24;
             break;
         case 'INFO': // 0x494E464F
-            dst->unk430 = sp24;
+            dst->dataINFO = sp24;
             break;
         case 'COMM': // 0x434F4D4D
             _uvMediaCopy(&dst->comm, sp24, sizeof(dst->comm));
             func_803127BC();
-            dst->unk440 = func_80312740(dst->comm.unk41E * 0x30);
-            dst->unk444 = func_80312740(dst->comm.unk41F * 0x30);
-            dst->unk448 = func_80312740(dst->comm.unk420 * 0x24);
-            dst->unk43C = func_80312740(dst->comm.unk41D * 0x54);
-            dst->unk44C = func_80312740(dst->comm.unk421 * 0x84);
-            dst->unk438 = func_80312740(dst->comm.unk41C * 0x28);
-            dst->unk450 = func_80312740(dst->comm.unk422 * 0x68);
-            dst->unk454 = func_80312740(dst->comm.unk423 * 0x20);
-            dst->unk458 = func_80312740(dst->comm.unk424 * 0x40);
-            dst->unk45C = func_80312740(dst->comm.unk425 * 0x1C);
-            dst->unk460 = func_80312740(dst->comm.unk426 * 0x14);
-            dst->unk464 = func_80312740(dst->comm.unk427 * 0xAC);
-            dst->unk46C = func_80312740(dst->comm.unk429 * 0x1C);
-            dst->unk468 = func_80312740(dst->comm.unk428 * 0x4C);
-            dst->unk470 = func_80312740(dst->comm.unk42A * 0x20); 
-            dst->unk474 = func_80312740(dst->comm.unk42B * 0x10);
+            dst->dataTPAD = func_80312740(dst->comm.countTPAD * 0x30);
+            dst->dataLPAD = func_80312740(dst->comm.countLPAD * 0x30);
+            dst->dataLSTP = func_80312740(dst->comm.countLSTP * 0x24);
+            dst->dataLWIN = func_80312740(dst->comm.countLWIN * 0x54);
+            dst->dataRNGS = func_80312740(dst->comm.countRNGS * 0x84);
+            dst->dataTHER = func_80312740(dst->comm.countTHER * 0x28);
+            dst->dataBALS = func_80312740(dst->comm.countBALS * 0x68);
+            dst->dataTARG = func_80312740(dst->comm.countTARG * 0x20);
+            dst->dataHPAD = func_80312740(dst->comm.countHPAD * 0x40);
+            dst->dataBTGT = func_80312740(dst->comm.countBTGT * 0x1C);
+            dst->dataPHTS = func_80312740(dst->comm.countPHTS * 0x14);
+            dst->dataFALC = func_80312740(dst->comm.countFALC * 0xAC);
+            dst->dataCNTG = func_80312740(dst->comm.countCNTG * 0x1C);
+            dst->dataSDFM = func_80312740(dst->comm.countSDFM * 0x4C);
+            dst->dataHOPD = func_80312740(dst->comm.countHOPD * 0x20);
+            dst->dataOBSV = func_80312740(dst->comm.countOBSV * 0x10);
             break;
         case 'THER': // 0x54484552
-            _uvMediaCopy(dst->unk438, sp24, sp2C);
+            _uvMediaCopy(dst->dataTHER, sp24, sp2C);
             break;
         case 'LWIN': // 0x4C57494E
-            _uvMediaCopy(dst->unk43C, sp24, sp2C);
+            _uvMediaCopy(dst->dataLWIN, sp24, sp2C);
             break;
         case 'TPAD': // 0x54504144
-            _uvMediaCopy(dst->unk440, sp24, sp2C);
+            _uvMediaCopy(dst->dataTPAD, sp24, sp2C);
             break;
         case 'LPAD': // 0x4C504144
-            _uvMediaCopy(dst->unk444, sp24, sp2C);
+            _uvMediaCopy(dst->dataLPAD, sp24, sp2C);
             break;
         case 'LSTP': // 0x4C535450
-            _uvMediaCopy(dst->unk448, sp24, sp2C);
+            _uvMediaCopy(dst->dataLSTP, sp24, sp2C);
             break;
         case 'RNGS': // 0x524E4753
-            _uvMediaCopy(dst->unk44C, sp24, sp2C);
+            _uvMediaCopy(dst->dataRNGS, sp24, sp2C);
             break;
         case 'BALS': // 0x42414C53
-            _uvMediaCopy(dst->unk450, sp24, sp2C);
+            _uvMediaCopy(dst->dataBALS, sp24, sp2C);
             break;
         case 'PHTS': // 0x50485453
-            _uvMediaCopy(dst->unk460, sp24, sp2C);
+            _uvMediaCopy(dst->dataPHTS, sp24, sp2C);
             break;
         case 'HOPD': // 0x484F5044
-            _uvMediaCopy(dst->unk470, sp24, sp2C);
+            _uvMediaCopy(dst->dataHOPD, sp24, sp2C);
             break;
         case 'TARG': // 0x54415247
-            _uvMediaCopy(dst->unk454, sp24, sp2C);
+            _uvMediaCopy(dst->dataTARG, sp24, sp2C);
             break;
         case 'HPAD': // 0x48504144
-            _uvMediaCopy(dst->unk458, sp24, sp2C);
+            _uvMediaCopy(dst->dataHPAD, sp24, sp2C);
             break;
         case 'BTGT': // 0x42544754
-            _uvMediaCopy(dst->unk45C, sp24, sp2C);
+            _uvMediaCopy(dst->dataBTGT, sp24, sp2C);
             break;
         case 'FALC': // 0x46414C43
-            _uvMediaCopy(dst->unk464, sp24, sp2C);
+            _uvMediaCopy(dst->dataFALC, sp24, sp2C);
             break;
         case 'CNTG': // 0x434E5447
-            _uvMediaCopy(dst->unk46C, sp24, sp2C);
+            _uvMediaCopy(dst->dataCNTG, sp24, sp2C);
             break;
         case 'SDFM': // 0x5344464D
-            _uvMediaCopy(dst->unk468, sp24, sp2C);
+            _uvMediaCopy(dst->dataSDFM, sp24, sp2C);
             break;
         case 'OBSV': // 0x4F425356
-            _uvMediaCopy(dst->unk474, sp24, sp2C);
+            _uvMediaCopy(dst->dataOBSV, sp24, sp2C);
             break;
         }
     }
@@ -859,7 +847,7 @@ void func_803462D4(u16 idx) {
         idx = 0;
     }
     src = &D_8037AA88[idx];
-    _uvMediaCopy((void*)D_8035078C->unk440, src, 0x30);
+    _uvMediaCopy((void*)D_8035078C->dataTPAD, src, 0x30);
 }
 
 void func_8034633C(s16* classIdx, s16* vehIdx, s16* testIdx) {
@@ -932,8 +920,7 @@ u8 func_80346468(void) {
     return D_803507A4;
 }
 
-// levelGetHOPD
-u8 func_80346474(void** arg0) {
-    *arg0 = D_8035078C->unk470;
-    return D_8035078C->comm.unk42A;
+u8 levelDataGetHOPD(void** data) {
+    *data = D_8035078C->dataHOPD;
+    return D_8035078C->comm.countHOPD;
 }

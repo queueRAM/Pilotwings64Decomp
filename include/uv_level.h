@@ -54,4 +54,20 @@ u8 levelGetLPAD(void** data);
 u8 levelGetBNUS(void** data);
 LevelObjects* func_8030BDC8(u8 arg0);
 
+u8 levelDataGetTHER(void** data);
+u8 levelDataGetLWIN(void** data);
+u8 levelDataGetTPAD(void** data);
+u8 levelDataGetCNTG(void** data);
+u8 levelDataGetOBSV(void** data);
+u8 levelDataGetLPAD(void** data);
+u8 levelDataGetLSTP(void** data);
+u8 levelDataGetRNGS(void** data);
+u8 levelDataGetBALS(void** data);
+u8 levelDataGetTARG(void** data);
+u8 levelDataGetHPAD(void** data);
+u8 levelDataGetBTGT(void** data);
+u8 levelDataGetPHTS(void** data);
+u8 levelDataGetFALC(void** data);
+u8 levelDataGetHOPD(void** data);
+
 #endif // UV_LEVEL_H
