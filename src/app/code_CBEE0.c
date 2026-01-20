@@ -1,4 +1,5 @@
 #include "common.h"
+#include <uv_graphics.h>
 #include <uv_level.h>
 #include <uv_math.h>
 #include <uv_matrix.h>
@@ -47,26 +48,26 @@ typedef struct {
         u8 unk429; // count CNTG
         u8 unk42A; // count HOPD
         u8 unk42B; // count OBSV
-    } unk0; // sub-struct ends here from _uvMediaCopy(,,0x42C)
-    s32 unk42C; // ptr NAME
-    s32 unk430; // ptr INFO
-    s32 unk434; // ptr JPTX
-    s32 unk438; // ptr THER
-    s32 unk43C; // ptr LWIN
-    s32 unk440; // ptr TPAD
-    s32 unk444; // ptr LPAD
-    s32 unk448; // ptr LSTP
-    s32 unk44C; // ptr RNGS
-    s32 unk450; // ptr BALS
-    s32 unk454; // ptr TARG
-    s32 unk458; // ptr HPAD
-    s32 unk45C; // ptr BTGT
-    s32 unk460; // ptr PHTS
-    s32 unk464; // ptr FALC
-    s32 unk468; // ptr SDFM
-    s32 unk46C; // ptr CNTG
-    s32 unk470; // ptr HOPD
-    s32 unk474; // ptr OBSV
+    } comm;
+    void* unk42C; // ptr NAME
+    void* unk430; // ptr INFO
+    void* unk434; // ptr JPTX
+    void* unk438; // ptr THER
+    void* unk43C; // ptr LWIN
+    void* unk440; // ptr TPAD
+    void* unk444; // ptr LPAD
+    void* unk448; // ptr LSTP
+    void* unk44C; // ptr RNGS
+    void* unk450; // ptr BALS
+    void* unk454; // ptr TARG
+    void* unk458; // ptr HPAD
+    void* unk45C; // ptr BTGT
+    void* unk460; // ptr PHTS
+    void* unk464; // ptr FALC
+    void* unk468; // ptr SDFM
+    void* unk46C; // ptr CNTG
+    void* unk470; // ptr HOPD
+    void* unk474; // ptr OBSV
 } Unk8037A600;
 
 typedef struct {
@@ -119,6 +120,7 @@ extern u8 D_8035079C;
 extern u8 D_803507A0;
 extern u8 D_803507A4;
 extern u8 D_803507A8[];
+extern u8 D_803507AC[];
 
 extern Unk80362690* D_80362690;
 
@@ -135,6 +137,7 @@ extern s32 gLevelTest;    // code refers "stage" | Test# within class | Birdman 
 extern s32 gLevelVehicle; // vehicle selected
 extern Unk8037AA88 D_8037AA88[];
 
+s32 func_802314D0(s32, s32, s32);
 void func_802CAD00(void);
 void func_802CAF50(void);
 void func_802CB094(void);
@@ -177,6 +180,8 @@ void func_80309868(void);
 void func_80309A64(void);
 void func_80309D64(Unk80345464_Arg0*);
 void func_80309FFC(void);
+void* func_80312740(s32);
+void func_803127BC(void);
 void func_80315474(void);
 void func_80315550(void);
 void func_80316DC0(void);
@@ -204,7 +209,7 @@ void func_8034467C(void);
 void func_803453AC(void);
 s32 func_803456D8(Unk80345464_Arg0*);
 void func_80345A24(void);
-Unk8037A600* func_80345CE4(u32);
+Unk8037A600* func_80345CE4(u32 arg0);
 u8 func_80346364(void);
 s32 func_80346370(s32);
 void func_803465F0(void);
@@ -264,9 +269,9 @@ void func_803449B0(void) {
 
     for (otherI = 0; otherI < 0x3D; otherI++) {
         temp_v0 = func_80345CE4(otherI);
-        classIdx = temp_v0->unk0.unk0;
-        testIdx = temp_v0->unk0.unk2;
-        vehIdx = temp_v0->unk0.unk1;
+        classIdx = temp_v0->comm.unk0;
+        testIdx = temp_v0->comm.unk2;
+        vehIdx = temp_v0->comm.unk1;
         _uvMediaCopy(sp88, (void*)temp_v0->unk42C, 0x28);
         if (classIdx > 7) {
             _uvDebugPrintf("\ntask : level index out of range - current limit %d\n", 7);
@@ -376,7 +381,7 @@ s32 func_80344FC8(s32 classIdx, s32 vehicle, s32 testIdx, u16* arg3, u16* arg4, 
     gLevelVehicleU8 = (u8)vehicle;
     gLevelTestU8 = (u8)testIdx;
 
-    *arg3 = D_803507A8[D_8035078C->unk0.unk3];
+    *arg3 = D_803507A8[D_8035078C->comm.unk3];
     switch (*arg3) {
     case 3:
         *arg4 = 1;
@@ -639,117 +644,213 @@ void func_80345A24(void) {
 }
 
 // levelGetTHER
-u8 func_80345AAC(s32* arg0) {
+u8 func_80345AAC(void** arg0) {
     *arg0 = D_8035078C->unk438;
-    return D_8035078C->unk0.unk41C;
+    return D_8035078C->comm.unk41C;
 }
 
 // levelGetLWIN
-u8 func_80345ACC(s32* arg0) {
+u8 func_80345ACC(void** arg0) {
     *arg0 = D_8035078C->unk43C;
-    return D_8035078C->unk0.unk41D;
+    return D_8035078C->comm.unk41D;
 }
 
 s32* func_80345AEC(void) {
-    return &D_8035078C->unk0.unk10;
+    return &D_8035078C->comm.unk10;
 }
 
 // levelGetTPAD
-u8 func_80345AFC(s32* arg0) {
+u8 func_80345AFC(void** arg0) {
     *arg0 = D_8035078C->unk440;
-    return D_8035078C->unk0.unk41E;
+    return D_8035078C->comm.unk41E;
 }
 
 // levelGetCNTG
-u8 func_80345B1C(s32* arg0) {
+u8 func_80345B1C(void** arg0) {
     *arg0 = D_8035078C->unk46C;
-    return D_8035078C->unk0.unk429;
+    return D_8035078C->comm.unk429;
 }
 
 // levelGetOBSV
-u8 func_80345B3C(s32* arg0) {
+u8 func_80345B3C(void** arg0) {
     *arg0 = D_8035078C->unk474;
-    return D_8035078C->unk0.unk42B;
+    return D_8035078C->comm.unk42B;
 }
 
 // levelGetLPAD
-u8 func_80345B5C(s32* arg0) {
+u8 func_80345B5C(void** arg0) {
     *arg0 = D_8035078C->unk444;
-    return D_8035078C->unk0.unk41F;
+    return D_8035078C->comm.unk41F;
 }
 
 // levelGetLSTP
-u8 func_80345B7C(s32* arg0) {
+u8 func_80345B7C(void** arg0) {
     *arg0 = D_8035078C->unk448;
-    return D_8035078C->unk0.unk420;
+    return D_8035078C->comm.unk420;
 }
 
 // levelGetRNGS
-u8 func_80345B9C(s32* arg0) {
+u8 func_80345B9C(void** arg0) {
     *arg0 = D_8035078C->unk44C;
-    return D_8035078C->unk0.unk421;
+    return D_8035078C->comm.unk421;
 }
 
 // levelGetBALS
-u8 func_80345BBC(s32* arg0) {
+u8 func_80345BBC(void** arg0) {
     *arg0 = D_8035078C->unk450;
-    return D_8035078C->unk0.unk422;
+    return D_8035078C->comm.unk422;
 }
 
 // levelGetTARG
-u8 func_80345BDC(s32* arg0) {
+u8 func_80345BDC(void** arg0) {
     *arg0 = D_8035078C->unk454;
-    return D_8035078C->unk0.unk423;
+    return D_8035078C->comm.unk423;
 }
 
 // levelGetHPAD
-u8 func_80345BFC(s32* arg0) {
+u8 func_80345BFC(void** arg0) {
     *arg0 = D_8035078C->unk458;
-    return D_8035078C->unk0.unk424;
+    return D_8035078C->comm.unk424;
 }
 
 // levelGetBTGT
-u8 func_80345C1C(s32* arg0) {
+u8 func_80345C1C(void** arg0) {
     *arg0 = D_8035078C->unk45C;
-    return D_8035078C->unk0.unk425;
+    return D_8035078C->comm.unk425;
 }
 
 // levelGetPHTS
-u8 func_80345C3C(s32* arg0) {
+u8 func_80345C3C(void** arg0) {
     *arg0 = D_8035078C->unk460;
-    return D_8035078C->unk0.unk426;
+    return D_8035078C->comm.unk426;
 }
 
 // levelGetFALC
-u8 func_80345C5C(s32* arg0) {
+u8 func_80345C5C(void** arg0) {
     if (arg0 != NULL) {
         *arg0 = D_8035078C->unk464;
     }
-    return D_8035078C->unk0.unk427;
+    return D_8035078C->comm.unk427;
 }
 
 s32* func_80345C80(void) {
-    return &D_8035078C->unk0.unk48;
+    return &D_8035078C->comm.unk48;
 }
 
 s32* func_80345C90(void) {
-    return &D_8035078C->unk0.unk2C;
+    return &D_8035078C->comm.unk2C;
 }
 
 f32 func_80345CA0(void) {
-    return D_8035078C->unk0.unk44;
+    return D_8035078C->comm.unk44;
 }
 
 s32* func_80345CB0(void) {
-    return &D_8035078C->unk0.unk8;
+    return &D_8035078C->comm.unk8;
 }
 
 void func_80345CC0(f32* arg0, f32* arg1) {
-    *arg0 = D_8035078C->unk0.unk404;
-    *arg1 = D_8035078C->unk0.unk408;
+    *arg0 = D_8035078C->comm.unk404;
+    *arg1 = D_8035078C->comm.unk408;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CBEE0/func_80345CE4.s")
+Unk8037A600* func_80345CE4(u32 arg0) {
+    s32 sp34;
+    s32 sp30;
+    u32 sp2C;
+    u32 tag;
+    void* sp24;
+    Unk8037A600* dst;
+
+    dst = &D_8037A600;
+    sp34 = func_802314D0((s32) D_803507AC[arg0], 2, arg0);
+    sp30 = func_80223E80(sp34);
+    uvMemSet(&D_8037A600, 0, sizeof(D_8037A600));
+
+    while ((tag = func_80223F7C(sp30, &sp2C, &sp24, 2)) != 0) {
+        switch (tag) {
+        case 'JPTX': // 0x4A505458
+            dst->unk434 = sp24;
+            break;
+        case 'NAME': // 0x4E414D45
+            dst->unk42C = sp24;
+            break;
+        case 'INFO': // 0x494E464F
+            dst->unk430 = sp24;
+            break;
+        case 'COMM': // 0x434F4D4D
+            _uvMediaCopy(&dst->comm, sp24, sizeof(dst->comm));
+            func_803127BC();
+            dst->unk440 = func_80312740(dst->comm.unk41E * 0x30);
+            dst->unk444 = func_80312740(dst->comm.unk41F * 0x30);
+            dst->unk448 = func_80312740(dst->comm.unk420 * 0x24);
+            dst->unk43C = func_80312740(dst->comm.unk41D * 0x54);
+            dst->unk44C = func_80312740(dst->comm.unk421 * 0x84);
+            dst->unk438 = func_80312740(dst->comm.unk41C * 0x28);
+            dst->unk450 = func_80312740(dst->comm.unk422 * 0x68);
+            dst->unk454 = func_80312740(dst->comm.unk423 * 0x20);
+            dst->unk458 = func_80312740(dst->comm.unk424 * 0x40);
+            dst->unk45C = func_80312740(dst->comm.unk425 * 0x1C);
+            dst->unk460 = func_80312740(dst->comm.unk426 * 0x14);
+            dst->unk464 = func_80312740(dst->comm.unk427 * 0xAC);
+            dst->unk46C = func_80312740(dst->comm.unk429 * 0x1C);
+            dst->unk468 = func_80312740(dst->comm.unk428 * 0x4C);
+            dst->unk470 = func_80312740(dst->comm.unk42A * 0x20); 
+            dst->unk474 = func_80312740(dst->comm.unk42B * 0x10);
+            break;
+        case 'THER': // 0x54484552
+            _uvMediaCopy(dst->unk438, sp24, sp2C);
+            break;
+        case 'LWIN': // 0x4C57494E
+            _uvMediaCopy(dst->unk43C, sp24, sp2C);
+            break;
+        case 'TPAD': // 0x54504144
+            _uvMediaCopy(dst->unk440, sp24, sp2C);
+            break;
+        case 'LPAD': // 0x4C504144
+            _uvMediaCopy(dst->unk444, sp24, sp2C);
+            break;
+        case 'LSTP': // 0x4C535450
+            _uvMediaCopy(dst->unk448, sp24, sp2C);
+            break;
+        case 'RNGS': // 0x524E4753
+            _uvMediaCopy(dst->unk44C, sp24, sp2C);
+            break;
+        case 'BALS': // 0x42414C53
+            _uvMediaCopy(dst->unk450, sp24, sp2C);
+            break;
+        case 'PHTS': // 0x50485453
+            _uvMediaCopy(dst->unk460, sp24, sp2C);
+            break;
+        case 'HOPD': // 0x484F5044
+            _uvMediaCopy(dst->unk470, sp24, sp2C);
+            break;
+        case 'TARG': // 0x54415247
+            _uvMediaCopy(dst->unk454, sp24, sp2C);
+            break;
+        case 'HPAD': // 0x48504144
+            _uvMediaCopy(dst->unk458, sp24, sp2C);
+            break;
+        case 'BTGT': // 0x42544754
+            _uvMediaCopy(dst->unk45C, sp24, sp2C);
+            break;
+        case 'FALC': // 0x46414C43
+            _uvMediaCopy(dst->unk464, sp24, sp2C);
+            break;
+        case 'CNTG': // 0x434E5447
+            _uvMediaCopy(dst->unk46C, sp24, sp2C);
+            break;
+        case 'SDFM': // 0x5344464D
+            _uvMediaCopy(dst->unk468, sp24, sp2C);
+            break;
+        case 'OBSV': // 0x4F425356
+            _uvMediaCopy(dst->unk474, sp24, sp2C);
+            break;
+        }
+    }
+    func_80223F30(sp30);
+    return &D_8037A600;
+}
 
 void func_803462D4(u16 idx) {
     Unk8037AA88* src;
@@ -768,7 +869,7 @@ void func_8034633C(s16* classIdx, s16* vehIdx, s16* testIdx) {
 }
 
 u8 func_80346364(void) {
-    return D_8037A600.unk0.unk4;
+    return D_8037A600.comm.unk4;
 }
 
 // func_80346370 does not initialize the return value `ret`
@@ -832,7 +933,7 @@ u8 func_80346468(void) {
 }
 
 // levelGetHOPD
-u8 func_80346474(s32* arg0) {
+u8 func_80346474(void** arg0) {
     *arg0 = D_8035078C->unk470;
-    return D_8035078C->unk0.unk42A;
+    return D_8035078C->comm.unk42A;
 }
