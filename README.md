@@ -1,3 +1,8 @@
+[![Build](https://github.com/gcsmith/Pilotwings64Decomp/actions/workflows/ci.yml/badge.svg)](https://github.com/gcsmith/Pilotwings64Decomp/actions/workflows/ci.yml)
+[![Code](https://decomp.dev/gcsmith/Pilotwings64Decomp/us.svg?mode=shield&measure=code&label=Code%20Bytes)](https://decomp.dev/gcsmith/Pilotwings64Decomp)
+[![Data](https://decomp.dev/gcsmith/Pilotwings64Decomp/us.svg?mode=shield&measure=data&label=Data%20Bytes)](https://decomp.dev/gcsmith/Pilotwings64Decomp)
+[![Functions](https://decomp.dev/gcsmith/Pilotwings64Decomp/us.svg?mode=shield&measure=matched_functions&label=Functions)](https://decomp.dev/gcsmith/Pilotwings64Decomp)
+
 # Pilotwings64Decomp
 
 An early, work-in-progress **matching decompilation** of Pilotwings 64. 
