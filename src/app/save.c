@@ -13,7 +13,21 @@ extern PilotwingsSaveFile D_803622E0[2];
 void func_802E81BC(void*);
 s32 func_802E8294(s32);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/save/func_802E7FA0.s")
+void func_802E7FA0(u8* arg0, s32* arg1, s32 arg2, s32 bitCount) {
+    u8* bytePtr;
+    s32 bitMask;
+    s32 shift;
+    s32 i;
+
+    bitMask = (0xFF >> (8 - bitCount));
+    arg2 = arg2 & bitMask;
+    for (i = 0; i < bitCount; i++) {
+        bytePtr = &arg0[*arg1 / 8];
+        shift = (*arg1 % 8);
+        *bytePtr |= ((arg2 & (1 << i)) >> i) << shift;
+        *arg1 += 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/save/func_802E81BC.s")
 
