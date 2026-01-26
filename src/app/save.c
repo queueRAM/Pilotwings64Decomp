@@ -1,5 +1,6 @@
 #include "common.h"
 #include "uv_graphics.h"
+#include "uv_level.h"
 #include "uv_memory.h"
 #include "uv_util.h"
 
@@ -8,11 +9,14 @@ typedef struct {
     u8 unk02[0xFE];
 } PilotwingsSaveFile;
 
+typedef struct {
+    u8 unk0[0x34E0];
+} Unk80364210;
+
 extern PilotwingsSaveFile D_803620E0[2];
 extern PilotwingsSaveFile D_803622E0[2];
 
-void func_802E81BC(char* arg0);
-s32 func_802E8294(s32);
+extern Unk80364210 D_80364210[];
 
 void uvFontSet(s32);
 void func_80219550(f64, f64);
@@ -20,6 +24,13 @@ void func_8021956C(u8, u8, u8, u8);
 s32 func_802197EC(char*);
 void func_80219EA8(void);
 void func_80219ACC(s32, s32, char*);
+s32 func_8030CB60(s32);
+void func_8032B3D0(void*);
+void func_80337D50(void);
+
+// forward declarations
+void func_802E81BC(char* arg0);
+s32 func_802E8294(s32);
 
 void func_802E7FA0(u8* arg0, s32* arg1, s32 arg2, s32 bitCount) {
     u8* bytePtr;
@@ -85,4 +96,13 @@ int func_802E899C(s32 fileIdx) {
     return (D_803620E0[fileIdx].magic[0] == 'P') && (D_803620E0[fileIdx].magic[1] == 'W');
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/save/func_802E89D4.s")
+s32 func_802E89D4(s32 fileIdx) {
+    s32 sp1C;
+
+    uvMemSet(&D_803620E0[fileIdx], 0, sizeof(PilotwingsSaveFile));
+    func_8032B3D0(&D_80364210[D_80362690->unk9C]);
+    func_80337D50();
+    sp1C = func_802E8294(fileIdx);
+    D_80362690->unkA8 = func_8030CB60(0);
+    return sp1C;
+}
