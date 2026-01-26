@@ -80,6 +80,9 @@ void func_802E8304(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/save/func_802E86C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/save/func_802E899C.s")
+// if returns s32, regalloc issues?
+int func_802E899C(s32 fileIdx) {
+    return (D_803620E0[fileIdx].magic[0] == 'P') && (D_803620E0[fileIdx].magic[1] == 'W');
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/save/func_802E89D4.s")
