@@ -10,8 +10,19 @@ typedef struct {
 extern PilotwingsSaveFile D_803620E0[2];
 extern PilotwingsSaveFile D_803622E0[2];
 
-void func_802E81BC(void*);
+void func_802E81BC(char* arg0);
 s32 func_802E8294(s32);
+
+void uvMemLoadDS(s32);
+void uvFontSet(s32);
+void func_80219550(f64, f64);
+void func_8021956C(u8, u8, u8, u8);
+s32 func_802197EC(char*);
+void uvGfxBegin(void);
+void uvGfxEnd(void);
+void func_80219EA8(void);
+void func_802228F0(s32, s32, s32, s32); // or u8, u8, u8, u8 ?
+void func_80219ACC(s32, s32, char*);
 
 void func_802E7FA0(u8* arg0, s32* arg1, s32 arg2, s32 bitCount) {
     u8* bytePtr;
@@ -29,7 +40,22 @@ void func_802E7FA0(u8* arg0, s32* arg1, s32 arg2, s32 bitCount) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/save/func_802E81BC.s")
+void func_802E81BC(char* arg0) {
+    s32 temp_s0;
+
+    uvMemLoadDS(0x2E);
+    uvFontSet(0);
+    func_80219550(1.0, 1.0);
+    func_8021956C(0xFF, 0xFF, 0x00, 0xFF);
+    temp_s0 = 160 - (func_802197EC(arg0) / 2);
+    for (;;) {
+        uvGfxBegin();
+        func_802228F0(0, 0, 0, 0);
+        func_80219ACC(temp_s0, 100, arg0);
+        func_80219EA8();
+        uvGfxEnd();
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/save/func_802E8294.s")
 
