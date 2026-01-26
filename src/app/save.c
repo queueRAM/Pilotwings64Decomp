@@ -1,4 +1,5 @@
 #include "common.h"
+#include "uv_graphics.h"
 #include "uv_memory.h"
 #include "uv_util.h"
 
@@ -13,15 +14,11 @@ extern PilotwingsSaveFile D_803622E0[2];
 void func_802E81BC(char* arg0);
 s32 func_802E8294(s32);
 
-void uvMemLoadDS(s32);
 void uvFontSet(s32);
 void func_80219550(f64, f64);
 void func_8021956C(u8, u8, u8, u8);
 s32 func_802197EC(char*);
-void uvGfxBegin(void);
-void uvGfxEnd(void);
 void func_80219EA8(void);
-void func_802228F0(s32, s32, s32, s32); // or u8, u8, u8, u8 ?
 void func_80219ACC(s32, s32, char*);
 
 void func_802E7FA0(u8* arg0, s32* arg1, s32 arg2, s32 bitCount) {
