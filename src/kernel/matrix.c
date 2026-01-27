@@ -87,9 +87,9 @@ void uvMat4Init(Mtx* mat, Mtx init) {
     mat->m[3][3] = init.m[3][3];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/matrix/func_80228180.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/matrix/uvMat4SetUnk5.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/matrix/func_80228440.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/matrix/uvMat4SetUnk6.s")
 
 void uvMat4SetIdentity(Mtx4F_t mat) {
     mat[0][0] = 1.0f;
@@ -321,8 +321,7 @@ void uvMat4UnkOp5(Mtx4F_t mat, Vec3F_t* vec1, Vec3F_t* vec2) {
     vec1->f[2] = tmp0 * mat[0][2] + tmp1 * mat[1][2] + tmp2 * mat[2][2] + mat[3][2];
 }
 
-void func_80229AA0(Mtx4F_t arg0, Mtx4F_t arg1, Mtx4F_t arg2);
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/matrix/func_80229AA0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/matrix/uvMat4UnkOp6.s")
 
 void uvMat4SetUnk2(Mtx4F_t mat, float arg1, float arg2, float arg3, float arg4, float arg5, float arg6) {
     float two5 = 2.0f * arg5;

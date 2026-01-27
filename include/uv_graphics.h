@@ -28,3 +28,4 @@ u32 func_80224170(s32 arg0, void* arg1, void** arg2, u32 tag, s32 palette, s32 a
 void func_802228F0(u8 r, u8 g, u8 b, u8 a);
 
 #endif // PILOTWINGS64_UV_GRAPHICS
+

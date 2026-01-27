@@ -6,6 +6,7 @@
 #include <uv_audio.h>
 #include <uv_clocks.h>
 #include <uv_controller.h>
+#include <uv_geometry.h>
 #include <uv_graphics.h>
 #include <uv_matrix.h>
 #include <uv_memory.h>
@@ -31,10 +32,6 @@ void func_80218BA0(void);
 void func_80219FD0(void);
 void func_8021F100(void);
 void func_80230130(void);
-void func_8021F368(void);
-
-void uvVtx(s32, s32, s32, s32, s32, s32, s32, s32, s32);
-void uvVtxEndPoly(void);
 
 extern u8 app_ROM_START[];
 extern u8 app_ROM_END[];
@@ -286,7 +283,7 @@ void func_8022E558(void) {
     func_80222100(sp74);
     uvMat4SetIdentity(sp74);
     func_80221A78(sp74);
-    func_8021F368();
+    uvVtxBeginPoly();
     uvVtx(0xF, 0xF, 0, 0, 0, 0, 0x80, 0, 0xFF);
     uvVtx(0x50, 0xF, 0, 0, 0, 0, 0x80, 0, 0xFF);
     uvVtx(0x50, 0x8C, 0, 0, 0, 0, 0x80, 0, 0xFF);
@@ -303,7 +300,7 @@ void func_8022E558(void) {
             var_s7 = 0;
             var_fp = 0;
         }
-        func_8021F368();
+        uvVtxBeginPoly();
         temp_s3 = ((spBA % 4) * 15) + 20;
         temp_s4 = (((0x1F - spBA) / 4) * 15) + 20;
         uvVtx(temp_s3, temp_s4, 0, 0, 0, var_fp, var_s7, var_s6, 0xFF);

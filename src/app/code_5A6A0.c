@@ -154,7 +154,6 @@ f32 Length3D(f32, f32, f32);
 void func_80204A8C(u8, s32);
 void func_80204C94(u8, f32, f32, f32, f32, f32, f32);
 void func_80204D94(u8, s16, s16, s16, s32);
-void func_80229AA0(Mtx4F_t arg0, Mtx4F_t arg1, Mtx4F_t arg2);
 f32 func_8022A27C(f32, f32);
 void func_802D4514(Unk802D3658_Arg0*);
 void func_802D45C4(Unk802D3658_Arg0*, f32);
@@ -344,7 +343,7 @@ void func_802D3658(Unk802D3658_Arg0* arg0) {
     Mtx4F_t sp30;
     f32 temp_fa0;
 
-    func_80229AA0(sp30, arg0->unk80.mf, arg0->unk108.mf);
+    uvMat4UnkOp6(sp30, arg0->unk80.mf, arg0->unk108.mf);
     uvMat4Copy(arg0->unk108.mf, sp30);
     temp_fa0 = SqrtF(SQ(arg0->unk108.mf[3][0] - arg0->unk80.mf[3][0]) + SQ(arg0->unk108.mf[3][1] - arg0->unk80.mf[3][1]) +
                      SQ(arg0->unk108.mf[3][2] - arg0->unk80.mf[3][2])) -
@@ -517,7 +516,7 @@ void func_802D3BE8(Unk802D3658_Arg0* arg0) {
         arg0->unkC8.mf[3][2] = (arg0->unk50 * ((temp_ft4_2 * 0.9659283f) + temp_ft5_2)) + ((1 - arg0->unk50) * temp_ft5_2);
     }
 
-    func_80229AA0(sp60.mf, arg0->unk80.mf, arg0->unkC8.mf);
+    uvMat4UnkOp6(sp60.mf, arg0->unk80.mf, arg0->unkC8.mf);
     func_802D58EC(arg0, sp60.mf);
     if (arg0->unk4C > 0.0f) {
         func_803138A0(&arg0->unk108, arg0->unkC8.mf, sp60.mf, arg0->unk4C);
@@ -527,7 +526,7 @@ void func_802D3BE8(Unk802D3658_Arg0* arg0) {
     uvMat4RotateAxis(arg0->unk108.mf, arg0->unk78 * 0.5f, 'z');
     uvMat4RotateAxis(arg0->unk108.mf, arg0->unk7C * 0.5f, 'x');
     if (func_802D472C(arg0, arg0->unkC8.mf) != 0) {
-        func_80229AA0(arg0->unk108.mf, arg0->unk80.mf, arg0->unkC8.mf);
+        uvMat4UnkOp6(arg0->unk108.mf, arg0->unk80.mf, arg0->unkC8.mf);
     }
 }
 
@@ -594,7 +593,7 @@ s32 func_802D408C(Unk802D3658_Arg0* arg0) {
 void func_802D41D8(Unk802D3658_Arg0* arg0) {
     f32 var_fv0;
 
-    func_80229AA0(arg0->unk108.mf, arg0->unk80.mf, arg0->unk14C.mf);
+    uvMat4UnkOp6(arg0->unk108.mf, arg0->unk80.mf, arg0->unk14C.mf);
     var_fv0 = (arg0->unk18C * 0.02f) + 0.5f;
     if (var_fv0 < 1.0f) {
         var_fv0 = 1.0f;
@@ -662,7 +661,7 @@ void func_802D4274(Unk802D3658_Arg0* arg0) {
     if (arg0->unk198 < var_fs0) {
         arg0->unk198 = var_fs0;
     }
-    func_80229AA0(arg0->unk108.mf, arg0->unk80.mf, sp70.mf);
+    uvMat4UnkOp6(arg0->unk108.mf, arg0->unk80.mf, sp70.mf);
     func_802D4A30(arg0, arg0->unk108.mf);
 }
 #endif
@@ -889,7 +888,7 @@ s32 func_802D4CA4(Unk802D3658_Arg0* arg0, Mtx4F_t arg1) {
     sp30.mf[3][0] = arg0->unk80.mf[3][0] + (arg0->unk80.mf[1][0] * (4.0f * arg0->unk8));
     sp30.mf[3][1] = arg0->unk80.mf[3][1] + (arg0->unk80.mf[1][1] * (4.0f * arg0->unk8));
     sp30.mf[3][2] = arg0->unk80.mf[3][2] + (arg0->unk80.mf[1][2] * (4.0f * arg0->unk8));
-    func_80229AA0(arg1, arg0->unk80.mf, sp30.mf);
+    uvMat4UnkOp6(arg1, arg0->unk80.mf, sp30.mf);
     (void)func_802D472C(arg0, arg1);
     return 1;
 }
@@ -1062,9 +1061,9 @@ void func_802D532C(Unk802D3658_Arg0* arg0) {
         sp40.mf[3][0] = arg0->unk1368;
         sp40.mf[3][1] = arg0->unk136C;
         sp40.mf[3][2] = arg0->unk1370;
-        func_80229AA0(arg0->unk108.mf, sp40.mf, sp80.mf);
+        uvMat4UnkOp6(arg0->unk108.mf, sp40.mf, sp80.mf);
     } else {
-        func_80229AA0(arg0->unk108.mf, arg0->unk80.mf, sp80.mf);
+        uvMat4UnkOp6(arg0->unk108.mf, arg0->unk80.mf, sp80.mf);
     }
     uvMat4RotateAxis(arg0->unk108.mf, arg0->unk78 * 0.5f, 'z');
     uvMat4RotateAxis(arg0->unk108.mf, arg0->unk7C * 0.5f, 'x');
@@ -1125,12 +1124,12 @@ void func_802D559C(Unk802D3658_Arg0* arg0) {
         temp_fa0_2 = 4.0f;
     }
     func_802D45C4(arg0, temp_fa0_2);
-    func_80229AA0(arg0->unk108.mf, arg0->unk80.mf, sp48.mf);
+    uvMat4UnkOp6(arg0->unk108.mf, arg0->unk80.mf, sp48.mf);
     temp_v0 = func_802D472C(arg0, sp48.mf);
     if (temp_v0 != 0) {
         arg0->unk210.z += 2.0f;
         sp48.mf[3][2] += 2.0f;
-        func_80229AA0(arg0->unk108.mf, arg0->unk80.mf, sp48.mf);
+        uvMat4UnkOp6(arg0->unk108.mf, arg0->unk80.mf, sp48.mf);
     }
 }
 
