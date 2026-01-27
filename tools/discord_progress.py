@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import argparse
 import requests
 import subprocess
@@ -18,7 +20,7 @@ def main(args):
     content = {
         "embeds": [{
             "title": f"{commit_msg}",
-            "description": f"```{progress_msg}```",
+            "description": f"{progress_msg}",
             "url": f"https://github.com/gcsmith/Pilotwings64Decomp/commit/{commit.hexsha}",
             "color": commit.authored_date & 0xFFFFFF
         }]
