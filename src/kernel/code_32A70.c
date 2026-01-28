@@ -1,4 +1,6 @@
 #include "common.h"
+#include "uv_controller.h"
+#include "uv_graphics.h"
 #include "uv_util.h"
 
 void func_80232554(u8);
@@ -52,7 +54,53 @@ void uvDbgCnt(u8 arg0, u8 arg1) {
 }
 #endif
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_32A70/func_80233590.s")
+#else
+void func_80233590(void) {
+    u8* sp2C;
+    f32 sp28;
+    f32 sp24;
+    f32 sp20;
+    f32 sp1C;
+
+    sp2C = (u8*)0x80200000;
+    sp20 = 0.0f;
+    sp1C = 0.0f;
+    while (uvIOUpdate() != 0) {
+        sp28 = uvControllerGetStick(0, 0);
+        sp24 = uvControllerGetStick(0, 1);
+        sp20 += sp28 * sp28 * sp28 * 8.0f;
+        sp1C += sp24 * sp24 * sp24 * 128.0f;
+        if (sp20 > 40.0f) {
+            sp20 = 0.0f, sp1C += 1.0f;
+        }
+        if (sp20 < 0.0f) {
+            sp20 = 40.0f, sp1C -= 1.0f;
+        }
+        if (sp1C < 0.0f) {
+            sp1C = 0.0f;
+        }
+        if (sp1C > 6553.6f) {
+            sp1C = 6553.6f;
+        }
+        sp2C = (u8*)((s32)sp20 * 0x10) + ((s32)sp1C * 0x140 * 2) + 0x80000000;
+        uvGfxBegin();
+        uvGfxEnd();
+        osViSwapBuffer(sp2C);
+        if (uvControllerButtonPress(0, Z_TRIG) != 0) {
+            break;
+        }
+        if (uvControllerButtonPress(0, START_BUTTON) != 0) {
+            break;
+        }
+
+        if (uvControllerButtonPress(0, A_BUTTON) != 0) {
+            _uvDebugPrintf("Address: 0x%x\n", sp2C);
+        }
+    }
+}
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_32A70/func_80233810.s")
 
