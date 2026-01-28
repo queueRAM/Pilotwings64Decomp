@@ -200,8 +200,11 @@ uvSprtDraw          = 0x80230DD4; // type:func
 _uvTxtDraw          = 0x8023031C; // type:func
 uvSprtFromBitmap    = 0x80230668; // type:func
 uvSprtSetBlit       = 0x80230E68; // type:func
+uvSprtGetUnk0       = 0x80231120; // type:func
+uvSprtGetUnk1       = 0x8023113C; // type:func
 uvSprtProps         = 0x80231158; // type:func
-mio0_decompress     = 0x80231A20; // type:func
+uvSprtUpdateUnk     = 0x80231450; // type:func
+uvSprtResetUnk      = 0x802314B8; // type:func
 
 uvRandSeed          = 0x802315E0; // type:func
 uvRandF_RANLUX      = 0x802315EC; // type:func
@@ -216,6 +219,8 @@ uvVec3Cross         = 0x802318A8; // type:func
 uvVec3Add           = 0x80231900; // type:func
 uvVec3Mul           = 0x80231934; // type:func
 uvVec3Normal        = 0x80231960; // type:func
+
+mio0_decompress     = 0x80231A20; // type:func
 
 uvPathPoseLine      = 0x8031EAD0; // type:func
 

@@ -291,8 +291,8 @@ void func_802D3444(Unk802D3658_Arg0* arg0) {
             arg0->unkD = 0;
         }
         arg0->unk1AC = func_8022A27C(arg0->unk80.m[0][0], arg0->unk80.m[0][1]) - 1.5707963f; // almost DEG_TO_RAD(90)
-        if ((arg0->unk1AC - arg0->unk1A8) > 1.5707964f) {                                      // matches DEG_TO_RAD(90)
-            arg0->unk1A8 = arg0->unk1A8 + 6.2831855f;                                          // matches DEG_TO_RAD(360)
+        if ((arg0->unk1AC - arg0->unk1A8) > 1.5707964f) {                                    // matches DEG_TO_RAD(90)
+            arg0->unk1A8 = arg0->unk1A8 + 6.2831855f;                                        // matches DEG_TO_RAD(360)
         }
         if ((arg0->unk1AC - arg0->unk1A8) < -1.5707964f) { // matches DEG_TO_RAD(-90)
             arg0->unk1A8 -= 6.2831855f;                    // matches DEG_TO_RAD(360)

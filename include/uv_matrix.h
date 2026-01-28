@@ -28,11 +28,11 @@ void uvMat4SetUnk1(Mtx4F* dst);
 
 // matrix multiplication: dst = mat1 x mat2
 // if dst is either mat1 or mat2, uses stack matrix
-void uvMat4Mul(Mtx4F* dst, Mtx4F* mat1, Mtx4F* mat2);
+void uvMat4Mul(Mtx4F* dst, Mtx4F* src1, Mtx4F* src2);
 
 // matrix multiplication: dst = mat2 x mat1
 // if dst is either mat1 or mat2, uses stack matrix
-void uvMat4MulBA(Mtx4F* dst, Mtx4F* mat1, Mtx4F* mat2);
+void uvMat4MulBA(Mtx4F* dst, Mtx4F* src1, Mtx4F* src2);
 
 void uvMat4RotateAxis(Mtx4F* dst, float angle, char axis);
 void uvMat4UnkOp2(Mtx4F* dst, float arg1, float arg2, float arg3);

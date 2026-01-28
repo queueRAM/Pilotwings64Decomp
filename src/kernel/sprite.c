@@ -1,4 +1,12 @@
+#include <uv_sprite.h>
 #include "common.h"
+
+extern Gfx* D_80298AB0;
+extern s32 gSprtUnkIndex;
+extern s32 gSprtUnkTable[];
+extern uvSprite_t gSprtTable1[];
+extern uvSprite_t gSprtTable2[];
+extern uvSprite_t gSprtTable3[];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/func_80230130.s")
 
@@ -18,16 +26,46 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/func_80230D30.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/uvSprtDraw.s")
+void uvSprtDraw(s32 sprite_id) {
+    uvSprite_t* sprite;
+
+    if (sprite_id >= 0x1F) {
+        _uvDebugPrintf("uvSprtDraw: invalid sprite id %d\n", sprite_id);
+        return;
+    }
+    sprite = &gSprtTable1[sprite_id];
+    if (sprite->unkA != 0xFFF) {
+        spInit(&D_80298AB0);
+        func_80230B98(sprite);
+        spFinish(&D_80298AB0);
+        D_80298AB0--;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/uvSprtSetBlit.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/func_80231120.s")
+s16 uvSprtGetUnk0(s32 sprite_id) {
+    return gSprtTable2[sprite_id].unk0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/func_8023113C.s")
+s16 uvSprtGetUnk1(s32 sprite_id) {
+    return gSprtTable3[sprite_id].unk0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/uvSprtProps.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/func_80231450.s")
+void uvSprtUpdateUnk(uvSprite_t* sprite) {
+    if (sprite->unk18 != 0) {
+        gSprtUnkTable[gSprtUnkIndex] = sprite->unk18;
+        gSprtUnkIndex += 1;
+    }
+    if (sprite->unk1C != 0) {
+        gSprtUnkTable[gSprtUnkIndex] = sprite->unk1C;
+        gSprtUnkIndex += 1;
+    }
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/myfree.s")
+void uvSprtResetUnk(void) {
+    gSprtUnkIndex = 0;
+}
+

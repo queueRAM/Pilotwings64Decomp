@@ -2,6 +2,7 @@
 #include <uv_graphics.h>
 #include <uv_memory.h>
 #include <uv_graphics.h>
+#include <uv_sprite.h>
 
 typedef struct {
     u32 start;
@@ -39,8 +40,6 @@ extern u32 D_802B8934;
 extern u8 D_803805E0;
 
 extern u8 initialize_emu_text_0000[];
-
-extern void myfree(void);
 
 void uvMemInitBlocks(void) {
     D_802B8830[0].start = 0x800DA800;
@@ -358,7 +357,7 @@ void uvLevelInit(void) {
     func_8022A47C();
     uvMemSet(initialize_emu_text_0000, 0, 0x160C);
     uvMemSet(D_802B6E30, 0, 0x7D0);
-    myfree();
+    uvSprtResetUnk();
     temp_v0 = func_80223E80(gUVBlockOffsets.UVSY);
 
     while ((tag = func_80223F7C(temp_v0, &length, &source, 0)) != 0) {

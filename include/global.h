@@ -9,6 +9,7 @@
 #include "uv_matrix.h"
 #include "uv_memory.h"
 #include "uv_sched.h"
+#include "uv_sprite.h"
 #include "uv_util.h"
 
 #endif
