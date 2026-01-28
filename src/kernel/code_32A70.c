@@ -1,4 +1,8 @@
 #include "common.h"
+#include "uv_util.h"
+
+void func_80232554(u8);
+void func_80232738(u8);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_32A70/func_80231AC0.s")
 
@@ -30,7 +34,23 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_32A70/func_8023345C.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_32A70/uvDbgCnt.s")
+#else
+void uvDbgCnt(u8 arg0, u8 arg1) {
+    if (arg0 == 0) {
+        return;
+    } else {
+        if (arg1 == 1) {
+            _uvDebugPrintf("uvDbgCnt: bar count not supported\n");
+        } else if (arg1 == 2) {
+            func_80232554(arg0);
+        } else if (arg1 == 3) {
+            func_80232738(arg0);
+        }
+    }
+}
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_32A70/func_80233590.s")
 
