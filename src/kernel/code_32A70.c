@@ -3,8 +3,11 @@
 #include "uv_graphics.h"
 #include "uv_util.h"
 
+void func_8023217C(u8, u8);
+void func_802323A8(u8, u8);
 void func_80232554(u8);
 void func_80232738(u8);
+void func_802333AC(u8);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_32A70/func_80231AC0.s")
 
@@ -34,7 +37,19 @@ void func_80232738(u8);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_32A70/func_802333AC.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_32A70/func_8023345C.s")
+#else
+void func_8023345C(u8 arg0, u8 arg1, u8 arg2) {
+    if (arg1 == 1) {
+        func_802333AC(arg0);
+    } else if (arg1 == 2) {
+        func_8023217C(arg0, arg2);
+    } else {
+        func_802323A8(arg0, arg2);
+    }
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_32A70/uvDbgCnt.s")
