@@ -168,7 +168,7 @@ ParsedUVBT* _uvParseUVBT(u8*);
 extern u8 D_DE720[];
 extern u8 D_DF5B0[];
 
-extern u8 initialize_emu_text_0000[];
+extern u8 gLevelData[];
 extern u32 D_802B53F4[];
 extern u32 D_802B5A34[];
 extern u32 D_802B5C34[];
@@ -181,7 +181,7 @@ extern u32 D_802B6A34[];
 extern u32 D_802B6E2C;
 extern u32 D_802B892C;
 
-void func_802246A0(void) {
+void uvMemInitBlockHdr(void) {
     s32 sp64;
     s32 temp_v0;
     u32 sp5C;
@@ -255,7 +255,7 @@ void func_802246A0(void) {
     uvLevelInit();
 }
 
-void* func_80224A90(u32 tag, s32 palette) {
+void* uvMemLoadDS(u32 tag, s32 palette) {
     void* ret;
 
     ret = NULL;
@@ -311,14 +311,14 @@ void uvMemLoadPal(s32 palette) {
     if (palette == 0xFFFF) {
         D_802B53C0 = NULL;
     } else {
-        D_802B53C0 = func_80224A90('UVTP', palette);
+        D_802B53C0 = uvMemLoadDS('UVTP', palette);
         if (D_802B53C0 == NULL) {
             _uvDebugPrintf("uvMemLoadPal: palette %d not in dbase\n", palette);
         }
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/uvMemLoadDS.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/uvLevelAppend.s")
 
 void uvConsumeBytes(void* dst, u8** ptr, s32 size) {
     switch (size) {
@@ -567,7 +567,7 @@ ParsedUVTR* _uvParseUVTR(u8* src) {
             uvConsumeBytes(&ptr->unk0, &src, sizeof(ptr->unk0));
             uvConsumeBytes(&ptr->unk44, &src, sizeof(ptr->unk44));
             uvConsumeBytes(&sp44, &src, 2);
-            ptr->unk40 = *(s32*)(initialize_emu_text_0000 + (sp44 * 4) + 0x70C);
+            ptr->unk40 = *(s32*)(gLevelData + (sp44 * 4) + 0x70C);
         }
     }
     return temp_v0;
@@ -871,3 +871,4 @@ ParsedUVSQ* uvParseTopUVSQ(s32 palette) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/texture/func_80227E5C.s")
+

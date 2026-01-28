@@ -55,7 +55,7 @@ void uvaSeqSetVol(f32 vol) {
 
 void uvaSeqStop(void) {
     alSeqpStop(gSeqPlayer);
-    func_80206150(7);
+    uvClkReset(7);
     while (alSeqpGetState(gSeqPlayer)) {
         if (uvClkGetSec(7) > 2.0) {
             _uvDebugPrintf("uvaSeqStop timed out\n");

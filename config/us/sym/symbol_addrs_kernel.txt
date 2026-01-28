@@ -41,7 +41,11 @@ uvaSeqStop          = 0x8020489C; // type:func
 uvChanEnv           = 0x80204DEC; // type:func
 uvChanTerra         = 0x80204E5C; // type:func
 _uvSortAdd          = 0x80205814; // type:func
+
+uvClkInit           = 0x80205FD0; // type:func
+uvClkUpdate         = 0x80205FFC; // type:func
 uvClkGetSec         = 0x80206058; // type:func
+uvClkReset          = 0x80206150; // type:func
 
 _uvDbSortHits       = 0x802071CC; // type:func
 uvTerraGetBox       = 0x8020FA08; // type:func
@@ -89,6 +93,7 @@ uvEndTmesh          = 0x8021F3A4; // type:func
 uvEndGrid           = 0x8021F96C; // type:func
 uvVtxEndPoly        = 0x802206C0; // type:func
 
+uvGfxInit           = 0x80220960; // type:func
 uvGfxBegin          = 0x80220B88; // type:func
 uvGfxStateDraw      = 0x80221398; // type:func
 uvClampFunction     = 0x80221B34; // type:func
@@ -153,9 +158,11 @@ uvControllerGetButton     = 0x802245E8; // type:func
 uvControllerButtonPress   = 0x80224604; // type:func
 uvControllerButtonRelease = 0x80224650; // type:func
 
+uvMemInitBlockHdr   = 0x802246A0; // type:func
 uvConsumeBytes      = 0x80225394; // type:func
+uvMemLoadDS         = 0x80224A90; // type:func
 uvMemLoadPal        = 0x80224C7C; // type:func
-uvMemLoadDS         = 0x80224CE0; // type:func
+uvLevelAppend       = 0x80224CE0; // type:func
 _uvExpandTexture    = 0x802265B8; // type:func
 _uvExpandTextureImg = 0x80226A54; // type:func
 _uvExpandTextureCpy = 0x80226B20; // type:func

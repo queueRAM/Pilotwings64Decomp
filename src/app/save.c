@@ -68,7 +68,7 @@ void func_802E7FA0(u8* arg0, s32* arg1, s32 arg2, s32 bitCount) {
 void func_802E81BC(char* arg0) {
     s32 temp_s0;
 
-    uvMemLoadDS(0x2E);
+    uvLevelAppend(0x2E);
     uvFontSet(0);
     func_80219550(1.0, 1.0);
     func_8021956C(0xFF, 0xFF, 0x00, 0xFF);

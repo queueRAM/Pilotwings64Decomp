@@ -52,9 +52,7 @@ void func_8034BEDC(void);
 void func_8034C0BC(void);
 void func_8034C964(void);
 void func_8034CB80(void);
-void uvLevelInit(void);
 void env_loadtpal(s32);
-void uvMemLoadDS(s32);
 
 extern s32 D_8034F400;
 extern s32 D_8034F404;
@@ -78,7 +76,7 @@ void func_8030B6C0(u8 arg0, u8 arg1, u8 arg2, s32 arg3) {
     uvLevelInit();
     func_80341F10(0x42);
     env_loadtpal(D_80362690->unk0[0].unk8);
-    uvMemLoadDS(arg0);
+    uvLevelAppend(arg0);
     switch (arg0) {
     case 1:
         D_8034F408 = func_8030BDC8(0);
@@ -93,7 +91,7 @@ void func_8030B6C0(u8 arg0, u8 arg1, u8 arg2, s32 arg3) {
         D_8034F408 = func_8030BDC8(3);
         break;
     }
-    uvMemLoadDS(0x1A);
+    uvLevelAppend(0x1A);
     if (arg3 != 0) {
         for (i = 0; i < (s32)gLevelObjects.countTOYS; i++) {
             func_80348280(&gLevelObjects.dataTOYS[i]);
@@ -103,12 +101,12 @@ void func_8030B6C0(u8 arg0, u8 arg1, u8 arg2, s32 arg3) {
         D_8034F400 = 0;
     }
     if ((arg2 == 0) || (arg2 == 6)) {
-        uvMemLoadDS(0x1B);
+        uvLevelAppend(0x1B);
     }
     func_8030BA98(arg1, arg2);
-    uvMemLoadDS(0xC);
-    uvMemLoadDS(0xD);
-    uvMemLoadDS(0x2E);
+    uvLevelAppend(0xC);
+    uvLevelAppend(0xD);
+    uvLevelAppend(0x2E);
     func_802E1444(D_80362690->unk0[0].unk8);
     if (arg3 != 0) {
         func_8030B868();
@@ -267,7 +265,7 @@ void func_8030BA98(u8 pilot, u8 vehicle) {
     if (var_a2 == -1) {
         _uvDebugPrintf("level : can't compute level append - pilsel:%d vehsel:%d\n", pilot, vehicle);
     } else {
-        uvMemLoadDS(var_a2);
+        uvLevelAppend(var_a2);
     }
 }
 

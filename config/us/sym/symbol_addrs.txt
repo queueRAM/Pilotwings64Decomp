@@ -85,6 +85,7 @@ gSprtTable1         = 0x802C7478;
 gSprtTable2         = 0x802C747A;
 gSprtTable3         = 0x802C747C;
 
+gLevelData          = 0x802C1C98;
 gLevelWOBJ          = 0x80369F30;
 gLevelLPAD          = 0x8036A030;
 gLevelTPTS          = 0x8036A180;

@@ -9,10 +9,10 @@ typedef struct uvClockState {
     s32 unk4;
 } uvClockState_t;
 
-void func_80205FD0(void);
-void func_80205FFC(void);
+void uvClkInit(void);
+void uvClkUpdate(void);
 f64 uvClkGetSec(s32 clk_id);
-void func_80206150(s32 clk_id);
+void uvClkReset(s32 clk_id);
 
 #endif // PILOTWINGS64_UV_CLOCKS
 

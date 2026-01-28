@@ -8,6 +8,7 @@
 #include <uv_controller.h>
 #include <uv_geometry.h>
 #include <uv_graphics.h>
+#include <uv_level.h>
 #include <uv_matrix.h>
 #include <uv_memory.h>
 #include <uv_sched.h>
@@ -177,9 +178,9 @@ s32 uvSysInit(s32 arg0) {
     // clang-format on
     osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON);
     gControllerPattern = 0;
-    func_80220960();
-    func_80205FD0();
-    func_802246A0();
+    uvGfxInit();
+    uvClkInit();
+    uvMemInitBlockHdr();
     func_80204930();
     func_80218700();
     func_8020F9F4();

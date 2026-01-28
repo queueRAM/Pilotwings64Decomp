@@ -39,7 +39,7 @@ extern u32 D_802B8934;
 
 extern u8 D_803805E0;
 
-extern u8 initialize_emu_text_0000[];
+extern u8 gLevelData[];
 
 void uvMemInitBlocks(void) {
     D_802B8830[0].start = 0x800DA800;
@@ -355,7 +355,7 @@ void uvLevelInit(void) {
     D_802B53C0 = NULL;
     D_802B8934 = 0;
     func_8022A47C();
-    uvMemSet(initialize_emu_text_0000, 0, 0x160C);
+    uvMemSet(gLevelData, 0, 0x160C);
     uvMemSet(D_802B6E30, 0, 0x7D0);
     uvSprtResetUnk();
     temp_v0 = func_80223E80(gUVBlockOffsets.UVSY);
@@ -364,7 +364,7 @@ void uvLevelInit(void) {
         if (tag == 'COMM') { // 0x434F4D4D
             _uvMediaCopy(&gUVBlockCounts, source, length);
             if (1) { } // fakematch
-            *((float*)&initialize_emu_text_0000[0x1608]) = gUVBlockCounts.unk0;
+            *((float*)&gLevelData[0x1608]) = gUVBlockCounts.unk0;
         }
     }
     func_80223F30(temp_v0);

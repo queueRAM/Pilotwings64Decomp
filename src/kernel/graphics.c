@@ -29,7 +29,7 @@ extern s32 gGfxStateStackData;
 extern u32 gGfxStateStack[];
 extern u8 gGfxStateStackIdx;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80220960.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfxInit.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfxBegin.s")
 

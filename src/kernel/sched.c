@@ -170,7 +170,7 @@ void _uvScCreateScheduler(OSSched* sc, void* stack, s32 priority, u8 mode, u8 nu
     osCreateThread(&sc->thread, 4, _uvScMain, (void*)sc, stack, priority);
     osStartThread(&sc->thread);
 
-    func_80206150(6);
+    uvClkReset(6);
     func_8022C34C();
 }
 
@@ -217,7 +217,7 @@ void _uvScHandleRetrace(void) {
     OSScClient* var_s0;
 
     msg = NULL;
-    func_80205FFC();
+    uvClkUpdate();
     if (gNmiAsserted == 0) {
         D_802B9C84 = 1;
         if (gSchedRspStatus) {

@@ -86,6 +86,12 @@ typedef struct {
 
 extern Unk80362690* D_80362690;
 
+void uvMemInitBlockHdr(void);
+void uvLevelInit(void);
+void uvLevelAppend(s32 level_id);
+void uvMemLoadDS(u32 tag, s32 palette);
+void uvMemLoadPal(s32 palette);
+
 void func_8030B6C0(u8 arg0, u8 arg1, u8 arg2, s32 arg3);
 void func_8030B868(void);
 void func_8030B964(void);
