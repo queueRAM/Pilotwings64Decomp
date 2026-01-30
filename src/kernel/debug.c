@@ -30,7 +30,9 @@ extern s16 D_802C802C;
 extern s32 D_802C8030;
 
 extern u16 D_8024B2D0[]; // 50 chars supported ['*'-'Z'], u16 per char
-extern u8 D_8024B334[]; // 50 chars supported, u8 per char
+extern u8 D_8024B334[];  // 50 chars supported, u8 per char
+
+extern Vtx_t D_8024B348[];
 
 extern Gfx D_8024B5A8[];
 /* .data and contains:
@@ -386,7 +388,19 @@ void func_80233590(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802338A8.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802339B0.s")
+#else
+void func_802339B0(u8 r, u8 g, u8 b, u8 a) {
+    s32 idx;
+    for (idx = 0; idx < 0x26; idx++) {
+        D_8024B348[idx].cn[0] = r;
+        D_8024B348[idx].cn[1] = g;
+        D_8024B348[idx].cn[2] = b;
+        D_8024B348[idx].cn[3] = a;
+    }
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233A40.s")
@@ -421,15 +435,15 @@ void func_80233A40(s32 arg0, u16 arg1) {
     } else {
         sp28 = 1;
     }
-    sp30.m[3][0] = (f32) (D_802C8020 + ((sp28 + sp26) * D_802C802C));
-    sp30.m[3][1] = (f32) D_802C8022;
+    sp30.m[3][0] = (f32)(D_802C8020 + ((sp28 + sp26) * D_802C802C));
+    sp30.m[3][1] = (f32)D_802C8022;
 
     for (sp2C = 0; sp2C < sp28; sp2C++) {
-        sp2A = (u16) (arg0 % arg1);
+        sp2A = (u16)(arg0 % arg1);
         func_8022345C(&sp30, 0);
         func_80233D04(sp2A);
-        sp30.m[3][0] -= (f32) D_802C802C;
-        arg0 = (s32) (arg0 - sp2A) / arg1;
+        sp30.m[3][0] -= (f32)D_802C802C;
+        arg0 = (s32)(arg0 - sp2A) / arg1;
     }
     if (sp26 != 0) {
         func_8022345C(&sp30, 0);
