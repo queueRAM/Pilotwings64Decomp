@@ -228,8 +228,10 @@ void func_802333AC(u8);
 void func_80233878(s16, s16);
 void func_802338A8(f32, f32);
 void func_802339B0(u8 r, u8 g, u8 b, u8 a);
+void func_80233A40(s32, u16);
 void func_80233D04(u16);
-void func_80233FC8(char* fmt, ...);
+void func_80233DB8(char ch);
+void func_80233FC8(char* fmt, u8* arg1, ...);
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80231AC0.s")
@@ -936,4 +938,76 @@ void func_80233DB8(char ch) {
 }
 #endif
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233FC8.s")
+#else
+void func_80233FC8(char* fmt, u8* arg1, ...) {
+    u8** spB4;
+    s32 idx;
+    s32 base;
+    char ch;
+    Mtx4F sp68;
+    Mtx4F sp28;
+    u8* sp24;
+    s32 sp20;
+
+    D_802C8030 = 0;
+    uvMat4Viewport(&sp68, 0.0f, 320.0f, 0.0f, 240.0f);
+    func_80222100(&sp68);
+    uvMat4SetIdentity(&sp28);
+    sp28.m[0][0] = D_802C8024;
+    sp28.m[1][1] = D_802C8028;
+    sp28.m[3][0] = (f32)D_802C8020;
+    sp28.m[3][1] = (f32)D_802C8022;
+    spB4 = &arg1;
+    idx = 0;
+    ch = fmt[idx];
+    while (ch != 0) {
+        func_8022345C(&sp28, 0);
+        if (ch == '%') {
+            idx++;
+            ch = fmt[idx];
+            base = 0;
+            if (ch == 'x') {
+                base = 16;
+            } else if (ch == 'd') {
+                base = 10;
+            } else if (ch == 'b') {
+                base = 2;
+            } else if (ch == 'f') {
+            } else if (ch == 's') {
+                sp24 = *spB4;
+                sp20 = 0;
+                sp28.m[0][0] = D_802C8024;
+                sp28.m[1][1] = D_802C8028;
+                while (sp24[sp20] != 0) {
+                    func_8022345C(&sp28, 0);
+                    sp28.m[3][0] += (f32)D_802C802C;
+                    func_80233DB8(sp24[sp20]);
+                    sp20 += 1;
+                }
+                sp28.m[3][0] -= (f32)D_802C802C;
+            }
+            if (base != 0) {
+                D_802C8020 = (s16)(sp28.m[3][0] - (f32)D_802C802C);
+                D_802C8022 = (s16)sp28.m[3][1];
+                func_80233A40(*spB4, base);
+                sp28.m[3][0] = (f32)D_802C8020;
+                sp28.m[3][1] = (f32)D_802C8022;
+            }
+            spB4 += 1;
+        } else if (ch == '\n') {
+            sp28.m[3][0] = (f32)-D_802C802C;
+            sp28.m[3][1] -= (f32)D_802C802E;
+            D_802C8022 += D_802C802E;
+        } else {
+            func_80233DB8(ch);
+        }
+        idx += 1;
+        ch = fmt[idx];
+        sp28.m[3][0] += (f32)D_802C802C;
+    }
+    D_802C8020 = (s16)sp28.m[3][0];
+    D_802C8022 = (s16)sp28.m[3][1];
+}
+#endif
