@@ -41,7 +41,7 @@ extern u8 gGfxStateStackIdx;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80220FF8.s")
 
-void func_802210C4(s32 dl) {
+void func_802210C4(Gfx* dl) {
     gSPDisplayList(gGfxDisplayListHead++, dl);
 }
 

@@ -21,6 +21,179 @@ typedef struct {
 extern Unk802B92A0 D_802B92A0[];
 extern s32 gSchedRingIdx;
 extern s32 D_802B9C18[];
+extern s32 D_802C8030;
+
+extern u16 D_8024B2D0[]; // 50 chars supported ['*'-'Z'], u16 per char
+extern Gfx D_8024B5A8[];
+/* .data and contains:
+{
+    gsSPVertex(D_8024B348, 14, 0),
+    gsSPEndDisplayList(),
+};
+*/
+extern Gfx D_8024B5B8[];
+/* .data and contains:
+{
+    gsSPVertex(D_8024B428, 15, 0),
+    gsSPVertex(D_8024B518, 1, 15),
+    gsSPEndDisplayList(),
+};
+*/
+extern Gfx D_8024B5D0[];
+/* .data and contains:
+{
+    gsSPVertex(D_8024B528, 8, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B5E0[];
+/* .data and contains:
+{
+    gsSP1Triangle(10, 11, 1, 0),
+    gsSP1Triangle(10, 1, 0, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B5F8[];
+/* .data and contains:
+{
+    gsSP1Triangle(11, 8, 2, 0),
+    gsSP1Triangle(11, 2, 1, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B610[];
+/* .data and contains:
+{
+    gsSP1Triangle(8, 12, 4, 0),
+    gsSP1Triangle(8, 4, 3, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B628[];
+/* .data and contains:
+{
+    gsSP1Triangle(12, 13, 5, 0),
+    gsSP1Triangle(12, 5, 4, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B640[];
+/* .data and contains:
+{
+    gsSP1Triangle(13, 9, 6, 0),
+    gsSP1Triangle(13, 6, 5, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B658[];
+/* .data and contains:
+{
+    gsSP1Triangle(9, 10, 0, 0),
+    gsSP1Triangle(9, 0, 7, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B670[];
+/* .data and contains:
+{
+    gsSP1Triangle(6, 9, 7, 0),
+    gsSP1Triangle(2, 6, 7, 0),
+    gsSP1Triangle(2, 3, 6, 0),
+    gsSP1Triangle(2, 8, 3, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B698[];
+/* .data and contains:
+{
+    gsSP1Triangle(0, 9, 11, 0),
+    gsSP1Triangle(0, 11, 7, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B6B0[];
+/* .data and contains:
+{
+    gsSP1Triangle(2, 9, 11, 0),
+    gsSP1Triangle(2, 11, 1, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B6C8[];
+/* .data and contains:
+{
+    gsSP1Triangle(4, 11, 9, 0),
+    gsSP1Triangle(4, 9, 3, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B6E0[];
+/* .data and contains:
+{
+    gsSP1Triangle(6, 11, 9, 0),
+    gsSP1Triangle(6, 9, 5, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B6F8[];
+/* .data and contains:
+{
+    gsSP1Triangle(12, 13, 15, 0),
+    gsSP1Triangle(12, 15, 14, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B710[];
+/* .data and contains:
+{
+    gsSP1Triangle(0, 2, 1, 0),
+    gsSP1Triangle(0, 3, 2, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx D_8024B728[];
+/* .data and contains:
+{
+    gsSP1Triangle(4, 5, 7, 0),
+    gsSP1Triangle(4, 7, 6, 0),
+    gsSPEndDisplayList(),
+};
+*/
+
+extern Gfx* D_8024B740[];
+/* array of 14 DL pointers, used by the for loops in func_80233DB8
+{
+    D_8024B5E0,
+    D_8024B5F8,
+    D_8024B610,
+    D_8024B628,
+    D_8024B640,
+    D_8024B658,
+    D_8024B670,
+    D_8024B698,
+    D_8024B6B0,
+    D_8024B6C8,
+    D_8024B6E0,
+    D_8024B6F8,
+    D_8024B710,
+    D_8024B728,
+};
+*/
 
 // forward declarations
 void func_8023217C(u8, u8);
@@ -210,6 +383,50 @@ void func_80233590(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233D04.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233DB8.s")
+#else
+void func_80233DB8(char ch) {
+    u16 sp1E;
+    u16 idx;
+
+    if (ch >= 'a') {
+        ch -= 0x20;
+    }
+    if ((ch >= '*') && (ch <= 'Z')) {
+        ch -= '*';
+    } else {
+        return;
+    }
+    sp1E = D_8024B2D0[(int)ch];
+
+    if (D_802C8030 != 1) {
+        func_802210C4(D_8024B5A8);
+    }
+    for (idx = 0; idx < 7; idx++) {
+        if ((1 << idx) & sp1E) {
+            func_802210C4(D_8024B740[idx]);
+        }
+    }
+
+    if (D_802C8030 != 2) {
+        func_802210C4(D_8024B5B8);
+    }
+    for (idx = 7; idx < 12; idx++) {
+        if ((1 << idx) & sp1E) {
+            func_802210C4(D_8024B740[idx]);
+        }
+    }
+
+    if (D_802C8030 != 3) {
+        func_802210C4(D_8024B5D0);
+    }
+    for (idx = 12; idx < 14; idx++) {
+        if ((1 << idx) & sp1E) {
+            func_802210C4(D_8024B740[idx]);
+        }
+    }
+}
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233FC8.s")
