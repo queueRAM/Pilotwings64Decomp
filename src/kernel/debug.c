@@ -385,7 +385,14 @@ void func_80233590(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233810.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233878.s")
+#else
+void func_80233878(s16 arg0, s16 arg1) {
+    D_802C8020 = arg0;
+    D_802C8022 = arg1;
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802338A8.s")
