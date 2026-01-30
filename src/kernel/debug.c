@@ -214,6 +214,8 @@ void func_80232554(u8);
 void func_80232738(u8);
 void func_8023286C(void);
 void func_80232EBC(void);
+void func_80232ECC(u8, u8, u8, u8, u8, u8);
+void func_80233310(void);
 void func_802333AC(u8);
 void func_80233D04(u16);
 void func_80233FC8(char* fmt, ...);
@@ -302,7 +304,16 @@ void func_80232EBC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80232ECC.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233310.s")
+#else
+void func_80233310(void) {
+    func_80232ECC(0, 0x2A, 0x34, 0x00, 0x00, 0xFF);
+    func_80232ECC(0, 0x29, 0x2D, 0xFF, 0x00, 0xFF);
+    func_80232ECC(1, 0x2A, 0x26, 0x00, 0xFF, 0x00);
+    func_80232ECC(1, 0x29, 0x1E, 0xFF, 0x00, 0x00);
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802333AC.s")
