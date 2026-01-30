@@ -383,7 +383,19 @@ void func_80233590(void) {
 }
 #endif
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233810.s")
+#else
+void func_80233810(void) {
+    D_802C8024 = 0.0f;
+    D_802C8028 = 0.0f;
+    D_802C802C = 12;
+    D_802C802E = 16;
+    D_802C8020 = 0;
+    D_802C8022 = 240 - D_802C802E;
+    D_802C8030 = 0;
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233878.s")
