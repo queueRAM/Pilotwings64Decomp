@@ -20,9 +20,12 @@ typedef struct {
     Unk802B92A0_Unk0 unk0[30];
 } Unk802B92A0;
 
+extern Unk802B92A0 D_802B8940[];
 extern Unk802B92A0 D_802B92A0[];
 extern s32 gSchedRingIdx;
+extern s32 D_802B9C00[];
 extern s32 D_802B9C18[];
+extern double D_802B9C30[];
 extern s16 D_802C8020;
 extern s16 D_802C8022;
 extern f32 D_802C8024;
@@ -258,7 +261,47 @@ f64 func_80231AC0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80231C10.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80231C9C.s")
+#else
+f64 func_80231C9C(void) {
+    Unk802B92A0_Unk0* sp2C;
+    s32 sp28;
+    s32 sp24;
+    s32 sp20;
+    s32 sp1C;
+    f64 sp10;
+    f64 sp8;
+    f64 sp0;
+
+    sp24 = (gSchedRingIdx + 1) % 5;
+    sp20 = (gSchedRingIdx + 2) % 5;
+    sp1C = 0;
+    sp8 = 0.0;
+    sp10 = 0.0;
+
+    for (sp28 = 0; sp28 < D_802B9C00[sp24]; sp28++) {
+        sp2C = &D_802B8940[sp24].unk0[sp28];
+        sp0 = sp2C->unk0 - D_802B9C30[sp24];
+        if (sp1C == 0) {
+            if (sp2C->unk8 == 0x2A) {
+                sp1C = 1;
+                sp10 = sp0;
+            }
+            if (sp2C->unk8 == 0x2B) {
+                sp8 += sp0;
+            }
+        } else if ((sp1C != 0) && (sp2C->unk8 == 0x2B)) {
+            sp1C = 0;
+            sp8 += sp0 - sp10;
+        }
+    }
+    if (sp1C != 0) {
+        sp8 += (D_802B9C30[sp20] - D_802B9C30[sp24]) - sp10;
+    }
+    return sp8;
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80231F04.s")
