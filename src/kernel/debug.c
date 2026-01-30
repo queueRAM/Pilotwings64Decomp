@@ -260,7 +260,40 @@ f64 func_80231AC0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80231C9C.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80231F04.s")
+#else
+void func_80231F04(f32 arg0, f32 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
+    s16 sp36;
+    s16 sp34;
+    s16 sp32;
+
+    sp36 = arg2 + 6;
+    sp34 = (s16)((arg0 * 1000.0f * 2.0f) + 85.0f);
+    sp32 = (s16)((arg1 * 1000.0f * 2.0f) + 85.0f);
+    if (arg0 < 0.0f) {
+        return;
+    }
+    if (sp32 < sp34) {
+        return;
+    }
+    if (sp34 > 320) {
+        return;
+    }
+    if (sp32 >= 320) {
+        sp32 = 319;
+    }
+    if (sp34 == sp32) {
+        sp32 = sp34 + 1;
+    }
+    uvVtxBeginPoly();
+    uvVtx(sp34, arg2, 0, 0, 0, arg3, arg4, arg5, 0xFF);
+    uvVtx(sp32, arg2, 0, 0, 0, arg3, arg4, arg5, 0xFF);
+    uvVtx(sp32, sp36, 0, 0, 0, arg3, arg4, arg5, 0xFF);
+    uvVtx(sp34, sp36, 0, 0, 0, arg3, arg4, arg5, 0xFF);
+    uvVtxEndPoly();
+}
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/D_8024F350.s")
 
