@@ -24,6 +24,8 @@ extern s32 D_802B9C18[];
 extern s32 D_802C8030;
 
 extern u16 D_8024B2D0[]; // 50 chars supported ['*'-'Z'], u16 per char
+extern u8 D_8024B334[]; // 50 chars supported, u8 per char
+
 extern Gfx D_8024B5A8[];
 /* .data and contains:
 {
@@ -381,7 +383,25 @@ void func_80233590(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233A40.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233D04.s")
+#else
+void func_80233D04(u16 arg0) {
+    u8 sp1F;
+    u8 idx;
+
+    sp1F = D_8024B334[arg0];
+    if (D_802C8030 != 1) {
+        func_802210C4(D_8024B5A8);
+    }
+
+    for (idx = 0; idx < 7; idx++) {
+        if ((1 << idx) & sp1F) {
+            func_802210C4(D_8024B740[idx]);
+        }
+    }
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233DB8.s")
