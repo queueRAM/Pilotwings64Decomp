@@ -22,6 +22,7 @@ void func_80230954(void);
 void func_802210C4(Gfx* dl);
 void func_80221A78(Mtx4F*);
 void func_80222100(Mtx4F*);
+void func_8022345C(Mtx4F*, s32);
 void func_802236A8(void);
 void uvGfxSetFlags(s32 flags);
 void uvGfxClearFlags(s32 flags);

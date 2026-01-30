@@ -1,6 +1,7 @@
 #include "common.h"
 #include <uv_controller.h>
 #include <uv_graphics.h>
+#include <uv_matrix.h>
 #include <uv_util.h>
 #include <uv_debug.h>
 
@@ -21,6 +22,11 @@ typedef struct {
 extern Unk802B92A0 D_802B92A0[];
 extern s32 gSchedRingIdx;
 extern s32 D_802B9C18[];
+extern s16 D_802C8020;
+extern s16 D_802C8022;
+extern f32 D_802C8024;
+extern f32 D_802C8028;
+extern s16 D_802C802C;
 extern s32 D_802C8030;
 
 extern u16 D_8024B2D0[]; // 50 chars supported ['*'-'Z'], u16 per char
@@ -202,6 +208,7 @@ void func_8023217C(u8, u8);
 void func_802323A8(u8, u8);
 void func_80232554(u8);
 void func_80232738(u8);
+void func_80233D04(u16);
 void func_80233FC8(char* fmt, ...);
 
 #ifndef NON_MATCHING
@@ -381,7 +388,56 @@ void func_80233590(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802339B0.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233A40.s")
+#else
+void func_80233A40(s32 arg0, u16 arg1) {
+    Mtx4F sp70;
+    Mtx4F sp30;
+    s32 sp2C;
+    u16 sp2A;
+    u16 sp28;
+    u16 sp26;
+
+    D_802C8030 = 0;
+    uvMat4Viewport(&sp70, 0.0f, 320.0f, 0.0f, 240.0f);
+    func_80222100(&sp70);
+    uvMat4SetIdentity(&sp30);
+    sp30.m[0][0] = D_802C8024;
+    sp30.m[1][1] = D_802C8028;
+    if (arg0 < 0) {
+        sp26 = 1;
+        arg0 = -arg0;
+    } else {
+        sp26 = 0;
+    }
+    sp28 = 0;
+    sp2C = 1;
+    if (arg0 != 0) {
+        while (arg0 >= sp2C) {
+            sp2C *= arg1;
+            sp28 += 1;
+        }
+    } else {
+        sp28 = 1;
+    }
+    sp30.m[3][0] = (f32) (D_802C8020 + ((sp28 + sp26) * D_802C802C));
+    sp30.m[3][1] = (f32) D_802C8022;
+
+    for (sp2C = 0; sp2C < sp28; sp2C++) {
+        sp2A = (u16) (arg0 % arg1);
+        func_8022345C(&sp30, 0);
+        func_80233D04(sp2A);
+        sp30.m[3][0] -= (f32) D_802C802C;
+        arg0 = (s32) (arg0 - sp2A) / arg1;
+    }
+    if (sp26 != 0) {
+        func_8022345C(&sp30, 0);
+        func_802210C4(D_8024B670);
+    }
+    D_802C8020 += D_802C802C * sp28;
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233D04.s")
