@@ -259,7 +259,18 @@ f64 func_80231AC0(void) {
 }
 #endif
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80231C10.s")
+#else
+f64 func_80231C10(void) {
+    s32 sp4;
+    s32 sp0;
+
+    sp4 = (gSchedRingIdx + 1) % 5;
+    sp0 = (gSchedRingIdx + 2) % 5;
+    return D_802B9C30[sp0] - D_802B9C30[sp4];
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80231C9C.s")
