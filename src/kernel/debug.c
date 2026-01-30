@@ -264,7 +264,44 @@ f64 func_80231AC0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/D_8024F350.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_8023217C.s")
+#else
+void func_8023217C(u8 arg0, u8 arg1) {
+    s32 val;
+    s16 xPos;
+    s16 yPos;
+    f64 multiplier;
+
+    xPos = 20;
+    yPos = 34;
+    if (arg1 == 1) {
+        multiplier = 1000.0;
+    } else {
+        multiplier = 1000000.0;
+    }
+    func_802339B0(0xFF, 0xFF, 0x00, 0xFF);
+    func_802338A8(6.0f, 8.0f);
+    if (arg0 & 0x01) {
+        val = func_80231C10() * multiplier;
+        func_80233878(xPos, yPos);
+        func_80233FC8("r: %d", val);
+        yPos += 14;
+    }
+    if (arg0 & 0x02) {
+        val = func_80231AC0() * multiplier;
+        func_80233878(xPos, yPos);
+        func_80233FC8("g: %d", val);
+        yPos += 14;
+    }
+    if (arg0 & 0x04) {
+        val = func_80231C9C() * multiplier;
+        func_80233878(xPos, yPos);
+        func_80233FC8("c: %d", val);
+        yPos += 14;
+    }
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802323A8.s")
