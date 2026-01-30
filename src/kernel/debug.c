@@ -214,6 +214,7 @@ extern Gfx* D_8024B740[];
 f64 func_80231AC0(void);
 f64 func_80231C10(void);
 f64 func_80231C9C(void);
+void func_80231F04(f32, f32, s16, u8, u8, u8);
 void func_8023217C(u8, u8);
 void func_80233310(void);
 void func_802323A8(u8, u8);
@@ -221,7 +222,7 @@ void func_80232554(u8);
 void func_80232738(u8);
 void func_8023286C(void);
 void func_80232EBC(void);
-void func_80232ECC(u8, u8, u8, u8, u8, u8);
+void func_80232ECC(s32, s32, u16, u8, u8, u8);
 void func_80233310(void);
 void func_802333AC(u8);
 void func_80233878(s16, s16);
@@ -565,8 +566,96 @@ void func_80232EBC(void) {
 }
 #endif
 
-// https://decomp.me/scratch/wEQOh
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80232ECC.s")
+#else
+void func_80232ECC(s32 arg0, s32 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5) {
+    Unk802B92A0_Unk0* sp4C;
+    s32 sp48;
+    s32 sp44;
+    s32 sp40;
+    s32 sp3C;
+    s32* sp38;
+    s32 sp34;
+    s32 sp30;
+    f64 sp28;
+    f64 sp20;
+
+    sp44 = (gSchedRingIdx + 1) % 5;
+    sp28 = D_802B9C30[sp44];
+    if (arg0 == 0) {
+        sp38 = D_802B9C00;
+    } else {
+        sp38 = D_802B9C18;
+    }
+
+    if (arg1 == 0x29) {
+        sp34 = 0x29;
+        sp30 = 0x2C;
+    } else {
+        sp34 = 0x2A;
+        sp30 = 0x2B;
+    }
+
+    sp48 = -1;
+    sp3C = 0;
+    for (;;) {
+        sp48 += 1;
+        if (sp48 > sp38[sp44]) {
+            sp3C += 1;
+            sp48 = 0;
+            sp44 = (sp44 + 1) % 5;
+        }
+        if (sp3C >= 5) {
+            break;
+        }
+        if (arg0 == 0) {
+            sp4C = &D_802B8940[sp44].unk0[sp48];
+        } else {
+            sp4C = &D_802B92A0[sp44].unk0[sp48];
+        }
+        if (sp4C->unk8 == sp34) {
+            break;
+        }
+        if (sp4C->unk8 == sp30) {
+            func_80231F04(0.0f, (f32)(sp4C->unk0 - sp28), arg2, arg3, arg4, arg5);
+            break;
+        }
+    }
+
+    sp48 = -1;
+    sp3C = 0;
+    sp40 = -1;
+    sp44 = (gSchedRingIdx + 1) % 5;
+
+    for (;;) {
+        sp48 += 1;
+        if (sp48 > sp38[sp44]) {
+            sp3C += 1;
+            sp48 = 0;
+            sp44 = (sp44 + 1) % 5;
+        }
+        if (sp3C >= 4) {
+            break;
+        }
+        if (arg0 == 0) {
+            sp4C = &D_802B8940[sp44].unk0[sp48];
+        } else {
+            sp4C = &D_802B92A0[sp44].unk0[sp48];
+        }
+        if (sp40 != sp34) {
+            if (sp4C->unk8 == sp34) {
+                sp40 = sp34;
+                sp20 = sp4C->unk0;
+            }
+        } else if (sp4C->unk8 != sp30) {
+        } else {
+            func_80231F04((f32)(sp20 - sp28), (f32)(sp4C->unk0 - sp28), arg2, arg3, arg4, arg5);
+            sp40 = -1;
+        }
+    }
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233310.s")
