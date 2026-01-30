@@ -218,6 +218,9 @@ void func_80232EBC(void);
 void func_80232ECC(u8, u8, u8, u8, u8, u8);
 void func_80233310(void);
 void func_802333AC(u8);
+void func_80233878(s16, s16);
+void func_802338A8(f32, f32);
+void func_802339B0(u8 r, u8 g, u8 b, u8 a);
 void func_80233D04(u16);
 void func_80233FC8(char* fmt, ...);
 
@@ -262,7 +265,43 @@ f64 func_80231AC0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802323A8.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80232554.s")
+#else
+void func_80232554(u8 arg0) {
+    s16 xPos;
+    s16 yPos;
+
+    xPos = 20;
+    yPos = 80;
+    func_802339B0(0xFF, 0xFF, 0, 0xFF);
+    func_802338A8(6.0f, 8.0f);
+    if (arg0 & 0x01) {
+        func_80233878(xPos, yPos);
+        func_80233FC8("v: %d", uvGfxGetCnt(0));
+        yPos += 14;
+    }
+    if (arg0 & 0x02) {
+        func_80233878(xPos, yPos);
+        func_80233FC8("p: %d", uvGfxGetCnt(1));
+        yPos += 14;
+    }
+    if (arg0 & 0x04) {
+        func_80233878(xPos, yPos);
+        func_80233FC8("l: %d", uvGfxGetCnt(2));
+        yPos += 14;
+    }
+    if (arg0 & 0x10) {
+        func_80233878(xPos, yPos);
+        func_80233FC8("t: %d", uvGfxGetCnt(4));
+        yPos += 14;
+    }
+    if (arg0 & 0x08) {
+        func_80233878(xPos, yPos);
+        func_80233FC8("m: %d", uvGfxGetCnt(3));
+    }
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80232738.s")
