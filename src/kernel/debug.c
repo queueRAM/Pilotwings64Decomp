@@ -6,6 +6,8 @@
 #include <uv_util.h>
 #include <uv_debug.h>
 
+// #define NON_MATCHING
+
 // this entire file was compiled with `-mips1 -O1 -g`
 // asm_processor doesn't currently work with `-mips1` and `-g`
 // so wrapping everything in NON_MATCHING until those details are worked out
@@ -352,7 +354,11 @@ void func_80231F04(f32 arg0, f32 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
 }
 #endif
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/D_8024F350.s")
+#else
+const char D_8024F350[] = "start: %f  (%d)   finish: %f (%d)\n";
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_8023217C.s")
@@ -483,12 +489,17 @@ void func_80232738(u8 arg0) {
     if (arg0 != 0x00) {
         _uvDebugPrintf("\n");
     }
-    // possibly some unused strings after "\n":
-    // "frame time %f\n"
-    // "started at %f\n"
-    // "finished at %f\n"
-    // "\n\n"
 }
+
+// unused strings after "\n":
+// "frame time %f\n"
+// "started at %f\n"
+// "finished at %f\n"
+// "\n\n"
+const char unk0[] = "frame time %f\n";
+const char unk1[] = "started at %f\n";
+const char unk2[] = "finished at %f\n";
+const char unk3[] = "\n\n";
 #endif
 
 #ifndef NON_MATCHING
