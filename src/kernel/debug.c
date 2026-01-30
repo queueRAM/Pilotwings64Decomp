@@ -208,6 +208,9 @@ extern Gfx* D_8024B740[];
 */
 
 // forward declarations
+f64 func_80231AC0(void);
+f64 func_80231C10(void);
+f64 func_80231C9C(void);
 void func_8023217C(u8, u8);
 void func_80233310(void);
 void func_802323A8(u8, u8);
@@ -263,7 +266,35 @@ f64 func_80231AC0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_8023217C.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802323A8.s")
+#else
+void func_802323A8(u8 arg0, u8 arg1) {
+    s32 sp24;
+    f64 sp18;
+
+    if (arg1 == 1) {
+        sp18 = 1000.0;
+    } else {
+        sp18 = 1000000.0;
+    }
+    if (arg0 & 0x01) {
+        sp24 = func_80231C10() * sp18;
+        _uvDebugPrintf("retrace: %d       ", sp24);
+    }
+    if (arg0 & 0x04) {
+        sp24 = func_80231C9C() * sp18;
+        _uvDebugPrintf("cpu: %d       ", sp24);
+    }
+    if (arg0 & 0x02) {
+        sp24 = func_80231AC0() * sp18;
+        _uvDebugPrintf("gfx: %d       ", sp24);
+    }
+    if (arg0 != 0) {
+        _uvDebugPrintf("\n");
+    }
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80232554.s")
