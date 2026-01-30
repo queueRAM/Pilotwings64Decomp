@@ -6,12 +6,6 @@
 #include <uv_util.h>
 #include <uv_debug.h>
 
-// #define NON_MATCHING
-
-// this entire file was compiled with `-mips1 -O1 -g`
-// asm_processor doesn't currently work with `-mips1` and `-g`
-// so wrapping everything in NON_MATCHING until those details are worked out
-
 typedef struct {
     f64 unk0;
     s32 unk8;
@@ -42,14 +36,14 @@ extern u8 D_8024B334[];  // 50 chars supported, u8 per char
 extern Vtx_t D_8024B348[];
 
 extern Gfx D_8024B5A8[];
-/* .data and contains:
+/* .data contents:
 {
     gsSPVertex(D_8024B348, 14, 0),
     gsSPEndDisplayList(),
 };
 */
 extern Gfx D_8024B5B8[];
-/* .data and contains:
+/* .data contents:
 {
     gsSPVertex(D_8024B428, 15, 0),
     gsSPVertex(D_8024B518, 1, 15),
@@ -57,7 +51,7 @@ extern Gfx D_8024B5B8[];
 };
 */
 extern Gfx D_8024B5D0[];
-/* .data and contains:
+/* .data contents:
 {
     gsSPVertex(D_8024B528, 8, 0),
     gsSPEndDisplayList(),
@@ -65,7 +59,7 @@ extern Gfx D_8024B5D0[];
 */
 
 extern Gfx D_8024B5E0[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(10, 11, 1, 0),
     gsSP1Triangle(10, 1, 0, 0),
@@ -74,7 +68,7 @@ extern Gfx D_8024B5E0[];
 */
 
 extern Gfx D_8024B5F8[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(11, 8, 2, 0),
     gsSP1Triangle(11, 2, 1, 0),
@@ -83,7 +77,7 @@ extern Gfx D_8024B5F8[];
 */
 
 extern Gfx D_8024B610[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(8, 12, 4, 0),
     gsSP1Triangle(8, 4, 3, 0),
@@ -92,7 +86,7 @@ extern Gfx D_8024B610[];
 */
 
 extern Gfx D_8024B628[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(12, 13, 5, 0),
     gsSP1Triangle(12, 5, 4, 0),
@@ -101,7 +95,7 @@ extern Gfx D_8024B628[];
 */
 
 extern Gfx D_8024B640[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(13, 9, 6, 0),
     gsSP1Triangle(13, 6, 5, 0),
@@ -110,7 +104,7 @@ extern Gfx D_8024B640[];
 */
 
 extern Gfx D_8024B658[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(9, 10, 0, 0),
     gsSP1Triangle(9, 0, 7, 0),
@@ -119,7 +113,7 @@ extern Gfx D_8024B658[];
 */
 
 extern Gfx D_8024B670[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(6, 9, 7, 0),
     gsSP1Triangle(2, 6, 7, 0),
@@ -130,7 +124,7 @@ extern Gfx D_8024B670[];
 */
 
 extern Gfx D_8024B698[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(0, 9, 11, 0),
     gsSP1Triangle(0, 11, 7, 0),
@@ -139,7 +133,7 @@ extern Gfx D_8024B698[];
 */
 
 extern Gfx D_8024B6B0[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(2, 9, 11, 0),
     gsSP1Triangle(2, 11, 1, 0),
@@ -148,7 +142,7 @@ extern Gfx D_8024B6B0[];
 */
 
 extern Gfx D_8024B6C8[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(4, 11, 9, 0),
     gsSP1Triangle(4, 9, 3, 0),
@@ -157,7 +151,7 @@ extern Gfx D_8024B6C8[];
 */
 
 extern Gfx D_8024B6E0[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(6, 11, 9, 0),
     gsSP1Triangle(6, 9, 5, 0),
@@ -166,7 +160,7 @@ extern Gfx D_8024B6E0[];
 */
 
 extern Gfx D_8024B6F8[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(12, 13, 15, 0),
     gsSP1Triangle(12, 15, 14, 0),
@@ -175,7 +169,7 @@ extern Gfx D_8024B6F8[];
 */
 
 extern Gfx D_8024B710[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(0, 2, 1, 0),
     gsSP1Triangle(0, 3, 2, 0),
@@ -184,7 +178,7 @@ extern Gfx D_8024B710[];
 */
 
 extern Gfx D_8024B728[];
-/* .data and contains:
+/* .data contents:
 {
     gsSP1Triangle(4, 5, 7, 0),
     gsSP1Triangle(4, 7, 6, 0),
@@ -233,11 +227,8 @@ void func_802339B0(u8 r, u8 g, u8 b, u8 a);
 void func_80233A40(s32, u16);
 void func_80233D04(u16);
 void func_80233DB8(char ch);
-void func_80233FC8(char* fmt, u8* arg1, ...);
+void func_80233FC8(char* fmt, s32 arg1, ...);
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80231AC0.s")
-#else
 f64 func_80231AC0(void) {
     Unk802B92A0_Unk0* sp14;
     s32 sp10;
@@ -262,11 +253,7 @@ f64 func_80231AC0(void) {
     }
     return 0.0;
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80231C10.s")
-#else
 f64 func_80231C10(void) {
     s32 sp4;
     s32 sp0;
@@ -275,11 +262,7 @@ f64 func_80231C10(void) {
     sp0 = (gSchedRingIdx + 2) % 5;
     return D_802B9C30[sp0] - D_802B9C30[sp4];
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80231C9C.s")
-#else
 f64 func_80231C9C(void) {
     Unk802B92A0_Unk0* sp2C;
     s32 sp28;
@@ -317,11 +300,7 @@ f64 func_80231C9C(void) {
     }
     return sp8;
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80231F04.s")
-#else
 void func_80231F04(f32 arg0, f32 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
     s16 sp36;
     s16 sp34;
@@ -352,17 +331,9 @@ void func_80231F04(f32 arg0, f32 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
     uvVtx(sp34, sp36, 0, 0, 0, arg3, arg4, arg5, 0xFF);
     uvVtxEndPoly();
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/D_8024F350.s")
-#else
 const char D_8024F350[] = "start: %f  (%d)   finish: %f (%d)\n";
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_8023217C.s")
-#else
 void func_8023217C(u8 arg0, u8 arg1) {
     s32 val;
     s16 xPos;
@@ -397,11 +368,7 @@ void func_8023217C(u8 arg0, u8 arg1) {
         yPos += 14;
     }
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802323A8.s")
-#else
 void func_802323A8(u8 arg0, u8 arg1) {
     s32 sp24;
     f64 sp18;
@@ -427,11 +394,7 @@ void func_802323A8(u8 arg0, u8 arg1) {
         _uvDebugPrintf("\n");
     }
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80232554.s")
-#else
 void func_80232554(u8 arg0) {
     s16 xPos;
     s16 yPos;
@@ -465,11 +428,7 @@ void func_80232554(u8 arg0) {
         func_80233FC8("m: %d", uvGfxGetCnt(3));
     }
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80232738.s")
-#else
 void func_80232738(u8 arg0) {
     if (arg0 & 0x02) {
         _uvDebugPrintf("tris: %d   ", uvGfxGetCnt(1));
@@ -492,19 +451,11 @@ void func_80232738(u8 arg0) {
 }
 
 // unused strings after "\n":
-// "frame time %f\n"
-// "started at %f\n"
-// "finished at %f\n"
-// "\n\n"
-const char unk0[] = "frame time %f\n";
-const char unk1[] = "started at %f\n";
-const char unk2[] = "finished at %f\n";
-const char unk3[] = "\n\n";
-#endif
+static const char unused0[] = "frame time %f\n";
+static const char unused1[] = "started at %f\n";
+static const char unused2[] = "finished at %f\n";
+static const char unused3[] = "\n\n";
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_8023286C.s")
-#else
 void func_8023286C(void) {
     s16 sp36;
 
@@ -570,18 +521,10 @@ void func_8023286C(void) {
     uvEndTmesh();
     uvGfxStatePop();
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80232EBC.s")
-#else
 void func_80232EBC(void) {
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80232ECC.s")
-#else
 void func_80232ECC(s32 arg0, s32 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5) {
     Unk802B92A0_Unk0* sp4C;
     s32 sp48;
@@ -668,22 +611,14 @@ void func_80232ECC(s32 arg0, s32 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5) {
         }
     }
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233310.s")
-#else
 void func_80233310(void) {
     func_80232ECC(0, 0x2A, 0x34, 0x00, 0x00, 0xFF);
     func_80232ECC(0, 0x29, 0x2D, 0xFF, 0x00, 0xFF);
     func_80232ECC(1, 0x2A, 0x26, 0x00, 0xFF, 0x00);
     func_80232ECC(1, 0x29, 0x1E, 0xFF, 0x00, 0x00);
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802333AC.s")
-#else
 void func_802333AC(UNUSED u8 arg0) {
     Mtx4F sp60;
     Mtx4F sp20;
@@ -702,11 +637,7 @@ void func_802333AC(UNUSED u8 arg0) {
     uvGfxStatePop();
     func_802236A8();
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_8023345C.s")
-#else
 void func_8023345C(u8 arg0, u8 arg1, u8 arg2) {
     if (arg1 == 1) {
         func_802333AC(arg0);
@@ -716,11 +647,7 @@ void func_8023345C(u8 arg0, u8 arg1, u8 arg2) {
         func_802323A8(arg0, arg2);
     }
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/uvDbgCnt.s")
-#else
 void uvDbgCnt(u8 arg0, u8 arg1) {
     if (arg0 == 0) {
         return;
@@ -734,11 +661,7 @@ void uvDbgCnt(u8 arg0, u8 arg1) {
         }
     }
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233590.s")
-#else
 void func_80233590(void) {
     u8* sp2C;
     f32 sp28;
@@ -782,11 +705,7 @@ void func_80233590(void) {
         }
     }
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233810.s")
-#else
 void func_80233810(void) {
     D_802C8024 = 0.0f;
     D_802C8028 = 0.0f;
@@ -796,31 +715,19 @@ void func_80233810(void) {
     D_802C8022 = 240 - D_802C802E;
     D_802C8030 = 0;
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233878.s")
-#else
 void func_80233878(s16 arg0, s16 arg1) {
     D_802C8020 = arg0;
     D_802C8022 = arg1;
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802338A8.s")
-#else
 void func_802338A8(f32 arg0, f32 arg1) {
     D_802C8024 = (f32)(arg0 / 10.0);
     D_802C8028 = (f32)(arg1 / 14.0);
     D_802C802C = (s16)((D_802C8024 + 0.25) * 10.0);
     D_802C802E = (s16)((D_802C8028 + 0.25) * 14.0);
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802339B0.s")
-#else
 void func_802339B0(u8 r, u8 g, u8 b, u8 a) {
     s32 idx;
     for (idx = 0; idx < 0x26; idx++) {
@@ -830,11 +737,7 @@ void func_802339B0(u8 r, u8 g, u8 b, u8 a) {
         D_8024B348[idx].cn[3] = a;
     }
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233A40.s")
-#else
 void func_80233A40(s32 arg0, u16 arg1) {
     Mtx4F sp70;
     Mtx4F sp30;
@@ -881,11 +784,7 @@ void func_80233A40(s32 arg0, u16 arg1) {
     }
     D_802C8020 += D_802C802C * sp28;
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233D04.s")
-#else
 void func_80233D04(u16 arg0) {
     u8 sp1F;
     u8 idx;
@@ -901,11 +800,7 @@ void func_80233D04(u16 arg0) {
         }
     }
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233DB8.s")
-#else
 void func_80233DB8(char ch) {
     u16 sp1E;
     u16 idx;
@@ -947,13 +842,9 @@ void func_80233DB8(char ch) {
         }
     }
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233FC8.s")
-#else
-void func_80233FC8(char* fmt, u8* arg1, ...) {
-    u8** spB4;
+void func_80233FC8(char* fmt, s32 arg1, ...) {
+    s32* spB4;
     s32 idx;
     s32 base;
     char ch;
@@ -987,7 +878,7 @@ void func_80233FC8(char* fmt, u8* arg1, ...) {
                 base = 2;
             } else if (ch == 'f') {
             } else if (ch == 's') {
-                sp24 = *spB4;
+                sp24 = (u8*)*spB4;
                 sp20 = 0;
                 sp28.m[0][0] = D_802C8024;
                 sp28.m[1][1] = D_802C8028;
@@ -1021,4 +912,3 @@ void func_80233FC8(char* fmt, u8* arg1, ...) {
     D_802C8020 = (s16)sp28.m[3][0];
     D_802C8022 = (s16)sp28.m[3][1];
 }
-#endif
