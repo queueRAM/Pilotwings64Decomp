@@ -208,9 +208,13 @@ extern Gfx* D_8024B740[];
 
 // forward declarations
 void func_8023217C(u8, u8);
+void func_80233310(void);
 void func_802323A8(u8, u8);
 void func_80232554(u8);
 void func_80232738(u8);
+void func_8023286C(void);
+void func_80232EBC(void);
+void func_802333AC(u8);
 void func_80233D04(u16);
 void func_80233FC8(char* fmt, ...);
 
@@ -300,8 +304,28 @@ void func_80232EBC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80233310.s")
 
-void func_802333AC(u8);
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_802333AC.s")
+#else
+void func_802333AC(UNUSED u8 arg0) {
+    Mtx4F sp60;
+    Mtx4F sp20;
+
+    arg0 += 1;
+    uvMat4Viewport(&sp20, 0.0f, 320.0f, 0.0f, 240.0f);
+    func_80222100(&sp20);
+    uvMat4SetIdentity(&sp60);
+    func_8022345C(&sp60, 1);
+    func_8023286C();
+    uvGfxStatePush();
+    uvGfxSetFlags(0xFFF);
+    uvGfxClearFlags(0xF00000);
+    func_80232EBC();
+    func_80233310();
+    uvGfxStatePop();
+    func_802236A8();
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_8023345C.s")
