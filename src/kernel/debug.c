@@ -1,5 +1,6 @@
 #include "common.h"
 #include <uv_controller.h>
+#include <uv_geometry.h>
 #include <uv_graphics.h>
 #include <uv_matrix.h>
 #include <uv_util.h>
@@ -293,7 +294,75 @@ void func_80232738(u8 arg0) {
 }
 #endif
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_8023286C.s")
+#else
+void func_8023286C(void) {
+    s16 sp36;
+
+    sp36 = 0x55;
+    uvGfxStatePush();
+    uvGfxSetFlags(0xFFF);
+    uvGfxClearFlags(0x80F00000);
+
+    uvBeginTmesh();
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0, 0, 0, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0, 0, 0, 0xFF);
+    sp36 = 0x75;
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0, 0, 0, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0, 0, 0, 0xFF);
+    uvEndTmesh();
+
+    uvBeginTmesh();
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0x28, 0x28, 0x28, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0x28, 0x28, 0x28, 0xFF);
+    sp36 = 0x97;
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0x28, 0x28, 0x28, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0x28, 0x28, 0x28, 0xFF);
+    uvEndTmesh();
+
+    uvBeginTmesh();
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0, 0, 0, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0, 0, 0, 0xFF);
+    sp36 = 0xB9;
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0, 0, 0, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0, 0, 0, 0xFF);
+    uvEndTmesh();
+
+    uvBeginTmesh();
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0x28, 0x28, 0x28, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0x28, 0x28, 0x28, 0xFF);
+    sp36 = 0xD9;
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0x28, 0x28, 0x28, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0x28, 0x28, 0x28, 0xFF);
+    uvEndTmesh();
+
+    uvBeginTmesh();
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0, 0, 0, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0, 0, 0, 0xFF);
+    sp36 = 0xFB;
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0, 0, 0, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0, 0, 0, 0xFF);
+    uvEndTmesh();
+
+    uvBeginTmesh();
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0x28, 0x28, 0x28, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0x28, 0x28, 0x28, 0xFF);
+    sp36 = 0x11D;
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0x28, 0x28, 0x28, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0x28, 0x28, 0x28, 0xFF);
+    uvEndTmesh();
+
+    uvBeginTmesh();
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0, 0, 0, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0, 0, 0, 0xFF);
+    sp36 = 0x13D;
+    uvVtx(sp36, 0x3C, 0, 0, 0, 0, 0, 0, 0xFF);
+    uvVtx(sp36, 0x1E, 0, 0, 0, 0, 0, 0, 0xFF);
+    uvEndTmesh();
+    uvGfxStatePop();
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80232EBC.s")
@@ -302,6 +371,7 @@ void func_80232EBC(void) {
 }
 #endif
 
+// https://decomp.me/scratch/wEQOh
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/debug/func_80232ECC.s")
 
 #ifndef NON_MATCHING
