@@ -13,7 +13,9 @@ void Length2D(f32 x, f32 y) {
     SqrtF(SQ(x) + SQ(y));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2AE50/Length3D.s")
+void Length3D(f32 x, f32 y, f32 z) {
+    SqrtF(SQ(x) + SQ(y) + SQ(z));
+}
 
 f32 func_8022A27C(f32, f32);
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2AE50/func_8022A27C.s")
