@@ -10,6 +10,9 @@ void uvEventPost(s32, s32);
 
 extern s32 D_802491E8;
 extern s32 D_802491EC;
+extern u8 D_802491F4;
+extern s8 D_802491F8;
+extern s8 D_802491FC;
 extern s32 D_80249200;
 extern f32 D_8024921C;
 extern s32 D_80249230;
@@ -30,6 +33,7 @@ extern s32 gGfxLookCount;
 extern s16 gGfxMstackIdx;
 extern MtxStack_t gGfxMstack[2];
 extern u8* gGfxFbPtrs[2];
+extern u8* D_80299278;
 
 extern UnkStruct_80222EE8_t D_802A9900[];
 extern s16 D_802A9980;
@@ -155,28 +159,79 @@ void uvGfxClearScreen(u8 r, u8 g, u8 b, u8 a) {
     gDPSetCycleType(gGfxDisplayListHead++, G_CYC_2CYCLE);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80222A98.s")
+void uvGfx_80222A98(void) {
+    gDPSetScissor(gGfxDisplayListHead++, G_SC_NON_INTERLACE, 0, 0, 320, 240) gDPPipeSync(gGfxDisplayListHead++);
+    gDPSetRenderMode(gGfxDisplayListHead++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+    gDPPipeSync(gGfxDisplayListHead++);
+    gDPSetCycleType(gGfxDisplayListHead++, G_CYC_FILL);
+    gDPPipeSync(gGfxDisplayListHead++);
+    gDPSetFillColor(gGfxDisplayListHead++, 0xFFFCFFFC);
+    gDPPipeSync(gGfxDisplayListHead++);
+    gDPSetColorImage(gGfxDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, osVirtualToPhysical(D_80299278));
+    gDPPipeSync(gGfxDisplayListHead++);
+    gDPFillRectangle(gGfxDisplayListHead++, 0, 0, 319, 239);
+    gDPPipeSync(gGfxDisplayListHead++);
+    gDPSetColorImage(gGfxDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, osVirtualToPhysical(gGfxFbCurrPtr));
+    gDPPipeSync(gGfxDisplayListHead++);
+    gDPSetCycleType(gGfxDisplayListHead++, G_CYC_2CYCLE);
+    gDPPipeSync(gGfxDisplayListHead++);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80222C94.s")
+void uvGfx_80222C94(s32 arg0) {
+    if (arg0 != 0) {
+        gDPSetRenderMode(gGfxDisplayListHead++, G_RM_PASS, G_RM_AA_ZB_OPA_TERR2);
+        gSPSetGeometryMode(gGfxDisplayListHead++, G_ZBUFFER);
+        D_802491F4 = 1;
+        gGfxStateStackData |= 0x200000;
+    } else {
+        gDPSetRenderMode(gGfxDisplayListHead++, G_RM_PASS, G_RM_AA_OPA_TERR2);
+        gSPClearGeometryMode(gGfxDisplayListHead++, G_ZBUFFER);
+        D_802491F4 = 0;
+        gGfxStateStackData &= 0xFFDFFFFF;
+    }
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80222D78.s")
+void uvGfx_80222D78(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        gSPSetGeometryMode(gGfxDisplayListHead++, G_CULL_FRONT);
+        D_802491F8 = 1;
+        gGfxStateStackData |= 0x80000;
+    } else {
+        gSPClearGeometryMode(gGfxDisplayListHead++, G_CULL_FRONT) D_802491F8 = 0;
+        gGfxStateStackData &= 0xFFF7FFFF;
+    }
+    if (arg1 != 0) {
+        gSPSetGeometryMode(gGfxDisplayListHead++, G_CULL_BACK);
+        D_802491FC = 1;
+        gGfxStateStackData |= 0x100000;
+    } else {
+        gSPClearGeometryMode(gGfxDisplayListHead++, G_CULL_BACK);
+        D_802491FC = 0;
+        gGfxStateStackData &= 0xFFEFFFFF;
+    }
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80222E90.s")
+void uvGfx_80222E90(s32 arg0) {
+    if (arg0 != 0) {
+        gSPSetGeometryMode(gGfxDisplayListHead++, G_LIGHTING) return;
+    }
+    gSPClearGeometryMode(gGfxDisplayListHead++, G_LIGHTING);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80222EE8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfxClipViewport.s")
 
 void uvGfx_80223094(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    uvGfx_80222EE8(&D_802A9900[arg0], arg1, arg2, arg3, arg4);
+    uvGfxClipViewport(&D_802A9900[arg0], arg1, arg2, arg3, arg4);
 }
 
 void uvGfx_802230CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    uvGfx_80222EE8(&D_802A9900[arg0 + 2], arg1, arg2, arg3, arg4);
-    uvGfx_80223114(arg0 + 2);
+    uvGfxClipViewport(&D_802A9900[arg0 + 2], arg1, arg2, arg3, arg4);
+    uvGfxSetViewport(arg0 + 2);
 }
 
-void uvGfx_80223114(s32 arg0) {
+void uvGfxSetViewport(s32 vp_id) {
     UnkStruct_80222EE8_t* temp_v0;
-    temp_v0 = &D_802A9900[arg0];
+    temp_v0 = &D_802A9900[vp_id];
 
     gSPViewport(gGfxDisplayListHead++, (u32)temp_v0 + 0x80000010);
     gDPSetScissor(gGfxDisplayListHead++, G_SC_NON_INTERLACE, temp_v0->unk8, 0xF0 - temp_v0->unkE, temp_v0->unkA, 0xF0 - temp_v0->unkC);
