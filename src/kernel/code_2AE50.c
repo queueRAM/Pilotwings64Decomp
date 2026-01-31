@@ -1,6 +1,9 @@
 #include "common.h"
+#include <math.h>
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2AE50/SqrtF.s")
+f32 SqrtF(f32 x) {
+    return sqrtf(x);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_2AE50/func_80229EC0.s")
 
