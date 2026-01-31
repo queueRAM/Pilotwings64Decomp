@@ -8,23 +8,23 @@ extern uvSprite_t gSprtTable1[];
 extern uvSprite_t gSprtTable2[];
 extern uvSprite_t gSprtTable3[];
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/func_80230130.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/uvSprt_80230130.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/func_802301A4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/uvSprt_802301A4.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/_uvTxtDraw.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/uvSprtFromBitmap.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/func_80230750.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/uvSprt_80230750.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/func_80230898.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/uvSprt_80230898.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/func_80230954.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/uvSprtInit.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/func_80230B98.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/uvSprtDisplayList.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/func_80230D30.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sprite/uvSprtDrawAll.s")
 
 void uvSprtDraw(s32 sprite_id) {
     uvSprite_t* sprite;
@@ -36,7 +36,7 @@ void uvSprtDraw(s32 sprite_id) {
     sprite = &gSprtTable1[sprite_id];
     if (sprite->unkA != 0xFFF) {
         spInit(&gGfxDisplayListHead);
-        func_80230B98(sprite);
+        uvSprtDisplayList(sprite);
         spFinish(&gGfxDisplayListHead);
         gGfxDisplayListHead--;
     }

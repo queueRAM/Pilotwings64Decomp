@@ -12,6 +12,7 @@
 #include <uv_matrix.h>
 #include <uv_memory.h>
 #include <uv_sched.h>
+#include <uv_sprite.h>
 #include <uv_texture.h>
 #include <macros.h>
 
@@ -32,7 +33,6 @@ void func_80218700(void);
 void func_80218BA0(void);
 void func_80219FD0(void);
 void func_8021F100(void);
-void func_80230130(void);
 
 extern u8 app_ROM_START[];
 extern u8 app_ROM_END[];
@@ -189,8 +189,8 @@ s32 uvSysInit(s32 arg0) {
     func_80218BA0();
     func_80219FD0();
     func_8021F100();
-    func_80230130();
-    func_80230954();
+    uvSprt_80230130();
+    uvSprtInit();
     uvMemInitBlocks();
     uvSysInitAudio();
     gEepromFound = osEepromProbe(&gSiContQ);
@@ -280,9 +280,9 @@ void func_8022E558(void) {
     uvGfxSetFlags(0x000FFF);
     uvGfxClearFlags(0xB00000);
     uvMat4Viewport(&sp74, 0.0f, 320.0f, 0.0f, 240.0f);
-    func_80222100(&sp74);
+    uvGfx_80222100(&sp74);
     uvMat4SetIdentity(&sp74);
-    func_80221A78(&sp74);
+    uvGfxPushMtxUnk(&sp74);
     uvVtxBeginPoly();
     uvVtx(0xF, 0xF, 0, 0, 0, 0, 0x80, 0, 0xFF);
     uvVtx(0x50, 0xF, 0, 0, 0, 0, 0x80, 0, 0xFF);
@@ -310,7 +310,7 @@ void func_8022E558(void) {
         uvVtxEndPoly();
     }
 
-    func_802236A8();
+    uvGfx_802236A8();
     uvGfxStatePop();
 }
 

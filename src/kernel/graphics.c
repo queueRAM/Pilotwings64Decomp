@@ -1,12 +1,11 @@
 #include <uv_graphics.h>
 #include <uv_memory.h>
 #include <uv_sched.h>
+#include <uv_sprite.h>
 
 void func_80218CA4(void);
 void func_8021A298(void);
 void func_8021F30C(s32);
-void func_80220E0C(void);
-void func_802301A4(void);
 void uvEventPost(s32, s32);
 
 extern s32 D_802491E8;
@@ -32,6 +31,7 @@ extern s16 gGfxMstackIdx;
 extern MtxStack_t gGfxMstack[2];
 extern u8* gGfxFbPtrs[2];
 
+extern UnkStruct_80222EE8_t D_802A9900[];
 extern s16 D_802A9980;
 extern s16 D_802A9982;
 extern s16 D_802A9984;
@@ -64,9 +64,9 @@ void uvGfxBegin(void) {
     gSPSegment(gGfxDisplayListHead++, 0x00, 0x00000000);
     gDPSetColorImage(gGfxDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, osVirtualToPhysical(gGfxFbCurrPtr));
 
-    func_80220E0C();
+    uvGfx_80220E0C();
     func_80218CA4();
-    func_802301A4();
+    uvSprt_802301A4();
     func_8021F30C(1);
     func_8021A298();
 
@@ -78,9 +78,9 @@ void uvGfxBegin(void) {
     gGfxLookCount = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80220CA0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80220CA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80220E0C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80220E0C.s")
 
 void uvGfxPushMtxView(Mtx src) {
     uvGfxMstackPush(src);
@@ -94,15 +94,15 @@ void uvGfxPushMtxProj(Mtx arg0) {
     D_80298AD0[gGfxFbIndex]++;
 }
 
-void func_802210C4(Gfx* dl) {
+void uvGfxDisplayList(Gfx* dl) {
     gSPDisplayList(gGfxDisplayListHead++, dl);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_802210E8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_802210E8.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfxStateDraw.s")
 
-void func_80221A78(Mtx4F* arg0) {
+void uvGfxPushMtxUnk(Mtx4F* arg0) {
     Mtx4F spC8;
     Mtx4F sp88;
     Mtx4F sp48;
@@ -116,9 +116,9 @@ void func_80221A78(Mtx4F* arg0) {
     uvGfxPushMtxView(*(Mtx*)&spC8);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvClampFunction.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfxClampLook.s")
 
-void uvProcessLooks(Mtx4F* arg0) {
+void uvGfxLookAt(Mtx4F* arg0) {
     Mtx4F temp;
 
     if (gGfxLookCount >= 0x1E) {
@@ -127,19 +127,19 @@ void uvProcessLooks(Mtx4F* arg0) {
     }
 
     uvMat4UnkOp4(&temp, &D_802B4888);
-    uvClampFunction(&D_80298AE8[gGfxFbIndex][gGfxLookCount], temp.m[3][0], temp.m[3][1], temp.m[3][2], arg0->m[3][0], arg0->m[3][1], arg0->m[3][2], 0.0f, 1.0f,
-                    0.0f);
+    uvGfxClampLook(&D_80298AE8[gGfxFbIndex][gGfxLookCount], temp.m[3][0], temp.m[3][1], temp.m[3][2], arg0->m[3][0], arg0->m[3][1], arg0->m[3][2], 0.0f, 1.0f,
+                   0.0f);
     gSPLookAt(gGfxDisplayListHead++, &D_80298AE8[gGfxFbIndex][gGfxLookCount]);
     gGfxLookCount += 1;
 }
 
-void func_80222100(Mtx4F* arg0) {
+void uvGfx_80222100(Mtx4F* arg0) {
     Mtx4F sp48;
     uvMat4SetUnk6(&sp48, arg0);
     uvGfxPushMtxProj(*(Mtx*)&sp48);
 }
 
-void func_80222170(s32 arg0) {
+void uvGfx_80222170(s32 arg0) {
     D_80249230 = arg0;
 }
 
@@ -155,21 +155,36 @@ void uvGfxClearScreen(u8 r, u8 g, u8 b, u8 a) {
     gDPSetCycleType(gGfxDisplayListHead++, G_CYC_2CYCLE);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80222A98.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80222A98.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80222C94.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80222C94.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80222D78.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80222D78.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80222E90.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80222E90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80222EE8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80222EE8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80223094.s")
+void uvGfx_80223094(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    uvGfx_80222EE8(&D_802A9900[arg0], arg1, arg2, arg3, arg4);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_802230CC.s")
+void uvGfx_802230CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    uvGfx_80222EE8(&D_802A9900[arg0 + 2], arg1, arg2, arg3, arg4);
+    uvGfx_80223114(arg0 + 2);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80223114.s")
+void uvGfx_80223114(s32 arg0) {
+    UnkStruct_80222EE8_t* temp_v0;
+    temp_v0 = &D_802A9900[arg0];
+
+    gSPViewport(gGfxDisplayListHead++, (u32)temp_v0 + 0x80000010);
+    gDPSetScissor(gGfxDisplayListHead++, G_SC_NON_INTERLACE, temp_v0->unk8, 0xF0 - temp_v0->unkE, temp_v0->unkA, 0xF0 - temp_v0->unkC);
+    D_802A9980 = temp_v0->unk8;
+    D_802A9982 = temp_v0->unkA;
+    D_802A9984 = temp_v0->unkC;
+    D_802A9986 = temp_v0->unkE;
+}
 
 void uvGfxMstackPushUnk(Mtx4F* src) {
     gGfxMstackIdx += 1;
@@ -195,23 +210,23 @@ Mtx* uvGfxMstackTop(void) {
     return &gGfxMstack[gGfxFbIndex][gGfxMstackIdx];
 }
 
-void func_80223408(f32 arg0) {
+void uvGfx_80223408(f32 arg0) {
     D_8024921C = arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80223414.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80223414.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_8022345C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_8022345C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_802234F4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_802234F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_802235A4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_802235A4.s")
 
-void func_802236A8(void) {
+void uvGfx_802236A8(void) {
     gSPPopMatrix(gGfxDisplayListHead++, G_MTX_MODELVIEW);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_802236CC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_802236CC.s")
 
 s32 uvGfxGetCnt(u32 arg0) {
     switch (arg0) {
@@ -265,7 +280,7 @@ void uvGfxClearFlags(s32 flags) {
     }
 }
 
-void func_80223A28(s32 flags) {
+void uvGfx_80223A28(s32 flags) {
     uvGfxState_t sp20;
     s32 pad;
 
@@ -274,16 +289,16 @@ void func_80223A28(s32 flags) {
     uvGfxStateDraw(&sp20);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80223A64.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80223A64.s")
 
-void func_80223B80(void) {
+void uvGfx_80223B80(void) {
     if (D_80249200 != 0) {
         uvWaitForMesg(UV_MESG_GFX);
         D_80249200 = 0;
     }
 }
 
-void func_80223BB8(s32 arg0) {
+void uvGfx_80223BB8(s32 arg0) {
     D_802491EC = arg0;
     if (arg0 != 0) {
         osViSetSpecialFeatures(1U);
@@ -292,11 +307,11 @@ void func_80223BB8(s32 arg0) {
     osViSetSpecialFeatures(2U);
 }
 
-void func_80223BF4(s32 arg0) {
+void uvGfx_80223BF4(s32 arg0) {
     D_802491E8 = arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/func_80223C00.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80223C00.s")
 
 void uvCopyFrameBuf(s32 fb_id) {
     u8* src;

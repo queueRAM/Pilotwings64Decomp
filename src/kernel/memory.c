@@ -346,8 +346,8 @@ void uvLevelInit(void) {
     u32 length;
     void* source;
 
-    func_80223B80();
-    func_80230954();
+    uvGfx_80223B80();
+    uvSprtInit();
     D_802B892C = 0x8004181C;
     D_802B8930 = osMemSize + 0x80000000;
     D_802B8824 = 0;

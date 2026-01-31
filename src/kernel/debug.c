@@ -613,9 +613,9 @@ void func_802333AC(UNUSED u8 arg0) {
 
     arg0 += 1;
     uvMat4Viewport(&sp20, 0.0f, 320.0f, 0.0f, 240.0f);
-    func_80222100(&sp20);
+    uvGfx_80222100(&sp20);
     uvMat4SetIdentity(&sp60);
-    func_8022345C(&sp60, 1);
+    uvGfx_8022345C(&sp60, 1);
     func_8023286C();
     uvGfxStatePush();
     uvGfxSetFlags(0xFFF);
@@ -623,7 +623,7 @@ void func_802333AC(UNUSED u8 arg0) {
     func_80232EBC();
     func_80233310();
     uvGfxStatePop();
-    func_802236A8();
+    uvGfx_802236A8();
 }
 
 void func_8023345C(u8 arg0, u8 arg1, u8 arg2) {
@@ -736,7 +736,7 @@ void func_80233A40(s32 arg0, u16 arg1) {
 
     D_802C8030 = 0;
     uvMat4Viewport(&sp70, 0.0f, 320.0f, 0.0f, 240.0f);
-    func_80222100(&sp70);
+    uvGfx_80222100(&sp70);
     uvMat4SetIdentity(&sp30);
     sp30.m[0][0] = D_802C8024;
     sp30.m[1][1] = D_802C8028;
@@ -761,14 +761,14 @@ void func_80233A40(s32 arg0, u16 arg1) {
 
     for (sp2C = 0; sp2C < sp28; sp2C++) {
         sp2A = (u16)(arg0 % arg1);
-        func_8022345C(&sp30, 0);
+        uvGfx_8022345C(&sp30, 0);
         func_80233D04(sp2A);
         sp30.m[3][0] -= (f32)D_802C802C;
         arg0 = (s32)(arg0 - sp2A) / arg1;
     }
     if (sp26 != 0) {
-        func_8022345C(&sp30, 0);
-        func_802210C4(D_8024B670);
+        uvGfx_8022345C(&sp30, 0);
+        uvGfxDisplayList(D_8024B670);
     }
     D_802C8020 += D_802C802C * sp28;
 }
@@ -779,12 +779,12 @@ void func_80233D04(u16 arg0) {
 
     sp1F = D_8024B334[arg0];
     if (D_802C8030 != 1) {
-        func_802210C4(D_8024B5A8);
+        uvGfxDisplayList(D_8024B5A8);
     }
 
     for (idx = 0; idx < 7; idx++) {
         if ((1 << idx) & sp1F) {
-            func_802210C4(D_8024B740[idx]);
+            uvGfxDisplayList(D_8024B740[idx]);
         }
     }
 }
@@ -804,29 +804,29 @@ void func_80233DB8(char ch) {
     sp1E = D_8024B2D0[(int)ch];
 
     if (D_802C8030 != 1) {
-        func_802210C4(D_8024B5A8);
+        uvGfxDisplayList(D_8024B5A8);
     }
     for (idx = 0; idx < 7; idx++) {
         if ((1 << idx) & sp1E) {
-            func_802210C4(D_8024B740[idx]);
+            uvGfxDisplayList(D_8024B740[idx]);
         }
     }
 
     if (D_802C8030 != 2) {
-        func_802210C4(D_8024B5B8);
+        uvGfxDisplayList(D_8024B5B8);
     }
     for (idx = 7; idx < 12; idx++) {
         if ((1 << idx) & sp1E) {
-            func_802210C4(D_8024B740[idx]);
+            uvGfxDisplayList(D_8024B740[idx]);
         }
     }
 
     if (D_802C8030 != 3) {
-        func_802210C4(D_8024B5D0);
+        uvGfxDisplayList(D_8024B5D0);
     }
     for (idx = 12; idx < 14; idx++) {
         if ((1 << idx) & sp1E) {
-            func_802210C4(D_8024B740[idx]);
+            uvGfxDisplayList(D_8024B740[idx]);
         }
     }
 }
@@ -843,7 +843,7 @@ void func_80233FC8(char* fmt, s32 arg1, ...) {
 
     D_802C8030 = 0;
     uvMat4Viewport(&sp68, 0.0f, 320.0f, 0.0f, 240.0f);
-    func_80222100(&sp68);
+    uvGfx_80222100(&sp68);
     uvMat4SetIdentity(&sp28);
     sp28.m[0][0] = D_802C8024;
     sp28.m[1][1] = D_802C8028;
@@ -853,7 +853,7 @@ void func_80233FC8(char* fmt, s32 arg1, ...) {
     idx = 0;
     ch = fmt[idx];
     while (ch != 0) {
-        func_8022345C(&sp28, 0);
+        uvGfx_8022345C(&sp28, 0);
         if (ch == '%') {
             idx++;
             ch = fmt[idx];
@@ -871,7 +871,7 @@ void func_80233FC8(char* fmt, s32 arg1, ...) {
                 sp28.m[0][0] = D_802C8024;
                 sp28.m[1][1] = D_802C8028;
                 while (sp24[sp20] != 0) {
-                    func_8022345C(&sp28, 0);
+                    uvGfx_8022345C(&sp28, 0);
                     sp28.m[3][0] += (f32)D_802C802C;
                     func_80233DB8(sp24[sp20]);
                     sp20 += 1;

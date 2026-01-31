@@ -20,11 +20,21 @@ typedef struct {
     u8 pad[0x40];
 } uvSprite_t;
 
-void func_80230B98(uvSprite_t* sprite);
+void uvSprt_80230130(void);
+void uvSprt_802301A4(void);
+void _uvTxtDraw(s32 arg0);
+void uvSprtFromBitmap(void *arg0, void *arg1);
+void uvSprt_80230750(void *arg0, void *arg1);
+s32  uvSprt_80230898(void);
+void uvSprtInit(void);
+void uvSprtDisplayList(uvSprite_t* sprite);
+void uvSprtDrawAll(void);
 void uvSprtDraw(s32 sprite_id);
 void uvSprtSetBlit(uvSprite_t* sprite, s32 arg1);
-s16 uvSprtGetUnk0(s32 sprite_id);
-s16 uvSprtGetUnk1(s32 sprite_id);
+s16  uvSprtGetUnk0(s32 sprite_id);
+s16  uvSprtGetUnk1(s32 sprite_id);
+// void uvSprtProps(s32 arg0, ? arg1, ? arg2, ? arg3);
+void uvSprtUpdateUnk(uvSprite_t* sprite);
 void uvSprtResetUnk(void);
 
 #endif // PILOTWINGS64_UV_SPRITE
