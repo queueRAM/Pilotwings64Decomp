@@ -85,10 +85,10 @@ void uvGfxInit(void) {
     gGfxDisplayListHead = gGfxDisplayListBase[gGfxFbIndex];
     gGfxFbCurrPtr = gGfxFbPtrs[gGfxFbIndex];
     D_802B494C = &D_802B4950[gGfxFbIndex];
-    D_802A9980 = 2;
-    D_802A9982 = 0x13E;
-    D_802A9984 = 2;
-    D_802A9986 = 0xEE;
+    // clang-format off: must preserve same line assignments
+    D_802A9980 = 2; D_802A9982 = 0x13E;
+    D_802A9984 = 2; D_802A9986 = 0xEE;
+    // clang-format on
 
     for (i = 0; i < 2; i++) {
         uvGfx_80223094(i, D_802A9980, D_802A9982, D_802A9984, (s32)D_802A9986);
