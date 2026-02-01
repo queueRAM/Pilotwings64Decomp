@@ -1,3 +1,4 @@
+#include <uv_geometry.h>
 #include <uv_graphics.h>
 #include <uv_memory.h>
 #include <uv_sched.h>
@@ -5,7 +6,6 @@
 
 void func_80218CA4(void);
 void func_8021A298(void);
-void func_8021F30C(s32);
 void uvEventPost(s32, s32);
 
 extern Gfx D_80249140[];
@@ -22,6 +22,10 @@ extern f32 D_80249208;
 extern f32 D_8024921C;
 extern s32 D_80249230;
 
+extern u8 D_80296AA0[];
+extern u8 D_80296AA8[];
+extern u8* D_80298AA8;
+extern u8* D_80298AAC;
 extern s32 D_80298AB8[];
 extern s32 D_80298AC0[];
 extern s32 D_80298AC8[];
@@ -60,8 +64,43 @@ extern u32 gGfxStateStack[];
 extern u8 gGfxStateStackIdx;
 
 extern Mtx4F D_802B4888;
+extern UnkStruct_uvGfxInit* D_802B494C;
+extern UnkStruct_uvGfxInit D_802B4950[];
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfxInit.s")
+typedef Gfx uvDisplayListBuf_t[0x1068];
+extern uvDisplayListBuf_t gGfxDisplayListBase[2];
+
+void uvGfxInit(void) {
+    u8 i;
+
+    D_80298AB8[0] = D_80298AB8[1] = 0;
+    D_80298AC0[0] = D_80298AC0[1] = 0;
+    D_80298AC8[0] = D_80298AC8[1] = 0;
+    D_80298AD0[0] = D_80298AD0[1] = 0;
+    D_80298AD8[0] = D_80298AD8[1] = 0;
+    gGfxFbPtrs[0] = 0x800DA800;
+    gGfxFbPtrs[1] = 0x80100000;
+    D_80299278 = 0x803DA800;
+    gGfxFbIndex = 0;
+    gGfxDisplayListHead = gGfxDisplayListBase[gGfxFbIndex];
+    gGfxFbCurrPtr = gGfxFbPtrs[gGfxFbIndex];
+    D_802B494C = &D_802B4950[gGfxFbIndex];
+    D_802A9980 = 2;
+    D_802A9982 = 0x13E;
+    D_802A9984 = 2;
+    D_802A9986 = 0xEE;
+
+    for (i = 0; i < 2; i++) {
+        uvGfx_80223094(i, D_802A9980, D_802A9982, D_802A9984, (s32)D_802A9986);
+    }
+    uvMat4SetIdentity(&D_802B4888);
+    gGfxStateStackIdx = 0;
+    D_802491D8[1] = 0.0f;
+    D_802491D8[0] = (f32)D_802491D8[1];
+    uvGfx_80223BB8(0);
+    D_80298AA8 = ((s32)&D_80296AA0 & 0xF) ? D_80296AA8 : D_80296AA0;
+    D_80298AAC = D_80298AA8 + 0x2000;
+}
 
 void uvGfxBegin(void) {
     if (gGfxBeginFlag == 1) {
@@ -76,7 +115,7 @@ void uvGfxBegin(void) {
     uvGfx_80220E0C();
     func_80218CA4();
     uvSprt_802301A4();
-    func_8021F30C(1);
+    uvVtxReset(1);
     func_8021A298();
 
     D_80298AB8[gGfxFbIndex] = 0;
@@ -160,14 +199,14 @@ void uvGfx_802210E8(uvGfxState_t* arg0) {
     uvGfx_802236A8();
 
     gDPPipeSync(gGfxDisplayListHead++);
-    gDPSetColorImage(gGfxDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, osVirtualToPhysical(gGfxFbCurrPtr))
-        gDPSetCombineMode(gGfxDisplayListHead++, G_CC_SHADE, G_CC_PASS2);
+    gDPSetColorImage(gGfxDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, osVirtualToPhysical(gGfxFbCurrPtr));
+    gDPSetCombineMode(gGfxDisplayListHead++, G_CC_SHADE, G_CC_PASS2);
     gDPSetRenderMode(gGfxDisplayListHead++, G_RM_PASS, G_RM_ZB_XLU_SURF2);
     gSPClearGeometryMode(gGfxDisplayListHead++, G_CULL_FRONT);
     gSPSetGeometryMode(gGfxDisplayListHead++, G_CULL_BACK);
-    gSPDisplayList(gGfxDisplayListHead++, (s32)arg0->unk8)
+    gSPDisplayList(gGfxDisplayListHead++, (s32)arg0->unk8);
 
-        D_80298AB8[gGfxFbIndex] += arg0->unk4 * 2;
+    D_80298AB8[gGfxFbIndex] += arg0->unk4 * 2;
     D_80298AC0[gGfxFbIndex] += arg0->unk6 * 2;
 }
 

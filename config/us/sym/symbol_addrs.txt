@@ -48,6 +48,14 @@ gSchedRdpStatus     = 0x802B9C6A;
 gSchedRingIdx       = 0x802B9C78;
 gSchedMsgQ          = 0x802C38E8;
 
+gGeomVertexData     = 0x80290680;
+gGeomVertexToggle   = 0x80296A84;
+gGeomVertexCount    = 0x80296A86;
+gGeomVertexPtrs     = 0x80296A80;
+gGeomFirstTmesh     = 0x80296A88;
+gGeomFirstPoly      = 0x80296A8A;
+gGeomFirstGrid      = 0x80296A8C;
+
 gGfxBeginFlag       = 0x80249204;
 gGfxLookCount       = 0x80298AE0;
 gGfxStateStack      = 0x802B48C8;

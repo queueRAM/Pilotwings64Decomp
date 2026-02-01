@@ -23,6 +23,10 @@ typedef struct {
     u8 pad[0x10];
 } UnkStruct_80222EE8_t;
 
+typedef struct {
+    u8 pad[0x58];
+} UnkStruct_uvGfxInit;
+
 extern Gfx* gGfxDisplayListHead;
 
 void uvGfxInit(void);

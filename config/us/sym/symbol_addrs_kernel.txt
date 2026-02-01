@@ -87,12 +87,16 @@ uvFxGetProps        = 0x8021B52C; // type:func
 uvModelGet          = 0x8021B9D0; // type:func
 _uvFxDraw           = 0x8021ED18; // type:func
 
+uvVtxInit           = 0x8021F100; // type:func
 uvVtx               = 0x8021F264; // type:func
+uvVtxReset          = 0x8021F30C; // type:func
 uvVtxBeginPoly      = 0x8021F368; // type:func
 uvBeginGrid         = 0x8021F37C; // type:func
 uvBeginTmesh        = 0x8021F390; // type:func
 uvEndTmesh          = 0x8021F3A4; // type:func
+uvEndGridWide       = 0x8021F56C; // type:func
 uvEndGrid           = 0x8021F96C; // type:func
+uvVtx_8022052C      = 0x8022052C; // type:func
 uvVtxEndPoly        = 0x802206C0; // type:func
 
 uvGfxInit           = 0x80220960; // type:func

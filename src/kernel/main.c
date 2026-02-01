@@ -32,7 +32,6 @@ void func_80217398(void);
 void func_80218700(void);
 void func_80218BA0(void);
 void func_80219FD0(void);
-void func_8021F100(void);
 
 extern u8 app_ROM_START[];
 extern u8 app_ROM_END[];
@@ -188,7 +187,7 @@ s32 uvSysInit(s32 arg0) {
 
     func_80218BA0();
     func_80219FD0();
-    func_8021F100();
+    uvVtxInit();
     uvSprt_80230130();
     uvSprtInit();
     uvMemInitBlocks();
