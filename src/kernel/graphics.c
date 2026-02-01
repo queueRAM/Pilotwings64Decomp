@@ -8,12 +8,17 @@ void func_8021A298(void);
 void func_8021F30C(s32);
 void uvEventPost(s32, s32);
 
+extern Gfx D_80249140[];
+extern f32 D_802491D8[];
+extern s32 D_802491E0;
+extern s32 D_802491E4;
 extern s32 D_802491E8;
 extern s32 D_802491EC;
 extern u8 D_802491F4;
 extern s8 D_802491F8;
 extern s8 D_802491FC;
 extern s32 D_80249200;
+extern f32 D_80249208;
 extern f32 D_8024921C;
 extern s32 D_80249230;
 
@@ -26,13 +31,13 @@ extern s32 D_80298AD8[];
 typedef Mtx MtxStack_t[0x15E];
 
 extern s32 gGfxBeginFlag;
-extern Gfx* gGfxDisplayListHead;
 extern void* gGfxFbCurrPtr;
 extern u16 gGfxFbIndex;
 extern s32 gGfxLookCount;
 extern s16 gGfxMstackIdx;
 extern MtxStack_t gGfxMstack[2];
 extern u8* gGfxFbPtrs[2];
+extern s32 D_8029926C;
 extern u8* D_80299278;
 
 extern UnkStruct_80222EE8_t D_802A9900[];
@@ -82,9 +87,43 @@ void uvGfxBegin(void) {
     gGfxLookCount = 0;
 }
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80220CA0.s")
+#else
+void uvGfx_80220CA0(f32 arg0) {
+    if (arg0 < 0.0f) {
+        arg0 = 0.0f;
+    } else if (arg0 > 0.996f) {
+        arg0 = 0.996f;
+    }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80220E0C.s")
+    D_80249208 = arg0;
+    if (arg0 > 0.0f) {
+        gSPSetGeometryMode(gGfxDisplayListHead++, G_FOG);
+        gSPFogFactor(gGfxDisplayListHead++, (((s32)(D_80249208 * 1000.0f) * -0x100) + 0x1F400) / (s32)(0x3E8 - (s32)(D_80249208 * 1000.0f)),
+                     0x1F400 / (s32)(0x3E8 - (s32)(D_80249208 * 1000.0f)));
+    } else {
+        gSPClearGeometryMode(gGfxDisplayListHead++, G_FOG);
+    }
+}
+#endif
+
+void uvGfx_80220E0C(void) {
+    if (D_80249208 > 0.0f) {
+        gSPSetGeometryMode(gGfxDisplayListHead++, G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_SHADING_SMOOTH);
+    } else {
+        gSPSetGeometryMode(gGfxDisplayListHead++, G_ZBUFFER | G_SHADE | G_CULL_BACK | G_SHADING_SMOOTH);
+    }
+    gSPDisplayList(gGfxDisplayListHead++, &D_80249140);
+    gDPSetDepthImage(gGfxDisplayListHead++, D_80299278);
+    gDPSetDepthImage(gGfxDisplayListHead++, osVirtualToPhysical(D_80299278));
+
+    gGfxStateStackData = 0x520FFF;
+    D_8029926C = 0xFFF;
+    D_802491E0 = 0;
+    D_802491E4 = -1;
+    uvGfx_80220CA0(D_80249208);
+}
 
 void uvGfxPushMtxView(Mtx src) {
     uvGfxMstackPush(src);
@@ -102,7 +141,35 @@ void uvGfxDisplayList(Gfx* dl) {
     gSPDisplayList(gGfxDisplayListHead++, dl);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_802210E8.s")
+void uvGfx_802210E8(uvGfxState_t* arg0) {
+    Mtx4F temp;
+
+    gDPPipeSync(gGfxDisplayListHead++);
+    gSPClearGeometryMode(gGfxDisplayListHead++, G_CULL_BACK | G_LIGHTING);
+    gSPSetGeometryMode(gGfxDisplayListHead++, G_ZBUFFER | G_SHADE | G_CULL_FRONT);
+    gDPSetCycleType(gGfxDisplayListHead++, G_CYC_2CYCLE);
+    gDPSetTextureLOD(gGfxDisplayListHead++, G_TL_TILE);
+    gDPSetCombineLERP(gGfxDisplayListHead++, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED);
+    gDPPipeSync(gGfxDisplayListHead++);
+    gDPSetRenderMode(gGfxDisplayListHead++, G_RM_PASS, G_RM_ZB_XLU_SURF2);
+    gDPSetColorImage(gGfxDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, osVirtualToPhysical(D_80299278));
+
+    uvMat4SetIdentity(&temp);
+    uvGfx_802234F4(&temp, 1);
+    gSPDisplayList(gGfxDisplayListHead++, (s32)arg0->unk8);
+    uvGfx_802236A8();
+
+    gDPPipeSync(gGfxDisplayListHead++);
+    gDPSetColorImage(gGfxDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, osVirtualToPhysical(gGfxFbCurrPtr))
+        gDPSetCombineMode(gGfxDisplayListHead++, G_CC_SHADE, G_CC_PASS2);
+    gDPSetRenderMode(gGfxDisplayListHead++, G_RM_PASS, G_RM_ZB_XLU_SURF2);
+    gSPClearGeometryMode(gGfxDisplayListHead++, G_CULL_FRONT);
+    gSPSetGeometryMode(gGfxDisplayListHead++, G_CULL_BACK);
+    gSPDisplayList(gGfxDisplayListHead++, (s32)arg0->unk8)
+
+        D_80298AB8[gGfxFbIndex] += arg0->unk4 * 2;
+    D_80298AC0[gGfxFbIndex] += arg0->unk6 * 2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfxStateDraw.s")
 
@@ -270,13 +337,53 @@ void uvGfx_80223408(f32 arg0) {
     D_8024921C = arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_80223414.s")
+f32 uvGfx_80223414(void) {
+    if (D_8024921C > 0.0f) {
+        return D_8024921C;
+    }
+    return D_802491D8[gGfxFbIndex ^ 1];
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_8022345C.s")
+void uvGfx_8022345C(Mtx4F* src, s32 push) {
+    s32 flags;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_802234F4.s")
+    uvGfxMstackPushUnk(src);
+    if (push != 0) {
+        flags = G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_PUSH;
+    } else {
+        flags = G_MTX_MODELVIEW | G_MTX_LOAD;
+    }
+    gSPMatrix(gGfxDisplayListHead++, osVirtualToPhysical(uvGfxMstackTop()), flags);
+    D_80298AD0[gGfxFbIndex]++;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_802235A4.s")
+void uvGfx_802234F4(Mtx4F* src, s32 push) {
+    s32 flags;
+
+    uvGfxMstackPushUnk(src);
+    if (push != 0) {
+        flags = G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH;
+    } else {
+        flags = G_MTX_MODELVIEW | G_MTX_MUL;
+    }
+    gSPMatrix(gGfxDisplayListHead++, osVirtualToPhysical(uvGfxMstackTop()), flags);
+    D_80298AD0[gGfxFbIndex]++;
+    D_80298AD8[gGfxFbIndex]++;
+}
+
+void uvGfx_802235A4(Mtx src, u8 push) {
+    s32 flags;
+
+    uvGfxMstackPush(src);
+    if (push != 0) {
+        flags = G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH;
+    } else {
+        flags = G_MTX_MODELVIEW | G_MTX_MUL;
+    }
+    gSPMatrix(gGfxDisplayListHead++, osVirtualToPhysical(uvGfxMstackTop()), flags);
+    D_80298AD0[gGfxFbIndex]++;
+    D_80298AD8[gGfxFbIndex]++;
+}
 
 void uvGfx_802236A8(void) {
     gSPPopMatrix(gGfxDisplayListHead++, G_MTX_MODELVIEW);

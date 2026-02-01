@@ -23,6 +23,8 @@ typedef struct {
     u8 pad[0x10];
 } UnkStruct_80222EE8_t;
 
+extern Gfx* gGfxDisplayListHead;
+
 void uvGfxInit(void);
 void uvGfxBegin(void);
 void uvGfx_80220CA0(f32 arg0);
@@ -30,7 +32,7 @@ void uvGfx_80220E0C(void);
 void uvGfxPushMtxView(Mtx src);
 void uvGfxPushMtxProj(Mtx src);
 void uvGfxDisplayList(Gfx* dl);
-void uvGfx_802210E8(void *arg0);
+void uvGfx_802210E8(uvGfxState_t* arg0);
 void uvGfxStateDraw(uvGfxState_t* arg0);
 void uvGfxPushMtxUnk(Mtx4F*);
 void uvGfxClampLook(LookAt*, f32, f32, f32, f32, f32, f32, f32, f32, f32);
@@ -52,9 +54,9 @@ void uvGfxMstackPush(Mtx src);
 Mtx* uvGfxMstackTop(void);
 void uvGfx_80223408(f32 arg0);
 f32  uvGfx_80223414(void);
-void uvGfx_8022345C(Mtx4F*, s32);
-void uvGfx_802234F4(Mtx4F *arg0, s32 arg1);
-void uvGfx_802235A4(s32 arg0, Mtx mat);
+void uvGfx_8022345C(Mtx4F* src, s32 push);
+void uvGfx_802234F4(Mtx4F* src, s32 push);
+void uvGfx_802235A4(Mtx src, u8 push);
 void uvGfx_802236A8(void);
 void uvGfx_802236CC(Mtx4F *arg0);
 s32  uvGfxGetCnt(u32 arg0);
