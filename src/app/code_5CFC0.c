@@ -6,6 +6,20 @@
 #include "code_5A6A0.h"
 #include "code_60020.h"
 
+// TODO: context things
+#include <uv_matrix.h>
+
+void uvDobjPosm(u16, s32, void*);
+void uvDobjState(u16, u8);
+void func_802D45C4(void*, f32); // TODO: arg0 type mismatch with other callers
+void db_getstart(Mtx4F*, void*, s32, s32);
+void func_802D94EC(void*);
+void func_80313570(Mtx4F*, f32*, f32*, f32*, f32*, f32*, f32*);
+void uvModelGetProps(u16, s32, void*, s32);
+extern f32 D_8034E9F0;
+extern s8 D_8034E9F4;
+extern s32 D_8034E9F8;
+
 typedef struct {
     u16 unk0;
     u8 unk2;
@@ -74,6 +88,72 @@ typedef struct {
     f32 unk40;
 } Unk802D5B50_Arg3;
 
+typedef struct {
+    u8 unk0;
+    u8 unk1;
+    u8 pad2[2];
+    u16 unk4;
+    u8 unk6;
+    u8 pad7;
+    f32 unk8;
+    u8 padC[0x3C];
+    f32 unk48;
+    f32 unk4C;
+    f32 unk50;
+    f32 unk54;
+    f32 unk58;
+    f32 unk5C;
+    f32 unk60;
+    f32 unk64;
+    f32 unk68;
+    f32 unk6C;
+    f32 unk70;
+    f32 unk74;
+    u8 pad78[0x1B0];
+    f32 unk228;
+} Unk802D5C5C_Arg0_B0;
+
+typedef struct {
+    u16 unk0;
+    u8 unk2;
+    u8 pad3;
+    s32 pad4;
+    f32 unk8;
+    u8 padC[2];
+    u16 unkE;
+    u8 pad10[4];
+    Mtx4F unk14;
+    u16 unk54;
+    u8 unk56;
+    u8 pad57;
+    Mtx4F unk58;
+    f32 unk98;
+    f32 unk9C;
+    f32 unkA0;
+    u8 padA4[12];
+    Unk802D5C5C_Arg0_B0* unkB0;
+    u8 unkB4;
+    u8 padB5[3];
+    f32 unkB8;
+    u8 padBC[8];
+    u8 unkC4;
+    u8 padC5[3];
+    f32 unkC8;
+    f32 unkCC;
+    f32 unkD0;
+    u8 unkD4;
+    u8 padD5[0xE3];
+    s32 unk1B8;
+    u8 pad1BC[0x64];
+    u16 unk220;
+    u8 pad222[0x4A];
+    f32 unk26C;
+    f32 unk270;
+    f32 unk274;
+    u8 pad278[0x1B];
+    u8 unk293;
+} Unk802D5C5C_Arg0;
+
 extern Unk803599D0 D_80359A30;
 
 // forward declarations
@@ -100,6 +180,7 @@ void func_802D5A90(void) {
     D_80359A30.unk3C = 1.0f;
 }
 
+// func_802D5B50 is invoked when loading cannonball level
 void func_802D5B50(u8 arg0, u8 pilot, Unk802D5B50_Arg2* arg2, Unk802D5B50_Arg3* arg3) {
     uvMemSet(arg2, 0, sizeof(*arg2));
     func_802D6F38(pilot, arg2);
@@ -114,7 +195,7 @@ void func_802D5B50(u8 arg0, u8 pilot, Unk802D5B50_Arg2* arg2, Unk802D5B50_Arg3* 
     uvDobjPosm(arg2->unk54, 0, &arg2->unk58);
     uvDobjState(arg2->unk54, arg2->unk56);
     arg2->unkB0 = arg3;
-    arg3->unk40 = arg3->unk40 + 100.0f;
+    arg3->unk40 += 100.0f;
     arg2->unk10 = arg0;
     arg2->unkA4 = 0.0f;
     arg2->unk293 = 0;
@@ -123,7 +204,61 @@ void func_802D5B50(u8 arg0, u8 pilot, Unk802D5B50_Arg2* arg2, Unk802D5B50_Arg3* 
     func_802D9CB0(arg2);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D5C5C.s")
+void func_802D5C5C(Unk802D5C5C_Arg0* arg0) {
+    f32 sp54;
+    f32 sp50;
+    f32 sp4C;
+    f32 sp48;
+    f32 sp44;
+    f32 sp40;
+
+    if (arg0->unkE == 0) {
+        db_getstart(&arg0->unk58, &arg0->unk1B8, 0, 0);
+        uvDobjPosm(arg0->unk54, 0, &arg0->unk58);
+        func_80313570(&arg0->unk58, &sp54, &sp50, &sp4C, &sp48, &sp44, &sp40);
+        arg0->unk98 = sp48;
+        arg0->unkA0 = 0.52359873f;
+        arg0->unk9C = 0.0f;
+    }
+    uvMat4Copy(&arg0->unk14, &arg0->unk58);
+    uvDobjPosm(arg0->unk0, 0, &arg0->unk14);
+    func_802D94EC(arg0);
+    arg0->unkCC = 0.0f;
+    arg0->unkD0 = 0.0f;
+    arg0->unkD4 = 0;
+    arg0->unkC4 = 0;
+    arg0->unkC8 = 0.0f;
+    arg0->unk293 = 0;
+    arg0->unk8 = 0.0f;
+    arg0->unk2 = 2;
+    arg0->unk56 = 2;
+    uvDobjState(arg0->unk0, 2 & 0xFF);
+    uvDobjState(arg0->unk54, arg0->unk56);
+    arg0->unkB4 = 5;
+    arg0->unkB8 = 1.0f;
+    arg0->unkB0->unk1 = arg0->unkB4;
+    arg0->unkB0->unk4 = arg0->unk54;
+    arg0->unkB0->unk6 = arg0->unk56;
+    arg0->unkB0->unk0 = 0x20;
+    arg0->unkB0->unk68 = arg0->unk26C;
+    arg0->unkB0->unk6C = arg0->unk270;
+    arg0->unkB0->unk70 = arg0->unk274;
+    arg0->unkB0->unk74 = 0.0f;
+    arg0->unkB0->unk5C = 0;
+    arg0->unkB0->unk60 = -1.0f;
+    arg0->unkB0->unk64 = -2.0f;
+    arg0->unkB0->unk54 = 2.0f;
+    arg0->unkB0->unk58 = 6.0f;
+    arg0->unkB0->unk48 = 0.06f;
+    arg0->unkB0->unk4C = 1;
+    arg0->unkB0->unk50 = 0.0f;
+    arg0->unkB0->unk228 = 0.0f;
+    uvModelGetProps(arg0->unk220, 1, &arg0->unkB0->unk8, 0);
+    func_802D45C4(arg0->unkB0, arg0->unkB8);
+    D_8034E9F0 = 4.712389f;
+    D_8034E9F4 = 0;
+    D_8034E9F8 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D5E98.s")
 
