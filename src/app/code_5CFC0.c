@@ -1,9 +1,29 @@
 #include "common.h"
 
-#include <PR/ultratypes.h>
+#include <uv_dobj.h>
+#include <uv_memory.h>
+#include "cbsound.h"
+#include "code_60020.h"
 
 typedef struct {
-    u8 pad0[0x220];
+    u16 unk0;
+    u8 unk2;
+    u8 pad3;
+    u16 unk4;
+    u8 pad6[0xA];
+    s16 unk10;
+    u8 pad12[2];
+    s32 unk14;
+    u8 pad18[0x3C];
+    u16 unk54;
+    u8 unk56;
+    u8 pad57;
+    s32 unk58;
+    u8 pad5C[0x48];
+    f32 unkA4;
+    u8 padA8[8];
+    void* unkB0;
+    u8 padB4[0x16C];
     s16 unk220;
     u8 pad222[2];
     f32 unk224;
@@ -44,11 +64,42 @@ typedef struct {
     u8 pad28F[2];
     u8 unk291;
     u8 unk292;
-} Unk802D6F38;
+    u8 unk293;
+    u8 pad294[0x2BC-0x294];
+} Unk802D5B50_Arg2;
+
+typedef struct {
+    u8 pad0[0x40];
+    f32 unk40;
+} Unk802D5B50_Arg3;
+
+// forward declarations
+void func_802D6F38(u8, Unk802D5B50_Arg2*);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D5A90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D5B50.s")
+void func_802D5B50(u8 arg0, u8 pilot, Unk802D5B50_Arg2* arg2, Unk802D5B50_Arg3* arg3) {
+    uvMemSet(arg2, 0, 0x2BC);
+    func_802D6F38(pilot, arg2);
+    arg2->unk0 = func_8021731C();
+    arg2->unk2 = 2;
+    uvDobjModel(arg2->unk0, arg2->unk220);
+    uvDobjPosm(arg2->unk0, 0, &arg2->unk14);
+    uvDobjState(arg2->unk0, arg2->unk2);
+    arg2->unk54 = func_8021731C();
+    arg2->unk56 = 2;
+    uvDobjModel(arg2->unk54, 0x105);
+    uvDobjPosm(arg2->unk54, 0, &arg2->unk58);
+    uvDobjState(arg2->unk54, arg2->unk56);
+    arg2->unkB0 = arg3;
+    arg3->unk40 = arg3->unk40 + 100.0f;
+    arg2->unk10 = arg0;
+    arg2->unkA4 = 0.0f;
+    arg2->unk293 = 0;
+    arg2->unk4 = 2;
+    func_802D9430(arg2);
+    func_802D9CB0(arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D5C5C.s")
 
@@ -62,8 +113,8 @@ typedef struct {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D6CC4.s")
 
-void func_802D6F38(u8 arg0, Unk802D6F38* arg1) {
-    switch (arg0) {
+void func_802D6F38(u8 pilot, Unk802D5B50_Arg2* arg1) {
+    switch (pilot) {
     case 0:
         arg1->unk224 = -0.025f;
         arg1->unk228 = 0.097f;
