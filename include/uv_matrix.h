@@ -23,6 +23,8 @@ void _uvDbMstackPop(void);
 void uvMat4Copy(Mtx4F* dst, Mtx4F* src);
 void uvMat4CopyXYZ(Mtx4F* dst, Mtx4F* src);
 void uvMat4CopyL(Mtx4F* dst, Mtx src);
+// uvMat4SetUnk5
+// uvMat4SetUnk6
 void uvMat4SetIdentity(Mtx4F* dst);
 void uvMat4SetUnk1(Mtx4F* dst);
 
@@ -39,7 +41,7 @@ void uvMat4UnkOp2(Mtx4F* dst, float arg1, float arg2, float arg3);
 void uvMat4UnkOp3(Mtx4F* dst, float arg1, float arg2, float arg3);
 void uvMat4UnkOp4(Mtx4F* dst, Mtx4F* mat2);
 void uvMat4UnkOp5(Mtx4F* dst, Vec3F *vec1, Vec3F *vec2);
-void uvMat4UnkOp6(Mtx4F* dst, Mtx4F* mat2, Mtx4F* mat3);
+void uvMat4UnkOp6(Mtx4F* dst, Mtx4F* src1, Mtx4F* src2);
 void uvMat4SetUnk2(Mtx4F* dst, float arg1, float arg2, float arg3, float arg4, float arg5, float arg6);
 void uvMat4Viewport(Mtx4F* dst, float arg1, float arg2, float arg3, float arg4);
 void uvMat4SetUnk4(Mtx4F* dst, float arg1, float arg2, float arg3, float arg4);

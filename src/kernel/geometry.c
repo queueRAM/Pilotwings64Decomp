@@ -14,7 +14,7 @@ s16 uvVtx(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, 
     uvVertex_t* vtx;
 
     vtx = &gGeomVertexPtrs[gGeomVertexCount];
-    if (gGeomVertexCount >= UV_GEOM_MAX_VERTICES) {
+    if (gGeomVertexCount >= UV_GEOM_NUM_VERTICES) {
         _uvDebugPrintf("uvVtx: out of dynamic vertices\n");
         return gGeomVertexCount;
     }

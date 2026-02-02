@@ -4,7 +4,7 @@
 #include <PR/ultratypes.h>
 #include <uv_util.h>
 
-#define UV_GEOM_MAX_VERTICES 0x320
+#define UV_GEOM_NUM_VERTICES 0x320
 
 typedef struct uvVertex {
     s16 unk0;
@@ -19,7 +19,7 @@ typedef struct uvVertex {
     s8 unkF;
 } uvVertex_t;
 
-typedef uvVertex_t uvVertexArray_t[UV_GEOM_MAX_VERTICES];
+typedef uvVertex_t uvVertexArray_t[UV_GEOM_NUM_VERTICES];
 
 void uvVtxInit(void);
 s16  uvVtx(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);

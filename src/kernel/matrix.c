@@ -321,7 +321,45 @@ void uvMat4UnkOp5(Mtx4F* dst, Vec3F* vec1, Vec3F* vec2) {
     vec1->f[2] = tmp0 * dst->m[0][2] + tmp1 * dst->m[1][2] + tmp2 * dst->m[2][2] + dst->m[3][2];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/matrix/uvMat4UnkOp6.s")
+void uvMat4UnkOp6(Mtx4F* dst, Mtx4F* src1, Mtx4F* src2) {
+    Vec3F v1;
+    Vec3F v2;
+    Vec3F v3;
+
+    v1.f[0] = src1->m[3][0] - src2->m[3][0];
+    v1.f[1] = src1->m[3][1] - src2->m[3][1];
+    v1.f[2] = src1->m[3][2] - src2->m[3][2];
+    if (uvVec3Normal(&v1, &v1) != 0) {
+        v2.f[0] = src2->m[2][0];
+        v2.f[1] = src2->m[2][1];
+        v2.f[2] = src2->m[2][2];
+        uvVec3Cross(&v3, &v1, &v2);
+        if (uvVec3Normal(&v3, &v3) == 0) {
+            v3.f[0] = src2->m[0][0];
+            v3.f[1] = src2->m[0][1];
+            v3.f[2] = 0.0f;
+            uvVec3Normal(&v3, &v3);
+        }
+        uvVec3Cross(&v2, &v3, &v1);
+        uvVec3Normal(&v2, &v2);
+        dst->m[0][0] = v3.f[0];
+        dst->m[0][1] = v3.f[1];
+        dst->m[0][2] = v3.f[2];
+        dst->m[1][0] = v1.f[0];
+        dst->m[1][1] = v1.f[1];
+        dst->m[1][2] = v1.f[2];
+        dst->m[2][0] = v2.f[0];
+        dst->m[2][1] = v2.f[1];
+        dst->m[2][2] = v2.f[2];
+        dst->m[3][0] = src2->m[3][0];
+        dst->m[3][1] = src2->m[3][1];
+        dst->m[3][2] = src2->m[3][2];
+        dst->m[0][3] = 0.0f;
+        dst->m[1][3] = 0.0f;
+        dst->m[2][3] = 0.0f;
+        dst->m[3][3] = 1.0f;
+    }
+}
 
 void uvMat4SetUnk2(Mtx4F* dst, float arg1, float arg2, float arg3, float arg4, float arg5, float arg6) {
     float two5 = 2.0f * arg5;

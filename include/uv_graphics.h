@@ -6,6 +6,9 @@
 #include <uv_util.h>
 #include <uv_matrix.h>
 
+#define UV_GFX_NUM_MATRICES 0x15E
+#define UV_GFX_NUM_LOOKS 0x1E
+
 typedef struct {
     s32 unk0;
     s16 unk4;
@@ -14,14 +17,16 @@ typedef struct {
 } uvGfxState_t;
 
 typedef struct {
-    s32 unk0;
-    s32 unk4;
-    s16 unk8;
-    s16 unkA;
-    s16 unkC;
-    s16 unkE;
-    u8 pad[0x10];
-} UnkStruct_80222EE8_t;
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 x0; // left?
+    s16 x1; // right?
+    s16 y0; // top?
+    s16 y1; // bottom?
+    Vp vp;
+} uvGfxViewport_t;
 
 typedef struct {
     u8 pad[0x58];
@@ -31,7 +36,7 @@ extern Gfx* gGfxDisplayListHead;
 
 void uvGfxInit(void);
 void uvGfxBegin(void);
-void uvGfx_80220CA0(f32 arg0);
+void uvGfxSetFogFactor(f32 arg0);
 void uvGfx_80220E0C(void);
 void uvGfxPushMtxView(Mtx src);
 void uvGfxPushMtxProj(Mtx src);
@@ -46,10 +51,10 @@ void uvGfx_80222170(s32 arg0);
 void uvGfxEnd(void);
 void uvGfxClearScreen(u8 r, u8 g, u8 b, u8 a);
 void uvGfx_80222A98(void);
-void uvGfx_80222C94(s32 arg0);
-void uvGfx_80222D78(s32 arg0, s32 arg1);
-void uvGfx_80222E90(s32 arg0);
-void uvGfxClipViewport(UnkStruct_80222EE8_t *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void uvGfxEnableZBuffer(s32 enable);
+void uvGfxEnableCull(s32 enable_front, s32 enable_back);
+void uvGfxEnableLighting(s32 enable);
+void uvGfxClipViewport(uvGfxViewport_t* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void uvGfx_80223094(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void uvGfx_802230CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void uvGfxSetViewport(s32 vp_id);
@@ -71,7 +76,7 @@ void uvGfxClearFlags(s32 flags);
 void uvGfx_80223A28(s32 flags);
 void uvGfx_80223A64(s32 arg0, s32 arg1);
 void uvGfx_80223B80(void);
-void uvGfx_80223BB8(s32 arg0);
+void uvGfxEnableGamma(s32 enable);
 void uvGfx_80223BF4(s32 arg0);
 void uvGfx_80223C00(void);
 void uvCopyFrameBuf(s32 fb_id);
