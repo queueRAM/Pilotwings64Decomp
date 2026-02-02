@@ -3,6 +3,7 @@
 #include <uv_dobj.h>
 #include <uv_memory.h>
 #include "cbsound.h"
+#include "code_5A6A0.h"
 #include "code_60020.h"
 
 typedef struct {
@@ -65,7 +66,7 @@ typedef struct {
     u8 unk291;
     u8 unk292;
     u8 unk293;
-    u8 pad294[0x2BC-0x294];
+    u8 pad294[0x2BC - 0x294];
 } Unk802D5B50_Arg2;
 
 typedef struct {
@@ -73,13 +74,34 @@ typedef struct {
     f32 unk40;
 } Unk802D5B50_Arg3;
 
+extern Unk803599D0 D_80359A30;
+
 // forward declarations
 void func_802D6F38(u8, Unk802D5B50_Arg2*);
+void func_802D5A90(void);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D5A90.s")
+void func_802D5A90(void) {
+    D_80359A30.unk0 = 8;
+    D_80359A30.unk4 = 0.0f;
+    D_80359A30.unk8 = 0.0f;
+    D_80359A30.unkC = 0.2f;
+    D_80359A30.unk10 = 0.04f;
+    D_80359A30.unk14 = 0.4f;
+    D_80359A30.unk18 = 0.16f;
+    D_80359A30.unk1C = 0.6f;
+    D_80359A30.unk20 = 0.36f;
+    D_80359A30.unk24 = 0.7f;
+    D_80359A30.unk28 = 0.49f;
+    D_80359A30.unk2C = 0.8f;
+    D_80359A30.unk30 = 0.64f;
+    D_80359A30.unk34 = 0.9f;
+    D_80359A30.unk38 = 0.81f;
+    D_80359A30.unk40 = 1.0f;
+    D_80359A30.unk3C = 1.0f;
+}
 
 void func_802D5B50(u8 arg0, u8 pilot, Unk802D5B50_Arg2* arg2, Unk802D5B50_Arg3* arg3) {
-    uvMemSet(arg2, 0, 0x2BC);
+    uvMemSet(arg2, 0, sizeof(*arg2));
     func_802D6F38(pilot, arg2);
     arg2->unk0 = func_8021731C();
     arg2->unk2 = 2;

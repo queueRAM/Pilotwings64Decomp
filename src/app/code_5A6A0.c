@@ -3,6 +3,7 @@
 #include "uv_math.h"
 #include "uv_matrix.h"
 #include "uv_vector.h"
+#include "code_5A6A0.h"
 
 typedef struct Unk802D3658_Unk230 {
     Mtx4F unk0;
@@ -125,22 +126,6 @@ typedef struct {
     volatile f32 unk1C; // volatile needed to avoid s0 usage
     u8 pad20[0x40 - 0x20];
 } Unk802D472C_SP60;
-
-typedef struct {
-    s32 unk0;
-    f32 unk4;
-    f32 unk8;
-    f32 unkC;
-    f32 unk10;
-    f32 unk14;
-    f32 unk18;
-    f32 unk1C;
-    f32 unk20;
-    f32 unk24;
-    f32 unk28;
-    f32 unk2C;
-    f32 unk30;
-} Unk803599D0;
 
 extern f32 D_8034F850;
 extern f32 D_8034E9E0;
