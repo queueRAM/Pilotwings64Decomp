@@ -2,7 +2,7 @@
 #define PILOTWINGS64_UV_MATRIX
 
 #include <ultra64.h>
-#include <uv_math.h>
+#include <uv_vector.h>
 #include <uv_util.h>
 
 typedef union {

@@ -1,5 +1,6 @@
 #include <macros.h>
 #include <uv_audio.h>
+#include <uv_math.h>
 
 extern ALSndPlayer* gSndPlayer;
 extern ALSndId* gSndVoiceTable;

@@ -2,6 +2,7 @@
 #include "uv_level.h"
 #include "uv_math.h"
 #include "uv_matrix.h"
+#include "uv_vector.h"
 
 typedef struct Unk802D3658_Unk230 {
     Mtx4F unk0;

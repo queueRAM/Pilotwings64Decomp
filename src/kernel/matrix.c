@@ -1,3 +1,4 @@
+#include <uv_math.h>
 #include <uv_matrix.h>
 
 extern s32 gMatrixStackIdx;
