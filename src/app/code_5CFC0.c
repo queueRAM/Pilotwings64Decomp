@@ -1,7 +1,9 @@
 #include "common.h"
 
-#include <uv_matrix.h>
+#include <uv_controller.h>
 #include <uv_dobj.h>
+#include <uv_math.h>
+#include <uv_matrix.h>
 #include <uv_memory.h>
 #include "cbsound.h"
 #include "code_5A6A0.h"
@@ -55,7 +57,7 @@ typedef struct {
     u8 pad3;
     s32 pad4;
     f32 unk8;
-    u8 padC[2];
+    u16 unkC;
     u16 unkE;
     u16 unk10;
     u16 pad12;
@@ -152,12 +154,17 @@ void func_802D5884(Unk802D3658_Arg0* arg0, u8 arg1);
 Unk80318294* func_80318294(void);
 void func_802EAC18(Unk802D3658_Unk230*, f32, Mtx4F*);
 
+void func_8031D8E0(s32, s32, f32);
+s32 func_803231A0(s32, s32);
+void uvModelGetPosm(s32 model, s32 part, Mtx4F*);
+
 extern f32 D_8034E9F0;
 extern u8 D_8034E9F4;
 extern s32 D_8034E9F8;
-extern f32 D_8034F854;
+extern f32 D_8034F854; // = 0.1f in .data
 extern s32 D_80362690;
 extern f32 D_8034F850;
+extern u8 D_80359A84;
 
 typedef struct {
     u16 unk0;
@@ -233,6 +240,7 @@ extern Unk803599D0 D_80359A30;
 // forward declarations
 void func_802D6F38(u8, Unk802D5B50_Arg2*);
 void func_802D5A90(void);
+void func_802D6B7C(Unk802D5C5C_Arg0*);
 
 void func_802D5A90(void) {
     D_80359A30.unk0 = 8;
@@ -539,7 +547,116 @@ void func_802D5F00(Unk802D5C5C_Arg0* arg0, u8 arg1) {
     }
 }
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D66C4.s")
+#else
+// func_802D66C4 does not initialize sp34
+#if defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsometimes-uninitialized"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
+// func_802D66C4 called every frame while inside cannon
+// controls the rate of rotation and Z-button presses
+void func_802D66C4(Unk802D5C5C_Arg0* arg0) {
+    Mtx4F sp38;
+    f32 sp34;
+    f32 var_fa0;
+
+    if (D_8034F850 >= 2.0f) {
+        D_8034E9F0 += 1.2f * D_8034F854;
+    }
+    if (D_8034E9F0 > 6.2831855f) { // little more than 2*PI or DEG_TO_RAD(360)
+        D_8034E9F0 -= 6.2831855f;
+    }
+    if (D_8034E9F0 <= 1.5707964f) {                             // DEG_TO_RAD(90)
+        sp34 = D_8034E9F0 / 1.5707964f;                         // DEG_TO_RAD(90)
+    } else if (D_8034E9F0 <= 3.1415927f) {                      // PI or DEG_TO_RAD(180)
+        sp34 = 1.0f - ((D_8034E9F0 - 1.5707964f) / 1.5707964f); // - DEG_TO_RAD(90) / DEG_TO_RAD(90)
+    } else if (D_8034E9F0 <= 4.712389f) {                       // DEG_TO_RAD(270)
+        sp34 = -(D_8034E9F0 - 3.1415927f) / 1.5707964f;         // - DEG_TO_RAD(180) / DEG_TO_RAD(90)
+    } else if (D_8034E9F0 <= 6.2831855f) {                      // DEG_TO_RAD(360)
+        // this block should just be `else` since `D_8034E9F0 > 6.2831855f` above
+        sp34 = ((D_8034E9F0 - 4.712389f) / 1.5707964f) + -1.0f; // - DEG_TO_RAD(270) / DEG_TO_RAD(90)
+    }
+    arg0->unkA4 = (((1.5f * sp34) - (uvSinF(D_8034E9F0) * 0.5f)) * 0.5f) + 0.5f;
+    if (func_803231A0(0, Z_TRIG) == 0) {
+        arg0->unk9C -= 0.25f * arg0->unkBC * D_8034F854;
+        arg0->unkA0 -= 0.25f * arg0->unkC0 * D_8034F854;
+
+        sp34 = FABS(arg0->unkBC);
+        if (sp34 > 0 || FABS(arg0->unkC0) > 0) {
+            arg0->unk11D = 1;
+        }
+    } else {
+        // square, but maintain +/-
+        var_fa0 = SQ(arg0->unkBC);
+        if (arg0->unkBC < 0.0f) {
+            var_fa0 = -var_fa0;
+        }
+        arg0->unk9C -= (1.0f / 2.0f) * var_fa0 * D_8034F854; // if 0.5f, tries to reuse reg
+        if (var_fa0 > 0.0f) {
+            arg0->unk11D = 1;
+        }
+
+        // square, but maintain +/-
+        var_fa0 = SQ(arg0->unkC0);
+        if (arg0->unkC0 < 0.0f) {
+            var_fa0 = -var_fa0;
+        }
+        arg0->unkA0 -= (1.0f / 2.0f) * var_fa0 * D_8034F854; // if 0.5f, tries to reuse reg
+        if (var_fa0 > 0.0f) {
+            arg0->unk11D = 1;
+        }
+    }
+
+    if (arg0->unkA0 < -0.1745329f) { // almost DEG_TO_RAD(-10.0)
+        arg0->unkA0 = -0.1745329f;
+    } else if (arg0->unkA0 > 1.0471975f) { // almost DEG_TO_RAD(60.0)
+        arg0->unkA0 = 1.0471975f;
+    }
+    uvModelGetPosm(0x105, 1, &sp38);
+    uvMat4RotateAxis(&sp38, arg0->unk9C, 'z');
+    uvMat4RotateAxis(&sp38, arg0->unkA0, 'x');
+    uvDobjPosm(arg0->unk54, 1, &sp38);
+    uvModelGetPosm(0x105, 2, &sp38);
+    uvMat4RotateAxis(&sp38, (1.44f * arg0->unk9C) - arg0->unkA0, 'x');
+    uvDobjPosm(arg0->unk54, 2, &sp38);
+    uvModelGetPosm(0x105, 3, &sp38);
+    uvMat4RotateAxis(&sp38, -arg0->unkA0 - (1.44f * arg0->unk9C), 'x');
+    uvDobjPosm(arg0->unk54, 3, &sp38);
+    if (D_80359A84 == 0) {
+        switch (arg0->unkC) {
+        case 0:
+            func_8031D8E0(0x111, 0x40000000, 0);
+            break;
+        case 1:
+            func_8031D8E0(0x10, 0x40000000, 0);
+            break;
+        case 2:
+            func_8031D8E0(0xD5, 0x40000000, 0);
+            break;
+        case 3:
+            func_8031D8E0(0x1A2, 0x40000000, 0);
+            break;
+        default:
+            func_8031D8E0(0x1A2, 0x40000000, 0);
+            break;
+        }
+        D_80359A84 = 1;
+    }
+    if (arg0->unkC4 != 0) {
+        func_802D6B7C(arg0);
+    } else {
+        uvDobjState(arg0->unk0, 0);
+    }
+}
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D6B7C.s")
 
