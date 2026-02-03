@@ -1,7 +1,7 @@
 #include "common.h"
 
-void uvSqrtF(f32 value) {
-    sqrtf(value);
+f32 uvSqrtF(f32 value) {
+    return sqrtf(value);
 }
 
 #ifndef NON_MATCHING
@@ -98,12 +98,12 @@ f32 func_8022A080(f32 x) {
 }
 #endif
 
-void uvLength2D(f32 x, f32 y) {
-    uvSqrtF(SQ(x) + SQ(y));
+f32 uvLength2D(f32 x, f32 y) {
+    return uvSqrtF(SQ(x) + SQ(y));
 }
 
-void uvLength3D(f32 x, f32 y, f32 z) {
-    uvSqrtF(SQ(x) + SQ(y) + SQ(z));
+f32 uvLength3D(f32 x, f32 y, f32 z) {
+    return uvSqrtF(SQ(x) + SQ(y) + SQ(z));
 }
 
 f32 func_8022A27C(f32 arg0, f32 arg1) {
