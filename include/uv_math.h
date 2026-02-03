@@ -11,11 +11,11 @@ s32  uvAbs(s32 x);
 
 // from kernel/math
 f32 uvSqrtF(f32);
-f32 func_80229EC0(f32 arg0);
-f32 func_8022A080(f32 arg0);
-f32 uvLength2D(f32 arg0, f32 arg1);
-f32 uvLength3D(f32, f32, f32);
-f32 func_8022A27C(f32 arg0, f32 arg1);
+f32 uvSinF(f32 x);
+f32 uvCosF(f32 x);
+f32 uvLength2D(f32 x, f32 y);
+f32 uvLength3D(f32 x, f32 y, f32 z);
+f32 uvMath_8022A27C(f32 arg0, f32 arg1);
 
 #endif // PILOTWINGS64_UV_MATH
 

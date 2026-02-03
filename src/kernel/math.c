@@ -32,7 +32,7 @@ f32 uvSqrtF(f32 value) {
     return sqrtf(value);
 }
 
-f32 func_80229EC0(f32 x) {
+f32 uvSinF(f32 x) {
     f64 dx;   // sp20
     f64 xsq;  // sp18
     f64 poly; // sp10
@@ -54,7 +54,7 @@ f32 func_80229EC0(f32 x) {
         return x;
     }
 
-    if (((ix >> 22) & 0x1FF) < 310) {
+    if (((ix >> 22) & 0x1FF) < 0x136) {
         dx = x;
 
         number = ROUNDF(dx * D_8024E3C8.d);
@@ -77,7 +77,7 @@ f32 func_80229EC0(f32 x) {
     return 0.0f;
 }
 
-f32 func_8022A080(f32 x) {
+f32 uvCosF(f32 x) {
     s32 ix = *(s32*)&x;
     f32 var_fv0;
     f64 fabsA0; // temp_fa0;
@@ -92,7 +92,7 @@ f32 func_8022A080(f32 x) {
     f64 xsq;
 
     // mask off exponent + mantissa MSbit of f32
-    if (((ix >> 22) & 0x1FF) < 310) {
+    if (((ix >> 22) & 0x1FF) < 0x136) {
         dx = (f32)FABS(x);
 
         poly = dx * D_8024E3C8.d + 0.5;
@@ -125,7 +125,7 @@ f32 uvLength3D(f32 x, f32 y, f32 z) {
     return uvSqrtF(SQ(x) + SQ(y) + SQ(z));
 }
 
-f32 func_8022A27C(f32 arg0, f32 arg1) {
+f32 uvMath_8022A27C(f32 arg0, f32 arg1) {
     s32 flag;
     f32 ret;
     f32 fabsA0;
