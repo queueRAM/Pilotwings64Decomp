@@ -6,7 +6,50 @@ void uvSqrtF(f32 value) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/math/func_80229EC0.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/math/func_8022A080.s")
+#else
+// https://decomp.me/scratch/1HzdU
+f32 func_8022A080(f32 x) {
+    s32 ix = *(s32*)&x;
+    f32 var_fv0;
+    f64 fabsA0; // temp_fa0;
+    f64 temp_fa1;
+    f64 temp_ft4;
+    f64 temp_fv0;
+    f64 temp_fv1;
+    s32 number;
+    f32 temp;
+    f64 poly;
+    f64 dx;
+    f64 xsq;
+
+    // mask off exponent + mantissa MSbit of f32
+    if (((ix >> 22) & 0x1FF) < 310) {
+        dx = (f32)FABS(x);
+
+        number = ROUNDF(dx * 0.318309886183790691 + 0.5);
+
+        poly = number - 0.5;
+        dx -= poly * 3.14159262180328369;
+        dx -= poly * 3.17865095470563921e-08;
+        xsq = dx * dx;
+
+        temp_fa1 = ((((D_8024E3A0[4] * xsq) + D_8024E3A0[3]) * xsq + D_8024E3A0[2]) * xsq + D_8024E3A0[1]);
+
+        if (!(number & 1)) {
+            return (f32)((dx * xsq) * temp_fa1 + dx);
+        } else {
+            return -(f32)((dx * xsq) * temp_fa1 + dx);
+        }
+    }
+    // NaN check
+    if (x != x) {
+        return 2.1401436e9f;
+    }
+    return 0.0f;
+}
+#endif
 
 void uvLength2D(f32 x, f32 y) {
     uvSqrtF(SQ(x) + SQ(y));
