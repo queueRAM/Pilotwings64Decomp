@@ -1,7 +1,7 @@
-#include "common.h"
 #include <uv_debug.h>
 #include <uv_level.h>
 
+void func_803182A0(void);
 void func_803415C8(void);
 
 // forward declarations
@@ -25,25 +25,26 @@ void func_8034B6F8(void) {
     }
     switch (var_v0) {
     case 1:
-        func_8023345C(7, 1, 1);
+        uvDbg_8023345C(7, 1, 1);
         break;
     case 2:
-        func_8023345C(7, 2, 2);
+        uvDbg_8023345C(7, 2, 2);
         uvDbgCnt(0x1F, 2);
         break;
     case 3:
-        func_8023345C(7, 1, 1);
-        func_8023345C(7, 2, 2);
+        uvDbg_8023345C(7, 1, 1);
+        uvDbg_8023345C(7, 2, 2);
         uvDbgCnt(0x1F, 2);
         break;
     case 4:
     case 5:
-        func_8023345C(6, 3, 1);
+        uvDbg_8023345C(6, 3, 1);
         uvDbgCnt(3, 3);
         break;
     case 6:
-        func_80233590();
+        uvDbg_80233590();
         D_80362690->unk0[0].debugFlag -= 1;
         break;
     }
 }
+

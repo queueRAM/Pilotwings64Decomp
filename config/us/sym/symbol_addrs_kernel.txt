@@ -228,7 +228,6 @@ _uvDbMstackReset    = 0x80227F30; // type:func
 _uvDbMstackTop      = 0x80227F40; // type:func
 _uvDbMstackPush     = 0x80227F5C; // type:func
 _uvDbMstackPop      = 0x80227FE4; // type:func
-uvDbgCnt            = 0x802334E4; // type:func
 
 uvFileWrite         = 0x8022DEF0; // type:func
 uvFileRead          = 0x8022DFE8; // type:func
@@ -274,6 +273,31 @@ uvVec3Mul           = 0x80231934; // type:func
 uvVec3Normal        = 0x80231960; // type:func
 
 mio0_decompress     = 0x80231A20; // type:func
+
+uvDbg_80231AC0      = 0x80231AC0; // type:func
+uvDbg_80231C10      = 0x80231C10; // type:func
+uvDbg_80231C9C      = 0x80231C9C; // type:func
+uvDbg_80231F04      = 0x80231F04; // type:func
+uvDbg_8023217C      = 0x8023217C; // type:func
+uvDbg_802323A8      = 0x802323A8; // type:func
+uvDbg_80232554      = 0x80232554; // type:func
+uvDbg_80232738      = 0x80232738; // type:func
+uvDbg_8023286C      = 0x8023286C; // type:func
+uvDbg_80232EBC      = 0x80232EBC; // type:func
+uvDbg_80232ECC      = 0x80232ECC; // type:func
+uvDbg_80233310      = 0x80233310; // type:func
+uvDbg_802333AC      = 0x802333AC; // type:func
+uvDbg_8023345C      = 0x8023345C; // type:func
+uvDbgCnt            = 0x802334E4; // type:func
+uvDbg_80233590      = 0x80233590; // type:func
+uvDbg_80233810      = 0x80233810; // type:func
+uvDbg_80233878      = 0x80233878; // type:func
+uvDbg_802338A8      = 0x802338A8; // type:func
+uvDbg_802339B0      = 0x802339B0; // type:func
+uvDbg_80233A40      = 0x80233A40; // type:func
+uvDbg_80233D04      = 0x80233D04; // type:func
+uvDbg_80233DB8      = 0x80233DB8; // type:func
+uvDbg_80233FC8      = 0x80233FC8; // type:func
 
 uvPathPoseLine      = 0x8031EAD0; // type:func
 

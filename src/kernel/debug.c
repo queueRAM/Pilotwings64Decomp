@@ -194,30 +194,7 @@ static Gfx* D_8024B740[] = {
     D_8024B698, D_8024B6B0, D_8024B6C8, D_8024B6E0, D_8024B6F8, D_8024B710, D_8024B728,
 };
 
-// forward declarations
-f64 func_80231AC0(void);
-f64 func_80231C10(void);
-f64 func_80231C9C(void);
-void func_80231F04(f32, f32, s16, u8, u8, u8);
-void func_8023217C(u8, u8);
-void func_80233310(void);
-void func_802323A8(u8, u8);
-void func_80232554(u8);
-void func_80232738(u8);
-void func_8023286C(void);
-void func_80232EBC(void);
-void func_80232ECC(s32, s32, u16, u8, u8, u8);
-void func_80233310(void);
-void func_802333AC(u8);
-void func_80233878(s16, s16);
-void func_802338A8(f32, f32);
-void func_802339B0(u8 r, u8 g, u8 b, u8 a);
-void func_80233A40(s32, u16);
-void func_80233D04(u16);
-void func_80233DB8(char ch);
-void func_80233FC8(char* fmt, s32 arg1, ...);
-
-f64 func_80231AC0(void) {
+f64 uvDbg_80231AC0(void) {
     Unk802B92A0_Unk0* sp14;
     s32 sp10;
     s32 spC;
@@ -242,7 +219,7 @@ f64 func_80231AC0(void) {
     return 0.0;
 }
 
-f64 func_80231C10(void) {
+f64 uvDbg_80231C10(void) {
     s32 sp4;
     s32 sp0;
 
@@ -251,7 +228,7 @@ f64 func_80231C10(void) {
     return D_802B9C30[sp0] - D_802B9C30[sp4];
 }
 
-f64 func_80231C9C(void) {
+f64 uvDbg_80231C9C(void) {
     Unk802B92A0_Unk0* sp2C;
     s32 sp28;
     s32 sp24;
@@ -289,7 +266,7 @@ f64 func_80231C9C(void) {
     return sp8;
 }
 
-void func_80231F04(f32 arg0, f32 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
+void uvDbg_80231F04(f32 arg0, f32 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
     s16 sp36;
     s16 sp34;
     s16 sp32;
@@ -322,7 +299,7 @@ void func_80231F04(f32 arg0, f32 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
 
 const char D_8024F350[] = "start: %f  (%d)   finish: %f (%d)\n";
 
-void func_8023217C(u8 arg0, u8 arg1) {
+void uvDbg_8023217C(u8 arg0, u8 arg1) {
     s32 val;
     s16 xPos;
     s16 yPos;
@@ -335,29 +312,29 @@ void func_8023217C(u8 arg0, u8 arg1) {
     } else {
         multiplier = 1000000.0;
     }
-    func_802339B0(0xFF, 0xFF, 0x00, 0xFF);
-    func_802338A8(6.0f, 8.0f);
+    uvDbg_802339B0(0xFF, 0xFF, 0x00, 0xFF);
+    uvDbg_802338A8(6.0f, 8.0f);
     if (arg0 & 0x01) {
-        val = func_80231C10() * multiplier;
-        func_80233878(xPos, yPos);
-        func_80233FC8("r: %d", val);
+        val = uvDbg_80231C10() * multiplier;
+        uvDbg_80233878(xPos, yPos);
+        uvDbg_80233FC8("r: %d", val);
         yPos += 14;
     }
     if (arg0 & 0x02) {
-        val = func_80231AC0() * multiplier;
-        func_80233878(xPos, yPos);
-        func_80233FC8("g: %d", val);
+        val = uvDbg_80231AC0() * multiplier;
+        uvDbg_80233878(xPos, yPos);
+        uvDbg_80233FC8("g: %d", val);
         yPos += 14;
     }
     if (arg0 & 0x04) {
-        val = func_80231C9C() * multiplier;
-        func_80233878(xPos, yPos);
-        func_80233FC8("c: %d", val);
+        val = uvDbg_80231C9C() * multiplier;
+        uvDbg_80233878(xPos, yPos);
+        uvDbg_80233FC8("c: %d", val);
         yPos += 14;
     }
 }
 
-void func_802323A8(u8 arg0, u8 arg1) {
+void uvDbg_802323A8(u8 arg0, u8 arg1) {
     s32 sp24;
     f64 sp18;
 
@@ -367,15 +344,15 @@ void func_802323A8(u8 arg0, u8 arg1) {
         sp18 = 1000000.0;
     }
     if (arg0 & 0x01) {
-        sp24 = func_80231C10() * sp18;
+        sp24 = uvDbg_80231C10() * sp18;
         _uvDebugPrintf("retrace: %d       ", sp24);
     }
     if (arg0 & 0x04) {
-        sp24 = func_80231C9C() * sp18;
+        sp24 = uvDbg_80231C9C() * sp18;
         _uvDebugPrintf("cpu: %d       ", sp24);
     }
     if (arg0 & 0x02) {
-        sp24 = func_80231AC0() * sp18;
+        sp24 = uvDbg_80231AC0() * sp18;
         _uvDebugPrintf("gfx: %d       ", sp24);
     }
     if (arg0 != 0) {
@@ -383,41 +360,41 @@ void func_802323A8(u8 arg0, u8 arg1) {
     }
 }
 
-void func_80232554(u8 arg0) {
+void uvDbg_80232554(u8 arg0) {
     s16 xPos;
     s16 yPos;
 
     xPos = 20;
     yPos = 80;
-    func_802339B0(0xFF, 0xFF, 0, 0xFF);
-    func_802338A8(6.0f, 8.0f);
+    uvDbg_802339B0(0xFF, 0xFF, 0, 0xFF);
+    uvDbg_802338A8(6.0f, 8.0f);
     if (arg0 & 0x01) {
-        func_80233878(xPos, yPos);
-        func_80233FC8("v: %d", uvGfxGetCnt(0));
+        uvDbg_80233878(xPos, yPos);
+        uvDbg_80233FC8("v: %d", uvGfxGetCnt(0));
         yPos += 14;
     }
     if (arg0 & 0x02) {
-        func_80233878(xPos, yPos);
-        func_80233FC8("p: %d", uvGfxGetCnt(1));
+        uvDbg_80233878(xPos, yPos);
+        uvDbg_80233FC8("p: %d", uvGfxGetCnt(1));
         yPos += 14;
     }
     if (arg0 & 0x04) {
-        func_80233878(xPos, yPos);
-        func_80233FC8("l: %d", uvGfxGetCnt(2));
+        uvDbg_80233878(xPos, yPos);
+        uvDbg_80233FC8("l: %d", uvGfxGetCnt(2));
         yPos += 14;
     }
     if (arg0 & 0x10) {
-        func_80233878(xPos, yPos);
-        func_80233FC8("t: %d", uvGfxGetCnt(4));
+        uvDbg_80233878(xPos, yPos);
+        uvDbg_80233FC8("t: %d", uvGfxGetCnt(4));
         yPos += 14;
     }
     if (arg0 & 0x08) {
-        func_80233878(xPos, yPos);
-        func_80233FC8("m: %d", uvGfxGetCnt(3));
+        uvDbg_80233878(xPos, yPos);
+        uvDbg_80233FC8("m: %d", uvGfxGetCnt(3));
     }
 }
 
-void func_80232738(u8 arg0) {
+void uvDbg_80232738(u8 arg0) {
     if (arg0 & 0x02) {
         _uvDebugPrintf("tris: %d   ", uvGfxGetCnt(1));
     }
@@ -428,7 +405,7 @@ void func_80232738(u8 arg0) {
         _uvDebugPrintf("mtx loads: %d   ", uvGfxGetCnt(2));
     }
     if (arg0 & 0x10) {
-        func_80233FC8("txt loads: %d   ", uvGfxGetCnt(4));
+        uvDbg_80233FC8("txt loads: %d   ", uvGfxGetCnt(4));
     }
     if (arg0 & 0x08) {
         _uvDebugPrintf("mtx load-mults: %d   ", uvGfxGetCnt(3));
@@ -444,7 +421,7 @@ static const char unused1[] = "started at %f\n";
 static const char unused2[] = "finished at %f\n";
 static const char unused3[] = "\n\n";
 
-void func_8023286C(void) {
+void uvDbg_8023286C(void) {
     s16 sp36;
 
     sp36 = 0x55;
@@ -510,10 +487,10 @@ void func_8023286C(void) {
     uvGfxStatePop();
 }
 
-void func_80232EBC(void) {
+void uvDbg_80232EBC(void) {
 }
 
-void func_80232ECC(s32 arg0, s32 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5) {
+void uvDbg_80232ECC(s32 arg0, s32 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5) {
     Unk802B92A0_Unk0* sp4C;
     s32 sp48;
     s32 sp44;
@@ -562,7 +539,7 @@ void func_80232ECC(s32 arg0, s32 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5) {
             break;
         }
         if (sp4C->unk8 == sp30) {
-            func_80231F04(0.0f, (f32)(sp4C->unk0 - sp28), arg2, arg3, arg4, arg5);
+            uvDbg_80231F04(0.0f, (f32)(sp4C->unk0 - sp28), arg2, arg3, arg4, arg5);
             break;
         }
     }
@@ -594,20 +571,20 @@ void func_80232ECC(s32 arg0, s32 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5) {
             }
         } else if (sp4C->unk8 != sp30) {
         } else {
-            func_80231F04((f32)(sp20 - sp28), (f32)(sp4C->unk0 - sp28), arg2, arg3, arg4, arg5);
+            uvDbg_80231F04((f32)(sp20 - sp28), (f32)(sp4C->unk0 - sp28), arg2, arg3, arg4, arg5);
             sp40 = -1;
         }
     }
 }
 
-void func_80233310(void) {
-    func_80232ECC(0, 0x2A, 0x34, 0x00, 0x00, 0xFF);
-    func_80232ECC(0, 0x29, 0x2D, 0xFF, 0x00, 0xFF);
-    func_80232ECC(1, 0x2A, 0x26, 0x00, 0xFF, 0x00);
-    func_80232ECC(1, 0x29, 0x1E, 0xFF, 0x00, 0x00);
+void uvDbg_80233310(void) {
+    uvDbg_80232ECC(0, 0x2A, 0x34, 0x00, 0x00, 0xFF);
+    uvDbg_80232ECC(0, 0x29, 0x2D, 0xFF, 0x00, 0xFF);
+    uvDbg_80232ECC(1, 0x2A, 0x26, 0x00, 0xFF, 0x00);
+    uvDbg_80232ECC(1, 0x29, 0x1E, 0xFF, 0x00, 0x00);
 }
 
-void func_802333AC(UNUSED u8 arg0) {
+void uvDbg_802333AC(UNUSED u8 arg0) {
     Mtx4F sp60;
     Mtx4F sp20;
 
@@ -616,23 +593,23 @@ void func_802333AC(UNUSED u8 arg0) {
     uvGfx_80222100(&sp20);
     uvMat4SetIdentity(&sp60);
     uvGfx_8022345C(&sp60, 1);
-    func_8023286C();
+    uvDbg_8023286C();
     uvGfxStatePush();
     uvGfxSetFlags(0xFFF);
     uvGfxClearFlags(0xF00000);
-    func_80232EBC();
-    func_80233310();
+    uvDbg_80232EBC();
+    uvDbg_80233310();
     uvGfxStatePop();
     uvGfx_802236A8();
 }
 
-void func_8023345C(u8 arg0, u8 arg1, u8 arg2) {
+void uvDbg_8023345C(u8 arg0, u8 arg1, u8 arg2) {
     if (arg1 == 1) {
-        func_802333AC(arg0);
+        uvDbg_802333AC(arg0);
     } else if (arg1 == 2) {
-        func_8023217C(arg0, arg2);
+        uvDbg_8023217C(arg0, arg2);
     } else {
-        func_802323A8(arg0, arg2);
+        uvDbg_802323A8(arg0, arg2);
     }
 }
 
@@ -643,14 +620,14 @@ void uvDbgCnt(u8 arg0, u8 arg1) {
         if (arg1 == 1) {
             _uvDebugPrintf("uvDbgCnt: bar count not supported\n");
         } else if (arg1 == 2) {
-            func_80232554(arg0);
+            uvDbg_80232554(arg0);
         } else if (arg1 == 3) {
-            func_80232738(arg0);
+            uvDbg_80232738(arg0);
         }
     }
 }
 
-void func_80233590(void) {
+void uvDbg_80233590(void) {
     u8* sp2C;
     f32 sp28;
     f32 sp24;
@@ -694,7 +671,7 @@ void func_80233590(void) {
     }
 }
 
-void func_80233810(void) {
+void uvDbg_80233810(void) {
     D_802C8024 = 0.0f;
     D_802C8028 = 0.0f;
     D_802C802C = 12;
@@ -704,19 +681,19 @@ void func_80233810(void) {
     D_802C8030 = 0;
 }
 
-void func_80233878(s16 arg0, s16 arg1) {
+void uvDbg_80233878(s16 arg0, s16 arg1) {
     D_802C8020 = arg0;
     D_802C8022 = arg1;
 }
 
-void func_802338A8(f32 arg0, f32 arg1) {
+void uvDbg_802338A8(f32 arg0, f32 arg1) {
     D_802C8024 = (f32)(arg0 / 10.0);
     D_802C8028 = (f32)(arg1 / 14.0);
     D_802C802C = (s16)((D_802C8024 + 0.25) * 10.0);
     D_802C802E = (s16)((D_802C8028 + 0.25) * 14.0);
 }
 
-void func_802339B0(u8 r, u8 g, u8 b, u8 a) {
+void uvDbg_802339B0(u8 r, u8 g, u8 b, u8 a) {
     s32 idx;
     for (idx = 0; idx < 0x26; idx++) {
         D_8024B348[idx].cn[0] = r;
@@ -726,7 +703,7 @@ void func_802339B0(u8 r, u8 g, u8 b, u8 a) {
     }
 }
 
-void func_80233A40(s32 arg0, u16 arg1) {
+void uvDbg_80233A40(s32 arg0, u16 arg1) {
     Mtx4F sp70;
     Mtx4F sp30;
     s32 sp2C;
@@ -762,7 +739,7 @@ void func_80233A40(s32 arg0, u16 arg1) {
     for (sp2C = 0; sp2C < sp28; sp2C++) {
         sp2A = (u16)(arg0 % arg1);
         uvGfx_8022345C(&sp30, 0);
-        func_80233D04(sp2A);
+        uvDbg_80233D04(sp2A);
         sp30.m[3][0] -= (f32)D_802C802C;
         arg0 = (s32)(arg0 - sp2A) / arg1;
     }
@@ -773,7 +750,7 @@ void func_80233A40(s32 arg0, u16 arg1) {
     D_802C8020 += D_802C802C * sp28;
 }
 
-void func_80233D04(u16 arg0) {
+void uvDbg_80233D04(u16 arg0) {
     u8 sp1F;
     u8 idx;
 
@@ -789,7 +766,7 @@ void func_80233D04(u16 arg0) {
     }
 }
 
-void func_80233DB8(char ch) {
+void uvDbg_80233DB8(char ch) {
     u16 sp1E;
     u16 idx;
 
@@ -831,7 +808,7 @@ void func_80233DB8(char ch) {
     }
 }
 
-void func_80233FC8(char* fmt, s32 arg1, ...) {
+void uvDbg_80233FC8(char* fmt, s32 arg1, ...) {
     s32* spB4;
     s32 idx;
     s32 base;
@@ -873,7 +850,7 @@ void func_80233FC8(char* fmt, s32 arg1, ...) {
                 while (sp24[sp20] != 0) {
                     uvGfx_8022345C(&sp28, 0);
                     sp28.m[3][0] += (f32)D_802C802C;
-                    func_80233DB8(sp24[sp20]);
+                    uvDbg_80233DB8(sp24[sp20]);
                     sp20 += 1;
                 }
                 sp28.m[3][0] -= (f32)D_802C802C;
@@ -881,7 +858,7 @@ void func_80233FC8(char* fmt, s32 arg1, ...) {
             if (base != 0) {
                 D_802C8020 = (s16)(sp28.m[3][0] - (f32)D_802C802C);
                 D_802C8022 = (s16)sp28.m[3][1];
-                func_80233A40(*spB4, base);
+                uvDbg_80233A40(*spB4, base);
                 sp28.m[3][0] = (f32)D_802C8020;
                 sp28.m[3][1] = (f32)D_802C8022;
             }
@@ -891,7 +868,7 @@ void func_80233FC8(char* fmt, s32 arg1, ...) {
             sp28.m[3][1] -= (f32)D_802C802E;
             D_802C8022 += D_802C802E;
         } else {
-            func_80233DB8(ch);
+            uvDbg_80233DB8(ch);
         }
         idx += 1;
         ch = fmt[idx];
@@ -900,3 +877,4 @@ void func_80233FC8(char* fmt, s32 arg1, ...) {
     D_802C8020 = (s16)sp28.m[3][0];
     D_802C8022 = (s16)sp28.m[3][1];
 }
+
