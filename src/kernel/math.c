@@ -4,7 +4,54 @@ void uvSqrtF(f32 value) {
     sqrtf(value);
 }
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/math/func_80229EC0.s")
+#else
+f32 func_80229EC0(f32 x) {
+    f64 dx;   // sp20
+    f64 xsq;  // sp18
+    f64 poly; // sp10
+    f64 temp_fa1;
+    s32 number; // sp8
+    s32 ix;     // sp4
+
+    ix = *(s32*)&x;
+
+    if (((ix >> 22) & 0x1FF) < 0xFF) {
+        dx = x;
+        if (((ix >> 22) & 0x1FF) >= 0xE6) {
+            xsq = SQ(dx);
+
+            temp_fa1 = ((((D_8024E3A0[4] * xsq) + D_8024E3A0[3]) * xsq + D_8024E3A0[2]) * xsq + D_8024E3A0[1]);
+
+            return (dx * xsq) * temp_fa1 + dx;
+        }
+        return x;
+    }
+
+    if (((ix >> 22) & 0x1FF) < 310) {
+        dx = x;
+
+        number = ROUNDF(dx * 0.318309886183790691);
+
+        dx -= ((poly = number) * 3.14159262180328369);
+        dx -= (poly * 3.17865095470563921e-08);
+        xsq = dx * dx;
+
+        temp_fa1 = ((((D_8024E3A0[4] * xsq) + D_8024E3A0[3]) * xsq + D_8024E3A0[2]) * xsq + D_8024E3A0[1]);
+
+        if (!(number & 1)) {
+            return (f32)((dx * xsq) * temp_fa1 + dx);
+        } else {
+            return -(f32)((dx * xsq) * temp_fa1 + dx);
+        }
+    }
+    if (x != x) {
+        return 2.1401436e9f;
+    }
+    return 0.0f;
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/math/func_8022A080.s")
