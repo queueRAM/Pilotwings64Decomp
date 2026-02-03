@@ -1,19 +1,31 @@
 #include "common.h"
 #include <math.h>
 
+typedef struct {
+    f64 d;
+} Double;
+
+typedef struct {
+    f32 f;
+} Float;
+
 static const double D_8024E3A0[] = {
     1.0, -0.166666595504277565, 0.00833306624608215474, -0.000198096029019379492, 2.60578063796803717e-06,
 };
 
-#if 1
+// to make the code use the matching operand order, these should be float literals
+// however, the compiler doubles D_8024E3C8, D_8024E3D0, D_8024E3D8 in .rodata
+// if using `static const`, compiler places D_8024E3C8, D_8024E3D0, D_8024E3D8 in .data
+#define USE_CONST_DATA
+#ifdef USE_FLOAT_LITERAL
 #define D_8024E3C8 0.318309886183790691
 #define D_8024E3D0 3.14159262180328369
 #define D_8024E3D8 3.17865095470563921e-08
-#else
-static const f64 D_8024E3C8 = 0.318309886183790691;
-static const f64 D_8024E3D0 = 3.14159262180328369;
-static const f64 D_8024E3D8 = 3.17865095470563921e-08;
-static const f32 unused8024E3E0 = 0.0f;
+#elif defined(USE_CONST_DATA)
+static const Double D_8024E3C8 = { 0.318309886183790691 };
+static const Double D_8024E3D0 = { 3.14159262180328369 };
+static const Double D_8024E3D8 = { 3.17865095470563921e-08 };
+static const Float zero = { 0.0f };
 #endif
 
 f32 uvSqrtF(f32 value) {
@@ -45,10 +57,10 @@ f32 func_80229EC0(f32 x) {
     if (((ix >> 22) & 0x1FF) < 310) {
         dx = x;
 
-        number = ROUNDF(dx * D_8024E3C8);
+        number = ROUNDF(dx * D_8024E3C8.d);
 
-        dx -= ((poly = number) * D_8024E3D0);
-        dx -= (poly * D_8024E3D8);
+        dx -= ((poly = number) * D_8024E3D0.d);
+        dx -= (poly * D_8024E3D8.d);
         xsq = dx * dx;
 
         temp_fa1 = ((((D_8024E3A0[4] * xsq) + D_8024E3A0[3]) * xsq + D_8024E3A0[2]) * xsq + D_8024E3A0[1]);
@@ -83,11 +95,11 @@ f32 func_8022A080(f32 x) {
     if (((ix >> 22) & 0x1FF) < 310) {
         dx = (f32)FABS(x);
 
-        poly = dx * D_8024E3C8 + 0.5;
+        poly = dx * D_8024E3C8.d + 0.5;
         number = ROUNDF(poly);
 
-        dx -= ((poly = (number - 0.5)) * D_8024E3D0);
-        dx -= (poly * D_8024E3D8);
+        dx -= ((poly = (number - 0.5)) * D_8024E3D0.d);
+        dx -= (poly * D_8024E3D8.d);
         xsq = dx * dx;
 
         temp_fa1 = ((((D_8024E3A0[4] * xsq) + D_8024E3A0[3]) * xsq + D_8024E3A0[2]) * xsq + D_8024E3A0[1]);
