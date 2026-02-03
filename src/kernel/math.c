@@ -1,12 +1,25 @@
 #include "common.h"
+#include <math.h>
+
+static const double D_8024E3A0[] = {
+    1.0, -0.166666595504277565, 0.00833306624608215474, -0.000198096029019379492, 2.60578063796803717e-06,
+};
+
+#if 1
+#define D_8024E3C8 0.318309886183790691
+#define D_8024E3D0 3.14159262180328369
+#define D_8024E3D8 3.17865095470563921e-08
+#else
+static const f64 D_8024E3C8 = 0.318309886183790691;
+static const f64 D_8024E3D0 = 3.14159262180328369;
+static const f64 D_8024E3D8 = 3.17865095470563921e-08;
+static const f32 unused8024E3E0 = 0.0f;
+#endif
 
 f32 uvSqrtF(f32 value) {
     return sqrtf(value);
 }
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/math/func_80229EC0.s")
-#else
 f32 func_80229EC0(f32 x) {
     f64 dx;   // sp20
     f64 xsq;  // sp18
@@ -32,10 +45,10 @@ f32 func_80229EC0(f32 x) {
     if (((ix >> 22) & 0x1FF) < 310) {
         dx = x;
 
-        number = ROUNDF(dx * 0.318309886183790691);
+        number = ROUNDF(dx * D_8024E3C8);
 
-        dx -= ((poly = number) * 3.14159262180328369);
-        dx -= (poly * 3.17865095470563921e-08);
+        dx -= ((poly = number) * D_8024E3D0);
+        dx -= (poly * D_8024E3D8);
         xsq = dx * dx;
 
         temp_fa1 = ((((D_8024E3A0[4] * xsq) + D_8024E3A0[3]) * xsq + D_8024E3A0[2]) * xsq + D_8024E3A0[1]);
@@ -51,12 +64,7 @@ f32 func_80229EC0(f32 x) {
     }
     return 0.0f;
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/math/func_8022A080.s")
-#else
-// https://decomp.me/scratch/1HzdU
 f32 func_8022A080(f32 x) {
     s32 ix = *(s32*)&x;
     f32 var_fv0;
@@ -75,11 +83,11 @@ f32 func_8022A080(f32 x) {
     if (((ix >> 22) & 0x1FF) < 310) {
         dx = (f32)FABS(x);
 
-        number = ROUNDF(dx * 0.318309886183790691 + 0.5);
+        poly = dx * D_8024E3C8 + 0.5;
+        number = ROUNDF(poly);
 
-        poly = number - 0.5;
-        dx -= poly * 3.14159262180328369;
-        dx -= poly * 3.17865095470563921e-08;
+        dx -= ((poly = (number - 0.5)) * D_8024E3D0);
+        dx -= (poly * D_8024E3D8);
         xsq = dx * dx;
 
         temp_fa1 = ((((D_8024E3A0[4] * xsq) + D_8024E3A0[3]) * xsq + D_8024E3A0[2]) * xsq + D_8024E3A0[1]);
@@ -96,7 +104,6 @@ f32 func_8022A080(f32 x) {
     }
     return 0.0f;
 }
-#endif
 
 f32 uvLength2D(f32 x, f32 y) {
     return uvSqrtF(SQ(x) + SQ(y));
