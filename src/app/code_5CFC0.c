@@ -313,6 +313,7 @@ void func_802D5B50(u8 arg0, u8 pilot, Unk802D5B50_Arg2* arg2, Unk802D5C5C_Arg0_B
     func_802D9CB0(arg2);
 }
 
+// func_802D5C5C is invoked when loading and exiting cannonball level
 void func_802D5C5C(Unk802D5C5C_Arg0* arg0) {
     f32 sp54;
     f32 sp50;
@@ -369,6 +370,7 @@ void func_802D5C5C(Unk802D5C5C_Arg0* arg0) {
     D_8034E9F8 = 0;
 }
 
+// func_802D5E98 is invoked at the end of a cannonball target
 void func_802D5E98(Unk802D5B50_Arg2* arg0) {
     uvDobjModel(arg0->unk0, 0xFFFF);
     uvDobjModel(arg0->unk54, 0xFFFF);
@@ -378,6 +380,7 @@ void func_802D5E98(Unk802D5B50_Arg2* arg0) {
     arg0->unkB0->unk40 -= 100.0f;
 }
 
+// func_802D5F00 called every frame while aiming cannon and while in flight
 void func_802D5F00(Unk802D5C5C_Arg0* arg0, u8 arg1) {
     f32 spEC;
     f32 spE8;
@@ -686,6 +689,7 @@ void func_802D66C4(Unk802D5C5C_Arg0* arg0) {
 #endif
 #endif
 
+// func_802D6B7C called when firing the cannon
 void func_802D6B7C(Unk802D5C5C_Arg0* arg0) {
     Mtx4F sp50;
 
@@ -710,6 +714,7 @@ void func_802D6B7C(Unk802D5C5C_Arg0* arg0) {
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D6CC4.s")
 #else
+// func_802D6CC4 called when pilot lands on surface after being shot from cannon
 void func_802D6CC4(Unk802D5C5C_Arg0* arg0) {
     Unk802D5C5C_Arg0_B0* temp_v0;
     f32 temp_fv0_2;
@@ -765,6 +770,7 @@ void func_802D6CC4(Unk802D5C5C_Arg0* arg0) {
 }
 #endif
 
+// func_802D6F38 is invoked when loading cannonball level
 void func_802D6F38(u8 pilot, Unk802D5B50_Arg2* arg1) {
     switch (pilot) {
     case 0:
@@ -1010,14 +1016,19 @@ void func_802D6F38(u8 pilot, Unk802D5B50_Arg2* arg1) {
     }
 }
 
+// func_802D77D8 is invoked when loading cannonball level
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D77D8.s")
 
+// func_802D7B7C called every frame while aiming cannon and while in flight before landing
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D7B7C.s")
 
+// func_802D8098 called every frame after landing from cannon shot
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D8098.s")
 
+// func_802D8494 called once after landing before the cannon is reset for next shot
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D8494.s")
 
+// func_802D8494 called once after all four cannon targets are complete
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D8730.s")
 
 void func_802D8A40(u8 arg0, Unk802D5C5C_Arg0* arg1) {
