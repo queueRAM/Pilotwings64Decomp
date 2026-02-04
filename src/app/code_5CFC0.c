@@ -83,10 +83,15 @@ typedef struct {
     f32 unkCC;
     f32 unkD0;
     u8 unkD4;
-    u8 padD5[0x11D - 0xD5];
+    u8 padD5[0x11C - 0xD5];
+    u8 unk11C;
     s8 unk11D;
     f32 unk120;
-    u8 pad124[0x1B8 - 0x124];
+    u8 pad124[0x12C - 0x124];
+    f32 unk12C;
+    f32 unk130;
+    f32 unk134;
+    u8 pad138[0x1B8 - 0x138];
     f32 unk1B8;
     f32 unk1BC;
     f32 unk1C0;
@@ -167,13 +172,26 @@ void func_802F9BF8(s32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32);
 void func_8033F7F8(u8);
 void uvEmitterTrigger(u8);
 
+Unk80318294* func_80318294(void);
+void func_802D9220(Unk802D5C5C_Arg0*);
+void func_802F8AB8(f32, f32, f32, f32, f32*); // guess
+s32 func_802D472C(Unk802D5C5C_Arg0_B0*, Mtx4F*);
+void func_802D4A30(Unk802D5C5C_Arg0_B0*, Mtx4F*);
+
 extern f32 D_8034E9F0;
 extern u8 D_8034E9F4;
 extern s32 D_8034E9F8;
-extern f32 D_8034F854; // = 0.1f in .data
-extern s32 D_80362690;
+extern f32 D_8034E9FC;
 extern f32 D_8034F850;
+extern f32 D_8034F854; // = 0.1f in .data
 extern u8 D_80359A84;
+extern f32 D_80359AB0;
+extern f32 D_80359AB4;
+extern f32 D_80359AB8;
+extern f32 D_80359AC0;
+extern f32 D_80359AC4;
+extern f32 D_80359AC8;
+extern s32 D_80362690;
 
 typedef struct {
     u16 unk0;
@@ -688,7 +706,63 @@ void func_802D6B7C(Unk802D5C5C_Arg0* arg0) {
     func_802D9430(arg0);
 }
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D6CC4.s")
+#else
+void func_802D6CC4(Unk802D5C5C_Arg0* arg0) {
+    Unk802D5C5C_Arg0_B0* temp_v0;
+    f32 temp_fv0_2;
+    f32 var_fv1;
+    f32 spB8;
+    f32 z;
+    Mtx4F sp74;
+    Mtx4F sp34;
+
+    if (arg0->unk293 == 0) {
+        arg0->unk293 = 1;
+        if (arg0->unk11C != 0) {
+            z = arg0->unk14.m[3][2]; // forces going through f0, instead of a2 direct
+            func_802F8AB8(arg0->unk14.m[3][0], arg0->unk14.m[3][1], z, 1.0f, &arg0->unk1C4);
+            arg0->unkB0->unk6 = 0;
+            arg0->unk2 = arg0->unkB0->unk6;
+            uvDobjState(arg0->unk0, arg0->unk2);
+            uvMat4Copy(&arg0->unkB0->unk80, &arg0->unk14);
+        }
+        uvMat4Copy(&arg0->unkB0->unk80, &arg0->unk14);
+        temp_v0 = arg0->unkB0;
+        D_80359AB0 = temp_v0->unk108.m[3][0];
+        D_80359AB4 = temp_v0->unk108.m[3][1];
+        D_80359AB8 = temp_v0->unk108.m[3][2];
+        D_80359AC0 = arg0->unk14.m[3][0] + (arg0->unk12C * 100.0f);
+        D_80359AC4 = arg0->unk14.m[3][1] + (arg0->unk130 * 100.0f);
+        D_80359AC8 = arg0->unk14.m[3][2] + (arg0->unk134 * 100.0f);
+        D_8034E9FC = 0.0f;
+    }
+    arg0->unkB4 = 5;
+    func_802D5884((Unk802D3658_Arg0*)arg0->unkB0, arg0->unkB4);
+
+    spB8 = D_8034E9FC * 0.5f;
+    if (spB8 < 0.0f) {
+        spB8 = 0.0f;
+    } else if (spB8 > 0.99f) {
+        spB8 = 0.99f;
+    }
+    D_8034E9FC += D_8034F854;
+    uvMat4SetIdentity(&sp34);
+    temp_fv0_2 = (1.0f - spB8);
+    sp34.m[3][0] = (spB8 * D_80359AC0) + (temp_fv0_2 * D_80359AB0);
+    sp34.m[3][1] = (spB8 * D_80359AC4) + (temp_fv0_2 * D_80359AB4);
+    sp34.m[3][2] = (spB8 * D_80359AC8) + (temp_fv0_2 * D_80359AB8);
+    uvMat4UnkOp6(&sp74, &arg0->unk14, &sp34);
+    if (func_802D472C(arg0->unkB0, &sp34) != 0) {
+        uvMat4UnkOp6(&sp74, &arg0->unk14, &sp34);
+    }
+    func_802D4A30(arg0->unkB0, &sp74);
+    uvMat4Copy(&arg0->unkB0->unk108, &sp74);
+    func_80318294()->unk0 = 0;
+    func_802D9220(arg0);
+}
+#endif
 
 void func_802D6F38(u8 pilot, Unk802D5B50_Arg2* arg1) {
     switch (pilot) {
