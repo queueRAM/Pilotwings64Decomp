@@ -7,23 +7,32 @@ Thread_Kernel       = 0x8022E980; // type:func
 
 uvWaitForMesg       = 0x8022E2DC; // type:func
 
+func_80200308       = 0x80200308; // type:func
 uvJanimLoad         = 0x80200350; // type:func
 uvJanimPoseLine     = 0x80200B38; // type:func
 uvJanimPoseGrid     = 0x80200F00; // type:func
 
+uvEmitterPrintf     = 0x80201180; // type:func
 uvEmitterInitTable  = 0x8020119C; // type:func
 uvEmitterInit       = 0x802011F0; // type:func
 uvEmitterLookup     = 0x802012B8; // type:func
 uvEmitterFromModel  = 0x80201348; // type:func
 uvEmitterSetMatrix  = 0x802013F8; // type:func
 uvEmitterGetMatrix  = 0x80201444; // type:func
+uvEmitter_80201494  = 0x80201494; // type:func
+uvEmitterSetUnk70   = 0x802015D8; // type:func
+uvEmitterGetUnk70   = 0x80201614; // type:func
+uvEmitterSetUnk78   = 0x8020165C; // type:func
+uvEmitterSetUnk74   = 0x80201698; // type:func
+uvEmitterSetPri     = 0x802016D4; // type:func
 uvEmitterProp       = 0x8020170C; // type:func
 uvEmitterTrigger    = 0x80201904; // type:func
 uvEmitterRelease    = 0x80201968; // type:func
 uvEmitterStatus     = 0x80201A0C; // type:func
-uvEmitterFlush      = 0x80201BA8; // type:func
 _uvaSoundBegin      = 0x80201B0C; // type:func
 _uvaSoundEnd        = 0x80201B7C; // type:func
+uvEmitterFlush      = 0x80201BA8; // type:func
+uvEmitter_80201D08  = 0x80201D08; // type:func
 _uvaUpdatePlayList  = 0x802021D4; // type:func
 _uvaPlaylistRemove  = 0x80202678; // type:func
 _uvaPlay            = 0x80202728; // type:func

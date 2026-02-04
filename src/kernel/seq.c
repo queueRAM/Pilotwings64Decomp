@@ -4,7 +4,7 @@
 
 extern ALSeqPlayer* gSeqPlayer;
 
-#if 1
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/seq/uvaSeqNew.s")
 #else
 void _uvMediaCopy(void*, void*, s32); /* extern */
@@ -63,3 +63,4 @@ void uvaSeqStop(void) {
         }
     }
 }
+

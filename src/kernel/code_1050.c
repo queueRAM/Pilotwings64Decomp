@@ -14,7 +14,6 @@ extern UnkStruct_80200308_t D_80250EC4[];
 extern UnkStruct_80200144_t D_80250E80[];
 
 void func_802000DC(u16);
-void uvEmitterFlush(u16);
 
 void func_802000A0(void) {
     s32 var_s0;
