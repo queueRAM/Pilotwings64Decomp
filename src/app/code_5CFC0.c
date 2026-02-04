@@ -87,8 +87,9 @@ typedef struct {
     s8 unk11D;
     f32 unk120;
     u8 pad124[0x1B8 - 0x124];
-    s32 unk1B8;
-    u8 pad1BC[0x1C4 - 0x1BC];
+    f32 unk1B8;
+    f32 unk1BC;
+    f32 unk1C0;
     f32 unk1C4;
     f32 unk1C8;
     f32 unk1CC;
@@ -99,8 +100,12 @@ typedef struct {
     f32 unk26C;
     f32 unk270;
     f32 unk274;
-    u8 pad278[0x1B];
+    u8 pad278[0x280 - 0x278];
+    f32 unk280;
+    u8 pad284[0x293 - 0x284];
     u8 unk293;
+    u8 pad294[0x2B4 - 0x294];
+    u8 unk2B4;
 } Unk802D5C5C_Arg0;
 
 typedef struct {
@@ -157,6 +162,10 @@ void func_802EAC18(Unk802D3658_Unk230*, f32, Mtx4F*);
 void func_8031D8E0(s32, s32, f32);
 s32 func_803231A0(s32, s32);
 void uvModelGetPosm(s32 model, s32 part, Mtx4F*);
+
+void func_802F9BF8(s32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32);
+void func_8033F7F8(u8);
+void uvEmitterTrigger(u8);
 
 extern f32 D_8034E9F0;
 extern u8 D_8034E9F4;
@@ -658,7 +667,26 @@ void func_802D66C4(Unk802D5C5C_Arg0* arg0) {
 #endif
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D6B7C.s")
+void func_802D6B7C(Unk802D5C5C_Arg0* arg0) {
+    Mtx4F sp50;
+
+    uvMat4Copy(&sp50, &arg0->unk58);
+    uvMat4RotateAxis(&sp50, arg0->unk9C, 'z');
+    uvMat4RotateAxis(&sp50, arg0->unkA0, 'x');
+    uvMat4UnkOp2(&sp50, 0.0f, 6.0f, 0.0f);
+    func_802F9BF8(2, sp50.m[3][0], sp50.m[3][1], sp50.m[3][2], 20.0f, 0.3f, 0.0f, 1.0f, 0.8f, 0.0f, 1.0f);
+    func_8033F7F8(0x4B);
+    uvEmitterTrigger(arg0->unk2B4);
+    arg0->unkD4 = 1;
+    arg0->unk1B8 = 0.0f;
+    arg0->unk1BC = 0.0f;
+    arg0->unk1C0 = (arg0->unkA4 * 271.4f * arg0->unk280) + 2.5f;
+    uvMat4Copy(&arg0->unk14, &sp50);
+    uvMat4RotateAxis(&arg0->unk14, -1.5707963f, 'x');
+    uvDobjState(arg0->unk0, arg0->unk2);
+    D_80359A84 = 0;
+    func_802D9430(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D6CC4.s")
 
