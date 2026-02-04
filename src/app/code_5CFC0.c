@@ -2,6 +2,7 @@
 
 #include <uv_controller.h>
 #include <uv_dobj.h>
+#include <uv_level.h>
 #include <uv_math.h>
 #include <uv_matrix.h>
 #include <uv_memory.h>
@@ -149,7 +150,7 @@ void uvModelGetProps(u16, s32, void*, s32);
 s32 func_802E6B5C(void);
 f32 func_803230B0(u16, s32);
 s32 func_80323164(u16);
-void func_802E65AC(Mtx4F*, s32, f32*, f32*, s32*);
+void func_802E65AC(Mtx4F*, void*, f32*, f32*, s32*);
 void func_802E682C(f32*, s32, u8);
 void func_802E6870(f32*, s32, u8*);
 f32 func_80313F08(Unk803599D0*, f32);
@@ -191,7 +192,6 @@ extern f32 D_80359AB8;
 extern f32 D_80359AC0;
 extern f32 D_80359AC4;
 extern f32 D_80359AC8;
-extern s32 D_80362690;
 
 typedef struct {
     u16 unk0;
@@ -406,7 +406,8 @@ void func_802D5F00(Unk802D5C5C_Arg0* arg0, u8 arg1) {
             spE4 = func_80323164(arg0->unk10);
         }
         sp2C = &arg0->unk14;
-        func_802E65AC(&arg0->unk14, D_80362690 + 6, &spEC, &spE8, &spE4);
+        // TODO: determine data at D_80362690+6
+        func_802E65AC(&arg0->unk14, ((u8*)D_80362690) + 6, &spEC, &spE8, &spE4);
         if (arg1 != 6) {
             spC8[0] = arg0->unk9C;
             spC8[1] = arg0->unkA0;
@@ -1019,4 +1020,16 @@ void func_802D6F38(u8 pilot, Unk802D5B50_Arg2* arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D8730.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_5CFC0/func_802D8A40.s")
+void func_802D8A40(u8 arg0, Unk802D5C5C_Arg0* arg1) {
+    u16* unkC;
+    unkC = D_80362690->unk0[D_80362690->unk9C].unkC;
+    if (unkC[1] == 3) {
+        if (arg0 == 1) {
+            uvDobjState(arg1->unk0, 0);
+            uvDobjState(arg1->unk54, 0);
+        } else {
+            uvDobjState(arg1->unk0, arg1->unk2);
+            uvDobjState(arg1->unk54, arg1->unk56);
+        }
+    }
+}
