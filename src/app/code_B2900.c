@@ -1,4 +1,5 @@
 #include "common.h"
+#include "code_B2900.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B2900/func_8032B3D0.s")
 

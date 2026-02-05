@@ -1,8 +1,7 @@
 #include <uv_debug.h>
 #include <uv_level.h>
-
-void func_803182A0(void);
-void func_803415C8(void);
+#include "code_9F2D0.h"
+#include "code_C8990.h"
 
 // forward declarations
 void func_8034B688(void);

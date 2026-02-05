@@ -1,4 +1,5 @@
 #include "common.h"
+#include "code_72B70.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_72B70/func_802EB640.s")
 

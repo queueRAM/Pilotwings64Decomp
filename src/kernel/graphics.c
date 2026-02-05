@@ -1,3 +1,4 @@
+#include <uv_event.h>
 #include <uv_geometry.h>
 #include <uv_graphics.h>
 #include <uv_memory.h>
@@ -6,7 +7,6 @@
 
 void func_80218CA4(void);
 void func_8021A298(void);
-void uvEventPost(s32, s32);
 
 extern Gfx D_80249140[];
 extern f32 D_802491D8[];
