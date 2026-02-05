@@ -3,6 +3,7 @@
 #include <uv_audio.h>
 #include <uv_controller.h>
 #include <uv_dobj.h>
+#include <uv_event.h>
 #include <uv_level.h>
 #include <uv_math.h>
 #include <uv_matrix.h>
@@ -14,11 +15,13 @@
 #include "code_60020.h"
 #include "code_66160.h"
 #include "code_72010.h"
+#include "code_72B70.h"
 #include "code_7FED0.h"
 #include "code_9A960.h"
 #include "code_9F2D0.h"
 #include "code_A9D00.h"
 #include "fdr.h"
+#include "save.h"
 #include "snd.h"
 
 // .data likely owned by this file
@@ -252,7 +255,7 @@ void cannonPilotLand(Unk802D5C5C_Arg0* arg0) {
 // cannonLoadPilot is invoked when loading cannonball level
 void cannonLoadPilot(u8 pilot, Unk802D5B50_Arg2* arg1) {
     switch (pilot) {
-    case 0:
+    case Lark:
         arg1->unk224 = -0.025f;
         arg1->unk228 = 0.097f;
         arg1->unk22C = 0.675f;
@@ -292,7 +295,7 @@ void cannonLoadPilot(u8 pilot, Unk802D5B50_Arg2* arg1) {
         arg1->unk291 = 0xC;
         arg1->unk284 = 0x3E;
         break;
-    case 1:
+    case Goose:
         arg1->unk224 = -0.001f;
         arg1->unk228 = 0.172f;
         arg1->unk22C = 0.782f;
@@ -332,7 +335,7 @@ void cannonLoadPilot(u8 pilot, Unk802D5B50_Arg2* arg1) {
         arg1->unk291 = 1;
         arg1->unk284 = 0x3F;
         break;
-    case 2:
+    case Hawk:
         arg1->unk224 = 0.003f;
         arg1->unk228 = 0.187f;
         arg1->unk22C = 0.634f;
@@ -372,7 +375,7 @@ void cannonLoadPilot(u8 pilot, Unk802D5B50_Arg2* arg1) {
         arg1->unk291 = 5;
         arg1->unk284 = 0x40;
         break;
-    case 3:
+    case Kiwi:
         arg1->unk224 = 0.002f;
         arg1->unk228 = 0.084f;
         arg1->unk22C = 0.706f;
@@ -412,7 +415,7 @@ void cannonLoadPilot(u8 pilot, Unk802D5B50_Arg2* arg1) {
         arg1->unk291 = 5;
         arg1->unk284 = 0x41;
         break;
-    case 4:
+    case Ibis:
         arg1->unk224 = -0.002f;
         arg1->unk228 = 0.085f;
         arg1->unk22C = 0.799f;
@@ -452,7 +455,7 @@ void cannonLoadPilot(u8 pilot, Unk802D5B50_Arg2* arg1) {
         arg1->unk291 = 1;
         arg1->unk284 = 0x42;
         break;
-    case 5:
+    case Robin:
         arg1->unk224 = -0.001f;
         arg1->unk228 = 0.095f;
         arg1->unk22C = 0.844f;

@@ -81,4 +81,11 @@ void uvGfx_80223BF4(s32 arg0);
 void uvGfx_80223C00(void);
 void uvCopyFrameBuf(s32 fb_id);
 
+void uvFontSet(s32);
+void uvFont_80219550(f64, f64);
+void uvFont_8021956C(u8, u8, u8, u8);
+s32 uvFontWidth(char*);
+void uvFont_80219EA8(void);
+void uvFont_80219ACC(s32, s32, char*);
+
 #endif // PILOTWINGS64_UV_GRAPHICS

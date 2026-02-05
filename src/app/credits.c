@@ -1,4 +1,5 @@
 #include "common.h"
+#include "credits.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/credits/func_8030C1C0.s")
 

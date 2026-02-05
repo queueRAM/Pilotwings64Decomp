@@ -92,12 +92,12 @@ ParsedUVFT* uvParseTopUVFT(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_19B50/uvFontSet.s")
 
-void func_80219550(f64 arg0, f64 arg1) {
+void uvFont_80219550(f64 arg0, f64 arg1) {
     D_80248E7C = (f32)arg0;
     D_80248E80 = (f32)arg1;
 }
 
-void func_8021956C(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
+void uvFont_8021956C(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
     D_80248E64 = arg0;
     D_80248E68 = arg1;
     D_80248E6C = arg2;
@@ -112,16 +112,16 @@ void func_8021956C(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_19B50/func_802196EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_19B50/func_802197EC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_19B50/uvFontWidth.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_19B50/func_80219828.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_19B50/func_80219874.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_19B50/func_80219ACC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_19B50/uvFont_80219ACC.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_19B50/func_80219CC0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_19B50/func_80219DA4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_19B50/func_80219EA8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_19B50/uvFont_80219EA8.s")

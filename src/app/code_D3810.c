@@ -1,4 +1,5 @@
 #include "common.h"
+#include "code_D3810.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_D3810/func_8034C2E0.s")
 

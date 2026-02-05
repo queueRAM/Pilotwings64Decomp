@@ -1,4 +1,5 @@
 #include "common.h"
+#include "snap.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/snap/func_80337D50.s")
 

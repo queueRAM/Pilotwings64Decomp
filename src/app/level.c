@@ -1,9 +1,23 @@
 #include "common.h"
-#include <PR/ultratypes.h>
 #include <uv_graphics.h>
 #include <uv_level.h>
 #include <uv_memory.h>
 #include <uv_util.h>
+#include "code_58B00.h"
+#include "code_68220.h"
+#include "code_69BF0.h"
+#include "code_6ECD0.h"
+#include "code_722D0.h"
+#include "code_78620.h"
+#include "code_9C080.h"
+#include "code_9CF50.h"
+#include "code_A7460.h"
+#include "code_BB820.h"
+#include "code_BD670.h"
+#include "code_C9440.h"
+#include "code_CE4F0.h"
+#include "code_D2D50.h"
+#include "code_D3810.h"
 
 typedef struct {
     s32 unk0;
@@ -15,47 +29,10 @@ typedef struct {
     u8 pad8[0x70];
 } Unk8030BDC8;
 
-s32 func_80223E80(s32 addr);
-void func_80223F30(s32 arg0);
-void func_802D1A74(void);
-void func_802D1CE8(void);
-void func_802D206C(void);
-void func_802E1444(u16);
-void func_802E27A8(void*);
-void func_802E79F0(void);
-void func_802E7C28(void);
-void func_802EB0D4(void);
-void func_802EB270(void);
-void func_802F15C8(void);
-void func_802F182C(void);
-void func_802F1AE8(void);
-void func_802F1D3C(void);
-void func_802F1FF0(void);
-void func_803151AC(void);
-void func_8031531C(void);
-void func_80315734(void);
-void func_8031596C(void);
-void func_80315D68(void);
-void func_80315E3C(void);
-void func_80320534(void);
-void func_8032079C(void);
-void func_80335BE4(void);
-void func_80335E44(void);
-void func_803363E0(void);
-void func_8033651C(void);
-void func_80341F10(s32);
-void func_80348280(LevelTOYS*);
-void func_803483AC(void);
-void func_8034BEDC(void);
-void func_8034C0BC(void);
-void func_8034C964(void);
-void func_8034CB80(void);
-void env_loadtpal(s32);
-
 extern s32 D_8034F400;
 extern s32 D_8034F404;
 extern LevelObjects* D_8034F408;
-extern s32 D_8034F40C;
+extern s32 gLevelCurMap;
 extern Unk8034F410 D_8034F410[];
 
 // likely arrays of structs for level data
@@ -67,30 +44,30 @@ extern s32 gLevelAPTS;
 extern s32 gLevelBNUS;
 extern LevelObjects gLevelObjects;
 
-void func_8030B6C0(u8 arg0, u8 arg1, u8 arg2, s32 arg3) {
+void levelLoad(u8 map, u8 pilot, u8 vehicle, s32 animateToys) {
     s32 i;
 
-    D_8034F40C = arg0;
+    gLevelCurMap = map;
     uvLevelInit();
     func_80341F10(0x42);
     env_loadtpal(D_80362690->unk0[0].unk8);
-    uvLevelAppend(arg0);
-    switch (arg0) {
-    case 1:
-        D_8034F408 = func_8030BDC8(0);
+    uvLevelAppend(map);
+    switch (map) {
+    case HolidayIsland:
+        D_8034F408 = levelLoadMapObjects(0);
         break;
-    case 3:
-        D_8034F408 = func_8030BDC8(1);
+    case CrescentIsland:
+        D_8034F408 = levelLoadMapObjects(1);
         break;
-    case 5:
-        D_8034F408 = func_8030BDC8(2);
+    case LittleStates:
+        D_8034F408 = levelLoadMapObjects(2);
         break;
-    case 10:
-        D_8034F408 = func_8030BDC8(3);
+    case EverFrostIsland:
+        D_8034F408 = levelLoadMapObjects(3);
         break;
     }
     uvLevelAppend(0x1A);
-    if (arg3 != 0) {
+    if (animateToys) {
         for (i = 0; i < (s32)gLevelObjects.countTOYS; i++) {
             func_80348280(&gLevelObjects.dataTOYS[i]);
         }
@@ -98,43 +75,43 @@ void func_8030B6C0(u8 arg0, u8 arg1, u8 arg2, s32 arg3) {
     } else {
         D_8034F400 = 0;
     }
-    if ((arg2 == 0) || (arg2 == 6)) {
+    if ((vehicle == HangGlider) || (vehicle == Birdman)) {
         uvLevelAppend(0x1B);
     }
-    func_8030BA98(arg1, arg2);
+    levelComputeAppend(pilot, vehicle);
     uvLevelAppend(0xC);
     uvLevelAppend(0xD);
     uvLevelAppend(0x2E);
     func_802E1444(D_80362690->unk0[0].unk8);
-    if (arg3 != 0) {
-        func_8030B868();
+    if (animateToys != 0) {
+        level_8030B868();
     }
 }
 
-void func_8030B868(void) {
+void level_8030B868(void) {
     if (D_8034F404 == 0) {
         if (1) { // fakematch
             D_8034F404 = 1;
         }
-        switch (D_8034F40C) {
-        case 1:
+        switch (gLevelCurMap) {
+        case HolidayIsland:
             func_802F1AE8();
             func_802D1CE8();
             break;
-        case 3:
+        case CrescentIsland:
             func_8034BEDC();
             func_802EB0D4();
             func_802D1A74();
             func_802F15C8();
             break;
-        case 5:
+        case LittleStates:
             func_80335BE4();
             func_802E79F0();
             func_803151AC();
             func_802F182C();
             func_80320534();
             break;
-        case 10:
+        case EverFrostIsland:
             func_80315D68();
             func_80315734();
             func_803363E0();
@@ -145,30 +122,30 @@ void func_8030B868(void) {
     }
 }
 
-void func_8030B964(void) {
+void level_8030B964(void) {
     if (D_8034F404 != 0) {
         if (1) { // fakematch
             D_8034F404 = 0;
         }
-        switch (D_8034F40C) {
-        case 1:
+        switch (gLevelCurMap) {
+        case HolidayIsland:
             func_802F1FF0();
             func_802D206C();
             break;
-        case 3:
+        case CrescentIsland:
             func_8034C0BC();
             func_802EB270();
             func_802D206C();
             func_802F1FF0();
             break;
-        case 5:
+        case LittleStates:
             func_80335E44();
             func_802E7C28();
             func_8031531C();
             func_802F1FF0();
             func_8032079C();
             break;
-        case 10:
+        case EverFrostIsland:
             func_80315E3C();
             func_8031596C();
             func_8033651C();
@@ -179,83 +156,83 @@ void func_8030B964(void) {
     }
 }
 
-void func_8030BA60(void) {
+void level_8030BA60(void) {
     if (D_8034F400 != 0) {
         func_803483AC();
-        func_8030B964();
+        level_8030B964();
     }
 }
 
-void func_8030BA98(u8 pilot, u8 vehicle) {
+void levelComputeAppend(u8 pilot, u8 vehicle) {
     s32 var_a2;
 
     var_a2 = -1;
     // clang-format off: compress switch statements
     switch (pilot) {
-    case 0:
+    case Lark:
         switch (vehicle) {
-        case 0: var_a2 = 0x1C; break;
-        case 1: var_a2 = 0x22; break;
-        case 2: var_a2 = 0x28; break;
-        case 3: var_a2 = 0x2F; break;
-        case 4: var_a2 = 0x3B; break;
-        case 6: var_a2 = 0x35; break;
-        case 5: var_a2 = 0x41; break;
+        case HangGlider: var_a2 = 0x1C; break;
+        case RocketBelt: var_a2 = 0x22; break;
+        case Gyrocopter: var_a2 = 0x28; break;
+        case Cannonball: var_a2 = 0x2F; break;
+        case SkyDiving: var_a2 = 0x3B; break;
+        case Birdman: var_a2 = 0x35; break;
+        case JumbleHopper: var_a2 = 0x41; break;
         }
         break;
-    case 1:
+    case Goose:
         switch (vehicle) {
-        case 0: var_a2 = 0x1D; break;
-        case 1: var_a2 = 0x23; break;
-        case 2: var_a2 = 0x29; break;
-        case 3: var_a2 = 0x30; break;
-        case 4: var_a2 = 0x3C; break;
-        case 6: var_a2 = 0x36; break;
-        case 5: var_a2 = 0x42; break;
+        case HangGlider: var_a2 = 0x1D; break;
+        case RocketBelt: var_a2 = 0x23; break;
+        case Gyrocopter: var_a2 = 0x29; break;
+        case Cannonball: var_a2 = 0x30; break;
+        case SkyDiving: var_a2 = 0x3C; break;
+        case Birdman: var_a2 = 0x36; break;
+        case JumbleHopper: var_a2 = 0x42; break;
         }
         break;
-    case 2:
+    case Hawk:
         switch (vehicle) {
-        case 0: var_a2 = 0x1E; break;
-        case 1: var_a2 = 0x24; break;
-        case 2: var_a2 = 0x2A; break;
-        case 3: var_a2 = 0x31; break;
-        case 4: var_a2 = 0x3D; break;
-        case 6: var_a2 = 0x37; break;
-        case 5: var_a2 = 0x43; break;
+        case HangGlider: var_a2 = 0x1E; break;
+        case RocketBelt: var_a2 = 0x24; break;
+        case Gyrocopter: var_a2 = 0x2A; break;
+        case Cannonball: var_a2 = 0x31; break;
+        case SkyDiving: var_a2 = 0x3D; break;
+        case Birdman: var_a2 = 0x37; break;
+        case JumbleHopper: var_a2 = 0x43; break;
         }
         break;
-    case 3:
+    case Kiwi:
         switch (vehicle) {
-        case 0: var_a2 = 0x1F; break;
-        case 1: var_a2 = 0x25; break;
-        case 2: var_a2 = 0x2B; break;
-        case 3: var_a2 = 0x32; break;
-        case 4: var_a2 = 0x3E; break;
-        case 6: var_a2 = 0x38; break;
-        case 5: var_a2 = 0x44; break;
+        case HangGlider: var_a2 = 0x1F; break;
+        case RocketBelt: var_a2 = 0x25; break;
+        case Gyrocopter: var_a2 = 0x2B; break;
+        case Cannonball: var_a2 = 0x32; break;
+        case SkyDiving: var_a2 = 0x3E; break;
+        case Birdman: var_a2 = 0x38; break;
+        case JumbleHopper: var_a2 = 0x44; break;
         }
         break;
-    case 4:
+    case Ibis:
         switch (vehicle) {
-        case 0: var_a2 = 0x20; break;
-        case 1: var_a2 = 0x26; break;
-        case 2: var_a2 = 0x2C; break;
-        case 3: var_a2 = 0x33; break;
-        case 4: var_a2 = 0x3F; break;
-        case 6: var_a2 = 0x39; break;
-        case 5: var_a2 = 0x45; break;
+        case HangGlider: var_a2 = 0x20; break;
+        case RocketBelt: var_a2 = 0x26; break;
+        case Gyrocopter: var_a2 = 0x2C; break;
+        case Cannonball: var_a2 = 0x33; break;
+        case SkyDiving: var_a2 = 0x3F; break;
+        case Birdman: var_a2 = 0x39; break;
+        case JumbleHopper: var_a2 = 0x45; break;
         }
         break;
-    case 5:
+    case Robin:
         switch (vehicle) {
-        case 0: var_a2 = 0x21; break;
-        case 1: var_a2 = 0x27; break;
-        case 2: var_a2 = 0x2D; break;
-        case 3: var_a2 = 0x34; break;
-        case 4: var_a2 = 0x40; break;
-        case 6: var_a2 = 0x3A; break;
-        case 5: var_a2 = 0x46; break;
+        case HangGlider: var_a2 = 0x21; break;
+        case RocketBelt: var_a2 = 0x27; break;
+        case Gyrocopter: var_a2 = 0x2D; break;
+        case Cannonball: var_a2 = 0x34; break;
+        case SkyDiving: var_a2 = 0x40; break;
+        case Birdman: var_a2 = 0x3A; break;
+        case JumbleHopper: var_a2 = 0x46; break;
         }
         break;
     }
@@ -267,7 +244,7 @@ void func_8030BA98(u8 pilot, u8 vehicle) {
     }
 }
 
-void func_8030BD20(void) {
+void level_8030BD20(void) {
 }
 
 u8 levelGetWOBJ(void** data) {
@@ -295,7 +272,7 @@ u8 levelGetBNUS(void** data) {
     return D_8034F408->countBNUS;
 }
 
-LevelObjects* func_8030BDC8(u8 arg0) {
+LevelObjects* levelLoadMapObjects(u8 mapIdx) {
     s32 i;
     s32 idx;  // spC0
     u32 size; // spBC
@@ -306,7 +283,7 @@ LevelObjects* func_8030BDC8(u8 arg0) {
     LevelObjects* temp;
     u8 tmp8;
 
-    idx = func_80223E80((s32)func_802314D0(D_8034F410[arg0].unk0, 2));
+    idx = func_80223E80((s32)func_802314D0(D_8034F410[mapIdx].unk0, 2));
     temp = &gLevelObjects;
     uvMemSet((void*)temp, 0, sizeof(LevelObjects));
     gLevelObjects.dataWOBJ = &gLevelWOBJ;

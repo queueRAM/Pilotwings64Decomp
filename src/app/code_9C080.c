@@ -1,4 +1,5 @@
 #include "common.h"
+#include "code_9C080.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9C080/func_80314B50.s")
 

@@ -5,7 +5,41 @@
 
 #define MAX_CLASSES  8
 #define MAX_TESTS    5
-#define MAX_VEHICLES 7
+
+enum PilotId {
+    Lark = 0,
+    Goose = 1,
+    Hawk  = 2,
+    Kiwi  = 3,
+    Ibis  = 4,
+    Robin = 5,
+    MAX_PILOTS
+};
+
+enum VehicleId {
+    HangGlider = 0,
+    RocketBelt = 1,
+    Gyrocopter = 2,
+    Cannonball = 3,
+    SkyDiving = 4,
+    JumbleHopper = 5,
+    Birdman = 6,
+    MAX_VEHICLES
+};
+
+enum MapId {
+    HolidayIsland = 1,
+    CrescentIsland = 3,
+    LittleStates = 5,
+    EverFrostIsland = 10,
+};
+
+typedef struct {
+    s32 unk0[12];
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+} Unk80345464_Arg0;
 
 typedef struct {
     u8 unk0[0x22C];
@@ -14,7 +48,7 @@ typedef struct {
 
 typedef struct {
     s32 unk0;
-    u16 unk4;
+    u16 map;
     u16 unk6;
     u16 unk8;
     u8 debugFlag;
@@ -85,6 +119,64 @@ typedef struct {
     void* dataBNUS;
 } LevelObjects;
 
+typedef struct {
+    struct {
+        u8 classNum;
+        u8 vehNum;
+        u8 testNum;
+        u8 unk3;
+        u8 unk4;
+        u8 unk5[0x3];
+        s32 unk8;
+        u8 unkC[4];
+        s32 unk10;
+        u8 unk14[0x18];
+        s32 unk2C;
+        u8 unk30[0x14];
+        f32 unk44;
+        s32 unk48;
+        u8 unk4C[0x3B8];
+        f32 unk404;
+        f32 unk408;
+        u8 unk40C[0x10];
+        u8 countTHER; // count THER
+        u8 countLWIN; // count LWIN
+        u8 countTPAD; // count TPAD
+        u8 countLPAD; // count LPAD
+        u8 countLSTP; // count LSTP
+        u8 countRNGS; // count RNGS
+        u8 countBALS; // count BALS
+        u8 countTARG; // count TARG
+        u8 countHPAD; // count HPAD
+        u8 countBTGT; // count BTGT
+        u8 countPHTS; // count PHTS
+        u8 countFALC; // count FALC
+        u8 countSDFM; // count SDFM
+        u8 countCNTG; // count CNTG
+        u8 countHOPD; // count HOPD
+        u8 countOBSV; // count OBSV
+    } comm;
+    void* dataNAME;      // ptr NAME
+    void* dataINFO;      // ptr INFO
+    void* dataJPTX;      // ptr JPTX
+    void* dataTHER;      // ptr THER
+    void* dataLWIN;      // ptr LWIN
+    void* dataTPAD;      // ptr TPAD
+    void* dataLPAD;      // ptr LPAD
+    void* dataLSTP;      // ptr LSTP
+    void* dataRNGS;      // ptr RNGS
+    void* dataBALS;      // ptr BALS
+    void* dataTARG;      // ptr TARG
+    void* dataHPAD;      // ptr HPAD
+    void* dataBTGT;      // ptr BTGT
+    void* dataPHTS;      // ptr PHTS
+    void* dataFALC;      // ptr FALC
+    void* dataSDFM;      // ptr SDFM
+    void* dataCNTG;      // ptr CNTG
+    void* dataHOPD;      // ptr HOPD
+    LevelOBSV* dataOBSV; // ptr OBSV
+} Unk8037A600;
+
 extern Unk80362690* D_80362690;
 
 void uvMemInitBlockHdr(void);
@@ -93,19 +185,38 @@ void uvLevelAppend(s32 level_id);
 void uvMemLoadDS(u32 tag, s32 palette);
 void uvMemLoadPal(s32 palette);
 
-void func_8030B6C0(u8 arg0, u8 arg1, u8 arg2, s32 arg3);
-void func_8030B868(void);
-void func_8030B964(void);
-void func_8030BA60(void);
-void func_8030BA98(u8 pilot, u8 vehicle);
-void func_8030BD20(void);
+void levelLoad(u8 map, u8 pilot, u8 vehicle, s32 animateToys);
+void level_8030B868(void);
+void level_8030B964(void);
+void level_8030BA60(void);
+void levelComputeAppend(u8 pilot, u8 vehicle);
+void level_8030BD20(void);
 u8 levelGetWOBJ(void** data);
 u8 levelGetTPTS(LevelTPTS** data);
 u8 levelGetAPTS(void** data);
 u8 levelGetLPAD(void** data);
 u8 levelGetBNUS(void** data);
-LevelObjects* func_8030BDC8(u8 arg0);
+LevelObjects* levelLoadMapObjects(u8 mapIdx);
 
+void level_803449B0(void);
+s32 levelIsValidIndex(s32 classIdx, s32 testIdx, s32 vehicle);
+s32 level_80344E0C(s32 classIdx, s32 testIdx, s32 vehicle, char* arg3, char* arg4);
+s32 levelGetTestCount(s32 classIdx, s32 vehicle);
+s32 level_80344FC8(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* arg4, u16* arg5);
+void level_803453AC(void);
+s32 level_80345464(Unk80345464_Arg0*, s32);
+s32 level_803456D8(Unk80345464_Arg0*);
+void level_80345A24(void);
+s32* levelGet_80345C80(void);
+s32* levelGet_80345C90(void);
+f32 levelGet_80345CA0(void);
+s32* levelGet_80345CB0(void);
+void levelGet_80345CC0(f32* arg0, f32* arg1);
+Unk8037A600* level_80345CE4(u32 arg0);
+void level_803462D4(u16 idx);
+u8 levelGet_80346364(void);
+s32 level_80346370(s32 terra);
+u8 levelGet_80346468(void);
 u8 levelDataGetTHER(void** data);
 u8 levelDataGetLWIN(void** data);
 u8 levelDataGetTPAD(void** data);
