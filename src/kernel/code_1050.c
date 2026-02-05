@@ -3,7 +3,9 @@
 
 typedef struct UnkStruct_80200144 {
     Mtx4F mat;
-    float vec[4];
+    float vec[2];
+    u8 pad48[4];
+    s32 unk4C;
 } UnkStruct_80200144_t;
 
 typedef struct UnkStruct_80200308 {
@@ -31,7 +33,7 @@ void func_802000DC(u16 arg0) {
 
     uvMat4SetIdentity(&ident);
     uvMat4Copy(&temp_a0->mat, &ident);
-    *(u32*)&temp_a0->vec[3] = 2;
+    temp_a0->unk4C = 2;
     temp_a0->vec[0] = 1.0f;
     temp_a0->vec[1] = 1.0f;
 }

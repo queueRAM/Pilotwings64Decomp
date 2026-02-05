@@ -171,67 +171,67 @@ void levelComputeAppend(u8 pilot, u8 vehicle) {
     switch (pilot) {
     case Lark:
         switch (vehicle) {
-        case HangGlider: var_a2 = 0x1C; break;
-        case RocketBelt: var_a2 = 0x22; break;
-        case Gyrocopter: var_a2 = 0x28; break;
-        case Cannonball: var_a2 = 0x2F; break;
-        case SkyDiving: var_a2 = 0x3B; break;
-        case Birdman: var_a2 = 0x35; break;
+        case HangGlider:   var_a2 = 0x1C; break;
+        case RocketBelt:   var_a2 = 0x22; break;
+        case Gyrocopter:   var_a2 = 0x28; break;
+        case Cannonball:   var_a2 = 0x2F; break;
+        case SkyDiving:    var_a2 = 0x3B; break;
+        case Birdman:      var_a2 = 0x35; break;
         case JumbleHopper: var_a2 = 0x41; break;
         }
         break;
     case Goose:
         switch (vehicle) {
-        case HangGlider: var_a2 = 0x1D; break;
-        case RocketBelt: var_a2 = 0x23; break;
-        case Gyrocopter: var_a2 = 0x29; break;
-        case Cannonball: var_a2 = 0x30; break;
-        case SkyDiving: var_a2 = 0x3C; break;
-        case Birdman: var_a2 = 0x36; break;
+        case HangGlider:   var_a2 = 0x1D; break;
+        case RocketBelt:   var_a2 = 0x23; break;
+        case Gyrocopter:   var_a2 = 0x29; break;
+        case Cannonball:   var_a2 = 0x30; break;
+        case SkyDiving:    var_a2 = 0x3C; break;
+        case Birdman:      var_a2 = 0x36; break;
         case JumbleHopper: var_a2 = 0x42; break;
         }
         break;
     case Hawk:
         switch (vehicle) {
-        case HangGlider: var_a2 = 0x1E; break;
-        case RocketBelt: var_a2 = 0x24; break;
-        case Gyrocopter: var_a2 = 0x2A; break;
-        case Cannonball: var_a2 = 0x31; break;
-        case SkyDiving: var_a2 = 0x3D; break;
-        case Birdman: var_a2 = 0x37; break;
+        case HangGlider:   var_a2 = 0x1E; break;
+        case RocketBelt:   var_a2 = 0x24; break;
+        case Gyrocopter:   var_a2 = 0x2A; break;
+        case Cannonball:   var_a2 = 0x31; break;
+        case SkyDiving:    var_a2 = 0x3D; break;
+        case Birdman:      var_a2 = 0x37; break;
         case JumbleHopper: var_a2 = 0x43; break;
         }
         break;
     case Kiwi:
         switch (vehicle) {
-        case HangGlider: var_a2 = 0x1F; break;
-        case RocketBelt: var_a2 = 0x25; break;
-        case Gyrocopter: var_a2 = 0x2B; break;
-        case Cannonball: var_a2 = 0x32; break;
-        case SkyDiving: var_a2 = 0x3E; break;
-        case Birdman: var_a2 = 0x38; break;
+        case HangGlider:   var_a2 = 0x1F; break;
+        case RocketBelt:   var_a2 = 0x25; break;
+        case Gyrocopter:   var_a2 = 0x2B; break;
+        case Cannonball:   var_a2 = 0x32; break;
+        case SkyDiving:    var_a2 = 0x3E; break;
+        case Birdman:      var_a2 = 0x38; break;
         case JumbleHopper: var_a2 = 0x44; break;
         }
         break;
     case Ibis:
         switch (vehicle) {
-        case HangGlider: var_a2 = 0x20; break;
-        case RocketBelt: var_a2 = 0x26; break;
-        case Gyrocopter: var_a2 = 0x2C; break;
-        case Cannonball: var_a2 = 0x33; break;
-        case SkyDiving: var_a2 = 0x3F; break;
-        case Birdman: var_a2 = 0x39; break;
+        case HangGlider:   var_a2 = 0x20; break;
+        case RocketBelt:   var_a2 = 0x26; break;
+        case Gyrocopter:   var_a2 = 0x2C; break;
+        case Cannonball:   var_a2 = 0x33; break;
+        case SkyDiving:    var_a2 = 0x3F; break;
+        case Birdman:      var_a2 = 0x39; break;
         case JumbleHopper: var_a2 = 0x45; break;
         }
         break;
     case Robin:
         switch (vehicle) {
-        case HangGlider: var_a2 = 0x21; break;
-        case RocketBelt: var_a2 = 0x27; break;
-        case Gyrocopter: var_a2 = 0x2D; break;
-        case Cannonball: var_a2 = 0x34; break;
-        case SkyDiving: var_a2 = 0x40; break;
-        case Birdman: var_a2 = 0x3A; break;
+        case HangGlider:   var_a2 = 0x21; break;
+        case RocketBelt:   var_a2 = 0x27; break;
+        case Gyrocopter:   var_a2 = 0x2D; break;
+        case Cannonball:   var_a2 = 0x34; break;
+        case SkyDiving:    var_a2 = 0x40; break;
+        case Birdman:      var_a2 = 0x3A; break;
         case JumbleHopper: var_a2 = 0x46; break;
         }
         break;
