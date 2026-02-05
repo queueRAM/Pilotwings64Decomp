@@ -173,10 +173,10 @@ void levelComputeAppend(u8 pilot, u8 vehicle) {
         switch (vehicle) {
         case VEHICLE_HANG_GLIDER:   var_a2 = 0x1C; break;
         case VEHICLE_ROCKET_BELT:   var_a2 = 0x22; break;
-        case VEHICLE_GYROCOPTER:   var_a2 = 0x28; break;
-        case VEHICLE_CANNONBALL:   var_a2 = 0x2F; break;
+        case VEHICLE_GYROCOPTER:    var_a2 = 0x28; break;
+        case VEHICLE_CANNONBALL:    var_a2 = 0x2F; break;
         case VEHICLE_SKY_DIVING:    var_a2 = 0x3B; break;
-        case VEHICLE_BIRDMAN:      var_a2 = 0x35; break;
+        case VEHICLE_BIRDMAN:       var_a2 = 0x35; break;
         case VEHICLE_JUMBLE_HOPPER: var_a2 = 0x41; break;
         }
         break;
@@ -184,10 +184,10 @@ void levelComputeAppend(u8 pilot, u8 vehicle) {
         switch (vehicle) {
         case VEHICLE_HANG_GLIDER:   var_a2 = 0x1D; break;
         case VEHICLE_ROCKET_BELT:   var_a2 = 0x23; break;
-        case VEHICLE_GYROCOPTER:   var_a2 = 0x29; break;
-        case VEHICLE_CANNONBALL:   var_a2 = 0x30; break;
+        case VEHICLE_GYROCOPTER:    var_a2 = 0x29; break;
+        case VEHICLE_CANNONBALL:    var_a2 = 0x30; break;
         case VEHICLE_SKY_DIVING:    var_a2 = 0x3C; break;
-        case VEHICLE_BIRDMAN:      var_a2 = 0x36; break;
+        case VEHICLE_BIRDMAN:       var_a2 = 0x36; break;
         case VEHICLE_JUMBLE_HOPPER: var_a2 = 0x42; break;
         }
         break;
@@ -195,10 +195,10 @@ void levelComputeAppend(u8 pilot, u8 vehicle) {
         switch (vehicle) {
         case VEHICLE_HANG_GLIDER:   var_a2 = 0x1E; break;
         case VEHICLE_ROCKET_BELT:   var_a2 = 0x24; break;
-        case VEHICLE_GYROCOPTER:   var_a2 = 0x2A; break;
-        case VEHICLE_CANNONBALL:   var_a2 = 0x31; break;
+        case VEHICLE_GYROCOPTER:    var_a2 = 0x2A; break;
+        case VEHICLE_CANNONBALL:    var_a2 = 0x31; break;
         case VEHICLE_SKY_DIVING:    var_a2 = 0x3D; break;
-        case VEHICLE_BIRDMAN:      var_a2 = 0x37; break;
+        case VEHICLE_BIRDMAN:       var_a2 = 0x37; break;
         case VEHICLE_JUMBLE_HOPPER: var_a2 = 0x43; break;
         }
         break;
@@ -206,10 +206,10 @@ void levelComputeAppend(u8 pilot, u8 vehicle) {
         switch (vehicle) {
         case VEHICLE_HANG_GLIDER:   var_a2 = 0x1F; break;
         case VEHICLE_ROCKET_BELT:   var_a2 = 0x25; break;
-        case VEHICLE_GYROCOPTER:   var_a2 = 0x2B; break;
-        case VEHICLE_CANNONBALL:   var_a2 = 0x32; break;
+        case VEHICLE_GYROCOPTER:    var_a2 = 0x2B; break;
+        case VEHICLE_CANNONBALL:    var_a2 = 0x32; break;
         case VEHICLE_SKY_DIVING:    var_a2 = 0x3E; break;
-        case VEHICLE_BIRDMAN:      var_a2 = 0x38; break;
+        case VEHICLE_BIRDMAN:       var_a2 = 0x38; break;
         case VEHICLE_JUMBLE_HOPPER: var_a2 = 0x44; break;
         }
         break;
@@ -217,10 +217,10 @@ void levelComputeAppend(u8 pilot, u8 vehicle) {
         switch (vehicle) {
         case VEHICLE_HANG_GLIDER:   var_a2 = 0x20; break;
         case VEHICLE_ROCKET_BELT:   var_a2 = 0x26; break;
-        case VEHICLE_GYROCOPTER:   var_a2 = 0x2C; break;
-        case VEHICLE_CANNONBALL:   var_a2 = 0x33; break;
+        case VEHICLE_GYROCOPTER:    var_a2 = 0x2C; break;
+        case VEHICLE_CANNONBALL:    var_a2 = 0x33; break;
         case VEHICLE_SKY_DIVING:    var_a2 = 0x3F; break;
-        case VEHICLE_BIRDMAN:      var_a2 = 0x39; break;
+        case VEHICLE_BIRDMAN:       var_a2 = 0x39; break;
         case VEHICLE_JUMBLE_HOPPER: var_a2 = 0x45; break;
         }
         break;
@@ -228,10 +228,10 @@ void levelComputeAppend(u8 pilot, u8 vehicle) {
         switch (vehicle) {
         case VEHICLE_HANG_GLIDER:   var_a2 = 0x21; break;
         case VEHICLE_ROCKET_BELT:   var_a2 = 0x27; break;
-        case VEHICLE_GYROCOPTER:   var_a2 = 0x2D; break;
-        case VEHICLE_CANNONBALL:   var_a2 = 0x34; break;
+        case VEHICLE_GYROCOPTER:    var_a2 = 0x2D; break;
+        case VEHICLE_CANNONBALL:    var_a2 = 0x34; break;
         case VEHICLE_SKY_DIVING:    var_a2 = 0x40; break;
-        case VEHICLE_BIRDMAN:      var_a2 = 0x3A; break;
+        case VEHICLE_BIRDMAN:       var_a2 = 0x3A; break;
         case VEHICLE_JUMBLE_HOPPER: var_a2 = 0x46; break;
         }
         break;
