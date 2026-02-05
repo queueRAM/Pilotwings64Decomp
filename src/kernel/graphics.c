@@ -430,7 +430,28 @@ void uvGfx_802236A8(void) {
     gSPPopMatrix(gGfxDisplayListHead++, G_MTX_MODELVIEW);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfx_802236CC.s")
+void uvGfx_802236CC(Mtx4F* arg0) {
+    Mtx4F sp20;
+    uvMat4MulBA(&sp20, &D_802B4888, arg0);
+    if (sp20.m[3][0] < -2.1e9f) {
+        sp20.m[3][0] = -2.1e9f;
+    } else if (sp20.m[3][0] > 2.1e9f) {
+        sp20.m[3][0] = 2.1e9f;
+    }
+    if (sp20.m[3][1] < -2.1e9f) {
+        sp20.m[3][1] = -2.1e9f;
+    } else if (sp20.m[3][1] > 2.1e9f) {
+        sp20.m[3][1] = 2.1e9f;
+    }
+    if (sp20.m[3][2] < -2.1e9f) {
+        sp20.m[3][2] = -2.1e9f;
+    } else if (sp20.m[3][2] > 2.1e9f) {
+        sp20.m[3][2] = 2.1e9f;
+    }
+    uvGfxMstackPushUnk(&sp20);
+    gSPMatrix(gGfxDisplayListHead++, osVirtualToPhysical(uvGfxMstackTop()), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+    D_80298AD0[gGfxFbIndex]++;
+}
 
 s32 uvGfxGetCnt(u32 arg0) {
     switch (arg0) {
