@@ -129,7 +129,23 @@ void func_80323020(void) {
     uvIOUpdate();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_803230B0.s")
+f32 func_803230B0(s32 contIdx, s32 axis) {
+    s32 idx;
+    if (D_8034FAD0 == 2) {
+        if ((D_8036DA30 == NULL) || (D_8036DA30 != D_8036DA30->unk0)) {
+            func_80322BE0();
+        }
+        if (axis == 0) {
+            idx = func_80322F7C(D_8034F850);
+            return func_803227D0(&D_8036DA30->unk4[idx]);
+        } else {
+            idx = func_80322F7C(D_8034F850);
+            return func_80322828(&D_8036DA30->unk4[idx]);
+        }
+    } else {
+        return uvControllerGetStick(contIdx, axis);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80323164.s")
 
