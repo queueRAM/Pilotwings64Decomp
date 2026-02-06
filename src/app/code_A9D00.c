@@ -6,13 +6,13 @@
 #include "code_A9D00.h"
 
 typedef struct {
-    u8 pad0[4];
+    f32 unk0;
     u32 unk4;
-} Unk803227D0;
+} Unk8036DA30_Unk4;
 
 typedef struct Unk8036DA30 {
     struct Unk8036DA30* unk0;
-    f32 unk4;
+    Unk8036DA30_Unk4 unk4[0x708];
 } Unk8036DA30;
 
 extern f32 D_8036DA34;
@@ -30,19 +30,19 @@ extern s32 D_8036DA5C;
 extern s32 D_8036DA60;
 
 
-f32 func_803227D0(Unk803227D0* arg0) {
+f32 func_803227D0(Unk8036DA30_Unk4* arg0) {
     return (f32) (((f32)((arg0->unk4 & 0xFF000000) >> 24) / 127.0) - 1.0);
 }
 
-f32 func_80322828(Unk803227D0* arg0) {
+f32 func_80322828(Unk8036DA30_Unk4* arg0) {
     return (f32) (((f32)((arg0->unk4 & 0x00FF0000) >> 16) / 127.0) - 1.0);
 }
 
-u32 func_80322880(Unk803227D0* arg0) {
+u32 func_80322880(Unk8036DA30_Unk4* arg0) {
     return arg0->unk4 & 0x0000FFFF;
 }
 
-void func_80322890(Unk803227D0* arg0, f32 arg1, f32 arg2, u32 arg3) {
+void func_80322890(Unk8036DA30_Unk4* arg0, f32 arg1, f32 arg2, u32 arg3) {
     arg0->unk4 = (u32) (((u32) ((arg1 + 1.0) * 127.0) << 0x18) | ((u32) ((1.0 + arg2) * 127.0) << 0x10) | arg3);
 }
 
@@ -99,27 +99,23 @@ s32 func_80322F7C(f32 arg0) {
     var_v1 = 0;
     temp_fv0 = arg0 - D_8036DA34;
 
-    for (var_v1 = 0; var_v1 < 0x708; var_v1++) {
-        if (temp_fv0 <= D_8036DA30[var_v1].unk4) {
+    for (var_v1 = 0; var_v1 < ARRAY_COUNT(D_8036DA30->unk4); var_v1++) {
+        if (temp_fv0 <= D_8036DA30->unk4[var_v1].unk0) {
             return var_v1;
         }
     }
-    return 0x707;
+    return ARRAY_COUNT(D_8036DA30->unk4) - 1;
 }
 
 void func_80323020(void) {
-    s32 tmp;
-    Unk8036DA30 **ptr;
+    s32 idx;
     if (D_8034FAD0 == 2) {
         if ((D_8036DA30 == NULL) || (D_8036DA30 != D_8036DA30->unk0)) {
             func_80322BE0();
         }
-        // fakematch with ptr
-        ptr = &D_8036DA30;
         D_8036DA3C = D_8036DA40;
-        tmp = func_80322F7C(D_8034F850);
-        // TODO: these types need to be sorted out
-        D_8036DA40 = func_80322880((Unk803227D0*)&(*ptr)[tmp].unk4);
+        idx = func_80322F7C(D_8034F850);
+        D_8036DA40 = func_80322880(&D_8036DA30->unk4[idx]);
     }
     uvIOUpdate();
 }
