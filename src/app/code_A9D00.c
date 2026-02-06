@@ -17,7 +17,6 @@ typedef struct Unk8036DA30 {
     Unk8036DA30_Unk4 unk4[0x708];
 } Unk8036DA30;
 
-extern f32 D_8036DA34;
 extern s32 D_8034FAD0;
 extern Unk8036DA30* D_8036DA30;
 extern f32 D_8036DA34;
@@ -86,7 +85,33 @@ s32 func_80322D60(s32 arg0, s32 arg1) {
     return func_803209F0(func_803229EC(D_8036DA44, D_8036DA48));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322DA8.s")
+void func_80322DA8(s32 arg0) {
+    switch (arg0) {
+    case 1:
+        _uvDebugPrintf("Beginning input recording\n", arg0);
+        D_8036DA34 = D_8034F850;
+        D_8036DA38 = D_8034F850 + 60.0f;
+        D_8034FAD0 = arg0;
+        break;
+    case 2:
+        D_8036DA3C = 0;
+        D_8036DA40 = 0;
+        D_8036DA34 = D_8034F850;
+        D_8036DA38 = D_8034F850 + 60.0f;
+        D_8034FAD0 = arg0;
+        break;
+    case 0:
+        if (D_8034FAD0 == 1) {
+            _uvDebugPrintf("End of recording\n", arg0);
+        }
+        D_8034FAD0 = arg0;
+        break;
+    }
+    D_8034FAD0 = arg0;
+    if (D_8034FAD0 != 0) {
+        uvRandSeed(0xABCD2356);
+    }
+}
 
 s32 func_80322EB0(void) {
     return D_8034FAD0;
