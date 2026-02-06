@@ -24,6 +24,14 @@ typedef struct Unk8036DA30 {
     Unk8036DA30_Unk4 unk4[0x708];
 } Unk8036DA30;
 
+typedef struct {
+    s32 unk0;
+    u8 pad4[4];
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+} Unk8036DA50;
+
 extern s32 D_8034FAD0;
 extern Unk8036DA30* D_8036DA30;
 extern f32 D_8036DA34;
@@ -32,10 +40,7 @@ extern s32 D_8036DA3C;
 extern s32 D_8036DA40;
 extern s32 D_8036DA44;
 extern s32 D_8036DA48;
-extern s32 D_8036DA50;
-extern s32 D_8036DA58;
-extern s32 D_8036DA5C;
-extern s32 D_8036DA60;
+extern Unk8036DA50 D_8036DA50;
 
 f32 func_803227D0(Unk8036DA30_Unk4* arg0) {
     return (f32)(((f32)((arg0->unk4 & 0xFF000000) >> 24) / 127.0) - 1.0);
@@ -57,19 +62,19 @@ s32 func_803229EC(s32, s32);
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_803229EC.s")
 
 s32 func_80322B60(void) {
-    return D_8036DA58;
+    return D_8036DA50.unk8;
 }
 
 s32 func_80322B6C(void) {
-    return D_8036DA5C;
+    return D_8036DA50.unkC;
 }
 
 s32 func_80322B78(void) {
-    return D_8036DA60;
+    return D_8036DA50.unk10;
 }
 
 s32 func_80322B84(void) {
-    return D_8036DA50;
+    return D_8036DA50.unk0;
 }
 
 void func_80322B90(void) {
@@ -89,35 +94,35 @@ void func_80322BE0(void) {
     s32 done;
     u32 size;
     u32 tag;
-    void* sp5C;
-    RPKT sp4C;
+    void* data;
+    RPKT pkt;
 
     idx = 0;
     done = 0;
     func_80322B90();
     temp_s4 = func_80223E80((s32)func_802314D0(func_803229EC(D_8036DA44, D_8036DA48), 2));
     uvMemSet(D_8036DA30->unk4, 0, sizeof(D_8036DA30->unk4));
-    uvMemSet(&D_8036DA50, 0, 0x14);
+    uvMemSet(&D_8036DA50, 0, sizeof(D_8036DA50));
 
     do {
-        tag = func_80223F7C(temp_s4, &size, &sp5C, 1);
+        tag = func_80223F7C(temp_s4, &size, &data, 1);
         switch (tag) {
             case 'RPKT': // 0x52504B54
-                _uvMediaCopy(&sp4C, sp5C, size);
-                D_8036DA30->unk4[idx].unk0 = sp4C.unk0;
+                _uvMediaCopy(&pkt, data, size);
+                D_8036DA30->unk4[idx].unk0 = pkt.unk0;
                 new_var = &D_8036DA30->unk4[idx];
-                func_80322890(new_var, sp4C.unk4, sp4C.unk8, sp4C.unkC);
+                func_80322890(new_var, pkt.unk4, pkt.unk8, pkt.unkC);
                 idx++;
                 break;
             case 'RHDR': // 0x52484452
-                _uvMediaCopy(&D_8036DA50, sp5C, size);
+                _uvMediaCopy(&D_8036DA50, data, size);
                 break;
             case 0:
                 if (tag && tag) {} // fakematch
                 done = 1;
                 break;
         }
-    } while ((done == 0) && (idx < ARRAY_COUNT(D_8036DA30->unk4)));
+    } while ((!done) && (idx < ARRAY_COUNT(D_8036DA30->unk4)));
     func_80223F30(temp_s4);
 }
 
