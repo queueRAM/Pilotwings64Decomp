@@ -31,13 +31,12 @@ extern s32 D_8036DA58;
 extern s32 D_8036DA5C;
 extern s32 D_8036DA60;
 
-
 f32 func_803227D0(Unk8036DA30_Unk4* arg0) {
-    return (f32) (((f32)((arg0->unk4 & 0xFF000000) >> 24) / 127.0) - 1.0);
+    return (f32)(((f32)((arg0->unk4 & 0xFF000000) >> 24) / 127.0) - 1.0);
 }
 
 f32 func_80322828(Unk8036DA30_Unk4* arg0) {
-    return (f32) (((f32)((arg0->unk4 & 0x00FF0000) >> 16) / 127.0) - 1.0);
+    return (f32)(((f32)((arg0->unk4 & 0x00FF0000) >> 16) / 127.0) - 1.0);
 }
 
 u32 func_80322880(Unk8036DA30_Unk4* arg0) {
@@ -45,7 +44,7 @@ u32 func_80322880(Unk8036DA30_Unk4* arg0) {
 }
 
 void func_80322890(Unk8036DA30_Unk4* arg0, f32 arg1, f32 arg2, u32 arg3) {
-    arg0->unk4 = (u32) (((u32) ((arg1 + 1.0) * 127.0) << 0x18) | ((u32) ((1.0 + arg2) * 127.0) << 0x10) | arg3);
+    arg0->unk4 = (u32)(((u32)((arg1 + 1.0) * 127.0) << 0x18) | ((u32)((1.0 + arg2) * 127.0) << 0x10) | arg3);
 }
 
 s32 func_803229EC(s32, s32);
