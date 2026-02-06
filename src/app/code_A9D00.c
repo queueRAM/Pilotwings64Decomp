@@ -147,7 +147,12 @@ f32 func_803230B0(s32 contIdx, s32 axis) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80323164.s")
+s32 func_80323164(s32 arg0) {
+    if (D_8034FAD0 == 2) {
+        return D_8036DA40;
+    }
+    return uvControllerGetButton(arg0);
+}
 
 s32 func_803231A0(s32 arg0, s32 arg1) {
     if (D_8034FAD0 == 2) {
