@@ -2,6 +2,7 @@
 #include <uv_controller.h>
 #include <uv_util.h>
 #include "code_9A960.h"
+#include "code_A7F20.h"
 #include "code_A9D00.h"
 
 typedef struct {
@@ -13,10 +14,13 @@ extern s32 D_8034FAD0;
 extern f32 D_8036DA34;
 extern f32 D_8036DA38;
 extern s32 D_8036DA40;
+extern s32 D_8036DA44;
+extern s32 D_8036DA48;
 extern s32 D_8036DA50;
 extern s32 D_8036DA58;
 extern s32 D_8036DA5C;
 extern s32 D_8036DA60;
+
 
 f32 func_803227D0(Unk803227D0* arg0) {
     return (f32) (((f32)((arg0->unk4 & 0xFF000000) >> 24) / 127.0) - 1.0);
@@ -34,6 +38,7 @@ void func_80322890(Unk803227D0* arg0, f32 arg1, f32 arg2, u32 arg3) {
     arg0->unk4 = (u32) (((u32) ((arg1 + 1.0) * 127.0) << 0x18) | ((u32) ((1.0 + arg2) * 127.0) << 0x10) | arg3);
 }
 
+s32 func_803229EC(s32, s32);
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_803229EC.s")
 
 s32 func_80322B60(void) {
@@ -54,9 +59,15 @@ s32 func_80322B84(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322B90.s")
 
+void func_80322BE0(void);
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322BE0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322D60.s")
+void func_80322D60(s32 arg0, s32 arg1) {
+    D_8036DA44 = arg0;
+    D_8036DA48 = arg1;
+    func_80322BE0();
+    func_803209F0(func_803229EC(D_8036DA44, D_8036DA48));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322DA8.s")
 
