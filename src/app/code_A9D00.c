@@ -1,5 +1,6 @@
 #include "common.h"
 #include <uv_controller.h>
+#include <uv_math.h>
 #include <uv_memory.h>
 #include <uv_util.h>
 #include "code_9A960.h"
@@ -165,4 +166,13 @@ s32 func_803231A0(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80323240.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_803232A0.s")
+f32 func_803232A0(void) {
+    f32 rng;
+
+    if (D_8034FAD0 != 0) {
+        rng = uvRandF_LCG();
+    } else {
+        rng = uvRandF_RANLUX();
+    }
+    return rng;
+}
