@@ -135,29 +135,29 @@ s32 func_80322D60(s32 arg0, s32 arg1) {
     return func_803209F0(idx);
 }
 
-void func_80322DA8(s32 arg0) {
-    switch (arg0) {
+void func_80322DA8(s32 mode) {
+    switch (mode) {
     case 1:
-        _uvDebugPrintf("Beginning input recording\n", arg0);
+        _uvDebugPrintf("Beginning input recording\n");
         D_8036DA34 = D_8034F850;
         D_8036DA38 = D_8034F850 + 60.0f;
-        D_8034FAD0 = arg0;
+        D_8034FAD0 = mode;
         break;
     case 2:
         D_8036DA3C = 0;
         D_8036DA40 = 0;
         D_8036DA34 = D_8034F850;
         D_8036DA38 = D_8034F850 + 60.0f;
-        D_8034FAD0 = arg0;
+        D_8034FAD0 = mode;
         break;
     case 0:
         if (D_8034FAD0 == 1) {
-            _uvDebugPrintf("End of recording\n", arg0);
+            _uvDebugPrintf("End of recording\n");
         }
-        D_8034FAD0 = arg0;
+        D_8034FAD0 = mode;
         break;
     }
-    D_8034FAD0 = arg0;
+    D_8034FAD0 = mode;
     if (D_8034FAD0 != 0) {
         uvRandSeed(0xABCD2356);
     }
@@ -176,12 +176,12 @@ void func_80322EBC(void) {
     }
 }
 
-s32 func_80322F7C(f32 arg0) {
+s32 func_80322F7C(f32 curTime) {
     f32 temp_fv0;
     s32 var_v1;
 
     var_v1 = 0;
-    temp_fv0 = arg0 - D_8036DA34;
+    temp_fv0 = curTime - D_8036DA34;
 
     for (var_v1 = 0; var_v1 < ARRAY_COUNT(D_8036DA30->unk4); var_v1++) {
         if (temp_fv0 <= D_8036DA30->unk4[var_v1].unk0) {
