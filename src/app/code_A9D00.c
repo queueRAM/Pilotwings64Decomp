@@ -71,7 +71,9 @@ void func_80322D60(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322DA8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322EB0.s")
+s32 func_80322EB0(void) {
+    return D_8034FAD0;
+}
 
 void func_80322EBC(void) {
     if (D_8034FAD0 == 1) {
