@@ -9,6 +9,13 @@
 
 typedef struct {
     f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    u32 unkC;
+} RPKT;
+
+typedef struct {
+    f32 unk0;
     u32 unk4;
 } Unk8036DA30_Unk4;
 
@@ -75,8 +82,44 @@ void func_80322B90(void) {
     }
 }
 
-void func_80322BE0(void);
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322BE0.s")
+void func_80322BE0(void) {
+    Unk8036DA30_Unk4 *new_var;
+    s32 temp_s4;
+    s32 idx;
+    s32 done;
+    u32 size;
+    u32 tag;
+    void* sp5C;
+    RPKT sp4C;
+
+    idx = 0;
+    done = 0;
+    func_80322B90();
+    temp_s4 = func_80223E80((s32)func_802314D0(func_803229EC(D_8036DA44, D_8036DA48), 2));
+    uvMemSet(D_8036DA30->unk4, 0, sizeof(D_8036DA30->unk4));
+    uvMemSet(&D_8036DA50, 0, 0x14);
+
+    do {
+        tag = func_80223F7C(temp_s4, &size, &sp5C, 1);
+        switch (tag) {
+            case 'RPKT': // 0x52504B54
+                _uvMediaCopy(&sp4C, sp5C, size);
+                D_8036DA30->unk4[idx].unk0 = sp4C.unk0;
+                new_var = &D_8036DA30->unk4[idx];
+                func_80322890(new_var, sp4C.unk4, sp4C.unk8, sp4C.unkC);
+                idx++;
+                break;
+            case 'RHDR': // 0x52484452
+                _uvMediaCopy(&D_8036DA50, sp5C, size);
+                break;
+            case 0:
+                if (tag && tag) {} // fakematch
+                done = 1;
+                break;
+        }
+    } while ((done == 0) && (idx < ARRAY_COUNT(D_8036DA30->unk4)));
+    func_80223F30(temp_s4);
+}
 
 s32 func_80322D60(s32 arg0, s32 arg1) {
     s32 idx;
