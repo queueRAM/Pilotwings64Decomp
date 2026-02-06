@@ -19,7 +19,7 @@
 #include "code_7FED0.h"
 #include "code_9A960.h"
 #include "code_9F2D0.h"
-#include "code_A9D00.h"
+#include "demo.h"
 #include "fdr.h"
 #include "save.h"
 #include "snd.h"
