@@ -26,7 +26,9 @@ u32 func_80322880(Unk803227D0* arg0) {
     return arg0->unk4 & 0x0000FFFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322890.s")
+void func_80322890(Unk803227D0* arg0, f32 arg1, f32 arg2, u32 arg3) {
+    arg0->unk4 = (u32) (((u32) ((arg1 + 1.0) * 127.0) << 0x18) | ((u32) ((1.0 + arg2) * 127.0) << 0x10) | arg3);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_803229EC.s")
 
