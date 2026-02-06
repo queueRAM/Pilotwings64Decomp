@@ -13,6 +13,7 @@ extern s32 D_8034FAD0;
 extern f32 D_8036DA34;
 extern f32 D_8036DA38;
 extern s32 D_8036DA40;
+extern s32 D_8036DA58;
 
 f32 func_803227D0(Unk803227D0* arg0) {
     return (f32) (((f32)((arg0->unk4 & 0xFF000000) >> 24) / 127.0) - 1.0);
@@ -32,7 +33,9 @@ void func_80322890(Unk803227D0* arg0, f32 arg1, f32 arg2, u32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_803229EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322B60.s")
+s32 func_80322B60(void) {
+    return D_8036DA58;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322B6C.s")
 
