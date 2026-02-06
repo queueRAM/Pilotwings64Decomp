@@ -6,6 +6,7 @@
 #include "code_5A6A0.h"
 #include "code_72010.h"
 #include "code_9A960.h"
+#include "demo.h"
 
 typedef struct {
     s32 unk0;
@@ -41,7 +42,6 @@ void func_803138A0(Mtx4F*, Mtx4F*, Mtx4F*, f32);
 f32 func_80313AF4(f32, f32, f32);
 void func_80313E18(Vec3F*, Mtx4F*);
 f32 func_80313F08(Unk803599D0*, f32);
-f32 func_803232A0(void);
 void func_8034ABB0(Mtx4F*, Vec3F*, Vec3F*);
 void func_8034AD6C(f32, f32, f32, Mtx4F*);
 void func_8034B210(Vec3F, Vec3F, Mtx4F*);
@@ -961,7 +961,7 @@ void func_802D559C(Unk802D3658_Arg0* arg0) {
             arg0->unk210.x = arg0->unk80.m[3][0] + ((arg0->unk204.x / temp_fv0) * temp_fa0);
             arg0->unk210.y = arg0->unk80.m[3][1] + ((arg0->unk204.y / temp_fv0) * temp_fa0);
             arg0->unk210.z = arg0->unk80.m[3][2] + ((arg0->unk204.z / temp_fv0) * temp_fa0);
-            if (func_803232A0() > 0.5f) {
+            if (demoRandF() > 0.5f) {
                 arg0->unk210.x += 2.0f * arg0->unk80.m[0][0];
                 arg0->unk210.y += 2.0f * arg0->unk80.m[0][1];
             } else {
