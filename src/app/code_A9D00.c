@@ -79,11 +79,11 @@ void func_80322B90(void) {
 void func_80322BE0(void);
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322BE0.s")
 
-void func_80322D60(s32 arg0, s32 arg1) {
+s32 func_80322D60(s32 arg0, s32 arg1) {
     D_8036DA44 = arg0;
     D_8036DA48 = arg1;
     func_80322BE0();
-    func_803209F0(func_803229EC(D_8036DA44, D_8036DA48));
+    return func_803209F0(func_803229EC(D_8036DA44, D_8036DA48));
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322DA8.s")
