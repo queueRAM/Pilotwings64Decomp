@@ -10,7 +10,14 @@ typedef struct {
     u32 unk4;
 } Unk803227D0;
 
+typedef struct {
+    u8 pad0[4];
+    f32 unk4;
+} Unk8036DA30;
+
+extern f32 D_8036DA34;
 extern s32 D_8034FAD0;
+extern Unk8036DA30* D_8036DA30;
 extern f32 D_8036DA34;
 extern f32 D_8036DA38;
 extern s32 D_8036DA40;
@@ -84,7 +91,20 @@ void func_80322EBC(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322F7C.s")
+s32 func_80322F7C(f32 arg0) {
+    f32 temp_fv0;
+    s32 var_v1;
+
+    var_v1 = 0;
+    temp_fv0 = arg0 - D_8036DA34;
+
+    for (var_v1 = 0; var_v1 < 0x708; var_v1++) {
+        if (temp_fv0 <= D_8036DA30[var_v1].unk4) {
+            return var_v1;
+        }
+    }
+    return 0x707;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80323020.s")
 
