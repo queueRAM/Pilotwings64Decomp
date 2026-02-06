@@ -4,12 +4,19 @@
 #include "code_9A960.h"
 #include "code_A9D00.h"
 
+typedef struct {
+    u8 pad0[4];
+    s32 unk4;
+} Unk803227D0;
+
 extern s32 D_8034FAD0;
 extern f32 D_8036DA34;
 extern f32 D_8036DA38;
 extern s32 D_8036DA40;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_803227D0.s")
+f32 func_803227D0(Unk803227D0* arg0) {
+    return (f32) (((f32)((arg0->unk4 & 0xFF000000) >> 24) / 127.0) - 1.0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322828.s")
 
