@@ -9,6 +9,6 @@ void func_80322DA8(s32);
 f32 func_803230B0(s32 contIdx, s32 axis);
 s32 func_80323164(s32);
 s32 func_803231A0(s32, s32);
-s32 func_803231E0(u16, s32);
+s32 func_803231E0(s32 idx, s32 button);
 
 #endif // APP_CODE_A9D00_H
