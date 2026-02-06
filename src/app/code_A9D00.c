@@ -13,6 +13,7 @@ extern s32 D_8034FAD0;
 extern f32 D_8036DA34;
 extern f32 D_8036DA38;
 extern s32 D_8036DA40;
+extern s32 D_8036DA50;
 extern s32 D_8036DA58;
 extern s32 D_8036DA5C;
 extern s32 D_8036DA60;
@@ -47,7 +48,9 @@ s32 func_80322B78(void) {
     return D_8036DA60;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322B84.s")
+s32 func_80322B84(void) {
+    return D_8036DA50;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322B90.s")
 
