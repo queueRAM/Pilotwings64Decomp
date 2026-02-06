@@ -1,5 +1,6 @@
 #include "common.h"
 #include <uv_controller.h>
+#include <uv_memory.h>
 #include <uv_util.h>
 #include "code_9A960.h"
 #include "code_A7F20.h"
@@ -65,7 +66,15 @@ s32 func_80322B84(void) {
     return D_8036DA50;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322B90.s")
+void func_80322B90(void) {
+    Unk8036DA30* temp_v0;
+
+    if ((D_8036DA30 == NULL) || (D_8036DA30 != D_8036DA30->unk0)) {
+        temp_v0 = (Unk8036DA30*)_uvMemAllocAlign8(sizeof(Unk8036DA30));
+        D_8036DA30 = temp_v0;
+        D_8036DA30->unk0 = D_8036DA30;
+    }
+}
 
 void func_80322BE0(void);
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80322BE0.s")
