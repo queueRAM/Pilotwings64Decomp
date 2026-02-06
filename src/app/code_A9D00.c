@@ -10,8 +10,8 @@ typedef struct {
     u32 unk4;
 } Unk803227D0;
 
-typedef struct {
-    u8 pad0[4];
+typedef struct Unk8036DA30 {
+    struct Unk8036DA30* unk0;
     f32 unk4;
 } Unk8036DA30;
 
@@ -20,6 +20,7 @@ extern s32 D_8034FAD0;
 extern Unk8036DA30* D_8036DA30;
 extern f32 D_8036DA34;
 extern f32 D_8036DA38;
+extern s32 D_8036DA3C;
 extern s32 D_8036DA40;
 extern s32 D_8036DA44;
 extern s32 D_8036DA48;
@@ -106,7 +107,22 @@ s32 func_80322F7C(f32 arg0) {
     return 0x707;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_80323020.s")
+void func_80323020(void) {
+    s32 tmp;
+    Unk8036DA30 **ptr;
+    if (D_8034FAD0 == 2) {
+        if ((D_8036DA30 == NULL) || (D_8036DA30 != D_8036DA30->unk0)) {
+            func_80322BE0();
+        }
+        // fakematch with ptr
+        ptr = &D_8036DA30;
+        D_8036DA3C = D_8036DA40;
+        tmp = func_80322F7C(D_8034F850);
+        // TODO: these types need to be sorted out
+        D_8036DA40 = func_80322880((Unk803227D0*)&(*ptr)[tmp].unk4);
+    }
+    uvIOUpdate();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_A9D00/func_803230B0.s")
 
