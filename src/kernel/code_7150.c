@@ -1,11 +1,13 @@
 #include "common.h"
 
+// clang-format off
 static s32 D_80248DB0[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
 static s32 D_80248DC4[] = {
     0x00000000, 0x00000000, 0x00000000,
 };
+// clang-format on
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/code_7150/func_802061A0.s")
 
