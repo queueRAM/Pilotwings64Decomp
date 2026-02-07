@@ -342,4 +342,4 @@ uvSinF              = 0x80229EC0; // type:func
 uvCosF              = 0x8022A080; // type:func
 uvLength2D          = 0x8022A208; // type:func
 uvLength3D          = 0x8022A23C; // type:func
-uvMath_8022A27C     = 0x8022A27C; // type:func
+uvAtan2F            = 0x8022A27C; // type:func

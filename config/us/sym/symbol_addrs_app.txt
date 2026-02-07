@@ -41,6 +41,16 @@ sdive_land          = 0x80331794; // type:func
 sdive_getpoints     = 0x80331A78; // type:func
 sdive_below         = 0x80331B88; // type:func
 
+demoAttInit         = 0x803209F0; // type:func
+demoAttLoadPos      = 0x80320A14; // type:func
+demoAttGetMtxRT     = 0x80320BF4; // type:func
+demoAttPrintRecord  = 0x80320C38; // type:func
+demoPositionLerp    = 0x80320C80; // type:func
+demoAngleLerp       = 0x80320C98; // type:func
+demoAttUpdate       = 0x80320D10; // type:func
+demoAtt_80320FBC    = 0x80320FBC; // type:func
+demoAttPrintRT      = 0x80321054; // type:func
+
 demoRecGetStickX    = 0x803227D0; // type:func
 demoRecGetStickY    = 0x80322828; // type:func
 demoRecGetButtons   = 0x80322880; // type:func
