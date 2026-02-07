@@ -20,13 +20,31 @@ typedef struct {
                       // (0xC0 allocated)
 } ParsedUVFT;
 
-extern u8 D_80248E64;
-extern u8 D_80248E68;
-extern u8 D_80248E6C;
-extern u8 D_80248E70;
+static s16 D_80248E20 = 0x0000;
+static s16 D_80248E24[] = {
+    0x0000, 0x0000, 0x3F80, 0x0000, 0x3F80, 0x0000, 0x0000, 0x0000,
+    0x0001, 0x1234, 0xFFFF, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0001, 0x0294, 0x1F08, 0x000F, 0x0080,
+};
+static u8 D_80248E50[] = {
+    0x03, 0x00, 0x00, 0x00, 0x80, 0x26, 0xA0, 0x40, 0x80,
+    0x26, 0xA3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00,
+};
+static u8 D_80248E64 = 0xFF;
+static u8 D_80248E68 = 0xFF;
+static u8 D_80248E6C = 0xFF;
+static u8 D_80248E70 = 0xFF;
+static u8 D_80248E74 = 0x00;
+static u8 D_80248E78 = 0x00;
 
-extern f32 D_80248E7C;
-extern f32 D_80248E80;
+static f32 D_80248E7C = 1;
+static f32 D_80248E80 = 1;
+static u32 D_80248E84 = 0;
+static u32 D_80248E88 = 8;
+static u32 D_80248E8C = 0;
+static u32 D_80248E90 = 0;
+static u32 D_80248E94 = 0;
 
 extern u32 D_802B69E4;
 
