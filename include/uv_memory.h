@@ -81,7 +81,7 @@ s32 uvFileRead(void* dst, s32 offs, s32 nbytes);
 
 // TODO: from code_24E30.c (is this memory? filesystem? texture?)
 s32  func_80223E80(s32 addr);
-void func_80223F30(s32 arg0);
+void func_80223F30(s32 idx);
 s32 func_80223F54(s32 idx);
 s32 func_80223F68(s32 idx);
 u32  func_80223F7C(s32 idx, u32* sizeOut, void** arg2, s32 arg3);

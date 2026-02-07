@@ -2,6 +2,7 @@
 #define UV_LEVEL_H
 
 #include <PR/ultratypes.h>
+#include <uv_matrix.h>
 
 #define MAX_CLASSES  8
 #define MAX_TESTS    5
@@ -42,7 +43,9 @@ typedef struct {
 } Unk80345464_Arg0;
 
 typedef struct {
-    u8 unk0[0x22C];
+    u8 unk0[0x108];
+    Mtx4F unk108;
+    u8 unk148[0x22C - 0x148];
     u8 unk22C;
 } Unk80362690_Unk0_Unk7C; // this could be Unk8037A600
 

@@ -4,8 +4,8 @@
 #include <uv_memory.h>
 #include <uv_util.h>
 #include "code_9A960.h"
-#include "code_A7F20.h"
 #include "demo.h"
+#include "demo_attitude.h"
 
 typedef struct {
     s32 unk0;
@@ -193,13 +193,13 @@ void demoInit(void) {
     func_80223F30(temp_s4);
 }
 
-s32 demo_80322D60(s32 arg0, s32 arg1) {
+void demo_80322D60(s32 arg0, s32 arg1) {
     s32 idx;
     D_8036DA44 = arg0;
     D_8036DA48 = arg1;
     demoInit();
     idx = demo_803229EC(D_8036DA44, D_8036DA48);
-    return func_803209F0(idx);
+    demoAttInit(idx);
 }
 
 void demoSetRecMode(s32 mode) {
