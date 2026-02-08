@@ -27,6 +27,7 @@ extern Unk8036C520 D_8036C520[];
 
 // forward declarations
 void func_8031E628(f32 arg0, f32* arg1, f32* arg2);
+void func_8031EABC(u8 arg0);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_80317DA0.s")
 
@@ -100,7 +101,14 @@ HUDData* getHUDPtr(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031DA9C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031DAA8.s")
+void func_8031DAA8(u8 arg0, f32 arg1) {
+    D_8036C5A8.unkC60 = arg0;
+    D_8036C5A8.unkC64 = arg1;
+    D_8036C5A8.unkC68 = (f32)D_8036C5A8.unk14;
+    if (arg0 == 1) {
+        func_8031EABC(0);
+    }
+}
 
 void func_8031DAF4(HUDData* arg0) {
     if ((arg0->unkB40 != -1) && !(D_8036C5A8.unk14 < arg0->unkBC8)) {

@@ -43,7 +43,10 @@ typedef struct {
     u8 unkC5C;
     u8 padC5D;
     s16 unkC5E;
-    u8 padC60[0xC];
+    u8 unkC60;
+    u8 padC61[3];
+    f32 unkC64;
+    f32 unkC68;
     f32 unkC6C;
     f32 unkC70;
     s8 unkC74;
