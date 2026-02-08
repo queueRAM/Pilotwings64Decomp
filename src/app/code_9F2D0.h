@@ -6,7 +6,7 @@
 typedef struct {
     u16 unk0; // Maybe some button mask?
     s16 pad2;
-    s32 pad4;
+    s32 unk4;
     s8 unk8;
     s8 pad9[0xC - 9];
     s32 padC;
