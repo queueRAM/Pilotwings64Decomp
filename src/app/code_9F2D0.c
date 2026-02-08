@@ -1,5 +1,6 @@
 #include "common.h"
 
+#include <uv_geometry.h>
 #include <uv_graphics.h>
 #include <uv_sobj.h>
 #include <uv_sprite.h>
@@ -95,7 +96,37 @@ HUDData* getHUDPtr(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031E628.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031E69C.s")
+void func_8031E69C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8) {
+    uvVtxBeginPoly();
+    uvVtx(arg0, arg1, 0, 0, 0, arg5, arg6, arg7, arg8);
+    uvVtx(arg0 + arg2, arg1, 0, 0, 0, arg5, arg6, arg7, arg8);
+    uvVtx(arg0 + arg2, arg1 + arg4, 0, 0, 0, arg5, arg6, arg7, arg8);
+    uvVtx(arg0, arg1 + arg4, 0, 0, 0, arg5, arg6, arg7, arg8);
+    uvVtxEndPoly();
+
+    uvVtxBeginPoly();
+    uvVtx(arg0, arg1, 0, 0, 0, arg5, arg6, arg7, arg8);
+    uvVtx(arg0 + arg4, arg1, 0, 0, 0, arg5, arg6, arg7, arg8);
+    uvVtx(arg0 + arg4, arg1 + arg3, 0, 0, 0, arg5, arg6, arg7, arg8);
+    uvVtx(arg0, arg1 + arg3, 0, 0, 0, arg5, arg6, arg7, arg8);
+    uvVtxEndPoly();
+    
+    uvVtxBeginPoly();
+    uvVtx(arg0, arg1 + arg3 - arg4, 0, 0, 0, arg5, arg6, arg7, arg8);
+    uvVtx(arg0 + arg2, arg1 + arg3 - arg4, 0, 0, 0, arg5, arg6, arg7, arg8);
+    uvVtx(arg0 + arg2, arg1 + arg3, 0, 0, 0, arg5, arg6, arg7, arg8);
+    uvVtx(arg0, arg1 + arg3, 0, 0, 0, arg5, arg6, arg7, arg8);
+    uvVtxEndPoly();
+    
+    if (1) { // fakematch
+        uvVtxBeginPoly();
+        uvVtx(arg0 + arg2 - arg4, arg1, 0, 0, 0, arg5, arg6, arg7, arg8);
+        uvVtx(arg0 + arg2, arg1, 0, 0, 0, arg5, arg6, arg7, arg8);
+        uvVtx(arg0 + arg2, arg1 + arg3, 0, 0, 0, arg5, arg6, arg7, arg8);
+        uvVtx(arg0 + arg2 - arg4, arg1 + arg3, 0, 0, 0, arg5, arg6, arg7, arg8);
+        uvVtxEndPoly();
+    }
+}
 
 void func_8031E9F8(void) {
     char buf[12];
