@@ -34,11 +34,11 @@ typedef struct {
     u8 unkBCC;
     u8 padBCD;
     s16 unkBCE;
-    s16 unkBD0;
-    u8 padBD2[0xC48 - 0xBD2];
+    s16 unkBD0[0x3C];
     f32 unkC48;
     f32 unkC4C;
-    u8 padC50[8];
+    f32 unkC50;
+    u8 padC54[4];
     f32 unkC58;
     u8 unkC5C;
     u8 padC5D;
@@ -54,7 +54,7 @@ typedef struct {
 
 HUDData* getHUDPtr(void);
 void func_803182A0(void);
-void func_8031D8E0(s32, f32, f32);
+void func_8031D8E0(s16, f32, f32);
 void func_8031D9B8(s16, f32, f32);
 
 #endif // APP_CODE_9F2D0_H

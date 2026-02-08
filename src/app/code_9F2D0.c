@@ -95,7 +95,37 @@ HUDData* getHUDPtr(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031D550.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031D8E0.s")
+void func_8031D8E0(s16 arg0, f32 arg1, f32 arg2) {
+    s16* temp_v0;
+    s32 i;
+    const u16 END_VALUE = -1;
+
+    if (arg0 == -1) {
+        D_8036C5A8.unkBD0[0] = -1;
+        D_8036C5A8.unkC5E = -1;
+        return;
+    }
+
+    temp_v0 = func_80342198(arg0);
+    D_8036C5A8.unkC5E = arg0;
+    if (D_8036C5A8.unkBD0[0] != -1) {
+        D_8036C5A8.unkC58 = D_8036C5A8.unk14 + 0.2f;
+    }
+
+    for (i = 0; i < ARRAY_COUNT(D_8036C5A8.unkBD0); i++) {
+        D_8036C5A8.unkBD0[i] = temp_v0[i];
+        // temp_v0 is s16, so comparing with 0xFFFF is always false.
+        // this is a bug that IDO does not warn about, but modern compilers do.
+        if (temp_v0[i] == END_VALUE) {
+            break;
+        }
+    }
+
+    D_8036C5A8.unkC5C = 1;
+    D_8036C5A8.unkC48 = arg1;
+    D_8036C5A8.unkC4C = D_8036C5A8.unk14;
+    D_8036C5A8.unkC50 = arg2;
+}
 
 void func_8031D9B8(s16 arg0, f32 arg1, f32 arg2) {
     s16* temp_v0;
@@ -166,10 +196,10 @@ void func_8031DAF4(HUDData* arg0) {
 }
 
 void func_8031DC00(HUDData* arg0) {
-    if ((arg0->unkBD0 != -1) && !(D_8036C5A8.unk14 < arg0->unkC58)) {
+    if ((arg0->unkBD0[0] != -1) && !(D_8036C5A8.unk14 < arg0->unkC58)) {
         if (arg0->unkC48 < (D_8036C5A8.unk14 - arg0->unkC4C)) {
             arg0->unkC5E = -1;
-            arg0->unkBD0 = -1;
+            arg0->unkBD0[0] = -1;
             return;
         }
         uvFontSet(6);
@@ -179,7 +209,7 @@ void func_8031DC00(HUDData* arg0) {
         } else {
             uvFont_8021956C(0U, 0x28, 0xFF, 0xFF);
         }
-        func_80219874(0xA0 - ((func_802196B0(&arg0->unkBD0) - 0x10) / 2), 0x8C, &arg0->unkBD0, 0x28, 0xFFE);
+        func_80219874(0xA0 - ((func_802196B0(&arg0->unkBD0[0]) - 0x10) / 2), 0x8C, &arg0->unkBD0[0], 0x28, 0xFFE);
     }
 }
 
