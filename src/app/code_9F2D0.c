@@ -3,6 +3,7 @@
 #include "code_9F2D0.h"
 
 extern HUDData D_8036C5A8;
+extern u8 D_8036D220;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_80317DA0.s")
 
@@ -94,4 +95,6 @@ HUDData* getHUDPtr(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031E9F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031EABC.s")
+void func_8031EABC(u8 arg0) {
+    D_8036D220 = arg0;
+}
