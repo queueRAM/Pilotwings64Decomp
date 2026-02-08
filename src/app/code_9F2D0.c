@@ -102,7 +102,23 @@ HUDData* getHUDPtr(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031DAA8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031DAF4.s")
+void func_8031DAF4(HUDData* arg0) {
+    if ((arg0->unkB40 != -1) && !(D_8036C5A8.unk14 < arg0->unkBC8)) {
+        if (arg0->unkBB8 < (D_8036C5A8.unk14 - arg0->unkBBC)) {
+            arg0->unkBCE = -1;
+            arg0->unkB40 = -1;
+            return;
+        }
+        uvFontSet(6);
+        uvFont_80219550(1.0, 1.0);
+        if (arg0->unkBCC != 0) {
+            uvFont_8021956C(0xFF, 0xFF, 0xFF, 0xFF);
+        } else {
+            uvFont_8021956C(0xFF, 0, 0, 0xFF);
+        }
+        func_80219874(0xA0 - ((s32)(func_802196B0(&arg0->unkB40) - 0x10) / 2), 0x7D, &arg0->unkB40, 0x28, 0xFFE);
+    }
+}
 
 void func_8031DC00(HUDData* arg0) {
     if ((arg0->unkBD0 != -1) && !(D_8036C5A8.unk14 < arg0->unkC58)) {
