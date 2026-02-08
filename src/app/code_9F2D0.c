@@ -1,6 +1,10 @@
 #include "common.h"
 
+#include <uv_graphics.h>
+#include <uv_sobj.h>
+#include <uv_sprite.h>
 #include "code_9F2D0.h"
+#include "snap.h"
 
 extern HUDData D_8036C5A8;
 extern u8 D_8036D220;
@@ -93,7 +97,17 @@ HUDData* getHUDPtr(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031E69C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031E9F8.s")
+void func_8031E9F8(void) {
+    char buf[12];
+    (void)func_8033F618();
+    uvFontSet(8);
+    uvFont_8021956C(0xFF, 0xFF, 0xFF, 0xFF);
+    uvFont_80219550(1.0, 1.0);
+    func_8022DA9C(buf, "%d", func_8033F618());
+    uvFont_80219ACC(0xA0, 0x1E, buf);
+    uvSprtProps(0xA, 2, 0x96, 0x1C, 7, 0xFF, 0xFF, 0xFF, 0xFF, 0);
+    uvSprtDraw(0xA);
+}
 
 void func_8031EABC(u8 arg0) {
     D_8036D220 = arg0;

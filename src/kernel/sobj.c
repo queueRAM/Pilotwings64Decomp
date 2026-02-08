@@ -1,5 +1,7 @@
 #include "common.h"
 
+#include <uv_sobj.h>
+
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/sobj/uvSobjsDraw.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/sobj/func_8022C7B8.s")
