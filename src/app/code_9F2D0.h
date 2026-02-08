@@ -11,7 +11,7 @@ typedef struct {
     s8 pad9[0xC - 9];
     s32 padC;
     f32 unk10;
-    s32 pad14;
+    f32 unk14;
     f32 unk18;
     s32 pad1C;
     f32 unk20;
@@ -24,7 +24,17 @@ typedef struct {
     f32 unk84;
     f32 unk88;
     f32 unk8C;
-    u8 pad90[0xC6C - 0x90];
+    u8 pad90[0xBD0 - 0x90];
+    s16 unkBD0;
+    u8 padBD2[0xC48 - 0xBD2];
+    f32 unkC48;
+    f32 unkC4C;
+    u8 padC50[8];
+    f32 unkC58;
+    u8 unkC5C;
+    u8 padC5D;
+    s16 unkC5E;
+    u8 padC60[0xC];
     f32 unkC6C;
     f32 unkC70;
     s8 unkC74;
