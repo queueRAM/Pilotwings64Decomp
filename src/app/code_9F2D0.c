@@ -22,6 +22,7 @@ extern Unk8034F93C D_8034F93C[3];
 extern Unk8034F93C D_8034F95C[4];
 
 extern HUDData D_8036C5A8;
+
 extern u8 D_8036D220;
 extern Unk8036C520 D_8036C520[];
 
@@ -99,7 +100,9 @@ HUDData* getHUDPtr(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031DA90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031DA9C.s")
+s16 func_8031DA9C(void) {
+    return D_8036C5A8.unkBCE;
+}
 
 void func_8031DAA8(u8 arg0, f32 arg1) {
     D_8036C5A8.unkC60 = arg0;
