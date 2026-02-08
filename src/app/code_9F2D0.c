@@ -6,6 +6,7 @@
 #include <uv_sobj.h>
 #include <uv_sprite.h>
 #include "code_9F2D0.h"
+#include "code_C9440.h"
 #include "snap.h"
 
 typedef struct {
@@ -96,7 +97,38 @@ HUDData* getHUDPtr(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031D8E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031D9B8.s")
+void func_8031D9B8(s16 arg0, f32 arg1, f32 arg2) {
+    s16* temp_v0;
+    s16* var_a0;
+    s32 i;
+    const u16 END_VALUE = -1;
+
+    if (arg0 == -1) {
+        D_8036C5A8.unkB40[0] = -1;
+        D_8036C5A8.unkBCE = -1;
+        return;
+    }
+
+    temp_v0 = func_80342198(arg0);
+    D_8036C5A8.unkBCE = arg0;
+    if (D_8036C5A8.unkB40[0] != -1) {
+        D_8036C5A8.unkBC8 = D_8036C5A8.unk14 + 0.2f;
+    }
+
+    for (i = 0; i < ARRAY_COUNT(D_8036C5A8.unkB40); i++) {
+        D_8036C5A8.unkB40[i] = temp_v0[i];
+        // temp_v0 is s16, so comparing with 0xFFFF is always false.
+        // this is a bug that IDO does not warn about, but modern compilers do.
+        if (temp_v0[i] == END_VALUE) {
+            break;
+        }
+    }
+
+    D_8036C5A8.unkBCC = 1;
+    D_8036C5A8.unkBB8 = arg1;
+    D_8036C5A8.unkBBC = D_8036C5A8.unk14;
+    D_8036C5A8.unkBC0 = arg2;
+}
 
 s16 func_8031DA90(void) {
     return D_8036C5A8.unkC5E;
@@ -116,10 +148,10 @@ void func_8031DAA8(u8 arg0, f32 arg1) {
 }
 
 void func_8031DAF4(HUDData* arg0) {
-    if ((arg0->unkB40 != -1) && !(D_8036C5A8.unk14 < arg0->unkBC8)) {
+    if ((arg0->unkB40[0] != -1) && !(D_8036C5A8.unk14 < arg0->unkBC8)) {
         if (arg0->unkBB8 < (D_8036C5A8.unk14 - arg0->unkBBC)) {
             arg0->unkBCE = -1;
-            arg0->unkB40 = -1;
+            arg0->unkB40[0] = -1;
             return;
         }
         uvFontSet(6);
@@ -129,7 +161,7 @@ void func_8031DAF4(HUDData* arg0) {
         } else {
             uvFont_8021956C(0xFF, 0, 0, 0xFF);
         }
-        func_80219874(0xA0 - ((s32)(func_802196B0(&arg0->unkB40) - 0x10) / 2), 0x7D, &arg0->unkB40, 0x28, 0xFFE);
+        func_80219874(0xA0 - ((s32)(func_802196B0(&arg0->unkB40[0]) - 0x10) / 2), 0x7D, &arg0->unkB40[0], 0x28, 0xFFE);
     }
 }
 
