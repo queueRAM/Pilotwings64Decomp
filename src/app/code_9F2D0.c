@@ -8,6 +8,14 @@
 #include "code_9F2D0.h"
 #include "snap.h"
 
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+} Unk8034F93C;
+
+extern Unk8034F93C D_8034F93C[3];
+extern Unk8034F93C D_8034F95C[4];
+
 extern HUDData D_8036C5A8;
 extern u8 D_8036D220;
 
@@ -93,7 +101,114 @@ HUDData* getHUDPtr(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031DF68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031DF74.s")
+void func_8031DF74(f32 arg0, f32 arg1, s32 arg2, s32 arg3, f32 arg4, u8 arg5) {
+    Mtx4F sp70;
+    u8 sp6F;
+    u8 sp6E;
+    s16 tmp5;
+    s16 pad1;
+    s16 sp68;
+    s16 sp66;
+    s32 i;
+
+    tmp5 = arg5;
+    switch (arg2) {
+    case 0:
+        if (arg3 != 0) {
+            sp6F = 0, sp6E = 0xFF;
+        } else {
+            sp6F = 0xFF, sp6E = 0xFF;
+        }
+        break;
+    case 1:
+    case 2:
+        sp6F = 0xFF, sp6E = 0;
+        break;
+    default:
+        return;
+    }
+    if (arg0 > 800.0f) {
+        uvMat4SetIdentity(&sp70);
+        uvMat4RotateAxis(&sp70, arg1, 'z');
+        uvMat4UnkOp2(&sp70, 0.0f, 30.0f, 0.0f);
+        uvGfxMtxViewMul(&sp70, 1);
+        if (arg0 >= 1000.0f) {
+            uvVtxBeginPoly();
+            for (i = 0; i < 3; i++) {
+                uvVtx(D_8034F95C[i].unk0 * 3, (D_8034F95C[i].unk2 * 3) + 1, 0, 0, 0, 0, 0, 0, tmp5);
+            }
+            uvVtxEndPoly();
+
+            uvVtxBeginPoly();
+            for (i = 0; i < 3; i++) {
+                uvVtx(D_8034F95C[i].unk0 * 2, (D_8034F95C[i].unk2 * 2) + 2, 0, 0, 0, sp6F, sp6E, 0, tmp5);
+            }
+            uvVtxEndPoly();
+        }
+        if (arg0 >= 900.0f) {
+            uvVtxBeginPoly();
+            for (i = 0; i < 3; i++) {
+                uvVtx(D_8034F95C[i].unk0 * 3, (D_8034F95C[i].unk2 * 3) - 1, 0, 0, 0, 0, 0, 0, tmp5);
+            }
+            uvVtxEndPoly();
+
+            uvVtxBeginPoly();
+            for (i = 0; i < 3; i++) {
+                uvVtx(D_8034F95C[i].unk0 * 2, D_8034F95C[i].unk2 * 2, 0, 0, 0, sp6F, sp6E, 0, tmp5);
+            }
+            uvVtxEndPoly();
+        }
+        uvVtxBeginPoly();
+        for (i = 0; i < 3; i++) {
+            uvVtx(D_8034F95C[i].unk0 * 5, (D_8034F95C[i].unk2 * 5) - 5, 0, 0, 0, 0, 0, 0, tmp5);
+        }
+        uvVtxEndPoly();
+
+        uvVtxBeginPoly();
+        for (i = 0; i < 3; i++) {
+            uvVtx(D_8034F95C[i].unk0 * 4, (D_8034F95C[i].unk2 * 4) - 4, 0, 0, 0, sp6F, sp6E, 0, tmp5);
+        }
+        uvVtxEndPoly();
+        uvGfxMtxViewPop();
+    } else {
+        arg0 *= 0.0375f;
+        sp68 = (s16)(s32)(uvSinF(arg1) * -arg0);
+        sp66 = (s16)(s32)(uvCosF(arg1) * arg0);
+        if (arg2 != 2) {
+            if (arg5 > 150) {
+                uvVtxBeginPoly();
+                for (i = 0; i < 4; i++) {
+                    uvVtx(D_8034F93C[i].unk0 * 3 + sp68, (D_8034F93C[i].unk2 * 3) + sp66, 0, 0, 0, 0, 0, 0, arg5);
+                }
+                uvVtxEndPoly();
+
+                uvVtxBeginPoly();
+                for (i = 0; i < 4; i++) {
+                    uvVtx(D_8034F93C[i].unk0 * 2 + sp68, (D_8034F93C[i].unk2 * 2) + sp66, 0, 0, 0, sp6F, sp6E, 0, arg5);
+                }
+                uvVtxEndPoly();
+            }
+        } else {
+            uvMat4SetIdentity(&sp70);
+            uvMat4UnkOp2(&sp70, (f32)sp68, (f32)sp66, 0.0f);
+            uvMat4RotateAxis(&sp70, arg4, 'z');
+            uvGfxMtxViewMul(&sp70, 1);
+
+            uvVtxBeginPoly();
+            for (i = 0; i < 4; i++) {
+                uvVtx(D_8034F93C[i].unk0 * 3, D_8034F93C[i].unk2 * 6, 0, 0, 0, 0, 0, 0, tmp5);
+            }
+            uvVtxEndPoly();
+
+            uvVtxBeginPoly();
+            for (i = 0; i < 4; i++) {
+                uvVtx(D_8034F93C[i].unk0 * 2, D_8034F93C[i].unk2 * 5, 0, 0, 0, sp6F, sp6E, 0, tmp5);
+            }
+            uvVtxEndPoly();
+            uvGfxMtxViewPop();
+        }
+    }
+}
 
 void func_8031E628(f32 arg0, f32* arg1, f32* arg2) {
     f32 a2tmp;
@@ -125,14 +240,14 @@ void func_8031E69C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 arg5, u8
     uvVtx(arg0 + arg4, arg1 + arg3, 0, 0, 0, arg5, arg6, arg7, arg8);
     uvVtx(arg0, arg1 + arg3, 0, 0, 0, arg5, arg6, arg7, arg8);
     uvVtxEndPoly();
-    
+
     uvVtxBeginPoly();
     uvVtx(arg0, arg1 + arg3 - arg4, 0, 0, 0, arg5, arg6, arg7, arg8);
     uvVtx(arg0 + arg2, arg1 + arg3 - arg4, 0, 0, 0, arg5, arg6, arg7, arg8);
     uvVtx(arg0 + arg2, arg1 + arg3, 0, 0, 0, arg5, arg6, arg7, arg8);
     uvVtx(arg0, arg1 + arg3, 0, 0, 0, arg5, arg6, arg7, arg8);
     uvVtxEndPoly();
-    
+
     if (1) { // fakematch
         uvVtxBeginPoly();
         uvVtx(arg0 + arg2 - arg4, arg1, 0, 0, 0, arg5, arg6, arg7, arg8);
