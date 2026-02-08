@@ -98,7 +98,9 @@ HUDData* getHUDPtr(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031D9B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031DA90.s")
+s16 func_8031DA90(void) {
+    return D_8036C5A8.unkC5E;
+}
 
 s16 func_8031DA9C(void) {
     return D_8036C5A8.unkBCE;
