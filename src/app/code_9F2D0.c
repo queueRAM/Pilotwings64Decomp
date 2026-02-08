@@ -2,6 +2,7 @@
 
 #include <uv_geometry.h>
 #include <uv_graphics.h>
+#include <uv_math.h>
 #include <uv_sobj.h>
 #include <uv_sprite.h>
 #include "code_9F2D0.h"
@@ -94,7 +95,21 @@ HUDData* getHUDPtr(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031DF74.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031E628.s")
+void func_8031E628(f32 arg0, f32* arg1, f32* arg2) {
+    f32 a2tmp;
+    f32 length;
+    f32 a1tmp;
+    f32 scale;
+
+    a2tmp = *arg2;
+    a1tmp = *arg1;
+    length = uvSqrtF(SQ(a2tmp) + SQ(a1tmp));
+    if (arg0 < length) {
+        scale = arg0 / length;
+        *arg1 *= scale;
+        *arg2 *= scale;
+    }
+}
 
 void func_8031E69C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8) {
     uvVtxBeginPoly();
