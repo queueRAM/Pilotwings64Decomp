@@ -13,11 +13,20 @@ typedef struct {
     s16 unk2;
 } Unk8034F93C;
 
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+} Unk8036C520;
+
 extern Unk8034F93C D_8034F93C[3];
 extern Unk8034F93C D_8034F95C[4];
 
 extern HUDData D_8036C5A8;
 extern u8 D_8036D220;
+extern Unk8036C520 D_8036C520[];
+
+// forward declarations
+void func_8031E628(f32 arg0, f32* arg1, f32* arg2);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_80317DA0.s")
 
@@ -97,7 +106,55 @@ HUDData* getHUDPtr(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031DC00.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9F2D0/func_8031DD0C.s")
+void func_8031DD0C(f32 arg0, f32 arg1, f32 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6, f32 arg7) {
+    s32 var_s0;
+    s32 var_s1;
+    s32 var_s2;
+    f32 spB8;
+    f32 spB4;
+    Unk8036C520* temp_v0;
+    f32 temp_fs0;
+    f32 temp_fs1;
+    f32 temp_fv0;
+    f32 temp_fv1;
+
+    var_s0 = 0x10;
+    var_s1 = 0;
+    temp_fs0 = uvSinF(arg7);
+    temp_fs1 = uvCosF(arg7);
+    uvBeginTmesh();
+
+    var_s2 = 0;
+    do {
+        if (var_s2 != 0) {
+            temp_v0 = &D_8036C520[var_s0];
+            temp_fv0 = (temp_v0->unk0 * arg2) + arg0;
+            temp_fv1 = (temp_v0->unk4 * arg2) + arg1;
+            spB8 = (temp_fv0 * temp_fs1) - (temp_fv1 * temp_fs0);
+            spB4 = (temp_fv0 * temp_fs0) + (temp_fv1 * temp_fs1);
+            func_8031E628(31.0f, &spB8, &spB4);
+            uvVtx((s32)spB8, (s32)spB4, 0, 0, 0, arg3, arg4, arg5, arg6);
+            if (var_s0 <= 0) {
+                var_s0 = 0x10;
+            }
+            var_s0 -= 1;
+        } else {
+            var_s1 += 1;
+            if (var_s1 >= 0x10) {
+                var_s1 = 0;
+            }
+            temp_v0 = &D_8036C520[var_s1];
+            temp_fv0 = (temp_v0->unk0 * arg2) + arg0;
+            temp_fv1 = (temp_v0->unk4 * arg2) + arg1;
+            spB8 = (temp_fv0 * temp_fs1) - (temp_fv1 * temp_fs0);
+            spB4 = (temp_fv0 * temp_fs0) + (temp_fv1 * temp_fs1);
+            func_8031E628(31.0f, &spB8, &spB4);
+            uvVtx((s32)spB8, (s32)spB4, 0, 0, 0, arg3, arg4, arg5, arg6);
+        }
+        var_s2 = var_s2 == 0;
+    } while (var_s0 >= var_s1);
+    uvEndTmesh();
+}
 
 void func_8031DF68(s32 arg0) {
     D_8036C5A8.unk4 = arg0;
