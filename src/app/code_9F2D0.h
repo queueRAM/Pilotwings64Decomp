@@ -24,7 +24,16 @@ typedef struct {
     f32 unk84;
     f32 unk88;
     f32 unk8C;
-    u8 pad90[0xBD0 - 0x90];
+    u8 pad90[0xB40 - 0x90];
+    s16 unkB40;
+    u8 padB42[0xBB8 - 0xB42];
+    f32 unkBB8;
+    f32 unkBBC;
+    u8 padBC0[8];
+    f32 unkBC8;
+    u8 unkBCC;
+    u8 padBCD;
+    s16 unkBCE;
     s16 unkBD0;
     u8 padBD2[0xC48 - 0xBD2];
     f32 unkC48;
