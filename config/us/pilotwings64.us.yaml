@@ -102,6 +102,7 @@ segments:
       - [0x2B370, c, kernel/memory]
       - [0x2C050, c, kernel/sched]
       - [0x2D490, c, kernel/sobj]
+      - [0x2E260, c, kernel/string]
       - [0x2EEA0, c, kernel/main]
       - [0x2FE40, c, kernel/code_2FE40]
       - [0x30DF0, c, kernel/code_30DF0]
