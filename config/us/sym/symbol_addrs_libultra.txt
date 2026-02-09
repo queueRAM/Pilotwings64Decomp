@@ -338,6 +338,3 @@ __osTimerCounter = 0x802CA5E0;
 __osEepPifRam = 0x802CA5F0;
 __osEepPifRam_2 = 0x802CA62C;
 kdebugserver_bss_0000 = 0x802CA650;
-strlen = 0x8022D300;
-strchr = 0x8022D2B0;
-
