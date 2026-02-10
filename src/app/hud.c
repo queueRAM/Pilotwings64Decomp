@@ -8,12 +8,19 @@
 #include <uv_sprite.h>
 #include <uv_string.h>
 #include <uv_vector.h>
+#include "demo.h"
 #include "code_68220.h"
 #include "code_9A960.h"
 #include "code_C9440.h"
 #include "hud.h"
 #include "snap.h"
 #include "snd.h"
+
+// number of frames to render for camera shutter animation
+#define CAMERA_SHUTTER_FRAMES 3
+
+// hang glider speeds below this value will be highlighted larger red/amber font
+#define HIGHLIGHT_SPEED_BELOW 36
 
 typedef struct {
     s16 unk0;
@@ -29,8 +36,7 @@ extern Unk8034F93C D_8034F95C[4];
 extern HUDState gHudState;
 
 extern u8 D_8036D224;
-extern Vec2F D_8036C520[16];
-extern Vec2F D_8036C5A0[]; // guess
+extern Vec2F gRadarThermCirc[17];
 
 // forward declarations
 void hud_8031A378(void);
@@ -40,6 +46,7 @@ void hudDrawBirdman(HUDState*);
 void hudDrawBox(HUDState*);
 void hudDrawCannonball(HUDState*);
 void hudDrawGyrocopter(HUDState*);
+void hudGenThermCircle(void);
 void hudDrawHangGlider(HUDState*);
 void hudDrawJumbleHopper(HUDState*);
 void hudDrawLowFuel(HUDState*);
@@ -48,20 +55,21 @@ void hudDrawSkyDiving(HUDState*);
 void hudDrawStartText(HUDState*);
 void hudDrawPhotoCount(void);
 void hudSeaLevel(s32 x, s32 y, s32 alt);
-void hudDrawSpeed(s32 x, s32 y, s32, s32);
-void hud_8031C900(s32 x, s32 y, s32);
-void hud_80319FEC(HUDState* hud);
+void hudDrawSpeed(s32 x, s32 y, s32 speed, s32 highlightLowSpeed);
+void hudDrawAltimeter(s32 x, s32 y, s32);
+void hudDrawCamera(HUDState* hud);
 void hudDrawFuel(s32 x, s32 y, s32);
-void hudDrawRadar(s32 x, s32 y, f32, f32, f32, f32, f32*);
+void hudDrawRadar(s32 x, s32 y, f32, f32, f32, f32, void*);
 void hudDrawThrottle(s32 x, s32 y, f32);
-void hudMissileReticle(s32 x, s32 y, s32 flag);
-void hudTimer(s32 x, s32 y, f32 timeSecF);
+void hudDrawAimReticle(s32 x, s32 y, s32 flag);
+void hudDrawTimer(s32 x, s32 y, f32 timeSecF);
+void hudDemoContButton(s32 spriteId, s32 x, s32 y);
 
 void hudInit(void) {
     D_8034F914 = 0;
     D_8036D224 = 1;
     D_8034F910 = 0.0f;
-    gHudState.unk0 = 0;
+    gHudState.renderFlags = 0;
     gHudState.unkC = 0;
     gHudState.unk14 = 0.0f;
     gHudState.unkB40[0] = -1;
@@ -120,7 +128,7 @@ void hudMainRender(void) {
     s32 pad[2];
 
     hud = &gHudState;
-    if ((hud->unk0 & 0x400) == 0x0) {
+    if ((hud->renderFlags & HUD_RENDER_DISABLE) == 0x0) {
         if ((hud->unkC50 != 0.0f) && (hud->unkC54 < gHudState.unk14)) {
             hud->unkC5C = !hud->unkC5C;
             hud->unkC54 = (1.0f / hud->unkC50) + gHudState.unk14;
@@ -129,18 +137,19 @@ void hudMainRender(void) {
             hud->unkBCC = !hud->unkBCC;
             hud->unkBC4 = (1.0f / hud->unkBC0) + gHudState.unk14;
         }
-        if (gHudState.unk0 & 0xFE) {
+        if (gHudState.renderFlags & HUD_RENDER_ANY_VEHICLE) {
             if (gHudState.unk28.m[0][0] != 0.0f) {
-                func_80313570(&gHudState.unk28, &gHudState.unk68, &gHudState.unk6C, &gHudState.unk70, &gHudState.unk74, &gHudState.unk78, &gHudState.unk7C);
+                func_80313570(&gHudState.unk28, &gHudState.radarUnk68, &gHudState.radarUnk6C, &gHudState.radarUnk70, &gHudState.radarUnk74, &gHudState.unk78,
+                              &gHudState.unk7C);
             } else {
-                gHudState.unk70 = 0.0f;
+                gHudState.radarUnk70 = 0.0f;
                 gHudState.unk7C = 0.0f;
-                gHudState.unk6C = (f32)gHudState.unk70;
+                gHudState.radarUnk6C = (f32)gHudState.radarUnk70;
                 gHudState.unk78 = (f32)gHudState.unk7C;
-                gHudState.unk68 = (f32)gHudState.unk6C;
-                gHudState.unk74 = (f32)gHudState.unk78;
+                gHudState.radarUnk68 = (f32)gHudState.radarUnk6C;
+                gHudState.radarUnk74 = (f32)gHudState.unk78;
             }
-            func_802E1754(gHudState.unk68, gHudState.unk6C, gHudState.unk70, &sp4C);
+            func_802E1754(gHudState.radarUnk68, gHudState.radarUnk6C, gHudState.radarUnk70, &sp4C);
             if ((sp4C.x == 0.0f) && (sp4C.y == 0.0f)) {
                 gHudState.unkB38 = 0.0f;
                 gHudState.unkB3C = (f32)gHudState.unkB38;
@@ -153,7 +162,7 @@ void hudMainRender(void) {
                 } else if (gHudState.unkB3C > 0.88945f) {
                     gHudState.unkB3C = 0.88945f;
                 }
-                gHudState.unkB38 = (f32)(gHudState.unkB38 - gHudState.unk74);
+                gHudState.unkB38 = (f32)(gHudState.unkB38 - gHudState.radarUnk74);
                 if (gHudState.unkB38 > 3.1415927f) {
                     gHudState.unkB38 = (f32)(gHudState.unkB38 - 6.2831855f);
                 }
@@ -172,19 +181,19 @@ void hudMainRender(void) {
             hudDrawBox(&gHudState);
         }
         if (gHudState.unkC64 < (gHudState.unk14 - gHudState.unkC68)) {
-            if (gHudState.unk0 & 0x02) {
+            if (gHudState.renderFlags & HUD_RENDER_HANG_GLIDER) {
                 hudDrawHangGlider(&gHudState);
-            } else if (gHudState.unk0 & 0x04) {
+            } else if (gHudState.renderFlags & HUD_RENDER_ROCKET_PACK) {
                 hudDrawRocketPack(&gHudState);
-            } else if (gHudState.unk0 & 0x08) {
+            } else if (gHudState.renderFlags & HUD_RENDER_GYROCOPTER) {
                 hudDrawGyrocopter(&gHudState);
-            } else if (gHudState.unk0 & 0x10) {
+            } else if (gHudState.renderFlags & HUD_RENDER_CANNONBALL) {
                 hudDrawCannonball(&gHudState);
-            } else if (gHudState.unk0 & 0x20) {
+            } else if (gHudState.renderFlags & HUD_RENDER_SKYDIVING) {
                 hudDrawSkyDiving(&gHudState);
-            } else if (gHudState.unk0 & 0x40) {
+            } else if (gHudState.renderFlags & HUD_RENDER_JUMBLE_HOPPER) {
                 hudDrawJumbleHopper(&gHudState);
-            } else if (gHudState.unk0 & 0x80) {
+            } else if (gHudState.renderFlags & HUD_RENDER_BIRDMAN) {
                 hudDrawBirdman(&gHudState);
             }
             hudDrawLowFuel(&gHudState);
@@ -202,122 +211,117 @@ void hudMainRender(void) {
 
 void hudDrawHangGlider(HUDState* hud) {
     hudDrawPhotoCount();
-    hudDrawSpeed(27, 37, (s32)hud->unk88, 1);
-    hudSeaLevel(235, 37, (s32)hud->unk84);
-    hud_8031C900(250, 129, (s32)hud->unk80);
-    hudDrawRadar(215, 222, hud->unk68, hud->unk6C, hud->unk70, hud->unk74, &hud->unk90);
-    hudTimer(27, 222, hud->unk10);
-    hud_80319FEC(hud);
+    hudDrawSpeed(27, 37, (s32)hud->speed, 1);
+    hudSeaLevel(235, 37, (s32)hud->altSeaLevel);
+    hudDrawAltimeter(250, 129, (s32)hud->altitude);
+    hudDrawRadar(215, 222, hud->radarUnk68, hud->radarUnk6C, hud->radarUnk70, hud->radarUnk74, &hud->unk90);
+    hudDrawTimer(27, 222, hud->elapsedTime);
+    hudDrawCamera(hud);
 }
 
 void hudDrawRocketPack(HUDState* hud) {
-    hudSeaLevel(235, 37, (s32)hud->unk84);
-    hud_8031C900(250, 129, (s32)hud->unk80);
-    hudDrawRadar(215, 222, hud->unk68, hud->unk6C, hud->unk70, hud->unk74, &hud->unk90);
-    hudDrawSpeed(27, 37, (s32)hud->unk88, 0);
-    hudDrawFuel(98, 37, hud->pad1C);
-    hudTimer(27, 222, hud->unk10);
+    hudSeaLevel(235, 37, (s32)hud->altSeaLevel);
+    hudDrawAltimeter(250, 129, (s32)hud->altitude);
+    hudDrawRadar(215, 222, hud->radarUnk68, hud->radarUnk6C, hud->radarUnk70, hud->radarUnk74, &hud->unk90);
+    hudDrawSpeed(27, 37, (s32)hud->speed, 0);
+    hudDrawFuel(98, 37, hud->fuel);
+    hudDrawTimer(27, 222, hud->elapsedTime);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hudDrawCannonball.s")
 
 void hudDrawSkyDiving(HUDState* hud) {
-    if (hud->unk4 != 0) {
+    // for sky diving, unk4 means alpha channel for the clouds that appear during
+    // the transition from diving formations and landing. it transitions 00->FF->00
+    if (hud->cloudFade != 0) {
         uvGfxStatePush();
         uvGfxSetFlags(0x800FFF);
         uvVtxBeginPoly();
-        uvVtx(10, 18, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->unk4);
-        uvVtx(310, 18, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->unk4);
-        uvVtx(310, 232, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->unk4);
-        uvVtx(10, 232, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->unk4);
+        uvVtx(10, 18, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->cloudFade);
+        uvVtx(310, 18, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->cloudFade);
+        uvVtx(310, 232, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->cloudFade);
+        uvVtx(10, 232, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->cloudFade);
         uvVtxEndPoly();
         uvGfxStatePop();
     } else {
-        hud_8031C900(250, 129, (s32)hud->unk80);
-        hudSeaLevel(235, 37, (s32)hud->unk84);
-        hudTimer(27, 222, hud->unk10);
-        hudDrawRadar(215, 222, hud->unk68, hud->unk6C, hud->unk70, hud->unk74, &hud->unk90);
+        hudDrawAltimeter(250, 129, (s32)hud->altitude);
+        hudSeaLevel(235, 37, (s32)hud->altSeaLevel);
+        hudDrawTimer(27, 222, hud->elapsedTime);
+        hudDrawRadar(215, 222, hud->radarUnk68, hud->radarUnk6C, hud->radarUnk70, hud->radarUnk74, &hud->unk90);
     }
 }
 
 void hudDrawJumbleHopper(HUDState* hud) {
-    hudDrawSpeed(27, 37, (s32)hud->unk88, 0);
-    hudSeaLevel(235, 37, (s32)hud->unk84);
-    hud_8031C900(250, 129, (s32)hud->unk80);
-    hudDrawRadar(215, 222, hud->unk68, hud->unk6C, hud->unk70, hud->unk74, &hud->unk90);
-    hudTimer(27, 222, hud->unk10);
+    hudDrawSpeed(27, 37, (s32)hud->speed, 0);
+    hudSeaLevel(235, 37, (s32)hud->altSeaLevel);
+    hudDrawAltimeter(250, 129, (s32)hud->altitude);
+    hudDrawRadar(215, 222, hud->radarUnk68, hud->radarUnk6C, hud->radarUnk70, hud->radarUnk74, &hud->unk90);
+    hudDrawTimer(27, 222, hud->elapsedTime);
 }
 
 void hudDrawBirdman(HUDState* hud) {
     if (D_80362690->unk0[D_80362690->unk9C].unkC.unk7B == 0) {
         hudDrawPhotoCount();
     }
-    hudSeaLevel(235, 37, (s32)hud->unk84);
-    hud_8031C900(250, 129, (s32)hud->unk80);
-    hudDrawSpeed(27, 37, (s32)hud->unk88, 0);
+    hudSeaLevel(235, 37, (s32)hud->altSeaLevel);
+    hudDrawAltimeter(250, 129, (s32)hud->altitude);
+    hudDrawSpeed(27, 37, (s32)hud->speed, 0);
     if (D_80362690->unk0[D_80362690->unk9C].unkC.unk7B == 0) {
-        hud_80319FEC(hud);
+        hudDrawCamera(hud);
     }
 }
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hud_80319FEC.s")
-#else
-void hud_80319FEC(HUDState* hud) {
+void hudDrawCamera(HUDState* hud) {
     s32 x;
 
-    if (hud->unk4 & 0x80000000) {
+    if (hud->cameraState & HUD_CAM_RENDER_RETICLE) {
         uvSprtProps(9, 2, 0x5F, 0xAF, 7, 0xFF, 0, 0, 0x78, 0);
         uvSprtDraw(9);
         if (D_8034F914 == 0) {
             func_8033F7F8(0x43);
             D_8034F914 = 1;
         }
-    } else if (hud->unk4 & 0x40000000) {
-        hud->unk4 = 3;
-    } else if (hud->unk4 != 0) {
-        if (hud->unk4 != 0) {
-            x = (hud->unk4 * -80) + 240;
+    } else if (hud->cameraState & HUD_CAM_RENDER_SHUTTER) {
+        hud->cameraState = CAMERA_SHUTTER_FRAMES; // state now means # frames to render shutter
+    } else if (hud->cameraState != 0) {
+        // field is count down for rendering black rects for shutter
+        if (hud->cameraState != 0) {
+            x = (CAMERA_SHUTTER_FRAMES - hud->cameraState) * (240 / CAMERA_SHUTTER_FRAMES);
         } else {
-            x = hud->unk4 * 80;
+            x = hud->cameraState * (240 / CAMERA_SHUTTER_FRAMES);
         }
         uvGfx_80223A28(0xFFF);
         uvVtxRect(0, 239, x, 0);
         uvVtxRect(319 - x, 239, 319, 0);
-        hud->unk4--;
+        hud->cameraState--;
         D_8034F914 = 0;
     }
 }
-#endif
 
 void hudDrawGyrocopter(HUDState* hud) {
-    hudDrawSpeed(27, 37, (s32)hud->unk88, 0);
-    hudSeaLevel(235, 37, (s32)hud->unk84);
-    hud_8031C900(250, 129, (s32)hud->unk80);
-    hudDrawRadar(215, 222, hud->unk68, hud->unk6C, hud->unk70, hud->unk74, &hud->unk90);
-    hudDrawFuel(98, 37, hud->pad1C);
+    hudDrawSpeed(27, 37, (s32)hud->speed, 0);
+    hudSeaLevel(235, 37, (s32)hud->altSeaLevel);
+    hudDrawAltimeter(250, 129, (s32)hud->altitude);
+    hudDrawRadar(215, 222, hud->radarUnk68, hud->radarUnk6C, hud->radarUnk70, hud->radarUnk74, &hud->unk90);
+    hudDrawFuel(98, 37, hud->fuel);
     hudDrawThrottle(27, 82, hud->unk18);
-    hudTimer(27, 222, hud->unk10);
-    if (hud->unk0 & 0x200) {
-        hudMissileReticle((s32)hud->unkC6C, (s32)hud->unkC70, 0);
+    hudDrawTimer(27, 222, hud->elapsedTime);
+    if (hud->renderFlags & HUD_RENDER_RETICLE) {
+        hudDrawAimReticle((s32)hud->unkC6C, (s32)hud->unkC70, 0);
     }
 }
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hud_8031A224.s")
-#else
-void hud_8031A224(void) {
+void hudGenThermCircle(void) {
     f32 angle;
     s32 i;
 
-    for (i = 0; i < ARRAY_COUNT(D_8036C520); i++) {
+    for (i = 0; i < ARRAY_COUNT(gRadarThermCirc) - 1; i++) {
         angle = (f32)i * 0.3926991f; // DEG_TO_RAD(22.5) or (360.0/16)
-        D_8036C520[i].x = uvSinF(angle);
-        D_8036C520[i].y = uvCosF(angle);
+        gRadarThermCirc[i].x = uvSinF(angle);
+        gRadarThermCirc[i].y = uvCosF(angle);
     }
-    D_8036C5A0[0] = D_8036C520[0];
+    gRadarThermCirc[ARRAY_COUNT(gRadarThermCirc) - 1] = gRadarThermCirc[0];
 }
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hud_8031A2CC.s")
 
@@ -339,15 +343,92 @@ void hud_8031A224(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hudDrawRadar.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hud_8031BE88.s")
+void hudDemoContButton(s32 spriteId, s32 x, s32 y) {
+    uvSprtProps(spriteId, 2, x + 20, 200 - y, 0);
+    uvSprtDraw(spriteId);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hudDemoController.s")
+void hudDemoController(void) {
+    s32 screenX;
+    s32 screenY;
+    f32 stickX;
+    f32 stickY;
+    s32 buttons;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hudDrawSpeed.s")
+    buttons = demoGetButtons(0);
+    uvSprtDraw(0xB);
+    stickX = demoGetInputs(0, INPUT_AXIS_X);
+    stickY = demoGetInputs(0, INPUT_AXIS_Y);
+    screenX = stickX * 4.0 + 37.0;
+    screenY = -stickY * 4.0 + 39.0;
+    hudDemoContButton(0xC, screenX, screenY);
+
+    if (buttons & A_BUTTON) {
+        hudDemoContButton(0xF, 56, 27);
+    }
+    if (buttons & B_BUTTON) {
+        hudDemoContButton(0xF, 50, 21);
+    }
+    if (buttons & U_CBUTTONS) {
+        hudDemoContButton(0xE, 62, 14);
+    }
+    if (buttons & D_CBUTTONS) {
+        hudDemoContButton(0xE, 62, 23);
+    }
+    if (buttons & L_CBUTTONS) {
+        hudDemoContButton(0xE, 57, 18);
+    }
+    if (buttons & R_CBUTTONS) {
+        hudDemoContButton(0xE, 66, 18);
+    }
+    if (buttons & U_JPAD) {
+        hudDemoContButton(0xD, 14, 18);
+    }
+    if (buttons & D_JPAD) {
+        hudDemoContButton(0xD, 14, 28);
+    }
+    if (buttons & L_JPAD) {
+        hudDemoContButton(0xD, 9, 23);
+    }
+    if (buttons & R_JPAD) {
+        hudDemoContButton(0xD, 18, 23);
+    }
+    if (buttons & L_TRIG) {
+        hudDemoContButton(0x10, 7, 6);
+    }
+    if (buttons & R_TRIG) {
+        hudDemoContButton(0x11, 56, 6);
+    }
+    if (buttons & Z_TRIG) {
+        hudDemoContButton(0x12, 3, 52);
+    }
+}
+
+void hudDrawSpeed(s32 x, s32 y, s32 speed, s32 highlightLowSpeed) {
+    char str[12];
+    s32 numX;
+
+    y += 8;
+    uvSprtProps(5, 2, x + 4, y - 18, 7, 0xFF, 0xFF, 0xFF, 0xFF, 0);
+    uvSprtDraw(5);
+    if ((speed < HIGHLIGHT_SPEED_BELOW) && (highlightLowSpeed)) {
+        uvFontSet(7);
+        numX = x - 5;
+    } else {
+        uvFontSet(8);
+        numX = x;
+    }
+    uvFont_8021956C(0xFF, 0xFF, 0xFF, 0xFF);
+    uvFont_80219550(1.0, 1.0);
+    uvSprintf(str, "%3d", speed);
+    uvFont_80219ACC(numX, y - 16, str);
+    uvFontSet(8);
+    uvFont_80219ACC(x + 33, y - 16, "k");
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hudDrawFuel.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hud_8031C900.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hudDrawAltimeter.s")
 
 void hudSeaLevel(s32 x, s32 y, s32 alt) {
     char str[12];
@@ -371,16 +452,17 @@ void hudSeaLevel(s32 x, s32 y, s32 alt) {
 }
 
 #ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hudTimer.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hudDrawTimer.s")
 #else
-void hudTimer(s32 x, s32 y, f32 timeSecF) {
-    s32 timeMs;     // var_v1;
-    s32 timeHundth; // temp_a0;
-    s32 temp_v1;
-    s32 timeSec;   // temp_lo;
-    s32 adjHundth; // sp44;
+// rom size changes when this gets compiled in, probably related to static var and .bss
+void hudDrawTimer(s32 x, s32 y, f32 timeSecF) {
+    static s32 D_8034F938 = 0;
+    s32 timeMs;
+    s32 timeSec;
+    s32 dispHundth;
+    s32 dispSec;
+    s32 adjHundth;
     char timeStr[12];
-    s32* ptr;
 
     if (timeSecF != 0.0f) {
         if (timeSecF < (D_8034F910 + 0.083f)) {
@@ -396,17 +478,15 @@ void hudTimer(s32 x, s32 y, f32 timeSecF) {
         timeMs = 3599999;
     }
     timeSec = (timeMs / 1000);
-    timeHundth = (timeMs / 10) - (timeSec * 100);
+    dispHundth = (timeMs / 10) - (timeSec * 100);
     if ((timeMs != 3599999) && (timeSecF != 0.0f) && adjHundth) {
-        temp_v1 = D_8034F938;
-        if (temp_v1 >= 4) {
-            temp_v1 = 0;
+        if (D_8034F938 >= 4) {
+            D_8034F938 = 0;
         }
-        temp_v1 += 1;
-        timeHundth += temp_v1;
-        D_8034F938 = temp_v1;
-        if (timeHundth >= 100) {
-            timeHundth -= 100;
+        D_8034F938 += 1;
+        dispHundth += D_8034F938;
+        if (dispHundth >= 100) {
+            dispHundth -= 100;
         }
     }
     uvSprtProps(4, 2, x, y, 7, 0xFF, 0xFF, 0xFF, 0xFF, 0);
@@ -416,12 +496,13 @@ void hudTimer(s32 x, s32 y, f32 timeSecF) {
     y -= 12;
     uvFont_8021956C(0xFF, 0xFF, 0xFF, 0xFF);
     uvFont_80219550(1.0, 1.0);
-    uvSprintf(timeStr, "%02d'%02d\"%02d", timeSec / 60, timeSec - ((timeSec / 60) * 60), timeHundth);
+    dispSec = timeSec - ((timeSec / 60) * 60);
+    uvSprintf(timeStr, "%02d'%02d\"%02d", timeSec / 60, dispSec, dispHundth);
     uvFont_80219ACC(x, y, timeStr);
 }
 #endif
 
-void hudMissileReticle(s32 x, s32 y, s32 flag) {
+void hudDrawAimReticle(s32 x, s32 y, s32 flag) {
     s16 centerX;
     s16 centerY;
 
@@ -435,6 +516,12 @@ void hudMissileReticle(s32 x, s32 y, s32 flag) {
     uvSprtDraw(8);
 }
 
+// called when fading screen to white and back after a crash
+// unkC60:
+//   1: fade to white while crashing
+//   2: fade from white back to crash site
+//   3: fade to black when??
+//   4: fade from black when??
 void hudDrawBox(HUDState* hud) {
     u8 r;
     u8 g;
@@ -628,7 +715,7 @@ void hudRadarThermal(f32 arg0, f32 arg1, f32 arg2, u8 r, u8 g, u8 b, u8 a, f32 a
     var_s2 = 0;
     do {
         if (var_s2 != 0) {
-            temp_v0 = &D_8036C520[var_s0];
+            temp_v0 = &gRadarThermCirc[var_s0];
             temp_fv0 = (temp_v0->x * arg2) + arg0;
             temp_fv1 = (temp_v0->y * arg2) + arg1;
             vx = (temp_fv0 * temp_fs1) - (temp_fv1 * temp_fs0);
@@ -644,7 +731,7 @@ void hudRadarThermal(f32 arg0, f32 arg1, f32 arg2, u8 r, u8 g, u8 b, u8 a, f32 a
             if (var_s1 >= 0x10) {
                 var_s1 = 0;
             }
-            temp_v0 = &D_8036C520[var_s1];
+            temp_v0 = &gRadarThermCirc[var_s1];
             temp_fv0 = (temp_v0->x * arg2) + arg0;
             temp_fv1 = (temp_v0->y * arg2) + arg1;
             vx = (temp_fv0 * temp_fs1) - (temp_fv1 * temp_fs0);
@@ -657,8 +744,9 @@ void hudRadarThermal(f32 arg0, f32 arg1, f32 arg2, u8 r, u8 g, u8 b, u8 a, f32 a
     uvEndTmesh();
 }
 
-void hud_8031DF68(s32 arg0) {
-    gHudState.unk4 = arg0;
+// sets union field for camera state
+void hudSetCameraState(s32 state) {
+    gHudState.cameraState = state;
 }
 
 void hudRadarWaypoint(f32 dist, f32 bearing, s32 type, s32 below, f32 heading, u8 alpha) {
