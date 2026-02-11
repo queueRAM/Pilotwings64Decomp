@@ -9,8 +9,8 @@ typedef struct {
 } DemoRecordingEntry;
 
 enum InputAxis {
-    INPUT_AXIS_0 = 0, // X or Z?
-    INPUT_AXIS_1 = 1 // X or Z?
+    INPUT_AXIS_X = 0,
+    INPUT_AXIS_Y = 1
 };
 
 f32 demoRecGetStickX(DemoRecordingEntry* entry);

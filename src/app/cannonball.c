@@ -158,8 +158,8 @@ void cannonEndTarget(Unk802D5B50_Arg2* arg0) {
 
 // cannonMovementFrame called every frame while aiming cannon and while in flight
 void cannonMovementFrame(Unk802D5C5C_Arg0* arg0, u8 arg1) {
-    f32 spEC;
-    f32 spE8;
+    f32 stickX;
+    f32 stickY;
     s32 spE4;
     Unk802D3658_Arg0* temp_v0;
     f32 var_fa0;
@@ -183,12 +183,12 @@ void cannonMovementFrame(Unk802D5C5C_Arg0* arg0, u8 arg1) {
     arg0->unk8 += D_8034F854;
     arg0->unk11D = 0;
     if (arg1 != 6) {
-        spEC = demoGetInputs(arg0->unk10, INPUT_AXIS_0);
-        spE8 = demoGetInputs(arg0->unk10, INPUT_AXIS_1);
+        stickX = demoGetInputs(arg0->unk10, INPUT_AXIS_X);
+        stickY = demoGetInputs(arg0->unk10, INPUT_AXIS_Y);
         spE4 = demoGetButtons(arg0->unk10);
     }
     sp2C = &arg0->unk14;
-    func_802E65AC(&arg0->unk14, &D_80362690->unk0[0].unk6, &spEC, &spE8, &spE4);
+    func_802E65AC(&arg0->unk14, &D_80362690->unk0[0].unk6, &stickX, &stickY, &spE4);
     if (arg1 != 6) {
         spC8[0] = arg0->zAxis;
         spC8[1] = arg0->xAxis;
@@ -201,22 +201,22 @@ void cannonMovementFrame(Unk802D5C5C_Arg0* arg0, u8 arg1) {
         arg0->unkD4 = spC7 >> 1;
         arg0->unkC4 = spC7 & 1;
     }
-    if (spEC > 0.0f) {
-        var_fv0 = spEC;
+    if (stickX > 0.0f) {
+        var_fv0 = stickX;
     } else {
-        var_fv0 = -spEC;
+        var_fv0 = -stickX;
     }
     arg0->unkBC = func_80313F08(&D_80359A30, var_fv0);
-    if (spEC < 0 /*.0f*/) {
+    if (stickX < 0 /*.0f*/) {
         arg0->unkBC = -arg0->unkBC;
     }
-    if (spE8 > 0.0f) {
-        var_fv0_2 = spE8;
+    if (stickY > 0.0f) {
+        var_fv0_2 = stickY;
     } else {
-        var_fv0_2 = -spE8;
+        var_fv0_2 = -stickY;
     }
     arg0->unkC0 = func_80313F08(&D_80359A30, var_fv0_2);
-    if (spE8 < 0.0f) {
+    if (stickY < 0.0f) {
         arg0->unkC0 = -arg0->unkC0;
     }
     if ((spE4 & 0x8000) && (D_8034F850 >= 2.0f)) {
@@ -327,25 +327,25 @@ void cannonMovementFrame(Unk802D5C5C_Arg0* arg0, u8 arg1) {
             uvMat4Copy(&hud->unk28, sp2C);
         }
         if ((arg0->unkB4 != 8) && (arg0->unkD4 != 2)) {
-            hud->unk0 = 0x10;
+            hud->renderFlags = HUD_RENDER_CANNONBALL;
         } else {
-            hud->unk0 = 0;
+            hud->renderFlags = 0;
         }
-        hud->unk70 = arg0->unk14.m[3][2];
-        hud->unk10 = arg0->unk8;
+        hud->radarUnk70 = arg0->unk14.m[3][2];
+        hud->elapsedTime = arg0->unk8;
         hud->unk18 = arg0->unkA4;
         hud->unk8C = arg0->unk1CC * 4.0f * 0.7f;
-        hud->unk80 = arg0->unk120 * 0.7f;
-        hud->unk84 = arg0->unk14.m[3][2] * 0.7f;
-        hud->unk88 = arg0->unk1D0 * 3.6f * 0.7f;
+        hud->altitude = arg0->unk120 * 0.7f;
+        hud->altSeaLevel = arg0->unk14.m[3][2] * 0.7f;
+        hud->speed = arg0->unk1D0 * 3.6f * 0.7f;
         hud->unk20 = arg0->unk98 + arg0->zAxis;
         hud->unk24 = arg0->xAxis;
         hud->unk8 = 3 - arg0->unkE;
         if (D_8034E9F4 != 0) {
-            hud->unk0 |= 0x200;
+            hud->renderFlags |= HUD_RENDER_RETICLE;
         } else {
-            if (hud->unk0 & 0x200) {
-                hud->unk0 &= ~0x200;
+            if (hud->renderFlags & HUD_RENDER_RETICLE) {
+                hud->renderFlags &= ~HUD_RENDER_RETICLE;
             }
         }
         hud->unkC70 = 0.0f;
@@ -537,7 +537,7 @@ void cannonPilotLand(Unk802D5C5C_Arg0* arg0) {
     }
     func_802D4A30(arg0->unkB0, &sp74);
     uvMat4Copy(&arg0->unkB0->unk108, &sp74);
-    hudGetState()->unk0 = 0;
+    hudGetState()->renderFlags = 0;
     func_802D9220(arg0);
 }
 #endif
