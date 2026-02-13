@@ -1,5 +1,9 @@
 // Visit https://github.com/ethteck/splat/wiki/Adding-Symbols for documentation about this file
 
+// -----------------------------------------------------------------------------
+// Function Symbols
+// -----------------------------------------------------------------------------
+
 app_firstfunc       = 0x802CA900; // type:func
 
 ballsCollision      = 0x802CBC9C; // type:func
@@ -222,6 +226,10 @@ windObjectsInit     = 0x8034E080; // type:func
 mem_get             = 0x80312740; // type:func
 mem_init            = 0x803127BC; // type:func
 mem_remaining       = 0x803127F0; // type:func
+
+// -----------------------------------------------------------------------------
+// Data Symbols
+// -----------------------------------------------------------------------------
 
 D_8035145C = 0x8035145C; // type:f32 force_migration:True
 D_80351464 = 0x80351464; // type:f32 force_migration:True

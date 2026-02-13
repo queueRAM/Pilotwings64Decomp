@@ -1,3 +1,9 @@
+// Visit https://github.com/ethteck/splat/wiki/Adding-Symbols for documentation about this file
+
+// -----------------------------------------------------------------------------
+// Function Symbols
+// -----------------------------------------------------------------------------
+
 __dummy = 0x802070B0;
 osViExtendVStart = 0x802071C0;
 alSndpSetSound = 0x802344A0;
