@@ -68,12 +68,12 @@ void cannon_802D5A90(void) {
 void cannonLoadLevel(u8 arg0, u8 pilot, Unk802D5B50_Arg2* arg2, Unk802D3658_Arg0* arg3) {
     uvMemSet(arg2, 0, sizeof(*arg2));
     cannonLoadPilot(pilot, arg2);
-    arg2->unk0 = func_8021731C();
+    arg2->unk0 = uvDobjAllocIdx();
     arg2->unk2 = 2;
     uvDobjModel(arg2->unk0, arg2->unk220);
     uvDobjPosm(arg2->unk0, 0, &arg2->unk14);
     uvDobjState(arg2->unk0, arg2->unk2);
-    arg2->unk54 = func_8021731C();
+    arg2->unk54 = uvDobjAllocIdx();
     arg2->unk56 = 2;
     uvDobjModel(arg2->unk54, 0x105);
     uvDobjPosm(arg2->unk54, 0, &arg2->unk58);
