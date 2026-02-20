@@ -5,6 +5,7 @@
 
 // forward declarations
 u8 func_8032DE14(void);
+u8 func_8032DE74(void);
 void func_8032E060(void);
 void func_8032E698(void);
 s32 func_8032E6B8(s32);
@@ -43,7 +44,17 @@ u8 func_8032DE14(void) {
     return (temp_a0->unk2 == 0 || temp_a0->unk2 == 6);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032DE74.s")
+u8 func_8032DE74(void) {
+    Unk80362690_Unk0_UnkC* temp_s1;
+    s32 var_v1;
+
+    temp_s1 = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    var_v1 = (temp_s1->unk2 == 0 || temp_s1->unk2 == 1 || temp_s1->unk2 == 2 || temp_s1->unk2 == 6);
+    if (levelDataGetFALC(NULL) != 0) {
+        var_v1 = 0;
+    }
+    return var_v1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032DF08.s")
 
