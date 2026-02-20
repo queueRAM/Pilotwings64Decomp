@@ -2,6 +2,12 @@
 #include <uv_graphics.h>
 #include <uv_level.h>
 #include "code_B5280.h"
+#include "menu.h"
+
+void func_80312FF8(s32);
+s32 func_8033F62C(void);
+void func_803405E4(void);
+extern s32 D_8034FFA0[]; // gResultsMenu
 
 // forward declarations
 u8 func_8032DE14(void);
@@ -56,7 +62,31 @@ u8 func_8032DE74(void) {
     return var_v1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032DF08.s")
+// populates menu at results screen, showing Check Photo/Replay/Next
+void func_8032DF08(void) {
+    s32 idx;
+    u8* ptr;
+    u8 val = 0xE; // fakematch?
+
+    idx = 0;
+    if (func_8032DE14() != 0) {
+        ptr = levelGet_80345CB0();
+        if (ptr[1] == 1) {
+            func_803405E4();
+        }
+        D_8034FFA0[0] = val; // Check Photo
+        idx = 1;
+    }
+    if (func_8032DE74()) {
+        D_8034FFA0[idx++] = 0x60; // Replay
+    }
+    D_8034FFA0[idx++] = 0x5B; // Next
+    menuCreateItems(170, 2, 6, 1.0f, 1.0f, D_8034FFA0, idx);
+    if (func_8032DE14() && !func_8033F62C()) {
+        menu_8030B69C(1);
+    }
+    func_80312FF8(5);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032E000.s")
 
