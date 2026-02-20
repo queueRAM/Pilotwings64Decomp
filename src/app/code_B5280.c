@@ -1,7 +1,36 @@
 #include "common.h"
+#include <uv_graphics.h>
+#include <uv_level.h>
 #include "code_B5280.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032DD50.s")
+// forward declarations
+void func_8032E060(void);
+void func_8032E698(void);
+s32 func_8032E6B8(s32);
+void func_8032E940(s32);
+
+s32 func_8032DD50(s32 arg0) {
+    Unk80362690_Unk0_UnkC* temp_s1;
+    s32 var_v1;
+
+    temp_s1 = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    func_8032E060();
+
+    while ((var_v1 = func_8032E6B8(arg0)) == 0) {
+        uvGfxBegin();
+        func_80204FC4((s32) temp_s1->unk70->unk22C);
+        func_8032E940(arg0);
+        uvGfxEnd();
+    }
+
+    func_8032E698();
+
+    // FIXME: Unk80362690_Unk0_UnkC is wrong, indexing 15 in 4-byte buffer to match
+    if ((temp_s1->unk2 == 3) && (temp_s1->pad7C[15] != 0)) {
+        temp_s1->pad7C[15] = 0;
+    }
+    return var_v1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032DE14.s")
 
