@@ -88,7 +88,21 @@ void func_8032DF08(void) {
     func_80312FF8(5);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032E000.s")
+s32 func_8032E000(s32 arg0) {
+    if (arg0 < 0) {
+        return arg0;
+    }
+    switch (D_8034FFA0[arg0]) {
+    case 0xE: // Check Photo
+        return 0;
+    case 0x60: // Replay
+        return 1;
+    case 0x5B: // Next
+        return 2;
+    default:
+        return -1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/D_803556B0.s")
 
