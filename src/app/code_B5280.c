@@ -4,6 +4,7 @@
 #include "code_B5280.h"
 
 // forward declarations
+u8 func_8032DE14(void);
 void func_8032E060(void);
 void func_8032E698(void);
 s32 func_8032E6B8(s32);
@@ -18,7 +19,7 @@ s32 func_8032DD50(s32 arg0) {
 
     while ((var_v1 = func_8032E6B8(arg0)) == 0) {
         uvGfxBegin();
-        func_80204FC4((s32) temp_s1->unk70->unk22C);
+        func_80204FC4((s32)temp_s1->unk70->unk22C);
         func_8032E940(arg0);
         uvGfxEnd();
     }
@@ -32,7 +33,15 @@ s32 func_8032DD50(s32 arg0) {
     return var_v1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032DE14.s")
+u8 func_8032DE14(void) {
+    Unk80362690_Unk0_UnkC* temp_a0;
+
+    temp_a0 = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    if (D_80362690->unk0[D_80362690->unk9C].unkC.unk7B != 0) {
+        return 0;
+    }
+    return (temp_a0->unk2 == 0 || temp_a0->unk2 == 6);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032DE74.s")
 
