@@ -1,20 +1,18 @@
 #include "common.h"
 #include <uv_graphics.h>
 #include <uv_level.h>
+#include "code_99D40.h"
 #include "code_9A960.h"
+#include "code_B3A70.h"
 #include "code_B5280.h"
+#include "code_CE4F0.h"
 #include "demo.h"
 #include "menu.h"
 #include "save.h"
+#include "snap.h"
+#include "snow.h"
 #include "snd.h"
 
-void func_80312FF8(s32);
-s32 func_8033F62C(void);
-void func_803405E4(void);
-s32 func_803470EC(void);
-void func_8032C540(Unk80362690*);
-void func_8032EF10(u16);
-s32 func_8033E3A8(s32);
 extern s32 D_8034FFA0[]; // gResultsMenu
 extern f32 D_8037192C;
 
@@ -25,6 +23,7 @@ void func_8032E060(void);
 void func_8032E698(void);
 s32 func_8032E6B8(s32);
 void func_8032E940(s32);
+void func_8032EF10(u16);
 
 s32 func_8032DD50(s32 arg0) {
     Unk80362690_Unk0_UnkC* temp_s1;
