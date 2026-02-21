@@ -413,7 +413,7 @@ s32 func_8032E6B8(s32 arg0) {
         case 0:
             if (func_8033E3A8(2) != 0) {
                 // FIXME: sp1C->pad8A
-                saveFileWrite((s32) sp1C->pad7C[0xE]);
+                saveFileWrite((s32)sp1C->pad7C[0xE]);
             }
             sp18 = 0;
             D_8037192C = 1.5f;
@@ -465,9 +465,9 @@ void func_8032E940(s32 arg0) {
     spCC = &D_80362690->unk0[D_80362690->unk9C].unkC;
     func_80314154();
     uvGfxSetFlags(GFX_STATE_400000);
-    spAC = (f32) (1.0 - (f64) ((1.5f - D_8037192C) / 1.5f));
+    spAC = (f32)(1.0 - (f64)((1.5f - D_8037192C) / 1.5f));
     uvVtxBeginPoly();
-    alpha = (s32) (130.0f * spAC);
+    alpha = (s32)(130.0f * spAC);
     uvVtx(0, 240, 0, 0, 0, 0, 0, 0, alpha);
     uvVtx(0, 0, 0, 0, 0, 0, 0, 0, alpha);
     uvVtx(320, 0, 0, 0, 0, 0, 0, 0, alpha);
@@ -476,7 +476,7 @@ void func_8032E940(s32 arg0) {
     uvGfxClearFlags(GFX_STATE_400000);
     if ((D_8034FFBC == 0) && (spCC->unk2 != 6)) {
         uvVtxBeginPoly();
-        alpha = (s32) (255.0f * spAC);
+        alpha = (s32)(255.0f * spAC);
         uvVtx(0x24, 0x78, 0, 0, 0, 0xD2, 0xD2, 0xD2, alpha);
         uvVtx(0x24, 0x77, 0, 0, 0, 0xD2, 0xD2, 0xD2, alpha);
         uvVtx(0x110, 0x77, 0, 0, 0, 0xD2, 0xD2, 0xD2, alpha);
@@ -495,7 +495,7 @@ void func_8032E940(s32 arg0) {
         uvFont_80219ACC(0x14, 0x64, sp48);
     } else {
         uvFontSet(6);
-        alpha = (s32) (255.0f * spAC);
+        alpha = (s32)(255.0f * spAC);
         uvFont_8021956C(0xD2, 0xD2, 0xD2, alpha);
         uvFont_80219550(1.0, 1.0);
 
@@ -513,10 +513,10 @@ void func_8032E940(s32 arg0) {
     }
     if ((arg0 != 0) && (D_8034FFBC == 0) && (spCC->unk2 != 6)) {
         uvFontSet(6);
-        alpha = (s32) (255.0f * spAC);
+        alpha = (s32)(255.0f * spAC);
         uvFont_8021956C(0xD2, 0xD2, 0xD2, alpha);
         uvFont_80219550(1.0, 1.0);
-    
+
         for (i = 0, var_s1 = 116; i < 4; i++, var_s1 += 16) {
             func_80219874(180, var_s1, D_8034FFAC[i], 3, 0xFFE);
         }
@@ -543,7 +543,7 @@ void func_8032EF10(s32 arg0) {
 
     if (D_8034FFC0 == 0) {
         for (i = 0; i < 3; i++) {
-            D_8037195A[i] = (s8) ((s32) ((uvRandF_RANLUX() * 14.0f) + 0.5f) + 1);
+            D_8037195A[i] = (s8)((s32)((uvRandF_RANLUX() * 14.0f) + 0.5f) + 1);
         }
         D_8034FFC0 = 1;
     }
@@ -551,13 +551,13 @@ void func_8032EF10(s32 arg0) {
     if (arg0 >= 3) {
         return;
     }
-        
+
     D_8037195A[arg0]++;
     if (D_8037195A[arg0] >= 16) {
         D_8037195A[arg0] = 1;
     }
     uvSprintf(str, "%s_%d_A", D_80350998[arg0], D_8037195A[arg0]);
-    text = textGetDataByName((s16* ) str);
+    text = textGetDataByName((s16*)str);
     if (text == NULL) {
         _uvDebugPrintf("Could not find %s in jtext\n", str);
     } else {
