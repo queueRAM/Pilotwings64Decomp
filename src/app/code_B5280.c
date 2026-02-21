@@ -346,7 +346,9 @@ s32 func_8032E000(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032E060.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032E698.s")
+void func_8032E698(void) {
+    func_80312FF8(7);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032E6B8.s")
 
