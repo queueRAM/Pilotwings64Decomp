@@ -1,6 +1,8 @@
 #include "common.h"
+#include <uv_geometry.h>
 #include <uv_graphics.h>
 #include <uv_level.h>
+#include <uv_string.h>
 #include "code_99D40.h"
 #include "code_9A960.h"
 #include "code_B3A70.h"
@@ -15,6 +17,14 @@
 
 extern s32 D_8034FFA0[]; // gResultsMenu
 extern f32 D_8037192C;
+extern s32 D_8034FFBC;
+extern u8 D_80371934;
+extern const char* D_80371938;
+extern s16* D_80371930;
+extern s16* D_8034FFAC[];
+extern s16* D_8037193C;
+extern s16 D_80371940[];
+extern s16 D_80371950[];
 
 // forward declarations
 u8 func_8032DE14(void);
@@ -433,6 +443,91 @@ s32 func_8032E6B8(s32 arg0) {
     return sp18;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032E940.s")
+void func_8032E940(s32 arg0) {
+    Unk80362690_Unk0_UnkC* spCC;
+    s32 alpha;
+    s32 var_a0;
+    s32 var_s1;
+    s32 var_s2;
+    s32 i;
+    s32 pad;
+    s32 pad2;
+    f32 spAC;
+    char sp48[100];
+
+    var_s2 = 0;
+    spCC = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    func_80314154();
+    uvGfxSetFlags(GFX_STATE_400000);
+    spAC = (f32) (1.0 - (f64) ((1.5f - D_8037192C) / 1.5f));
+    uvVtxBeginPoly();
+    alpha = (s32) (130.0f * spAC);
+    uvVtx(0, 240, 0, 0, 0, 0, 0, 0, alpha);
+    uvVtx(0, 0, 0, 0, 0, 0, 0, 0, alpha);
+    uvVtx(320, 0, 0, 0, 0, 0, 0, 0, alpha);
+    uvVtx(320, 240, 0, 0, 0, 0, 0, 0, alpha);
+    uvVtxEndPoly();
+    uvGfxClearFlags(GFX_STATE_400000);
+    if ((D_8034FFBC == 0) && (spCC->unk2 != 6)) {
+        uvVtxBeginPoly();
+        alpha = (s32) (255.0f * spAC);
+        uvVtx(0x24, 0x78, 0, 0, 0, 0xD2, 0xD2, 0xD2, alpha);
+        uvVtx(0x24, 0x77, 0, 0, 0, 0xD2, 0xD2, 0xD2, alpha);
+        uvVtx(0x110, 0x77, 0, 0, 0, 0xD2, 0xD2, 0xD2, alpha);
+        uvVtx(0x110, 0x78, 0, 0, 0, 0xD2, 0xD2, 0xD2, alpha);
+        uvVtxEndPoly();
+    }
+    func_803141E4();
+    if ((spAC >= 0.5f) && (arg0 != 0)) {
+        menuInit();
+    }
+    if (D_80371934 != 0) {
+        uvFontSet(0);
+        uvFont_8021956C(0xD2, 0x00, 0xD2, 0xFF);
+        uvFont_80219550(1.0, 1.0);
+        uvSprintf(sp48, "STR MISSING %s", D_80371938);
+        uvFont_80219ACC(0x14, 0x64, sp48);
+    } else {
+        uvFontSet(6);
+        alpha = (s32) (255.0f * spAC);
+        uvFont_8021956C(0xD2, 0xD2, 0xD2, alpha);
+        uvFont_80219550(1.0, 1.0);
+
+        var_s1 = D_8034FFBC ? 168 : 180;
+        var_a0 = D_8034FFBC ? 44 : 28;
+
+        if (D_80371930 != NULL) {
+            do {
+                var_s2 += func_80219874(var_a0, var_s1, &D_80371930[var_s2], 0xFF, 0xFFE);
+                var_s1 -= 16;
+            } while (D_80371930[var_s2] != -1);
+        } else {
+            _uvDebugPrintf("Null Kanji string in screv screen\n");
+        }
+    }
+    if ((arg0 != 0) && (D_8034FFBC == 0) && (spCC->unk2 != 6)) {
+        uvFontSet(6);
+        alpha = (s32) (255.0f * spAC);
+        uvFont_8021956C(0xD2, 0xD2, 0xD2, alpha);
+        uvFont_80219550(1.0, 1.0);
+    
+        for (i = 0, var_s1 = 116; i < 4; i++, var_s1 += 16) {
+            func_80219874(180, var_s1, D_8034FFAC[i], 3, 0xFFE);
+        }
+
+        if ((spCC->unk2 == 3) || (spCC->unk2 == 0) || (spCC->unk2 == 4)) {
+            func_80219874(180, 100, &D_80371950, 3, 0xFFE);
+            func_80219874(216, 100, D_8037193C, 4, 0xFFE);
+        } else {
+            func_80219874(180, 84, D_80371950, 3, 0xFFE);
+            func_80219874(216, 84, D_8037193C, 4, 0xFFE);
+        }
+
+        if ((spCC->unk2 != 3) && (spCC->unk2 != 0) && (spCC->unk2 != 4)) {
+            func_80219874(180, 100, D_80371940, 4, 0xFFE);
+        }
+    }
+    uvFont_80219EA8();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032EF10.s")
