@@ -2,6 +2,7 @@
 #include <uv_geometry.h>
 #include <uv_graphics.h>
 #include <uv_level.h>
+#include <uv_math.h>
 #include <uv_string.h>
 #include "code_99D40.h"
 #include "code_9A960.h"
@@ -14,17 +15,22 @@
 #include "snap.h"
 #include "snow.h"
 #include "snd.h"
+#include "text_data.h"
 
 extern s32 D_8034FFA0[]; // gResultsMenu
+extern s16* D_8034FFAC[];
+extern s32 D_8034FFC0;
+extern const char* D_80350998[];
+
 extern f32 D_8037192C;
 extern s32 D_8034FFBC;
 extern u8 D_80371934;
 extern const char* D_80371938;
 extern s16* D_80371930;
-extern s16* D_8034FFAC[];
 extern s16* D_8037193C;
 extern s16 D_80371940[];
 extern s16 D_80371950[];
+extern u8 D_8037195A[];
 
 // forward declarations
 u8 func_8032DE14(void);
@@ -33,7 +39,7 @@ void func_8032E060(void);
 void func_8032E698(void);
 s32 func_8032E6B8(s32);
 void func_8032E940(s32);
-void func_8032EF10(u16);
+void func_8032EF10(s32);
 
 s32 func_8032DD50(s32 arg0) {
     Unk80362690_Unk0_UnkC* temp_s1;
@@ -530,4 +536,32 @@ void func_8032E940(s32 arg0) {
     uvFont_80219EA8();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032EF10.s")
+void func_8032EF10(s32 arg0) {
+    s16* text;
+    char str[256];
+    s32 i;
+
+    if (D_8034FFC0 == 0) {
+        for (i = 0; i < 3; i++) {
+            D_8037195A[i] = (s8) ((s32) ((uvRandF_RANLUX() * 14.0f) + 0.5f) + 1);
+        }
+        D_8034FFC0 = 1;
+    }
+
+    if (arg0 >= 3) {
+        return;
+    }
+        
+    D_8037195A[arg0]++;
+    if (D_8037195A[arg0] >= 16) {
+        D_8037195A[arg0] = 1;
+    }
+    uvSprintf(str, "%s_%d_A", D_80350998[arg0], D_8037195A[arg0]);
+    text = textGetDataByName((s16* ) str);
+    if (text == NULL) {
+        _uvDebugPrintf("Could not find %s in jtext\n", str);
+    } else {
+        D_80371930 = text;
+        D_8034FFBC = 1;
+    }
+}
