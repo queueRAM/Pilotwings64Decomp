@@ -1,13 +1,22 @@
 #include "common.h"
 #include <uv_graphics.h>
 #include <uv_level.h>
+#include "code_9A960.h"
 #include "code_B5280.h"
+#include "demo.h"
 #include "menu.h"
+#include "save.h"
+#include "snd.h"
 
 void func_80312FF8(s32);
 s32 func_8033F62C(void);
 void func_803405E4(void);
+s32 func_803470EC(void);
+void func_8032C540(Unk80362690*);
+void func_8032EF10(u16);
+s32 func_8033E3A8(s32);
 extern s32 D_8034FFA0[]; // gResultsMenu
+extern f32 D_8037192C;
 
 // forward declarations
 u8 func_8032DE14(void);
@@ -34,8 +43,9 @@ s32 func_8032DD50(s32 arg0) {
     func_8032E698();
 
     // FIXME: Unk80362690_Unk0_UnkC is wrong, indexing 15 in 4-byte buffer to match
-    if ((temp_s1->unk2 == 3) && (temp_s1->pad7C[15] != 0)) {
-        temp_s1->pad7C[15] = 0;
+    // was: temp_sw->pad8B
+    if ((temp_s1->unk2 == 3) && (temp_s1->pad7C[0xF] != 0)) {
+        temp_s1->pad7C[0xF] = 0;
     }
     return var_v1;
 }
@@ -350,7 +360,79 @@ void func_8032E698(void) {
     func_80312FF8(7);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032E6B8.s")
+s32 func_8032E6B8(s32 arg0) {
+    Unk80362690_Unk0_UnkC* sp1C;
+    s32 sp18;
+    s32 temp_v0_2;
+
+    sp1C = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    sp18 = 0;
+    func_80313D74();
+    D_8037192C += D_8034F854;
+    if (D_8037192C > 1.5f) {
+        D_8037192C = 1.5f;
+    }
+    if ((arg0 != 0) && (D_8037192C > 0.75f)) {
+        sp18 = menu_8030B50C();
+        temp_v0_2 = func_8032E000(sp18);
+        switch (temp_v0_2) {
+        case 2:
+            if (D_80362690->unk0[D_80362690->unk9C].unkC.unk7B != 0) {
+                return 0xB;
+            }
+            menuSetProps();
+            // FIXME: sp1C->pad8B
+            if (((sp1C->unk2 != 3) || (sp1C->pad7C[0xF] != 0)) && (sp1C->unk2 != 6)) {
+                sp18 = func_803470EC();
+            } else {
+                sp18 = 2;
+            }
+            D_8037192C = 1.5f;
+            break;
+        case 1:
+            func_8032C540(D_80362690);
+            func_8032EF10(sp1C->unk2);
+            sp18 = 0;
+            D_8037192C = 1.5f;
+            break;
+        case 0:
+            if (func_8033E3A8(2) != 0) {
+                // FIXME: sp1C->pad8A
+                saveFileWrite((s32) sp1C->pad7C[0xE]);
+            }
+            sp18 = 0;
+            D_8037192C = 1.5f;
+            break;
+        case 3:
+            return 4;
+        case 4:
+            return 2;
+        case 5:
+            return 0xB;
+        case 6:
+            return 2;
+        case -3:
+        case -2:
+        case -1:
+            sp18 = 0;
+            break;
+        }
+    } else {
+        if (arg0 == 0) {
+            D_8037192C = 1.5f;
+            demo_80323020();
+            if (demoButtonPress(D_80362690->unk9C, A_BUTTON | B_BUTTON | START_BUTTON) != 0) {
+                sp18 = 1;
+                if (demoButtonPress(D_80362690->unk9C, A_BUTTON | START_BUTTON) != 0) {
+                    func_8033F7F8(0x73);
+                } else if (demoButtonPress(D_80362690->unk9C, CONT_B) != 0) {
+                    func_8033F7F8(1);
+                }
+            }
+        }
+    }
+    return sp18;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032E940.s")
 
