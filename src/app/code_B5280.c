@@ -17,6 +17,9 @@
 #include "snd.h"
 #include "text_data.h"
 
+extern const char* D_8034FC40[][4][3];
+extern const char* D_8034FD60[][4][3];
+extern u8 D_8034FE80[][4][3][4];
 extern s32 D_8034FFA0[]; // gResultsMenu
 extern s16* D_8034FFAC[];
 extern s32 D_8034FFC0;
@@ -35,7 +38,7 @@ extern u8 D_8037195A[];
 // forward declarations
 u8 func_8032DE14(void);
 u8 func_8032DE74(void);
-void func_8032E060(void);
+void func_8032E060(s32);
 void func_8032E698(void);
 s32 func_8032E6B8(s32);
 void func_8032E940(s32);
@@ -46,7 +49,7 @@ s32 func_8032DD50(s32 arg0) {
     s32 var_v1;
 
     temp_s1 = &D_80362690->unk0[D_80362690->unk9C].unkC;
-    func_8032E060();
+    func_8032E060(arg0);
 
     while ((var_v1 = func_8032E6B8(arg0)) == 0) {
         uvGfxBegin();
@@ -369,7 +372,123 @@ s32 func_8032E000(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/D_80355C2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_B5280/func_8032E060.s")
+void func_8032E060(s32 arg0) {
+    s32 val;
+    Unk80362690_Unk0_UnkC* sp40;
+    s32 i;
+    const char* var_s0;
+    s32 var_a1;
+    s32 var_s3; // point total (out of 100)?
+    s16* temp_t0;
+    s32 temp_a2;
+    s32 strIdx;
+
+    sp40 = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    var_s3 = 0;
+    if (sp40->unk2 == 6) {
+        if (arg0 != 0) {
+            var_s0 = "BD_ALL_S2";
+        } else {
+            var_s0 = "BD_ALL_S1";
+        }
+    } else if (arg0 != 0) {
+        var_s0 = D_8034FC40[sp40->unk2][sp40->unk4][sp40->unk6];
+    } else {
+        var_s0 = D_8034FD60[sp40->unk2][sp40->unk4][sp40->unk6];
+    }
+    D_80371930 = textGetDataByName(var_s0);
+    if (D_80371930 == NULL) {
+        D_80371934 = 1;
+        D_80371938 = var_s0;
+    } else {
+        D_80371934 = 0;
+    }
+    D_8037192C = (arg0 == 0) ? 1.5f : 0.0f;
+    if (arg0 != 0) {
+        func_8032DF08();
+        for (i = 0; i < 4; i++) {
+            temp_a2 = D_8034FE80[sp40->unk2][sp40->unk4][sp40->unk6][i];
+            // sp40->unk4 is class, temp_a3_2 is test x vehicle?
+            temp_t0 = &D_80364210[D_80362690->unk9C].unk0[sp40->unk4].unk0[sp40->unk6][sp40->unk2 + 1].unk10;
+            D_8034FFAC[i][0] = D_8034FFAC[i][1] = D_8034FFAC[i][2] = -3;
+            D_8034FFAC[i][3] = 0xFFE;
+            D_8034FFAC[i][4] = -1;
+            switch (temp_a2) {
+            case 1:
+                var_a1 = temp_t0[3];
+                break;
+            case 2:
+                var_a1 = temp_t0[2];
+                break;
+            case 3:
+                var_a1 = temp_t0[6];
+                break;
+            case 4:
+                var_a1 = temp_t0[7];
+                break;
+            case 5:
+                var_a1 = temp_t0[11];
+                break;
+            case 6:
+                var_a1 = temp_t0[5];
+                break;
+            case 7:
+                var_a1 = temp_t0[10];
+                break;
+            case 8:
+                var_a1 = temp_t0[16];
+                break;
+            case 9:
+                var_a1 = temp_t0[15];
+                break;
+            case 11:
+                var_a1 = temp_t0[14];
+                break;
+            case 12:
+                var_a1 = D_80364210[D_80362690->unk9C].unk0[sp40->unk4].unk0[0][sp40->unk2 + 1].unk14;
+                break;
+            case 13:
+                var_a1 = D_80364210[D_80362690->unk9C].unk0[sp40->unk4].unk0[1][sp40->unk2 + 1].unk14;
+                break;
+            case 14:
+                var_a1 = D_80364210[D_80362690->unk9C].unk0[sp40->unk4].unk0[2][sp40->unk2 + 1].unk14;
+                break;
+            case 15:
+                var_a1 = D_80364210[D_80362690->unk9C].unk0[sp40->unk4].unk0[3][sp40->unk2 + 1].unk14;
+                break;
+            case 16:
+                var_a1 = temp_t0[13];
+                break;
+            default:
+                continue;
+            }
+
+            if (var_a1 == 0x7F) {
+                D_8034FFAC[i][0] = D_8034FFAC[i][1] = -3;
+                D_8034FFAC[i][1] = 0xFFE;
+                D_8034FFAC[i][2] = -1;
+            } else {
+                var_s3 += var_a1;
+                textFmtInt(D_8034FFAC[i], var_a1, 3);
+            }
+        }
+
+        if (D_80364210[D_80362690->unk9C].unk0[0].unk0[0][1].unk8 != 0) {
+            textFmtInt(D_80371940, -D_80364210[D_80362690->unk9C].unk0[0].unk0[0][1].unk8, 3);
+            var_s3 += D_80364210[D_80362690->unk9C].unk0[0].unk0[0][1].unk8; // unk38
+        } else {
+            textFmtInt(D_80371940, (s32)-temp_t0[12], 3);
+            var_s3 += temp_t0[12];
+        }
+        if (var_s3 < 0) {
+            var_s3 = 0;
+        }
+        textFmtInt(D_80371950, var_s3, 3);
+        strIdx = (var_s3 == 1) ? 0x8A : 0x131; // "pt." : "pts."
+        D_8037193C = textGetDataByIdx(strIdx);
+    }
+    D_8034FFBC = 0;
+}
 
 void func_8032E698(void) {
     func_80312FF8(7);
@@ -557,7 +676,7 @@ void func_8032EF10(s32 arg0) {
         D_8037195A[arg0] = 1;
     }
     uvSprintf(str, "%s_%d_A", D_80350998[arg0], D_8037195A[arg0]);
-    text = textGetDataByName((s16*)str);
+    text = textGetDataByName(str);
     if (text == NULL) {
         _uvDebugPrintf("Could not find %s in jtext\n", str);
     } else {
