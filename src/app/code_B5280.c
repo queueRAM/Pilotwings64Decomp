@@ -45,15 +45,15 @@ void func_8032E940(s32);
 void func_8032EF10(s32);
 
 s32 func_8032DD50(s32 arg0) {
-    Unk80362690_Unk0_UnkC* temp_s1;
+    Unk80362690_Unk0_UnkC* unkC;
     s32 var_v1;
 
-    temp_s1 = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    unkC = &D_80362690->unk0[D_80362690->unk9C].unkC;
     func_8032E060(arg0);
 
     while ((var_v1 = func_8032E6B8(arg0)) == 0) {
         uvGfxBegin();
-        func_80204FC4((s32)temp_s1->unk70->unk22C);
+        func_80204FC4((s32)unkC->unk70->unk22C);
         func_8032E940(arg0);
         uvGfxEnd();
     }
@@ -62,28 +62,28 @@ s32 func_8032DD50(s32 arg0) {
 
     // FIXME: Unk80362690_Unk0_UnkC is wrong, indexing 15 in 4-byte buffer to match
     // was: temp_sw->pad8B
-    if ((temp_s1->unk2 == 3) && (temp_s1->pad7C[0xF] != 0)) {
-        temp_s1->pad7C[0xF] = 0;
+    if ((unkC->unk2 == 3) && (unkC->pad7C[0xF] != 0)) {
+        unkC->pad7C[0xF] = 0;
     }
     return var_v1;
 }
 
 u8 func_8032DE14(void) {
-    Unk80362690_Unk0_UnkC* temp_a0;
+    Unk80362690_Unk0_UnkC* unkC;
 
-    temp_a0 = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    unkC = &D_80362690->unk0[D_80362690->unk9C].unkC;
     if (D_80362690->unk0[D_80362690->unk9C].unkC.unk7B != 0) {
         return 0;
     }
-    return (temp_a0->unk2 == 0 || temp_a0->unk2 == 6);
+    return (unkC->unk2 == 0 || unkC->unk2 == 6);
 }
 
 u8 func_8032DE74(void) {
-    Unk80362690_Unk0_UnkC* temp_s1;
+    Unk80362690_Unk0_UnkC* unkC;
     s32 var_v1;
 
-    temp_s1 = &D_80362690->unk0[D_80362690->unk9C].unkC;
-    var_v1 = (temp_s1->unk2 == 0 || temp_s1->unk2 == 1 || temp_s1->unk2 == 2 || temp_s1->unk2 == 6);
+    unkC = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    var_v1 = (unkC->unk2 == 0 || unkC->unk2 == 1 || unkC->unk2 == 2 || unkC->unk2 == 6);
     if (levelDataGetFALC(NULL) != 0) {
         var_v1 = 0;
     }
@@ -374,7 +374,7 @@ s32 func_8032E000(s32 arg0) {
 
 void func_8032E060(s32 arg0) {
     s32 val;
-    Unk80362690_Unk0_UnkC* sp40;
+    Unk80362690_Unk0_UnkC* unkC;
     s32 i;
     const char* var_s0;
     s32 var_a1;
@@ -383,18 +383,18 @@ void func_8032E060(s32 arg0) {
     s32 temp_a2;
     s32 strIdx;
 
-    sp40 = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    unkC = &D_80362690->unk0[D_80362690->unk9C].unkC;
     var_s3 = 0;
-    if (sp40->unk2 == 6) {
+    if (unkC->unk2 == 6) {
         if (arg0 != 0) {
             var_s0 = "BD_ALL_S2";
         } else {
             var_s0 = "BD_ALL_S1";
         }
     } else if (arg0 != 0) {
-        var_s0 = D_8034FC40[sp40->unk2][sp40->unk4][sp40->unk6];
+        var_s0 = D_8034FC40[unkC->unk2][unkC->unk4][unkC->unk6];
     } else {
-        var_s0 = D_8034FD60[sp40->unk2][sp40->unk4][sp40->unk6];
+        var_s0 = D_8034FD60[unkC->unk2][unkC->unk4][unkC->unk6];
     }
     D_80371930 = textGetDataByName(var_s0);
     if (D_80371930 == NULL) {
@@ -407,9 +407,9 @@ void func_8032E060(s32 arg0) {
     if (arg0 != 0) {
         func_8032DF08();
         for (i = 0; i < 4; i++) {
-            temp_a2 = D_8034FE80[sp40->unk2][sp40->unk4][sp40->unk6][i];
-            // sp40->unk4 is class, temp_a3_2 is test x vehicle?
-            temp_t0 = &D_80364210[D_80362690->unk9C].unk0[sp40->unk4].unk0[sp40->unk6][sp40->unk2 + 1].unk10;
+            temp_a2 = D_8034FE80[unkC->unk2][unkC->unk4][unkC->unk6][i];
+            // unkC->unk4 is class, p40->unk6 * unkC->unk2 is test * vehicle?
+            temp_t0 = &D_80364210[D_80362690->unk9C].unk0[unkC->unk4].unk0[unkC->unk6][unkC->unk2 + 1].unk10;
             D_8034FFAC[i][0] = D_8034FFAC[i][1] = D_8034FFAC[i][2] = -3;
             D_8034FFAC[i][3] = 0xFFE;
             D_8034FFAC[i][4] = -1;
@@ -445,16 +445,16 @@ void func_8032E060(s32 arg0) {
                 var_a1 = temp_t0[14];
                 break;
             case 12:
-                var_a1 = D_80364210[D_80362690->unk9C].unk0[sp40->unk4].unk0[0][sp40->unk2 + 1].unk14;
+                var_a1 = D_80364210[D_80362690->unk9C].unk0[unkC->unk4].unk0[0][unkC->unk2 + 1].unk14;
                 break;
             case 13:
-                var_a1 = D_80364210[D_80362690->unk9C].unk0[sp40->unk4].unk0[1][sp40->unk2 + 1].unk14;
+                var_a1 = D_80364210[D_80362690->unk9C].unk0[unkC->unk4].unk0[1][unkC->unk2 + 1].unk14;
                 break;
             case 14:
-                var_a1 = D_80364210[D_80362690->unk9C].unk0[sp40->unk4].unk0[2][sp40->unk2 + 1].unk14;
+                var_a1 = D_80364210[D_80362690->unk9C].unk0[unkC->unk4].unk0[2][unkC->unk2 + 1].unk14;
                 break;
             case 15:
-                var_a1 = D_80364210[D_80362690->unk9C].unk0[sp40->unk4].unk0[3][sp40->unk2 + 1].unk14;
+                var_a1 = D_80364210[D_80362690->unk9C].unk0[unkC->unk4].unk0[3][unkC->unk2 + 1].unk14;
                 break;
             case 16:
                 var_a1 = temp_t0[13];
@@ -495,11 +495,11 @@ void func_8032E698(void) {
 }
 
 s32 func_8032E6B8(s32 arg0) {
-    Unk80362690_Unk0_UnkC* sp1C;
+    Unk80362690_Unk0_UnkC* unkC;
     s32 sp18;
     s32 temp_v0_2;
 
-    sp1C = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    unkC = &D_80362690->unk0[D_80362690->unk9C].unkC;
     sp18 = 0;
     func_80313D74();
     D_8037192C += D_8034F854;
@@ -515,8 +515,8 @@ s32 func_8032E6B8(s32 arg0) {
                 return 0xB;
             }
             menuSetProps();
-            // FIXME: sp1C->pad8B
-            if (((sp1C->unk2 != 3) || (sp1C->pad7C[0xF] != 0)) && (sp1C->unk2 != 6)) {
+            // FIXME: unkC->pad8B
+            if (((unkC->unk2 != 3) || (unkC->pad7C[0xF] != 0)) && (unkC->unk2 != 6)) {
                 sp18 = func_803470EC();
             } else {
                 sp18 = 2;
@@ -525,14 +525,14 @@ s32 func_8032E6B8(s32 arg0) {
             break;
         case 1:
             func_8032C540(D_80362690);
-            func_8032EF10(sp1C->unk2);
+            func_8032EF10(unkC->unk2);
             sp18 = 0;
             D_8037192C = 1.5f;
             break;
         case 0:
             if (func_8033E3A8(2) != 0) {
-                // FIXME: sp1C->pad8A
-                saveFileWrite((s32)sp1C->pad7C[0xE]);
+                // FIXME: unkC->pad8A
+                saveFileWrite((s32)unkC->pad7C[0xE]);
             }
             sp18 = 0;
             D_8037192C = 1.5f;
@@ -569,7 +569,7 @@ s32 func_8032E6B8(s32 arg0) {
 }
 
 void func_8032E940(s32 arg0) {
-    Unk80362690_Unk0_UnkC* spCC;
+    Unk80362690_Unk0_UnkC* unkC;
     s32 alpha;
     s32 var_a0;
     s32 var_s1;
@@ -581,7 +581,7 @@ void func_8032E940(s32 arg0) {
     char sp48[100];
 
     var_s2 = 0;
-    spCC = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    unkC = &D_80362690->unk0[D_80362690->unk9C].unkC;
     func_80314154();
     uvGfxSetFlags(GFX_STATE_400000);
     spAC = (f32)(1.0 - (f64)((1.5f - D_8037192C) / 1.5f));
@@ -593,7 +593,7 @@ void func_8032E940(s32 arg0) {
     uvVtx(320, 240, 0, 0, 0, 0, 0, 0, alpha);
     uvVtxEndPoly();
     uvGfxClearFlags(GFX_STATE_400000);
-    if ((D_8034FFBC == 0) && (spCC->unk2 != 6)) {
+    if ((D_8034FFBC == 0) && (unkC->unk2 != 6)) {
         uvVtxBeginPoly();
         alpha = (s32)(255.0f * spAC);
         uvVtx(0x24, 0x78, 0, 0, 0, 0xD2, 0xD2, 0xD2, alpha);
@@ -630,7 +630,7 @@ void func_8032E940(s32 arg0) {
             _uvDebugPrintf("Null Kanji string in screv screen\n");
         }
     }
-    if ((arg0 != 0) && (D_8034FFBC == 0) && (spCC->unk2 != 6)) {
+    if ((arg0 != 0) && (D_8034FFBC == 0) && (unkC->unk2 != 6)) {
         uvFontSet(6);
         alpha = (s32)(255.0f * spAC);
         uvFont_8021956C(0xD2, 0xD2, 0xD2, alpha);
@@ -640,7 +640,7 @@ void func_8032E940(s32 arg0) {
             func_80219874(180, var_s1, D_8034FFAC[i], 3, 0xFFE);
         }
 
-        if ((spCC->unk2 == 3) || (spCC->unk2 == 0) || (spCC->unk2 == 4)) {
+        if ((unkC->unk2 == 3) || (unkC->unk2 == 0) || (unkC->unk2 == 4)) {
             func_80219874(180, 100, &D_80371950, 3, 0xFFE);
             func_80219874(216, 100, D_8037193C, 4, 0xFFE);
         } else {
@@ -648,7 +648,7 @@ void func_8032E940(s32 arg0) {
             func_80219874(216, 84, D_8037193C, 4, 0xFFE);
         }
 
-        if ((spCC->unk2 != 3) && (spCC->unk2 != 0) && (spCC->unk2 != 4)) {
+        if ((unkC->unk2 != 3) && (unkC->unk2 != 0) && (unkC->unk2 != 4)) {
             func_80219874(180, 100, D_80371940, 4, 0xFFE);
         }
     }
