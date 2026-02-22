@@ -17,16 +17,16 @@
 #include "snd.h"
 #include "text_data.h"
 
-extern const char* D_8034FC40[][4][3];
-extern const char* D_8034FD60[][4][3];
-extern u8 D_8034FE80[][4][3][4];
-extern s32 D_8034FFA0[]; // gResultsMenu
-extern s16* D_8034FFAC[];
+extern const char* D_8034FC40[6][4][3];
+extern const char* D_8034FD60[6][4][3];
+extern u8 D_8034FE80[6][4][3][4];
+extern s32 D_8034FFA0[3]; // gResultsMenu
+extern s16* D_8034FFAC[4];
+extern s32 D_8034FFBC;
 extern s32 D_8034FFC0;
 extern const char* D_80350998[];
 
 extern f32 D_8037192C;
-extern s32 D_8034FFBC;
 extern u8 D_80371934;
 extern const char* D_80371938;
 extern s16* D_80371930;
@@ -116,11 +116,11 @@ void func_8032DF08(void) {
     func_80312FF8(5);
 }
 
-s32 func_8032E000(s32 arg0) {
-    if (arg0 < 0) {
-        return arg0;
+s32 func_8032E000(s32 idx) {
+    if (idx < 0) {
+        return idx;
     }
-    switch (D_8034FFA0[arg0]) {
+    switch (D_8034FFA0[idx]) {
     case 0xE: // Check Photo
         return 0;
     case 0x60: // Replay
@@ -406,7 +406,7 @@ void func_8032E060(s32 arg0) {
     D_8037192C = (arg0 == 0) ? 1.5f : 0.0f;
     if (arg0 != 0) {
         func_8032DF08();
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < ARRAY_COUNT(D_8034FFAC); i++) {
             temp_a2 = D_8034FE80[unkC->unk2][unkC->unk4][unkC->unk6][i];
             // unkC->unk4 is class, p40->unk6 * unkC->unk2 is test * vehicle?
             temp_t0 = &D_80364210[D_80362690->unk9C].unk0[unkC->unk4].unk0[unkC->unk6][unkC->unk2 + 1].unk10;
