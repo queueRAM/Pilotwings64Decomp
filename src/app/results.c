@@ -260,7 +260,7 @@ void resultSumTally(s32 arg0) {
     const char* var_s0;
     s32 pts;
     s32 ptsTotal;
-    s16* scores;
+    TestResult* res;
     s32 ptType;
     s32 strIdx;
 
@@ -290,55 +290,55 @@ void resultSumTally(s32 arg0) {
         for (i = 0; i < ARRAY_COUNT(sPtsTallyStr); i++) {
             ptType = sResultPtTypes[unkC->veh][unkC->cls][unkC->test][i];
             // unkC->unk4 is class, p40->unk6 * unkC->unk2 is test * vehicle?
-            scores = D_80364210[D_80362690->unk9C].unk0[unkC->cls].unk0[unkC->test][unkC->veh + 1].scores;
+            res = &D_80364210[D_80362690->unk9C].unk0[unkC->cls].unk0[unkC->test][unkC->veh + 1].result;
             sPtsTallyStr[i][0] = sPtsTallyStr[i][1] = sPtsTallyStr[i][2] = -3;
             sPtsTallyStr[i][3] = 0xFFE;
             sPtsTallyStr[i][4] = -1;
             switch (ptType) {
             case 1:
-                pts = scores[3];
+                pts = res->scores[2];
                 break;
             case 2:
-                pts = scores[2];
+                pts = res->scores[1];
                 break;
             case 3:
-                pts = scores[6];
+                pts = res->scores[5];
                 break;
             case 4:
-                pts = scores[7];
+                pts = res->scores[6];
                 break;
             case 5:
-                pts = scores[11];
+                pts = res->scores[10];
                 break;
             case 6:
-                pts = scores[5];
+                pts = res->scores[4];
                 break;
             case 7:
-                pts = scores[10];
+                pts = res->scores[9];
                 break;
             case 8:
-                pts = scores[16];
+                pts = res->scores[15];
                 break;
             case 9:
-                pts = scores[15];
+                pts = res->scores[14];
                 break;
             case 11:
-                pts = scores[14];
+                pts = res->scores[13];
                 break;
             case 12:
-                pts = D_80364210[D_80362690->unk9C].unk0[unkC->cls].unk0[0][unkC->veh + 1].scores[2];
+                pts = D_80364210[D_80362690->unk9C].unk0[unkC->cls].unk0[0][unkC->veh + 1].result.scores[1];
                 break;
             case 13:
-                pts = D_80364210[D_80362690->unk9C].unk0[unkC->cls].unk0[1][unkC->veh + 1].scores[2];
+                pts = D_80364210[D_80362690->unk9C].unk0[unkC->cls].unk0[1][unkC->veh + 1].result.scores[1];
                 break;
             case 14:
-                pts = D_80364210[D_80362690->unk9C].unk0[unkC->cls].unk0[2][unkC->veh + 1].scores[2];
+                pts = D_80364210[D_80362690->unk9C].unk0[unkC->cls].unk0[2][unkC->veh + 1].result.scores[1];
                 break;
             case 15:
-                pts = D_80364210[D_80362690->unk9C].unk0[unkC->cls].unk0[3][unkC->veh + 1].scores[2];
+                pts = D_80364210[D_80362690->unk9C].unk0[unkC->cls].unk0[3][unkC->veh + 1].result.scores[1];
                 break;
             case 16:
-                pts = scores[13];
+                pts = res->scores[12];
                 break;
             default:
                 continue;
@@ -358,8 +358,8 @@ void resultSumTally(s32 arg0) {
             textFmtInt(sPtsDeductedStr, -D_80364210[D_80362690->unk9C].unk0[0].unk0[0][1].unk8, 3);
             ptsTotal += D_80364210[D_80362690->unk9C].unk0[0].unk0[0][1].unk8; // unk38
         } else {
-            textFmtInt(sPtsDeductedStr, -scores[12], 3);
-            ptsTotal += scores[12];
+            textFmtInt(sPtsDeductedStr, -res->scores[11], 3);
+            ptsTotal += res->scores[11];
         }
         if (ptsTotal < 0) {
             ptsTotal = 0;

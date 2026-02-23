@@ -19,6 +19,7 @@
 #include "code_D2D50.h"
 #include "code_D3810.h"
 #include "text_data.h"
+#include "toys.h"
 
 typedef struct {
     s32 unk0;
