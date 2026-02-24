@@ -219,7 +219,9 @@ typedef struct {
     s32 unk98;
     s32 unk9C;
     u8 unkA0;
-    u8 padA1[7];
+    u8 padA1[2];
+    u8 unkA3;
+    u8 padA4[4];
     s32 unkA8;
 } Unk80362690;
 
