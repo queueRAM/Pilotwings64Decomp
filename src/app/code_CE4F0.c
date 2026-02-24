@@ -7,24 +7,33 @@
 #include "code_CE4F0.h"
 #include "menu.h"
 #include "save.h"
+#include "text_data.h"
 
+typedef struct {
+    char* unk0[5];
+} Unk803508E0;
+
+extern Unk803508E0 D_803508E0[];
+extern char* D_80350930[];
 extern s32 D_80350944;
 extern s32 D_80350948[];
 extern s32 D_80350954;
+extern s16* D_80350958[4];
 extern u16 D_80359AAA;
 extern u16 D_80359AAE;
 
-extern s16* D_80350958[];
 extern s16* D_8037AD1C;
+extern s32 D_8037AD20;
 extern s16 D_8037AD28[];
 extern s16* D_8037AD34;
 extern s16 D_8037AD38[];
 extern u8 D_8037AD42;
 extern s16* D_8037AD48[];
-extern const char D_8037AD58[];
+extern char D_8037AD58[];
 
 // forward declarations
 void func_80347270(void);
+void func_8034754C(void);
 void func_80347694(void);
 s32 func_8034769C(void);
 void func_80347780(void);
@@ -100,7 +109,68 @@ s32 func_80347150(s32 arg0) {
     return -1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CE4F0/func_80347270.s")
+void func_80347270(void) {
+    Unk80362690_Unk0_UnkC* temp_s4;
+    s32 temp_v0;
+    s32 var_a0;
+    s32 var_s5;
+    char* var_a1;
+    char* var_v0_2;
+    s32 var_v1;
+    s32 sp50;
+    Unk80364210* sp4C;
+    u8 temp_t5;
+    u8* var_v1_3;
+    s32 i;
+
+    temp_s4 = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    var_s5 = 0;
+    sp4C = &D_80364210[D_80362690->unk9C];
+    D_8037AD20 = 0;
+
+    for (i = 0; i < ARRAY_COUNT(D_80350958); i++) {
+        D_80350958[i][0] = D_80350958[i][1] = D_80350958[i][2] = -3;
+        D_80350958[i][3] = 0xFFE;
+        D_80350958[i][4] = -1;
+    }
+
+    for (i = 0; i < levelGetTestCount(temp_s4->cls, temp_s4->veh); i++) {
+        temp_v0 = func_8032BE1C(sp4C, temp_s4->cls, i, temp_s4->veh); // was unk5, , unk3
+        if (temp_v0 != 127) {
+            var_s5 += temp_v0;
+            textFmtInt(D_80350958[i], temp_v0, 3);
+        }
+        var_a0 = (temp_v0 == 1) ? 0x8A : 0x131; // "pt." : "pts."
+        D_8037AD48[i] = textGetDataByIdx(var_a0);
+    }
+
+    if (temp_s4->veh < 3) {
+        var_v1 = temp_s4->cls;
+    } else {
+        var_v1 = temp_s4->veh + 1;
+    }
+    D_8037AD42 = func_8032C174(&sp50, var_s5, var_v1);
+    textFmtInt(D_8037AD28, var_s5, 3);
+    var_a0 = (var_s5 == 1) ? 0x8A : 0x131; // "pt." : "pts."
+    D_8037AD34 = textGetDataByIdx(var_a0);
+    textFmtInt(D_8037AD38, sp50, 3);
+    var_v1 = D_8037AD42;
+    if ((var_v1 == 3) && (sp50 == 0)) {
+        var_v1 = D_8037AD42 = 4;
+    }
+    if (temp_s4->veh < 3) {
+        var_a1 = D_803508E0[temp_s4->cls].unk0[var_v1];
+    } else {
+        var_a1 = D_80350930[var_v1];
+    }
+    if (var_a1 != NULL) {
+        for (i = 0; var_a1[i] != '\0'; i++) {
+            D_8037AD58[i] = var_a1[i];
+        }
+    }
+    D_8037AD1C = textGetDataByName(var_a1);
+    func_8034754C();
+}
 
 void func_8034754C(void) {
     Unk80362690_Unk0_UnkC* temp_a0;
