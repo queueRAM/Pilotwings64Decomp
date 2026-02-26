@@ -4,6 +4,7 @@
 #include <uv_matrix.h>
 #include <uv_util.h>
 
+#include "code_61A60.h"
 #include "code_66160.h"
 #include "code_9A960.h"
 
@@ -208,4 +209,18 @@ void db_getstart(Mtx4F* arg0, Vec3F* arg1, u8* arg2, f32* arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_66160/func_802E08F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_66160/func_802E0C30.s")
+u8 func_802E0C30(u8 arg0, s32 arg1) {
+    u8 ret;
+
+    ret = 0;
+    if ((arg0 == 4) || ((arg0 != 0) && (arg1 == -1))) {
+        ret = 1;
+    } else if (arg0 == 0) {
+        if (func_802E02F8() == 4) {
+            ret = 1;
+        } else if ((func_802E02F8() == 1) && ((arg1 == -1) || (func_802DC8E4(arg1) != 0))) {
+            ret = 1;
+        }
+    }
+    return ret;
+}
