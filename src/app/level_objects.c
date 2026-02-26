@@ -499,7 +499,7 @@ s32* func_80345AEC(void) {
     return &D_8035078C->comm.unk10;
 }
 
-s32 levelDataGetTPAD(void** data) {
+s32 levelDataGetTPAD(LevelTPAD** data) {
     *data = D_8035078C->dataTPAD;
     return D_8035078C->comm.countTPAD;
 }
@@ -610,7 +610,7 @@ LevelCommObjects* levelLoadCommObj(u32 arg0) {
         case 'COMM': // 0x434F4D4D
             _uvMediaCopy(&dst->comm, data, sizeof(dst->comm));
             mem_init();
-            dst->dataTPAD = mem_get(dst->comm.countTPAD * 0x30);
+            dst->dataTPAD = mem_get(dst->comm.countTPAD * sizeof(LevelTPAD));
             dst->dataLPAD = mem_get(dst->comm.countLPAD * 0x30);
             dst->dataLSTP = mem_get(dst->comm.countLSTP * 0x24);
             dst->dataLWIN = mem_get(dst->comm.countLWIN * 0x54);

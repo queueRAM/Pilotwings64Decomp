@@ -270,6 +270,16 @@ typedef struct {
 } LevelTHER;
 
 typedef struct {
+    Vec3F pos;
+    Vec3F angle;
+    u8 pad18[4];
+    Vec3F unk1C;
+    u8 unk28;
+    u8 pad29[3];
+    f32 unk2C;
+} LevelTPAD;
+
+typedef struct {
     u8 unk0;
     u8 unk1[3];
     f32 unk4_X;
@@ -408,7 +418,7 @@ void level_8034528C(void);
 u8 levelGet_80346468(void);
 s32 levelDataGetTHER(LevelTHER** data);
 s32 levelDataGetLWIN(void** data);
-s32 levelDataGetTPAD(void** data);
+s32 levelDataGetTPAD(LevelTPAD** data);
 s32 levelDataGetCNTG(void** data);
 s32 levelDataGetOBSV(LevelOBSV** data);
 s32 levelDataGetLPAD(void** data);
