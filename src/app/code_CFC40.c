@@ -14,6 +14,7 @@
 #include "code_9A960.h"
 #include "code_B2900.h"
 #include "code_CFC40.h"
+#include "credits.h"
 #include "demo.h"
 #include "hud.h"
 #include "map3d.h"
@@ -26,34 +27,34 @@
 // this ABS() doesn't use `>=` like other functions
 #define ABS_NOEQ(x) ((x) > 0 ? (x) : -(x))
 
-extern f32 D_8037DC60;
-extern f32 D_8037DC64;
-extern s32 D_8037DC68;
-extern s32 D_8037DC6C;
-extern s32 D_8037DC70;
-extern s32 D_8037DC74;
-extern s32 D_8037DC78;
-extern s32 D_8037DC7C;
-extern s32 D_8037DC80;
-// 84?
-extern char D_8037DC88[];
-extern u16 D_8037DC8C;
-extern s16 D_8037DC8E;
-extern s16* D_8037DC90;
-extern s16* D_8037DC94;
-extern char D_8037DC98[];
-extern u8 D_8037DC9B;
+static f32 D_8037DC60;
+static f32 D_8037DC64;
+static s32 D_8037DC68;
+static s32 D_8037DC6C;
+static s32 D_8037DC70;
+static s32 D_8037DC74;
+static s32 D_8037DC78;
+static s32 D_8037DC7C;
+static s32 D_8037DC80;
+s32 D_8037DC84;
+static char D_8037DC88[4];
+static u16 D_8037DC8C;
+static s16 D_8037DC8E;
+static s16* D_8037DC90;
+static s16* D_8037DC94;
+static char D_8037DC98[3];
+static u8 D_8037DC9B;
 
-extern u8 D_8034F420[][4];
-extern u8 D_8034F43C[];
-extern s32 D_80350974;
-extern s8 D_80350978;
-extern s8 D_8035097C;
-extern u8 D_80350984;
-extern const char* gClassShortName[4];
-extern s32 D_803509B4;
-extern u8 D_803509B7;
-extern s32 D_803509B8;
+s32 D_80350970_pad = 3; // unused
+s32 D_80350974 = 0;
+s8 D_80350978 = 0;
+s8 D_8035097C = 0;
+s8 D_80350980_pad = 0xFF; // unused
+u8 D_80350984 = 0xFF;
+const char* gClassShortNames[4] = { "E", "A", "B", "P" };
+const char* gVehShortNames[7] = { "HG", "RP", "GC", "EX", "EX", "EX", "BD" };
+s32 D_803509B4 = 0;
+s32 D_803509B8 = 0;
 
 // forward declarations
 void func_8033FB14(void);
@@ -69,28 +70,6 @@ s32 func_80348710(void) {
     }
     return FALSE;
 }
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CFC40/D_80356F70.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CFC40/D_80356F74.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CFC40/D_80356F78.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CFC40/D_80356F7C.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CFC40/D_80356F80.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CFC40/D_80356F84.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CFC40/D_80356F88.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CFC40/D_80356F8C.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CFC40/D_80356F90.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CFC40/D_80356F94.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CFC40/D_80356F98.s")
 
 void func_803487A4(s32 arg0) {
     Unk80362690_Unk0_UnkC* unkC;
@@ -139,11 +118,11 @@ void func_803487A4(s32 arg0) {
     }
 
     if ((unkC->veh == VEHICLE_BIRDMAN) || (unkC->veh <= VEHICLE_GYROCOPTER)) {
-        uvSprintf(sp54, "%s_%s_%d_N", gClassShortName[unkC->cls], gVehShortNames[unkC->veh], arg0 + 1);
-        uvSprintf(sp40, "%s_%s_%d_H", gClassShortName[unkC->cls], gVehShortNames[unkC->veh], arg0 + 1);
+        uvSprintf(sp54, "%s_%s_%d_N", gClassShortNames[unkC->cls], gVehShortNames[unkC->veh], arg0 + 1);
+        uvSprintf(sp40, "%s_%s_%d_H", gClassShortNames[unkC->cls], gVehShortNames[unkC->veh], arg0 + 1);
     } else {
-        uvSprintf(sp54, "%s_%s_%d_N", gClassShortName[unkC->veh - 2], gVehShortNames[unkC->veh], arg0 + 1);
-        uvSprintf(sp40, "%s_%s_%d_H", gClassShortName[unkC->veh - 2], gVehShortNames[unkC->veh], arg0 + 1);
+        uvSprintf(sp54, "%s_%s_%d_N", gClassShortNames[unkC->veh - 2], gVehShortNames[unkC->veh], arg0 + 1);
+        uvSprintf(sp40, "%s_%s_%d_H", gClassShortNames[unkC->veh - 2], gVehShortNames[unkC->veh], arg0 + 1);
     }
     D_8037DC90 = textGetDataByName(sp54);
     D_8037DC94 = textGetDataByName(sp40);
@@ -179,10 +158,10 @@ void func_80348B84(Unk80367710* arg0, s32 arg1) {
                 D_803509B4 = 0;
             }
         }
-        if ((temp_v1->veh != 6) && (temp_v1->veh >= 3)) {
+        if ((temp_v1->veh != VEHICLE_BIRDMAN) && (temp_v1->veh >= VEHICLE_CANNONBALL)) {
             D_803509B4 = temp_v1->cls;
         }
-        if ((temp_v1->veh != 6) && (temp_v1->veh >= 3)) {
+        if ((temp_v1->veh != VEHICLE_BIRDMAN) && (temp_v1->veh >= VEHICLE_CANNONBALL)) {
             temp_v1->cls = D_803509B4;
             temp_v1->test = 0;
         } else {
@@ -243,7 +222,7 @@ u8 func_8034926C(Unk80367710* arg0) {
     } else {
         demo_80323020();
         if (D_80350974 == 2) {
-            if ((sp6C->cls == 0) && (sp6C->veh <= 2)) {
+            if ((sp6C->cls == CLASS_BEGINNER) && (sp6C->veh <= VEHICLE_GYROCOPTER)) {
                 D_8037DC78 = 1;
                 D_8037DC80 = 2;
             } else {
@@ -320,7 +299,7 @@ u8 func_8034926C(Unk80367710* arg0) {
                 sp68 = -1;
             }
 
-            if ((sp6C->veh != 6) && (sp6C->veh >= 3)) {
+            if ((sp6C->veh != VEHICLE_BIRDMAN) && (sp6C->veh >= VEHICLE_CANNONBALL)) {
                 sp68 = 0;
             }
             if (sp68 != 0) {
@@ -331,7 +310,7 @@ u8 func_8034926C(Unk80367710* arg0) {
                 D_8037DC64 = (D_8035097C * 25) + 26;
                 sp64 = (D_80350978 - D_8037DC78) + ((D_8035097C - D_8037DC74) * ((D_8037DC80 - D_8037DC78) + 1));
 
-                if ((sp6C->veh != 6) && (sp6C->veh >= 3)) {
+                if ((sp6C->veh != VEHICLE_BIRDMAN) && (sp6C->veh >= VEHICLE_CANNONBALL)) {
                     if (D_803509B4 == arg0->unk0 - 1) {
                         D_803509B4 = 0;
                     } else {
@@ -349,7 +328,7 @@ u8 func_8034926C(Unk80367710* arg0) {
                 if (D_803509B4 != var_a2) {
                     func_8033F758(0x6A, 1.0f, 0.5f, 0.0f);
                     func_803122B4(D_80362690, 0);
-                    if ((sp6C->veh != 6) && (sp6C->veh >= 3)) {
+                    if ((sp6C->veh != VEHICLE_BIRDMAN) && (sp6C->veh >= VEHICLE_CANNONBALL)) {
                         sp6C->cls = D_803509B4;
                         sp6C->test = 0;
                     } else {
@@ -363,7 +342,7 @@ u8 func_8034926C(Unk80367710* arg0) {
         }
         if (demoButtonPress(D_80362690->unk9C, 0x8000 | 0x1000) != 0) {
             if (D_80350974 == 2) {
-                if ((sp6C->cls == 0) && (sp6C->veh <= 2)) {
+                if ((sp6C->cls == CLASS_BEGINNER) && (sp6C->veh <= VEHICLE_GYROCOPTER)) {
                     switch (sp64) {
                     case 0:
                         func_8033F758(0x72, 1.0f, 1.22f, 0.0f);
@@ -383,7 +362,7 @@ u8 func_8034926C(Unk80367710* arg0) {
                 switch (sp64) {
                 case 3:
                     func_8033F7F8(0xF);
-                    return D_803509B7;
+                    return D_803509B4;
                 case 0:
                     func_8033F7F8(0x73);
                     resultHandler(0);
@@ -434,9 +413,6 @@ u8 func_8034926C(Unk80367710* arg0) {
                     // these u8 temps are needed to get the `li` and `cvt.s.w`
                     const u8 tmpCB = 0xCB;
                     const u8 tmp33 = 0x33;
-
-                    if (!D_803509B4) { } // fakematch
-
                     D_80350974 = 0;
                     D_80350978 = 2;
                     D_8035097C = 1;
@@ -476,7 +452,7 @@ void func_80349C38(s32 arg0, u8 arg1, u8 arg2) {
     }
     var_v1 = uvStrlen(sp58);
     if (var_v1 == 0) {
-        uvSprintf(sp58, "%s_%s_%d\n", gClassShortName[sp48->cls], gVehShortNames[sp48->veh], D_803509B4 + 1);
+        uvSprintf(sp58, "%s_%s_%d\n", gClassShortNames[sp48->cls], gVehShortNames[sp48->veh], D_803509B4 + 1);
         var_v1 = uvStrlen(sp58);
     }
     temp_v0_2 = &sp58[var_v1];

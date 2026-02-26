@@ -3,6 +3,10 @@
 
 #include <PR/ultratypes.h>
 
+// will get from BA's data PR
+extern u8 D_8034F420[][4];
+extern u8 D_8034F43C[];
+
 s32 func_8030CB60(s32);
 s32 func_8030CC48(void);
 
