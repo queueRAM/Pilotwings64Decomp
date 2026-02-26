@@ -328,7 +328,7 @@ void level_803453AC(void) {
     }
 }
 
-s32 level_80345464(Unk80345464_Arg0* arg0, s32 arg1) {
+s32 level_80345464(Mtx4F* arg0, s32 arg1) {
     u16 veh;
     s32 sp18;
     s32 temp_v0;
@@ -389,7 +389,7 @@ s32 level_80345464(Unk80345464_Arg0* arg0, s32 arg1) {
     return sp18;
 }
 
-s32 level_803456D8(Unk80345464_Arg0* arg0) {
+s32 level_803456D8(Mtx4F* arg0) {
     LevelTPTS* sp8C;
     f32 temp_fv0;
     u8 temp_v0;
@@ -410,9 +410,9 @@ s32 level_803456D8(Unk80345464_Arg0* arg0) {
 
     for (var_s1 = 0; var_s1 < temp_v0; var_s1++) {
         temp_s0 = &sp8C[var_s1];
-        sp78.x = arg0->unk30 - temp_s0->unk4_X;
-        sp78.y = arg0->unk34 - temp_s0->unk8_Y;
-        sp78.z = arg0->unk38 - temp_s0->unkC_Z;
+        sp78.x = arg0->m[3][0] - temp_s0->unk4_X;
+        sp78.y = arg0->m[3][1] - temp_s0->unk8_Y;
+        sp78.z = arg0->m[3][2] - temp_s0->unkC_Z;
         if (uvVec3Len(&sp78) <= temp_s0->unk14) {
             sp6C.x = uvCosF((temp_s0->unk10 + 90.0f) * 0.01745329f);
             sp6C.y = uvSinF((temp_s0->unk10 + 90.0f) * 0.01745329f);
@@ -457,15 +457,15 @@ s32 level_803456D8(Unk80345464_Arg0* arg0) {
     uvChanTerra(D_80362690->unk0[D_80362690->unk9C].unkC.unk70->unk22C, temp_v0_2);
     if (temp_v0_2 != D_80362690->unk0[0].unk6) {
         D_80362690->unk0[0].unk6 = (u16)temp_v0_2;
-        arg0->unk30 = arg0->unk30 + temp_s0->unk28_X;
-        arg0->unk34 = arg0->unk34 + temp_s0->unk2C_Y;
-        arg0->unk38 = arg0->unk38 + temp_s0->unk30_Z;
+        arg0->m[3][0] += temp_s0->unk28_X;
+        arg0->m[3][1] += temp_s0->unk2C_Y;
+        arg0->m[3][2] += temp_s0->unk30_Z;
         return 1;
     }
     if ((temp_s0->unk18 == -1) || (temp_s0->unk20 == -1)) {
-        arg0->unk30 = arg0->unk30 + temp_s0->unk28_X;
-        arg0->unk34 = arg0->unk34 + temp_s0->unk2C_Y;
-        arg0->unk38 = arg0->unk38 + temp_s0->unk30_Z;
+        arg0->m[3][0] += temp_s0->unk28_X;
+        arg0->m[3][1] += temp_s0->unk2C_Y;
+        arg0->m[3][2] += temp_s0->unk30_Z;
         return 2;
     }
     return 0;

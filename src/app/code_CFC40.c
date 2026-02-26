@@ -5,17 +5,37 @@
 #include <uv_level.h>
 #include <uv_sprite.h>
 #include <uv_string.h>
+#include "code_52230.h"
+#include "code_64070.h"
 #include "code_66160.h"
+#include "code_6ACE0.h"
 #include "code_72B70.h"
+#include "code_905C0.h"
 #include "code_9A960.h"
 #include "code_B2900.h"
 #include "code_CFC40.h"
+#include "demo.h"
+#include "hud.h"
 #include "map3d.h"
+#include "results.h"
+#include "rings.h"
+#include "snap.h"
 #include "snd.h"
 #include "text_data.h"
 
-extern s32 D_803509B4;
-extern const char* gClassShortName[4]; // gClassShortName
+// this ABS() doesn't use `>=` like other functions
+#define ABS_NOEQ(x) ((x) > 0 ? (x) : -(x))
+
+extern f32 D_8037DC60;
+extern f32 D_8037DC64;
+extern s32 D_8037DC68;
+extern s32 D_8037DC6C;
+extern s32 D_8037DC70;
+extern s32 D_8037DC74;
+extern s32 D_8037DC78;
+extern s32 D_8037DC7C;
+extern s32 D_8037DC80;
+// 84?
 extern char D_8037DC88[];
 extern u16 D_8037DC8C;
 extern s16 D_8037DC8E;
@@ -30,11 +50,14 @@ extern s32 D_80350974;
 extern s8 D_80350978;
 extern s8 D_8035097C;
 extern u8 D_80350984;
+extern const char* gClassShortName[4];
+extern s32 D_803509B4;
+extern u8 D_803509B7;
 extern s32 D_803509B8;
-extern f32 D_8037DC60;
-extern f32 D_8037DC64;
-extern s32 D_8037DC68;
-extern s32 D_8037DC6C;
+
+// forward declarations
+void func_8033FB14(void);
+void func_8034A428(void);
 
 s32 func_80348710(void) {
     Unk80362690_Unk0_UnkC* unkC;
@@ -193,7 +216,240 @@ void func_80348B84(Unk80367710* arg0, s32 arg1) {
     func_803487A4(D_803509B4);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_CFC40/func_8034926C.s")
+u8 func_8034926C(Unk80367710* arg0) {
+    Unk80362690_Unk0_UnkC* sp6C;
+    s32 sp68;
+    u32 sp64;
+    s32 sp60;
+    s32 sp5C;
+    f32 stickX;
+    f32 stickY;
+    Vec3F sp48; // passed to db_getstart, but result not used
+    s32 var_a2;
+
+    sp6C = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    sp68 = 0;
+    if (D_80350974 == 1) {
+        func_80311660(D_80362690->unk9C, 0);
+        if (demoButtonPress(D_80362690->unk9C, 0x8000 | 0x4000 | 0x1000) != 0) {
+            D_80350974 = 0;
+            if (demoButtonPress(D_80362690->unk9C, 0x8000 | 0x1000) != 0) {
+                func_8033F7F8(0x71);
+            } else if (demoButtonPress(D_80362690->unk9C, 0x4000) != 0) {
+                func_8033F7F8(1);
+            }
+            return 6;
+        }
+    } else {
+        demo_80323020();
+        if (D_80350974 == 2) {
+            if ((sp6C->cls == 0) && (sp6C->veh <= 2)) {
+                D_8037DC78 = 1;
+                D_8037DC80 = 2;
+            } else {
+                D_8037DC78 = 2;
+                D_8037DC80 = 2;
+            }
+            D_8037DC74 = 1;
+            D_8037DC7C = 1;
+        } else {
+            D_8037DC74 = 0;
+            D_8037DC7C = 1;
+            D_8037DC78 = 0;
+            D_8037DC80 = 2;
+        }
+        stickX = demoGetInputs(D_80362690->unk9C, 0);
+        stickY = demoGetInputs(D_80362690->unk9C, 1);
+        D_8037DC68 = D_8037DC6C = 0;
+
+        if (ABS_NOEQ(stickX) < 0.75f && ABS_NOEQ(stickY) < 0.75f) {
+            D_8037DC70 = 0;
+        } else if (D_8037DC70 == 0) {
+            if (stickX > 0.75f) {
+                D_8037DC68 = 1;
+                D_8037DC70 = 1;
+            }
+            if (stickX < -0.75f) {
+                D_8037DC68 = -1;
+                D_8037DC70 = 1;
+            }
+            if (stickY > 0.75f) {
+                D_8037DC6C = 1;
+                D_8037DC70 = 1;
+            }
+            if (stickY < -0.75f) {
+                D_8037DC6C = -1;
+                D_8037DC70 = 1;
+            }
+        }
+
+        sp60 = D_80350978;
+        sp5C = D_8035097C;
+        D_80350978 += D_8037DC68;
+        D_8035097C += D_8037DC6C;
+
+        if (D_80350978 < D_8037DC78) {
+            D_80350978 = D_8037DC78;
+        } else if (D_8037DC80 < D_80350978) {
+            D_80350978 = D_8037DC80;
+        }
+
+        if (D_8035097C < D_8037DC74) {
+            D_8035097C = D_8037DC74;
+        } else if (D_8037DC7C < D_8035097C) {
+            D_8035097C = D_8037DC7C;
+        }
+
+        if ((D_80350974 != 2) && (D_80350978 == 2) && (D_8035097C == 0)) {
+            if (func_80348710() == 0) {
+                D_80350978 = sp60;
+                D_8035097C = sp5C;
+            }
+        }
+
+        if ((sp60 != D_80350978) || (sp5C != D_8035097C)) {
+            func_8033F758(0, 1.0f, 1.03f, 0.0f);
+        }
+        D_8037DC60 = (D_80350978 * 78) + 47;
+        D_8037DC64 = (D_8035097C * 25) + 26;
+        sp64 = (D_80350978 - D_8037DC78) + ((D_8035097C - D_8037DC74) * ((D_8037DC80 - D_8037DC78) + 1));
+        if (D_80350974 != 2) {
+            if (demoButtonPress(D_80362690->unk9C, 0x1) != 0) {
+                sp68 = 1;
+            } else if (demoButtonPress(D_80362690->unk9C, 0x2) != 0) {
+                sp68 = -1;
+            }
+
+            if ((sp6C->veh != 6) && (sp6C->veh >= 3)) {
+                sp68 = 0;
+            }
+            if (sp68 != 0) {
+                var_a2 = D_803509B4;
+                D_80350978 = D_8037DC78;
+                D_8035097C = D_8037DC7C;
+                D_8037DC60 = (D_80350978 * 78) + 47;
+                D_8037DC64 = (D_8035097C * 25) + 26;
+                sp64 = (D_80350978 - D_8037DC78) + ((D_8035097C - D_8037DC74) * ((D_8037DC80 - D_8037DC78) + 1));
+
+                if ((sp6C->veh != 6) && (sp6C->veh >= 3)) {
+                    if (D_803509B4 == arg0->unk0 - 1) {
+                        D_803509B4 = 0;
+                    } else {
+                        D_803509B4++;
+                    }
+                } else {
+                    D_803509B4 += sp68;
+                    if (D_803509B4 >= arg0->unk0) {
+                        D_803509B4 = 0;
+                    }
+                    if ((s16)D_803509B4 < 0) { // TODO: cast is needed, why?
+                        D_803509B4 = arg0->unk0 - 1;
+                    }
+                }
+                if (D_803509B4 != var_a2) {
+                    func_8033F758(0x6A, 1.0f, 0.5f, 0.0f);
+                    func_803122B4(D_80362690, 0);
+                    if ((sp6C->veh != 6) && (sp6C->veh >= 3)) {
+                        sp6C->cls = D_803509B4;
+                        sp6C->test = 0;
+                    } else {
+                        sp6C->test = D_803509B4;
+                    }
+                    level_80344FC8(sp6C->cls, sp6C->veh, sp6C->test, &D_80362690->unk0[0].map, &D_80362690->unk0[0].unk6, &D_80362690->unk0[0].unk8);
+                    map3d(D_80362690, 0);
+                    func_803487A4(sp6C->test);
+                }
+            }
+        }
+        if (demoButtonPress(D_80362690->unk9C, 0x8000 | 0x1000) != 0) {
+            if (D_80350974 == 2) {
+                if ((sp6C->cls == 0) && (sp6C->veh <= 2)) {
+                    switch (sp64) {
+                    case 0:
+                        func_8033F758(0x72, 1.0f, 1.22f, 0.0f);
+                        return 0xFE;
+                    case 1:
+                        func_8033F758(0x72, 1.0f, 1.22f, 0.0f);
+                        D_80350974 = 0;
+                        break;
+                    }
+                } else {
+                    if (sp64 == 0) {
+                        func_8033F758(0x72, 1.0f, 1.22f, 0.0f);
+                        D_80350974 = 0;
+                    }
+                }
+            } else {
+                switch (sp64) {
+                case 3:
+                    func_8033F7F8(0xF);
+                    return D_803509B7;
+                case 0:
+                    func_8033F7F8(0x73);
+                    resultHandler(0);
+                    break;
+                case 4:
+                    func_8033F7F8(0x71);
+                    db_getstart(&sp6C->unk2C, &sp48, 0, 0);
+                    func_8034A428();
+                    hud_8031A2CC();
+                    D_80362690->unkA0 = 1;
+                    func_803239B4();
+                    func_80309A64();
+                    func_802CB094();
+                    func_802E3A5C();
+                    func_802E3E6C();
+                    func_80324A34();
+                    func_80309FFC();
+                    func_802CB35C();
+                    D_80362690->unkA0 = 0;
+                    func_8030FE80(D_80362690, 1);
+                    func_80348B84(arg0, 2);
+                    break;
+                case 5:
+                    func_8033F758(0x72, 1.0f, 1.22f, 0.0f);
+                    D_80350974 = 2;
+                    break;
+                case 2:
+                    func_8033F7F8(0x6E);
+                    func_8033FB14();
+                    func_8034A428();
+                    func_8033E3A8(3);
+                    func_80348B84(arg0, 1);
+                    break;
+                case 1:
+                    func_8033F758(0x75, 1.0f, 0.8f, 0.0f);
+                    func_8034A428();
+                    func_802DCB40();
+                    func_80348B84(arg0, 2);
+                    break;
+                default:
+                    break;
+                }
+            }
+        } else {
+            if (demoButtonPress(D_80362690->unk9C, 0x4000) != 0) {
+                func_8033F7F8(1);
+                if (D_80350974 == 2) {
+                    // these u8 temps are needed to get the `li` and `cvt.s.w`
+                    const u8 tmpCB = 0xCB;
+                    const u8 tmp33 = 0x33;
+
+                    if (!D_803509B4) { } // fakematch
+
+                    D_80350974 = 0;
+                    D_80350978 = 2;
+                    D_8035097C = 1;
+                    D_8037DC60 = tmpCB;
+                    D_8037DC64 = tmp33;
+                } else {
+                    return 0xFF;
+                }
+            }
+        }
+    }
+    return 6;
+}
 
 void func_80349C38(s32 arg0, u8 arg1, u8 arg2) {
     s32 pad1;
