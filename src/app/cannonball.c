@@ -470,9 +470,9 @@ void cannonShoot(Unk802D5C5C_Arg0* arg0) {
     func_8033F7F8(0x4B);
     uvEmitterTrigger(arg0->unk2B4);
     arg0->unkD4 = 1;
-    arg0->unk1B8 = 0.0f;
-    arg0->unk1BC = 0.0f;
-    arg0->unk1C0 = (arg0->unkA4 * 271.4f * arg0->unk280) + 2.5f;
+    arg0->unk1B8.x = 0.0f;
+    arg0->unk1B8.y = 0.0f;
+    arg0->unk1B8.z = (arg0->unkA4 * 271.4f * arg0->unk280) + 2.5f;
     uvMat4Copy(&arg0->unk14, &sp50);
     uvMat4RotateAxis(&arg0->unk14, -1.5707963f, 'x');
     uvDobjState(arg0->unk0, arg0->unk2);

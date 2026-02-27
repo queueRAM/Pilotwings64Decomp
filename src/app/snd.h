@@ -3,6 +3,7 @@
 
 #include <PR/ultratypes.h>
 
+void func_8033F6F8(s32, s32);
 void func_8033F748(s32);
 void func_8033F758(u8, f32, f32, f32);
 void func_8033F7F8(u8);

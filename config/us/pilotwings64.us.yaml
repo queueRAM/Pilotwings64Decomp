@@ -521,7 +521,7 @@ segments:
       - [0xD7D20, .data, app/thermals]
       - [0xD7D30, data]
       - [0xD7E10, .data, app/total_results]
-      - [0xD7EA0, data] # app/code_CE4F0
+      - [0xD7EA0, .data, app/code_CFC40]
       - [0xD7EF0, .data, app/code_D2D50]
       - [0xD7F20, .data, app/code_D3810]
       - [0xD7F40, .rodata, app/code_51E30]
@@ -631,6 +631,7 @@ segments:
       - { type: .bss, vram: 0x8037AB50, name: app/thermals }
       - { type: .bss, vram: 0x8037ACE0, name: app/total_results }
       - { type: bss, vram: 0x8037AD70, name: app_bss_8037ACD8 }
+      - { type: .bss, vram: 0x8037DC60, name: app/code_CFC40 }
       - { type: .bss, vram: 0x8037DCA0, name: app/user_paths }
       - { type: bss, vram: 0x8037F380, name: app_bss_8037F380 }
 
