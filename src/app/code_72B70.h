@@ -5,7 +5,7 @@
 #include <uv_matrix.h>
 
 typedef struct {
-    u8 unk0;
+    u8 testCount;
     u8 pad1[0x157];
 } Unk80367710;
 

@@ -28,34 +28,34 @@
 // this ABS() doesn't use `>=` like other functions
 #define ABS_NOEQ(x) ((x) > 0 ? (x) : -(x))
 
-static f32 D_8037DC60;
-static f32 D_8037DC64;
-static s32 D_8037DC68;
-static s32 D_8037DC6C;
-static s32 D_8037DC70;
-static s32 D_8037DC74;
-static s32 D_8037DC78;
-static s32 D_8037DC7C;
-static s32 D_8037DC80;
-s32 D_8037DC84;
-static char D_8037DC88[4];
-static u16 D_8037DC8C;
-static s16 D_8037DC8E;
-static s16* D_8037DC90;
-static s16* D_8037DC94;
-static char D_8037DC98[3];
-static u8 D_8037DC9B;
+static f32 sSelMenuX;
+static f32 sSelMenuY;
+static s32 sStickDirX;
+static s32 sStickDirY;
+static s32 sStickIsHeld;
+static s32 sMenuMinY;
+static s32 sMenuMinX;
+static s32 sMenuMaxY;
+static s32 sMenuMaxX;
+s32 D_8037DC84; // global, but not used in this file
+static char sTestNumPtsStr[4];
+static u16 sWidthNumPts;
+static s16 sTestPtsX;
+static s16* sTestNameText;
+static s16* sTestHintText;
+static char sTestNumStr[3];
+static u8 sDrawTestPts;
 
-s32 D_80350970_pad = 3; // unused
-s32 D_80350974 = 0;
-s8 D_80350978 = 0;
-s8 D_8035097C = 0;
-s8 D_80350980_pad = 0xFF; // unused
-u8 D_80350984 = 0xFF;
+static s32 D_80350970_pad = 3; // unused
+static s32 D_80350974 = 0;
+static s8 sMenuCurX = 0;
+static s8 sMenuCurY = 0;
+static s8 D_80350980_pad = 0xFF; // unused
+static u8 D_80350984 = 0xFF;
 const char* gClassShortNames[4] = { "E", "A", "B", "P" };
 const char* gVehShortNames[7] = { "HG", "RP", "GC", "EX", "EX", "EX", "BD" };
-s32 D_803509B4 = 0;
-s32 D_803509B8 = 0;
+s32 gCurTestIdx = 0;
+static s32 D_803509B8 = 0;
 
 // forward declarations
 void func_8033FB14(void);
@@ -66,71 +66,71 @@ s32 func_80348710(void) {
 
     unkC = &D_80362690->unk0[D_80362690->unk9C].unkC;
     if ((unkC->veh == VEHICLE_HANG_GLIDER) &&
-        (((unkC->cls == CLASS_A) && (D_803509B4 == 0)) || ((unkC->cls == CLASS_B) && (D_803509B4 == 1)) || ((unkC->cls == CLASS_PILOT) && (D_803509B4 == 2)))) {
+        (((unkC->cls == CLASS_A) && (gCurTestIdx == 0)) || ((unkC->cls == CLASS_B) && (gCurTestIdx == 1)) || ((unkC->cls == CLASS_PILOT) && (gCurTestIdx == 2)))) {
         return TRUE;
     }
     return FALSE;
 }
 
-void func_803487A4(s32 arg0) {
+void func_803487A4(s32 testIdx) {
     Unk80362690_Unk0_UnkC* unkC;
-    s32 width;
-    s32 temp_v0;
+    s32 ptsWidth;
+    s32 pts;
     s32 test;
-    s32 var_s1;
-    s32 var_s3;
-    char sp54[20];
-    char sp40[20];
+    s32 numPts;
+    s32 ptsAdded;
+    char nameStr[20];
+    char hintStr[20];
 
-    var_s3 = 0;
+    ptsAdded = FALSE;
     unkC = &D_80362690->unk0[D_80362690->unk9C].unkC;
     if (unkC->veh <= VEHICLE_GYROCOPTER) {
-        var_s1 = func_8032BE1C(&D_80364210[D_80362690->unk9C], unkC->cls, arg0, unkC->veh);
+        numPts = testGetPointCount(&D_80364210[D_80362690->unk9C], unkC->cls, testIdx, unkC->veh);
     } else {
-        var_s1 = 0;
+        numPts = 0;
         if (unkC->veh >= VEHICLE_SKY_DIVING) {
-            var_s1 = func_8032BE1C(&D_80364210[D_80362690->unk9C], arg0, 0, unkC->veh);
+            numPts = testGetPointCount(&D_80364210[D_80362690->unk9C], testIdx, 0, unkC->veh);
         } else {
-            var_s1 = 0;
+            numPts = 0;
             for (test = 0; test < levelGetTestCount(unkC->cls, unkC->veh); test++) {
-                temp_v0 = func_8032BE1C(&D_80364210[D_80362690->unk9C], unkC->cls, test, unkC->veh);
-                if (temp_v0 != 0x7F) {
-                    var_s1 += temp_v0;
-                    var_s3 = 1;
+                pts = testGetPointCount(&D_80364210[D_80362690->unk9C], unkC->cls, test, unkC->veh);
+                if (pts != 0x7F) {
+                    numPts += pts;
+                    ptsAdded = TRUE;
                 }
             }
-            if (var_s3 == 0) {
-                var_s1 = 0x7F;
+            if (!ptsAdded) {
+                numPts = 0x7F;
             }
         }
     }
 
-    if (var_s1 != 0x7F) {
+    if (numPts != 0x7F) {
         uvFontSet(3);
         uvFont_80219550(1.0, 1.0);
-        uvSprintf(D_8037DC88, "%d", var_s1);
-        D_8037DC8C = uvFontWidth(D_8037DC88);
+        uvSprintf(sTestNumPtsStr, "%d", numPts);
+        sWidthNumPts = uvFontWidth(sTestNumPtsStr);
         uvFont_80219550(0.699999988079071045, 1.0);
-        width = uvFontWidth("PTS");
-        D_8037DC8E = 258 - (width + D_8037DC8C) / 2;
-        D_8037DC9B = 1;
+        ptsWidth = uvFontWidth("PTS");
+        sTestPtsX = 258 - (ptsWidth + sWidthNumPts) / 2;
+        sDrawTestPts = TRUE;
     } else {
-        D_8037DC9B = 0;
+        sDrawTestPts = FALSE;
     }
 
     if ((unkC->veh == VEHICLE_BIRDMAN) || (unkC->veh <= VEHICLE_GYROCOPTER)) {
-        uvSprintf(sp54, "%s_%s_%d_N", gClassShortNames[unkC->cls], gVehShortNames[unkC->veh], arg0 + 1);
-        uvSprintf(sp40, "%s_%s_%d_H", gClassShortNames[unkC->cls], gVehShortNames[unkC->veh], arg0 + 1);
+        uvSprintf(nameStr, "%s_%s_%d_N", gClassShortNames[unkC->cls], gVehShortNames[unkC->veh], testIdx + 1);
+        uvSprintf(hintStr, "%s_%s_%d_H", gClassShortNames[unkC->cls], gVehShortNames[unkC->veh], testIdx + 1);
     } else {
-        uvSprintf(sp54, "%s_%s_%d_N", gClassShortNames[unkC->veh - 2], gVehShortNames[unkC->veh], arg0 + 1);
-        uvSprintf(sp40, "%s_%s_%d_H", gClassShortNames[unkC->veh - 2], gVehShortNames[unkC->veh], arg0 + 1);
+        uvSprintf(nameStr, "%s_%s_%d_N", gClassShortNames[unkC->veh - 2], gVehShortNames[unkC->veh], testIdx + 1);
+        uvSprintf(hintStr, "%s_%s_%d_H", gClassShortNames[unkC->veh - 2], gVehShortNames[unkC->veh], testIdx + 1);
     }
-    D_8037DC90 = textGetDataByName(sp54);
-    D_8037DC94 = textGetDataByName(sp40);
+    sTestNameText = textGetDataByName(nameStr);
+    sTestHintText = textGetDataByName(hintStr);
     if ((unkC->veh <= VEHICLE_GYROCOPTER) || (unkC->veh == VEHICLE_BIRDMAN)) {
-        uvSprintf(D_8037DC98, "%d", arg0 + 1);
+        uvSprintf(sTestNumStr, "%d", testIdx + 1);
     } else {
-        uvSprintf(D_8037DC98, "%d", 1);
+        uvSprintf(sTestNumStr, "%d", 1);
     }
 }
 
@@ -151,22 +151,22 @@ void func_80348B84(Unk80367710* arg0, s32 arg1) {
     D_803509B8 = 0;
     if (arg1 == 0) {
         if (D_80362690->unkA3 == 0) {
-            D_803509B4 = 0;
+            gCurTestIdx = 0;
             D_80362690->unkA3 = 1;
         } else {
-            D_803509B4++;
-            if (D_803509B4 >= arg0->unk0) {
-                D_803509B4 = 0;
+            gCurTestIdx++;
+            if (gCurTestIdx >= arg0->testCount) {
+                gCurTestIdx = 0;
             }
         }
         if ((temp_v1->veh != VEHICLE_BIRDMAN) && (temp_v1->veh >= VEHICLE_CANNONBALL)) {
-            D_803509B4 = temp_v1->cls;
+            gCurTestIdx = temp_v1->cls;
         }
         if ((temp_v1->veh != VEHICLE_BIRDMAN) && (temp_v1->veh >= VEHICLE_CANNONBALL)) {
-            temp_v1->cls = D_803509B4;
+            temp_v1->cls = gCurTestIdx;
             temp_v1->test = 0;
         } else {
-            temp_v1->test = D_803509B4;
+            temp_v1->test = gCurTestIdx;
         }
     }
     level_80344FC8(temp_v1->cls, temp_v1->veh, temp_v1->test, &D_80362690->unk0[0].map, &D_80362690->unk0[0].unk6, &D_80362690->unk0[0].unk8);
@@ -185,30 +185,30 @@ void func_80348B84(Unk80367710* arg0, s32 arg1) {
     uvSprtProps(8, 3, 1, 1, 0x40, 0x12, 2, 0xCE, 0x47, 7, 0xFF, 0xFF, 0xFF, 0xFF, 9, 0x14, 0);
     uvSprtProps(9, 3, 1, 1, 0x40, 0x12, 2, 0x80, 0x47, 7, 0xFF, 0xFF, 0xFF, 0xFF, 9, 0x3C, 0);
     if (arg1 == 0) {
-        D_80350978 = 0;
-        D_8035097C = 1;
-        D_8037DC60 = (f32)((D_80350978 * 78) + 47);
-        D_8037DC64 = (f32)((D_8035097C * 25) + 26);
-        D_8037DC68 = D_8037DC6C = 0;
+        sMenuCurX = 0;
+        sMenuCurY = 1;
+        sSelMenuX = (sMenuCurX * 78) + 47;
+        sSelMenuY = (sMenuCurY * 25) + 26;
+        sStickDirX = sStickDirY = 0;
         D_80350984 = 0xFF;
     }
-    D_8037DC9B = 0;
-    func_803487A4(D_803509B4);
+    sDrawTestPts = FALSE;
+    func_803487A4(gCurTestIdx);
 }
 
 u8 func_8034926C(Unk80367710* arg0) {
     Unk80362690_Unk0_UnkC* sp6C;
-    s32 sp68;
+    s32 testIdxAdj;
     u32 sp64;
-    s32 sp60;
-    s32 sp5C;
+    s32 menuPrevX;
+    s32 menuPrevY;
     f32 stickX;
     f32 stickY;
     Vec3F sp48; // passed to db_getstart, but result not used
     s32 var_a2;
 
     sp6C = &D_80362690->unk0[D_80362690->unk9C].unkC;
-    sp68 = 0;
+    testIdxAdj = 0;
     if (D_80350974 == 1) {
         func_80311660(D_80362690->unk9C, 0);
         if (demoButtonPress(D_80362690->unk9C, A_BUTTON | B_BUTTON | START_BUTTON) != 0) {
@@ -224,116 +224,116 @@ u8 func_8034926C(Unk80367710* arg0) {
         demo_80323020();
         if (D_80350974 == 2) {
             if ((sp6C->cls == CLASS_BEGINNER) && (sp6C->veh <= VEHICLE_GYROCOPTER)) {
-                D_8037DC78 = 1;
-                D_8037DC80 = 2;
+                sMenuMinX = 1;
+                sMenuMaxX = 2;
             } else {
-                D_8037DC78 = 2;
-                D_8037DC80 = 2;
+                sMenuMinX = 2;
+                sMenuMaxX = 2;
             }
-            D_8037DC74 = 1;
-            D_8037DC7C = 1;
+            sMenuMinY = 1;
+            sMenuMaxY = 1;
         } else {
-            D_8037DC74 = 0;
-            D_8037DC7C = 1;
-            D_8037DC78 = 0;
-            D_8037DC80 = 2;
+            sMenuMinY = 0;
+            sMenuMaxY = 1;
+            sMenuMinX = 0;
+            sMenuMaxX = 2;
         }
-        stickX = demoGetInputs(D_80362690->unk9C, 0);
-        stickY = demoGetInputs(D_80362690->unk9C, 1);
-        D_8037DC68 = D_8037DC6C = 0;
+        stickX = demoGetInputs(D_80362690->unk9C, INPUT_AXIS_X);
+        stickY = demoGetInputs(D_80362690->unk9C, INPUT_AXIS_Y);
+        sStickDirX = sStickDirY = 0;
 
         if (ABS_NOEQ(stickX) < 0.75f && ABS_NOEQ(stickY) < 0.75f) {
-            D_8037DC70 = 0;
-        } else if (D_8037DC70 == 0) {
+            sStickIsHeld = FALSE;
+        } else if (!sStickIsHeld) {
             if (stickX > 0.75f) {
-                D_8037DC68 = 1;
-                D_8037DC70 = 1;
+                sStickDirX = 1;
+                sStickIsHeld = TRUE;
             }
             if (stickX < -0.75f) {
-                D_8037DC68 = -1;
-                D_8037DC70 = 1;
+                sStickDirX = -1;
+                sStickIsHeld = TRUE;
             }
             if (stickY > 0.75f) {
-                D_8037DC6C = 1;
-                D_8037DC70 = 1;
+                sStickDirY = 1;
+                sStickIsHeld = TRUE;
             }
             if (stickY < -0.75f) {
-                D_8037DC6C = -1;
-                D_8037DC70 = 1;
+                sStickDirY = -1;
+                sStickIsHeld = TRUE;
             }
         }
 
-        sp60 = D_80350978;
-        sp5C = D_8035097C;
-        D_80350978 += D_8037DC68;
-        D_8035097C += D_8037DC6C;
+        menuPrevX = sMenuCurX;
+        menuPrevY = sMenuCurY;
+        sMenuCurX += sStickDirX;
+        sMenuCurY += sStickDirY;
 
-        if (D_80350978 < D_8037DC78) {
-            D_80350978 = D_8037DC78;
-        } else if (D_8037DC80 < D_80350978) {
-            D_80350978 = D_8037DC80;
+        if (sMenuCurX < sMenuMinX) {
+            sMenuCurX = sMenuMinX;
+        } else if (sMenuMaxX < sMenuCurX) {
+            sMenuCurX = sMenuMaxX;
         }
 
-        if (D_8035097C < D_8037DC74) {
-            D_8035097C = D_8037DC74;
-        } else if (D_8037DC7C < D_8035097C) {
-            D_8035097C = D_8037DC7C;
+        if (sMenuCurY < sMenuMinY) {
+            sMenuCurY = sMenuMinY;
+        } else if (sMenuMaxY < sMenuCurY) {
+            sMenuCurY = sMenuMaxY;
         }
 
-        if ((D_80350974 != 2) && (D_80350978 == 2) && (D_8035097C == 0)) {
-            if (func_80348710() == 0) {
-                D_80350978 = sp60;
-                D_8035097C = sp5C;
+        if ((D_80350974 != 2) && (sMenuCurX == 2) && (sMenuCurY == 0)) {
+            if (!func_80348710()) {
+                sMenuCurX = menuPrevX;
+                sMenuCurY = menuPrevY;
             }
         }
 
-        if ((sp60 != D_80350978) || (sp5C != D_8035097C)) {
+        if ((menuPrevX != sMenuCurX) || (menuPrevY != sMenuCurY)) {
             func_8033F758(0, 1.0f, 1.03f, 0.0f);
         }
-        D_8037DC60 = (D_80350978 * 78) + 47;
-        D_8037DC64 = (D_8035097C * 25) + 26;
-        sp64 = (D_80350978 - D_8037DC78) + ((D_8035097C - D_8037DC74) * ((D_8037DC80 - D_8037DC78) + 1));
+        sSelMenuX = (sMenuCurX * 78) + 47;
+        sSelMenuY = (sMenuCurY * 25) + 26;
+        sp64 = (sMenuCurX - sMenuMinX) + ((sMenuCurY - sMenuMinY) * ((sMenuMaxX - sMenuMinX) + 1));
         if (D_80350974 != 2) {
             if (demoButtonPress(D_80362690->unk9C, R_CBUTTONS) != 0) {
-                sp68 = 1;
+                testIdxAdj = 1;
             } else if (demoButtonPress(D_80362690->unk9C, L_CBUTTONS) != 0) {
-                sp68 = -1;
+                testIdxAdj = -1;
             }
 
             if ((sp6C->veh != VEHICLE_BIRDMAN) && (sp6C->veh >= VEHICLE_CANNONBALL)) {
-                sp68 = 0;
+                testIdxAdj = 0;
             }
-            if (sp68 != 0) {
-                var_a2 = D_803509B4;
-                D_80350978 = D_8037DC78;
-                D_8035097C = D_8037DC7C;
-                D_8037DC60 = (D_80350978 * 78) + 47;
-                D_8037DC64 = (D_8035097C * 25) + 26;
-                sp64 = (D_80350978 - D_8037DC78) + ((D_8035097C - D_8037DC74) * ((D_8037DC80 - D_8037DC78) + 1));
+            if (testIdxAdj != 0) {
+                var_a2 = gCurTestIdx;
+                sMenuCurX = sMenuMinX;
+                sMenuCurY = sMenuMaxY;
+                sSelMenuX = (sMenuCurX * 78) + 47;
+                sSelMenuY = (sMenuCurY * 25) + 26;
+                sp64 = (sMenuCurX - sMenuMinX) + ((sMenuCurY - sMenuMinY) * ((sMenuMaxX - sMenuMinX) + 1));
 
                 if ((sp6C->veh != VEHICLE_BIRDMAN) && (sp6C->veh >= VEHICLE_CANNONBALL)) {
-                    if (D_803509B4 == arg0->unk0 - 1) {
-                        D_803509B4 = 0;
+                    if (gCurTestIdx == arg0->testCount - 1) {
+                        gCurTestIdx = 0;
                     } else {
-                        D_803509B4++;
+                        gCurTestIdx++;
                     }
                 } else {
-                    D_803509B4 += sp68;
-                    if (D_803509B4 >= arg0->unk0) {
-                        D_803509B4 = 0;
+                    gCurTestIdx += testIdxAdj;
+                    if (gCurTestIdx >= arg0->testCount) {
+                        gCurTestIdx = 0;
                     }
-                    if ((s16)D_803509B4 < 0) { // TODO: cast is needed, why?
-                        D_803509B4 = arg0->unk0 - 1;
+                    if ((s16)gCurTestIdx < 0) { // TODO: cast is needed, why?
+                        gCurTestIdx = arg0->testCount - 1;
                     }
                 }
-                if (D_803509B4 != var_a2) {
+                if (gCurTestIdx != var_a2) {
                     func_8033F758(0x6A, 1.0f, 0.5f, 0.0f);
                     func_803122B4(D_80362690, 0);
                     if ((sp6C->veh != VEHICLE_BIRDMAN) && (sp6C->veh >= VEHICLE_CANNONBALL)) {
-                        sp6C->cls = D_803509B4;
+                        sp6C->cls = gCurTestIdx;
                         sp6C->test = 0;
                     } else {
-                        sp6C->test = D_803509B4;
+                        sp6C->test = gCurTestIdx;
                     }
                     level_80344FC8(sp6C->cls, sp6C->veh, sp6C->test, &D_80362690->unk0[0].map, &D_80362690->unk0[0].unk6, &D_80362690->unk0[0].unk8);
                     map3d(D_80362690, 0);
@@ -363,7 +363,7 @@ u8 func_8034926C(Unk80367710* arg0) {
                 switch (sp64) {
                 case 3:
                     func_8033F7F8(0xF);
-                    return D_803509B4;
+                    return gCurTestIdx;
                 case 0:
                     func_8033F7F8(0x73);
                     resultHandler(0);
@@ -415,10 +415,10 @@ u8 func_8034926C(Unk80367710* arg0) {
                     const u8 tmpCB = 0xCB;
                     const u8 tmp33 = 0x33;
                     D_80350974 = 0;
-                    D_80350978 = 2;
-                    D_8035097C = 1;
-                    D_8037DC60 = tmpCB;
-                    D_8037DC64 = tmp33;
+                    sMenuCurX = 2;
+                    sMenuCurY = 1;
+                    sSelMenuX = tmpCB;
+                    sSelMenuY = tmp33;
                 } else {
                     return 0xFF;
                 }
@@ -438,7 +438,7 @@ void func_80349C38(s32 arg0, u8 arg1, u8 arg2) {
     u32 var_v1;
     s32 pad3;
     char sp8C[108];
-    char sp58[52];
+    char strId[52];
     s16* sp54;
     s32 temp_a0;
     s32 temp_v0_3;
@@ -447,16 +447,16 @@ void func_80349C38(s32 arg0, u8 arg1, u8 arg2) {
 
     sp48 = &D_80362690->unk0[D_80362690->unk9C].unkC;
     if ((sp48->veh != VEHICLE_BIRDMAN) && (arg2 >= 3)) {
-        level_80344E0C(arg1, 0, arg2, sp8C, sp58);
+        level_80344E0C(arg1, 0, arg2, sp8C, strId);
     } else {
-        level_80344E0C(arg1, D_803509B4, arg2, sp8C, sp58);
+        level_80344E0C(arg1, gCurTestIdx, arg2, sp8C, strId);
     }
-    var_v1 = uvStrlen(sp58);
+    var_v1 = uvStrlen(strId);
     if (var_v1 == 0) {
-        uvSprintf(sp58, "%s_%s_%d\n", gClassShortNames[sp48->cls], gVehShortNames[sp48->veh], D_803509B4 + 1);
-        var_v1 = uvStrlen(sp58);
+        uvSprintf(strId, "%s_%s_%d\n", gClassShortNames[sp48->cls], gVehShortNames[sp48->veh], gCurTestIdx + 1);
+        var_v1 = uvStrlen(strId);
     }
-    temp_v0_2 = &sp58[var_v1];
+    temp_v0_2 = &strId[var_v1];
     temp_v0_2[0] = '_';
     temp_v0_2[1] = 'M';
     temp_v0_2[2] = '\0';
@@ -465,9 +465,9 @@ void func_80349C38(s32 arg0, u8 arg1, u8 arg2) {
     func_80311C68(D_80362690, 0);
     if (D_80350974 != 1) {
         if (D_80350974 != 2) {
-            sp54 = textGetDataByName(sp58);
+            sp54 = textGetDataByName(strId);
         } else {
-            sp54 = D_8037DC94;
+            sp54 = sTestHintText;
         }
         screenDrawBox2(38, 80, 244, 110, 2, 0, 0xA0, 0);
         screenDrawBox2(38, 195, 191, 25, 2, 0, 0xA0, 0);
@@ -516,26 +516,26 @@ void func_80349C38(s32 arg0, u8 arg1, u8 arg2) {
                 uvGfxStatePop();
             }
         }
-        func_802DEE44((s32)((f64)D_8037DC60 + 0.5), (s32)((f64)D_8037DC64 + 0.5), 0x46, 0x18, 3, 0xC8, 0xC8, 0, 0x64, 0x64, 0);
+        func_802DEE44((s32)((f64)sSelMenuX + 0.5), (s32)((f64)sSelMenuY + 0.5), 0x46, 0x18, 3, 0xC8, 0xC8, 0, 0x64, 0x64, 0);
         func_803141E4();
         uvFontSet(0);
         uvFont_80219550(1.0, 0.800000011920929);
         uvFont_8021956C(0xBE, 0xBE, 0xBE, 0xFF);
-        uvFont_80219ACC(67, 200, D_8037DC98);
-        if (D_8037DC90 != NULL) {
+        uvFont_80219ACC(67, 200, sTestNumStr);
+        if (sTestNameText != NULL) {
             uvFontSet(6);
             uvFont_8021956C(0xBE, 0xBE, 0xBE, 0xFF);
             uvFont_80219550(1.0, 1.0);
-            func_80219874(79, 196, D_8037DC90, 0xFF, 0xFFE);
+            func_80219874(79, 196, sTestNameText, 0xFF, 0xFFE);
         }
-        if ((D_8037DC9B != 0) && (sp48->veh != VEHICLE_BIRDMAN)) {
+        if (sDrawTestPts && (sp48->veh != VEHICLE_BIRDMAN)) {
             uvFontSet(3);
             uvFont_8021956C(0xBE, 0xBE, 0xBE, 0xFF);
             uvFont_80219550(1.0, 1.0);
-            uvFont_80219ACC((s32)(u16)D_8037DC8E, 0xC4, D_8037DC88);
+            uvFont_80219ACC((u16)sTestPtsX, 196, sTestNumPtsStr);
             uvFont_8021956C(0xAA, 0xAA, 0xAA, 0xFF);
             uvFont_80219550(0.699999988079071, 1.0);
-            uvFont_80219ACC((u16)D_8037DC8E + D_8037DC8C + 1, 0xC4, "PTS");
+            uvFont_80219ACC((u16)sTestPtsX + sWidthNumPts + 1, 196, "PTS");
         }
         if (sp54 != NULL) {
             uvFontSet(6);
