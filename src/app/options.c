@@ -18,15 +18,15 @@
 
 // TODO: usage of [unk9C+1].debugFlag are likely incorrect way to get to 0x96 offset
 
-f32 D_8034F8D0[] = { 0.0f, 0.2f, 0.4f, 0.6f, 1.0f };
-s32 D_8034F8E4 = 0;
-s32 D_8034F8E8 = 0;
-s32 D_8034F8EC = 4;
-s32 D_8034F8F0 = 4;
-s32 D_8034F8F4 = 0;
+static f32 sVolume[] = { 0.0f, 0.2f, 0.4f, 0.6f, 1.0f };
+static s32 sStereoMono = 0;
+static s32 sSoundTrack = 0;
+static s32 sVolumeMusic = 4;
+static s32 sVolumeSfx = 4;
+static s32 D_8034F8F4 = 0;
 
 extern s16 D_8036C120;
-extern s32 D_8036C124;
+extern s32 sStickHeld;
 extern u8 D_8036C128; // flag to determine if game is complete
 extern u8 D_8036C129;
 extern s32 D_8036C130[5]; // menu items, at least 5
@@ -95,7 +95,7 @@ void func_80315F0C(void) {
         func_80316238();
         break;
     }
-    D_8036C124 = 0;
+    sStickHeld = 0;
 }
 
 void func_803160B0(void) {
@@ -141,10 +141,10 @@ void func_80316238(void) {
     menuCreateItems(40, 70, 6, 1.0f, 1.0f, D_8036C130, 5);
     func_80312F5C(1, 0xFF, 0xFF, 0xFF);
     func_80312F5C(0, 0xFF, 0xFF, 0);
-    func_80316BEC(0, D_8034F8E4);
-    func_80316D34(1, D_8034F8E8);
-    func_80316BEC(2, D_8034F8EC);
-    func_80316BEC(3, D_8034F8F0);
+    func_80316BEC(0, sStereoMono);
+    func_80316D34(1, sSoundTrack);
+    func_80316BEC(2, sVolumeMusic);
+    func_80316BEC(3, sVolumeSfx);
     func_80312FF8(6);
 }
 
@@ -260,14 +260,14 @@ s32 func_80316528(void) {
 
 s32 func_80316634(void) {
     s32 sp24;
-    s32 temp_v1;
-    s32 sp1C;
+    s32 menuItem;
+    s32 optInc;
     f32 stickX;
 
     sp24 = menu_8030B50C();
-    temp_v1 = menu_8030B668();
+    menuItem = menu_8030B668();
     if (sp24 == -1) {
-        if (temp_v1 != 1) {
+        if (menuItem != 1) {
             D_8036C120 = 0;
             func_8032D51C(0);
             func_80315F0C();
@@ -277,76 +277,76 @@ s32 func_80316634(void) {
             func_8033F964(1);
         }
     }
-    sp1C = 0;
+    optInc = 0;
     stickX = demoGetInputs(0, INPUT_AXIS_X);
     if (ABS_NOEQ(stickX) < 0.75f) {
-        D_8036C124 = FALSE;
-    } else if (!D_8036C124) {
+        sStickHeld = FALSE;
+    } else if (!sStickHeld) {
         if (stickX > 0.75f) {
-            sp1C = 1;
-            D_8036C124 = TRUE;
+            optInc = 1;
+            sStickHeld = TRUE;
         }
         if (stickX < -0.75f) {
-            sp1C = -1;
-            D_8036C124 = TRUE;
+            optInc = -1;
+            sStickHeld = TRUE;
         }
     }
 
-    switch (temp_v1) {
+    switch (menuItem) {
     case 0:
-        D_8034F8E4 += sp1C;
-        D_8034F8E4 = func_80316D88(D_8034F8E4, 0, 1);
-        if (D_8034F8E4 == 0) {
+        sStereoMono += optInc;
+        sStereoMono = func_80316D88(sStereoMono, 0, 1);
+        if (sStereoMono == 0) {
             func_80200180(0, 8, 2, 0);
         } else {
             func_80200180(0, 8, 1, 0);
         }
-        if (sp1C != 0) {
-            func_8033F7F8(0x54);
+        if (optInc != 0) {
+            snd_play_sfx(0x54);
         }
-        func_80316BEC(0, D_8034F8E4);
+        func_80316BEC(0, sStereoMono);
         return -1;
     case 1:
-        D_8034F8E8 += sp1C;
-        D_8034F8E8 = func_80316D88(D_8034F8E8, 0, 30);
-        if (sp24 == temp_v1) {
-            func_8033F748(D_8034F8E8);
+        sSoundTrack += optInc;
+        sSoundTrack = func_80316D88(sSoundTrack, 0, 30);
+        if (sp24 == menuItem) {
+            func_8033F748(sSoundTrack);
             func_8033F964(0);
             func_8033FCD0(0xFF);
         }
-        if (sp1C != 0) {
-            func_8033F7F8(0x54);
+        if (optInc != 0) {
+            snd_play_sfx(0x54);
         }
-        func_80316D34(1, D_8034F8E8);
+        func_80316D34(1, sSoundTrack);
         return -1;
     case 2:
-        D_8034F8EC += sp1C;
-        if (D_8034F8EC < 0) {
-            D_8034F8EC = 0;
-        } else if (D_8034F8EC >= 5) {
-            D_8034F8EC = 4;
+        sVolumeMusic += optInc;
+        if (sVolumeMusic < 0) {
+            sVolumeMusic = 0;
+        } else if (sVolumeMusic >= 5) {
+            sVolumeMusic = 4;
         }
-        func_80316BEC(2, D_8034F8EC);
-        func_8033FA88(D_8034F8D0[D_8034F8EC]);
-        func_8033FD94(0xFF, D_8034F8D0[D_8034F8F0], D_8034F8D0[D_8034F8EC]);
+        func_80316BEC(2, sVolumeMusic);
+        func_8033FA88(sVolume[sVolumeMusic]);
+        func_8033FD94(0xFF, sVolume[sVolumeSfx], sVolume[sVolumeMusic]);
         return -1;
     case 3:
-        D_8034F8F0 += sp1C;
-        if (sp1C != 0) {
-            func_8033F7F8(0x6E);
+        sVolumeSfx += optInc;
+        if (optInc != 0) {
+            snd_play_sfx(0x6E);
         }
-        if (D_8034F8F0 < 0) {
-            D_8034F8F0 = 0;
-        } else if (D_8034F8F0 >= 5) {
-            D_8034F8F0 = 4;
+        if (sVolumeSfx < 0) {
+            sVolumeSfx = 0;
+        } else if (sVolumeSfx >= 5) {
+            sVolumeSfx = 4;
         }
-        func_80316BEC(3, D_8034F8F0);
-        func_8033FAD4(D_8034F8D0[D_8034F8F0]);
-        func_8033FD94(0xFF, D_8034F8D0[D_8034F8F0], D_8034F8D0[D_8034F8EC]);
+        func_80316BEC(3, sVolumeSfx);
+        func_8033FAD4(sVolume[sVolumeSfx]);
+        func_8033FD94(0xFF, sVolume[sVolumeSfx], sVolume[sVolumeMusic]);
         return -1;
     case 4:
-        if (sp24 == temp_v1) {
-            func_8033F7F8(0x6E);
+        if (sp24 == menuItem) {
+            snd_play_sfx(0x6E);
             func_8032D51C(0);
             return 0;
         }

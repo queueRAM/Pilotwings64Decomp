@@ -6,7 +6,7 @@
 void func_8033F6F8(s32, s32);
 void func_8033F748(u16);
 void func_8033F758(u8, f32, f32, f32);
-void func_8033F7F8(u8);
+void snd_play_sfx(u8);
 void func_8033F964(s32);
 void func_8033FA88(f32);
 void func_8033FAD4(f32);
