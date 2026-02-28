@@ -1,5 +1,8 @@
 #include "common.h"
 #include <uv_graphics.h>
+#include <uv_level.h>
+#include "credits.h"
+#include "save.h"
 
 f32 D_8034F8D0[] = { 0.0f, 0.2f, 0.4f, 0.6f, 1.0f };
 s32 D_8034F8E4 = 0;
@@ -9,6 +12,8 @@ s32 D_8034F8F0 = 4;
 s32 D_8034F8F4 = 0;
 
 extern s16 D_8036C120;
+extern s32 D_8036C124;
+extern u8 D_8036C128;
 
 // forward declarations
 void func_80315F0C(void);
@@ -16,6 +21,10 @@ void func_8031631C(void);
 s32 func_8031633C(void);
 void func_80316A28(void);
 void func_80316B08(void);
+void func_803160B0(void);
+void func_803161A8(void);
+void func_80316238(void);
+void func_80316B80(void);
 
 s32 func_80315E90(void) {
     s32 temp_v0;
@@ -32,7 +41,37 @@ s32 func_80315E90(void) {
     return temp_v0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80315F0C.s")
+void func_80315F0C(void) {
+    D_80362690->unk0[D_80362690->unk9C+1].debugFlag = 0;
+    saveFileLoad(D_80362690->unk0[D_80362690->unk9C+1].debugFlag);
+    D_8036C128 = func_8030CC48();
+    
+    D_80362690->unk0[D_80362690->unk9C+1].debugFlag = 1;
+    saveFileLoad(D_80362690->unk0[D_80362690->unk9C+1].debugFlag);
+    
+    if (D_8036C128 < func_8030CC48()) {
+        D_8036C128 = func_8030CC48();
+    } else {
+        D_80362690->unk0[D_80362690->unk9C+1].debugFlag = 0;
+        saveFileLoad(D_80362690->unk0[D_80362690->unk9C+1].debugFlag);
+    }
+    if (D_8036C120 == 3) {
+        func_80316B80();
+        D_8036C120 = 0;
+    }
+    switch (D_8036C120) {
+    case 0:
+        func_803160B0();
+        break;
+    case 1:
+        func_803161A8();
+        break;
+    case 2:
+        func_80316238();
+        break;
+    }
+    D_8036C124 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_803160B0.s")
 
