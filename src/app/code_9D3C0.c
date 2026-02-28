@@ -131,7 +131,9 @@ void func_80316238(void) {
     func_80312FF8(6);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_8031631C.s")
+void func_8031631C(void) {
+    menuSetProps();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_8031633C.s")
 
