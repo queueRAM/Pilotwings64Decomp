@@ -405,7 +405,62 @@ void func_80316B80(void) {
     textLoadBlock(0x42);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316BEC.s")
+void func_80316BEC(s32 menuIdx, s32 setting) {
+    s32 menuStr;
+
+    switch (menuIdx) {
+    case 0:
+        switch (setting) {
+        case 0:
+            menuStr = 0x4B; // "Stereo"
+            break;
+        case 1:
+            menuStr = 0x100; // "Mono"
+            break;
+        }
+        break;
+    case 2:
+        switch (setting) {
+        case 0:
+            menuStr = 0x133; // "Vol 1."
+            break;
+        case 1:
+            menuStr = 0xD6; // "Vol. >2"
+            break;
+        case 2:
+            menuStr = 0x6E; // "Vol. >>3"
+            break;
+        case 3:
+            menuStr = 0x1F; // "Vol. >>>4"
+            break;
+        case 4:
+            menuStr = 0x183; // "Vol. >>>>5"
+            break;
+        }
+        break;
+    case 3:
+        switch (setting) {
+        case 0:
+            menuStr = 0x64; // "Vol 1."
+            break;
+        case 1:
+            menuStr = 0x1B; // "Vol. >2"
+            break;
+        case 2:
+            menuStr = 0x179; // "Vol. >>3"
+            break;
+        case 3:
+            menuStr = 0x12C; // "Vol. >>>4"
+            break;
+        case 4:
+            menuStr = 0xD2; // "Vol. >>>>5"
+            break;
+        }
+        break;
+    }
+    D_8036C130[menuIdx] = menuStr;
+    menuSetItem(menuIdx, textGetDataByIdx(menuStr));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316D34.s")
 
