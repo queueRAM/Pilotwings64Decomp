@@ -45,7 +45,7 @@ s32 func_80316634(void);
 void func_80316B80(void);
 void func_80316BEC(s32, s32);
 void func_80316D34(s32, s32);
-s32 func_80316D88(f32, s32, s32);
+s32 func_80316D88(s32, s32, s32);
 void func_80316A90(void);
 void func_80316AB8(void);
 void func_80316AE0(void);
@@ -472,4 +472,11 @@ void func_80316D34(s32 arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316D88.s")
+s32 func_80316D88(s32 val, s32 arg1, s32 arg2) {
+    if (val < arg1) {
+        val = arg2;
+    } else if (val > arg2) {
+        val = arg1;
+    }
+    return val;
+}
