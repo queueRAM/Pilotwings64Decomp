@@ -1,4 +1,5 @@
 #include "common.h"
+#include <uv_font.h>
 #include <uv_graphics.h>
 #include <uv_level.h>
 #include "kernel/code_1050.h"
@@ -369,7 +370,10 @@ void func_80316A28(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316A90.s")
+void func_80316A90(void) {
+    menuInit();
+    uvFont_80219EA8();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316AB8.s")
 
