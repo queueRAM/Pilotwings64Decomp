@@ -13,6 +13,7 @@
 #include "save.h"
 #include "snap.h"
 #include "snd.h"
+#include "text_data.h"
 
 // TODO: usage of [unk9C+1].debugFlag are likely incorrect way to get to 0x96 offset
 
@@ -396,7 +397,13 @@ void func_80316B08(void) {
     uvVtxRect(310, 232, 319, 18);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316B80.s")
+void func_80316B80(void) {
+    uvLevelInit();
+    uvLevelAppend(0x70);
+    uvLevelAppend(0x2E);
+    uvSprtProps(0, 3, 1, 2, 0, 240, 9, 0x43, 0);
+    textLoadBlock(0x42);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316BEC.s")
 
