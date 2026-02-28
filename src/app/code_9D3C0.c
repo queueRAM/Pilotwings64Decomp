@@ -6,6 +6,7 @@
 #include "credits.h"
 #include "menu.h"
 #include "save.h"
+#include "snap.h"
 #include "snd.h"
 
 // TODO: usage of [unk9C+1].debugFlag are likely incorrect way to get to 0x96 offset
@@ -20,6 +21,7 @@ s32 D_8034F8F4 = 0;
 extern s16 D_8036C120;
 extern s32 D_8036C124;
 extern u8 D_8036C128;     // flag to determine if game is complete
+extern u8 D_8036C129;
 extern s32 D_8036C130[5]; // menu items, at least 5
 
 // forward declarations
@@ -208,7 +210,42 @@ s32 func_803163B8(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316528.s")
+s32 func_80316528(void) {
+    s32 temp_v0;
+
+    temp_v0 = menu_8030B50C();
+    switch (temp_v0) {
+    case 0:
+        D_8036C129 = 0;
+        saveFileLoad(D_8036C129);
+        if (func_8033E3A8(0) != 0) {
+            saveFileWrite(D_8036C129);
+        }
+        func_80316B80();
+        func_803161A8();
+        return -1;
+    case 1:
+        D_8036C129 = 1;
+        saveFileLoad(D_8036C129);
+        if (func_8033E3A8(0) != 0) {
+            saveFileWrite(D_8036C129);
+        }
+        func_80316B80();
+        func_803161A8();
+        menu_8030B69C(1);
+        return -1;
+    case 2:
+        func_8032D51C(0);
+        return 0;
+    case -1:
+        D_8036C120 = 0;
+        func_8032D51C(0);
+        func_80315F0C();
+        return -1;
+    default:
+        return -1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316634.s")
 
