@@ -18,7 +18,7 @@ s32 D_8034F8F4 = 0;
 extern s16 D_8036C120;
 extern s32 D_8036C124;
 extern u8 D_8036C128; // flag to determine if game is complete
-extern s32 D_8036C130[4]; // menu items, at least 4
+extern s32 D_8036C130[5]; // menu items, at least 5
 
 // forward declarations
 void func_80315F0C(void);
@@ -30,6 +30,8 @@ void func_803160B0(void);
 void func_803161A8(void);
 void func_80316238(void);
 void func_80316B80(void);
+void func_80316BEC(s32, s32);
+void func_80316D34(s32, s32);
 
 s32 func_80315E90(void) {
     s32 temp_v0;
@@ -112,7 +114,22 @@ void func_803161A8(void) {
     D_8034F8F4 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316238.s")
+
+void func_80316238(void) {
+    D_8036C130[0] = 0x4B;  // "Stereo"
+    D_8036C130[1] = 0xCE;  // "Sound Track"
+    D_8036C130[2] = 0x133; // "Vol. 1" (Sound Track)
+    D_8036C130[3] = 0x64;  // "Vol. 1" (Sound Effects)
+    D_8036C130[4] = 0x11C; // "Return"
+    menuCreateItems(40, 70, 6, 1.0f, 1.0f, D_8036C130, 5);
+    func_80312F5C(1, 0xFF, 0xFF, 0xFF);
+    func_80312F5C(0, 0xFF, 0xFF, 0);
+    func_80316BEC(0, D_8034F8E4);
+    func_80316D34(1, D_8034F8E8);
+    func_80316BEC(2, D_8034F8EC);
+    func_80316BEC(3, D_8034F8F0);
+    func_80312FF8(6);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_8031631C.s")
 
