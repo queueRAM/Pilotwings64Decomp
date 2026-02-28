@@ -462,6 +462,14 @@ void func_80316BEC(s32 menuIdx, s32 setting) {
     menuSetItem(menuIdx, textGetDataByIdx(menuStr));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316D34.s")
+void func_80316D34(s32 arg0, s32 arg1) {
+    s16* str;
+
+    if (arg0 == 1) {
+        str = textGetDataByIdx(0xCE); // "Sound Track"
+        textFmtIntAt(str, arg1 + 1, 2, 13);
+        menuSetItem(1, str);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316D88.s")
