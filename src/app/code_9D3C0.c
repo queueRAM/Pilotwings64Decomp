@@ -1,9 +1,11 @@
 #include "common.h"
 #include <uv_graphics.h>
 #include <uv_level.h>
+#include "kernel/code_1050.h"
 #include "code_99D40.h"
 #include "code_B3A70.h"
 #include "credits.h"
+#include "demo.h"
 #include "menu.h"
 #include "save.h"
 #include "snap.h"
@@ -20,7 +22,7 @@ s32 D_8034F8F4 = 0;
 
 extern s16 D_8036C120;
 extern s32 D_8036C124;
-extern u8 D_8036C128;     // flag to determine if game is complete
+extern u8 D_8036C128; // flag to determine if game is complete
 extern u8 D_8036C129;
 extern s32 D_8036C130[5]; // menu items, at least 5
 
@@ -39,6 +41,7 @@ s32 func_80316634(void);
 void func_80316B80(void);
 void func_80316BEC(s32, s32);
 void func_80316D34(s32, s32);
+s32 func_80316D88(f32, s32, s32);
 
 s32 func_80315E90(void) {
     s32 temp_v0;
@@ -247,7 +250,107 @@ s32 func_80316528(void) {
     }
 }
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316634.s")
+#else
+s32 func_80316634(void) {
+    s32 sp24;
+    s32 temp_v1;
+    s32 sp1C;
+    f32 stickX;
+
+    sp24 = menu_8030B50C();
+    temp_v1 = menu_8030B668();
+    if (sp24 == -1) {
+        if (temp_v1 != 1) {
+            D_8036C120 = 0;
+            func_8032D51C(0);
+            func_80315F0C();
+            return -1;
+        } else {
+            D_8034F8F4 = 0;
+            func_8033F964(1);
+        }
+    }
+    sp1C = 0;
+    stickX = demoGetInputs(0, 0);
+    if (ABS_NOEQ(stickX) < 0.75f) {
+        D_8036C124 = FALSE;
+    } else if (!D_8036C124) {
+        if (stickX > 0.75f) {
+            sp1C = 1;
+            D_8036C124 = TRUE;
+        }
+        if (stickX < -0.75f) {
+            sp1C = -1;
+            D_8036C124 = TRUE;
+        }
+    }
+
+    switch (temp_v1) {
+    case 0:
+        D_8034F8E4 += sp1C;
+        D_8034F8E4 = func_80316D88(0.75f, 0, 1);
+        if (D_8034F8E4 == 0) {
+            func_80200180(0, 8, 2, 0);
+        } else {
+            func_80200180(0, 8, 1, 0);
+        }
+        if (sp1C != 0) {
+            func_8033F7F8(0x54);
+        }
+        func_80316BEC(0, D_8034F8E4);
+        return -1;
+    case 1:
+        D_8034F8E8 += sp1C;
+        D_8034F8E8 = func_80316D88(0.75f, 0, 0x1E);
+        if (sp24 == temp_v1) {
+            func_8033F748(D_8034F8E8);
+            func_8033F964(0);
+            func_8033FCD0(0xFF);
+        }
+        if (sp1C != 0) {
+            func_8033F7F8(0x54);
+        }
+        func_80316D34(1, D_8034F8E8);
+        return -1;
+    case 2:
+        D_8034F8EC += sp1C;
+        if (D_8034F8EC < 0) {
+            D_8034F8EC = 0;
+        } else if (D_8034F8EC >= 5) {
+            D_8034F8EC = 4;
+        }
+        func_80316BEC(2, D_8034F8EC);
+        func_8033FA88(D_8034F8D0[D_8034F8EC]);
+        func_8033FD94(0xFF, D_8034F8D0[D_8034F8F0], D_8034F8D0[D_8034F8EC]);
+        return -1;
+    case 3:
+        D_8034F8F0 += sp1C;
+        if (sp1C != 0) {
+            func_8033F7F8(0x6E);
+        }
+        if (D_8034F8F0 < 0) {
+            D_8034F8F0 = 0;
+        } else if (D_8034F8F0 >= 5) {
+            D_8034F8F0 = 4;
+        }
+        func_80316BEC(3, D_8034F8F0);
+        func_8033FAD4(D_8034F8D0[D_8034F8F0]);
+        func_8033FD94(0xFF, D_8034F8D0[D_8034F8F0], D_8034F8D0[D_8034F8EC]);
+        return -1;
+    case 4:
+        if (sp24 == temp_v1) {
+            func_8033F7F8(0x6E);
+            func_8032D51C(0);
+            return 0;
+        }
+        return -1;
+    default:
+        return -1;
+    }
+}
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316A28.s")
 
