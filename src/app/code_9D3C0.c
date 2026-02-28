@@ -99,10 +99,18 @@ void func_803160B0(void) {
     }
     menuCreateItems(0x50, menuY, 6, 1.0f, 1.0f, D_8036C130, count);
     func_80312F5C(1, 0xFF, 0xFF, 0xFF);
-    func_80312F5C(0, 0xFF, 0xFF, 0);
+    func_80312F5C(0, 0xFF, 0xFF, 0x00);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_803161A8.s")
+void func_803161A8(void) {
+    D_8036C130[0] = 0xBD;  // "File 1"
+    D_8036C130[1] = 0x51;  // "File 2"
+    D_8036C130[2] = 0x11C; // "Return"
+    menuCreateItems(80, 100, 6, 1.0f, 1.0f, D_8036C130, 3);
+    func_80312F5C(1, 0xFF, 0xFF, 0xFF);
+    func_80312F5C(0, 0xFF, 0xFF, 0x00);
+    D_8034F8F4 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316238.s")
 
