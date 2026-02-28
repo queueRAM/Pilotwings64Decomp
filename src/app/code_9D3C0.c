@@ -17,7 +17,7 @@ s32 D_8034F8F4 = 0;
 
 extern s16 D_8036C120;
 extern s32 D_8036C124;
-extern u8 D_8036C128; // flag to determine if game is complete
+extern u8 D_8036C128;     // flag to determine if game is complete
 extern s32 D_8036C130[5]; // menu items, at least 5
 
 // forward declarations
@@ -29,6 +29,9 @@ void func_80316B08(void);
 void func_803160B0(void);
 void func_803161A8(void);
 void func_80316238(void);
+s32 func_803163B8(void);
+s32 func_80316528(void);
+s32 func_80316634(void);
 void func_80316B80(void);
 void func_80316BEC(s32, s32);
 void func_80316D34(s32, s32);
@@ -49,18 +52,18 @@ s32 func_80315E90(void) {
 }
 
 void func_80315F0C(void) {
-    D_80362690->unk0[D_80362690->unk9C+1].debugFlag = 0;
-    saveFileLoad(D_80362690->unk0[D_80362690->unk9C+1].debugFlag);
+    D_80362690->unk0[D_80362690->unk9C + 1].debugFlag = 0;
+    saveFileLoad(D_80362690->unk0[D_80362690->unk9C + 1].debugFlag);
     D_8036C128 = func_8030CC48();
-    
-    D_80362690->unk0[D_80362690->unk9C+1].debugFlag = 1;
-    saveFileLoad(D_80362690->unk0[D_80362690->unk9C+1].debugFlag);
-    
+
+    D_80362690->unk0[D_80362690->unk9C + 1].debugFlag = 1;
+    saveFileLoad(D_80362690->unk0[D_80362690->unk9C + 1].debugFlag);
+
     if (D_8036C128 < func_8030CC48()) {
         D_8036C128 = func_8030CC48();
     } else {
-        D_80362690->unk0[D_80362690->unk9C+1].debugFlag = 0;
-        saveFileLoad(D_80362690->unk0[D_80362690->unk9C+1].debugFlag);
+        D_80362690->unk0[D_80362690->unk9C + 1].debugFlag = 0;
+        saveFileLoad(D_80362690->unk0[D_80362690->unk9C + 1].debugFlag);
     }
     if (D_8036C120 == 3) {
         func_80316B80();
@@ -84,7 +87,7 @@ void func_803160B0(void) {
     s32 menuY;
     s32 count;
 
-    saveFileLoad((s32) D_80362690->unk0[D_80362690->unk9C+1].debugFlag);
+    saveFileLoad((s32)D_80362690->unk0[D_80362690->unk9C + 1].debugFlag);
     if (D_8036C128 != 0) {
         D_8036C130[0] = 0xC2;  // "Check album"
         D_8036C130[1] = 0xBE;  // "Sound"
@@ -114,7 +117,6 @@ void func_803161A8(void) {
     D_8034F8F4 = 0;
 }
 
-
 void func_80316238(void) {
     D_8036C130[0] = 0x4B;  // "Stereo"
     D_8036C130[1] = 0xCE;  // "Sound Track"
@@ -135,7 +137,19 @@ void func_8031631C(void) {
     menuSetProps();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_8031633C.s")
+s32 func_8031633C(void) {
+    switch (D_8036C120) {
+    case 0:
+        return func_803163B8();
+    case 1:
+        return func_80316528();
+    case 2:
+        return func_80316634();
+    default:
+        _uvDebugPrintf("option_update : unknown panel!\n");
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_803163B8.s")
 
