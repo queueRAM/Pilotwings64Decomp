@@ -2,9 +2,11 @@
 #include <uv_graphics.h>
 #include <uv_level.h>
 #include "code_99D40.h"
+#include "code_B3A70.h"
 #include "credits.h"
 #include "menu.h"
 #include "save.h"
+#include "snd.h"
 
 // TODO: usage of [unk9C+1].debugFlag are likely incorrect way to get to 0x96 offset
 
@@ -151,7 +153,60 @@ s32 func_8031633C(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_803163B8.s")
+s32 func_803163B8(void) {
+    s32 temp_v0;
+    u32 temp_t7;
+
+    temp_v0 = menu_8030B50C();
+    temp_t7 = temp_v0 + 1;
+    if (D_8036C128) {
+        switch (temp_t7) {
+        case 1:
+            D_8036C120 = 1;
+            func_8032D51C(0);
+            func_80315F0C();
+            return -1;
+        case 2:
+            D_8036C120 = 2;
+            func_8032D51C(0);
+            func_80315F0C();
+            return -1;
+        case 3:
+            func_8033FB14();
+            func_8033F964(1);
+            func_8032D51C(0);
+            func_8030CCFC();
+            func_80316B80();
+            func_803160B0();
+            return -1;
+        case 0:
+        case 4:
+            func_8032D51C(0);
+            return 0;
+        default:
+            return -1;
+        }
+    } else {
+        switch (temp_v0) {
+        case 0:
+            D_8036C120 = 1;
+            func_8032D51C(0);
+            func_80315F0C();
+            return -1;
+        case 1:
+            D_8036C120 = 2;
+            func_8032D51C(0);
+            func_80315F0C();
+            return -1;
+        case -1:
+        case 2:
+            func_8032D51C(0);
+            return 0;
+        default:
+            return -1;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316528.s")
 
