@@ -1,7 +1,9 @@
 #include "common.h"
 #include <uv_font.h>
+#include <uv_geometry.h>
 #include <uv_graphics.h>
 #include <uv_level.h>
+#include <uv_sprite.h>
 #include "kernel/code_1050.h"
 #include "code_99D40.h"
 #include "code_B3A70.h"
@@ -385,7 +387,14 @@ void func_80316AE0(void) {
     uvFont_80219EA8();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316B08.s")
+void func_80316B08(void) {
+    uvSprtDraw(0);
+    uvGfx_80223A28(0xFFF);
+    uvVtxRect(0, 18, 319, 0);
+    uvVtxRect(0, 239, 319, 232);
+    uvVtxRect(0, 232, 10, 18);
+    uvVtxRect(310, 232, 319, 18);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316B80.s")
 
