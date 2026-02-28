@@ -257,9 +257,6 @@ s32 func_80316528(void) {
     }
 }
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316634.s")
-#else
 s32 func_80316634(void) {
     s32 sp24;
     s32 temp_v1;
@@ -297,7 +294,7 @@ s32 func_80316634(void) {
     switch (temp_v1) {
     case 0:
         D_8034F8E4 += sp1C;
-        D_8034F8E4 = func_80316D88(0.75f, 0, 1);
+        D_8034F8E4 = func_80316D88(D_8034F8E4, 0, 1);
         if (D_8034F8E4 == 0) {
             func_80200180(0, 8, 2, 0);
         } else {
@@ -310,7 +307,7 @@ s32 func_80316634(void) {
         return -1;
     case 1:
         D_8034F8E8 += sp1C;
-        D_8034F8E8 = func_80316D88(0.75f, 0, 0x1E);
+        D_8034F8E8 = func_80316D88(D_8034F8E8, 0, 30);
         if (sp24 == temp_v1) {
             func_8033F748(D_8034F8E8);
             func_8033F964(0);
@@ -357,7 +354,6 @@ s32 func_80316634(void) {
         return -1;
     }
 }
-#endif
 
 void func_80316A28(void) {
     switch (D_8036C120) {
