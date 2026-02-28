@@ -10,6 +10,7 @@
 #include "credits.h"
 #include "demo.h"
 #include "menu.h"
+#include "options.h"
 #include "save.h"
 #include "snap.h"
 #include "snd.h"
