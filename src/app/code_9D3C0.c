@@ -1,4 +1,5 @@
 #include "common.h"
+#include <uv_graphics.h>
 
 f32 D_8034F8D0[] = { 0.0f, 0.2f, 0.4f, 0.6f, 1.0f };
 s32 D_8034F8E4 = 0;
@@ -7,7 +8,29 @@ s32 D_8034F8EC = 4;
 s32 D_8034F8F0 = 4;
 s32 D_8034F8F4 = 0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80315E90.s")
+extern s16 D_8036C120;
+
+// forward declarations
+void func_80315F0C(void);
+void func_8031631C(void);
+s32 func_8031633C(void);
+void func_80316A28(void);
+void func_80316B08(void);
+
+s32 func_80315E90(void) {
+    s32 temp_v0;
+
+    D_8036C120 = 3;
+    func_80315F0C();
+    while ((temp_v0 = func_8031633C()) == -1) {
+        uvGfxBegin();
+        func_80316B08();
+        func_80316A28();
+        uvGfxEnd();
+    }
+    func_8031631C();
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80315F0C.s")
 
