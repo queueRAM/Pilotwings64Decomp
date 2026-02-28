@@ -375,7 +375,10 @@ void func_80316A90(void) {
     uvFont_80219EA8();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316AB8.s")
+void func_80316AB8(void) {
+    menuInit();
+    uvFont_80219EA8();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316AE0.s")
 
