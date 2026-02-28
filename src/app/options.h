@@ -3,6 +3,6 @@
 
 #include <PR/ultratypes.h>
 
-s32 func_80315E90(void);
+s32 optionsTopRender(void);
 
 #endif // APP_OPTIONS_H

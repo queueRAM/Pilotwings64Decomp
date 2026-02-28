@@ -25,48 +25,48 @@ static s32 sVolumeMusic = 4;
 static s32 sVolumeSfx = 4;
 static s32 D_8034F8F4 = 0;
 
-extern s16 D_8036C120;
+extern s16 sOptionsPanel;
 extern s32 sStickHeld;
 extern u8 D_8036C128; // flag to determine if game is complete
 extern u8 D_8036C129;
-extern s32 D_8036C130[5]; // menu items, at least 5
+extern s32 sOptionMenuItems[5]; // menu items, at least 5
 
 // forward declarations
-void func_80315F0C(void);
-void func_8031631C(void);
-s32 func_8031633C(void);
-void func_80316A28(void);
-void func_80316B08(void);
-void func_803160B0(void);
-void func_803161A8(void);
-void func_80316238(void);
-s32 func_803163B8(void);
-s32 func_80316528(void);
-s32 func_80316634(void);
-void func_80316B80(void);
-void func_80316BEC(s32, s32);
-void func_80316D34(s32, s32);
-s32 func_80316D88(s32, s32, s32);
-void func_80316A90(void);
-void func_80316AB8(void);
-void func_80316AE0(void);
+void optionsInit(void);
+void optionsDeinit(void);
+s32 optionsMenuHandler(void);
+void optionsDrawPanel(void);
+void optionsDrawBorder(void);
+void optionsInitMain(void);
+void optionsInitAlbum(void);
+void optionsInitSound(void);
+s32 optionsHandlerMain(void);
+s32 optionsHandlerAlbum(void);
+s32 optionsHandlerSound(void);
+void options_80316B80(void);
+void optionsSetSetting(s32, s32);
+void optionsSetTrack(s32, s32);
+s32 optionsItemWrap(s32 val, s32 first, s32 last);
+void optionsPanel0(void);
+void optionsPanel1(void);
+void optionsPanel2(void);
 
-s32 func_80315E90(void) {
-    s32 temp_v0;
+s32 optionsTopRender(void) {
+    s32 menuSel;
 
-    D_8036C120 = 3;
-    func_80315F0C();
-    while ((temp_v0 = func_8031633C()) == -1) {
+    sOptionsPanel = 3;
+    optionsInit();
+    while ((menuSel = optionsMenuHandler()) == -1) {
         uvGfxBegin();
-        func_80316B08();
-        func_80316A28();
+        optionsDrawBorder();
+        optionsDrawPanel();
         uvGfxEnd();
     }
-    func_8031631C();
-    return temp_v0;
+    optionsDeinit();
+    return menuSel;
 }
 
-void func_80315F0C(void) {
+void optionsInit(void) {
     D_80362690->unk0[D_80362690->unk9C + 1].debugFlag = 0;
     saveFileLoad(D_80362690->unk0[D_80362690->unk9C + 1].debugFlag);
     D_8036C128 = func_8030CC48();
@@ -80,93 +80,93 @@ void func_80315F0C(void) {
         D_80362690->unk0[D_80362690->unk9C + 1].debugFlag = 0;
         saveFileLoad(D_80362690->unk0[D_80362690->unk9C + 1].debugFlag);
     }
-    if (D_8036C120 == 3) {
-        func_80316B80();
-        D_8036C120 = 0;
+    if (sOptionsPanel == 3) {
+        options_80316B80();
+        sOptionsPanel = 0;
     }
-    switch (D_8036C120) {
+    switch (sOptionsPanel) {
     case 0:
-        func_803160B0();
+        optionsInitMain();
         break;
     case 1:
-        func_803161A8();
+        optionsInitAlbum();
         break;
     case 2:
-        func_80316238();
+        optionsInitSound();
         break;
     }
     sStickHeld = 0;
 }
 
-void func_803160B0(void) {
+void optionsInitMain(void) {
     s32 menuY;
     s32 count;
 
-    saveFileLoad((s32)D_80362690->unk0[D_80362690->unk9C + 1].debugFlag);
+    saveFileLoad(D_80362690->unk0[D_80362690->unk9C + 1].debugFlag);
     if (D_8036C128 != 0) {
-        D_8036C130[0] = 0xC2;  // "Check album"
-        D_8036C130[1] = 0xBE;  // "Sound"
-        D_8036C130[2] = 0x13;  // "Congratulations!"
-        D_8036C130[3] = 0x11C; // "Return"
+        sOptionMenuItems[0] = 0xC2;  // "Check album"
+        sOptionMenuItems[1] = 0xBE;  // "Sound"
+        sOptionMenuItems[2] = 0x13;  // "Congratulations!"
+        sOptionMenuItems[3] = 0x11C; // "Return"
         count = 4;
         menuY = 80;
     } else {
-        D_8036C130[0] = 0xC2;  // "Check album"
-        D_8036C130[1] = 0xBE;  // "Sound"
-        D_8036C130[2] = 0x11C; // "Return"
+        sOptionMenuItems[0] = 0xC2;  // "Check album"
+        sOptionMenuItems[1] = 0xBE;  // "Sound"
+        sOptionMenuItems[2] = 0x11C; // "Return"
         count = 3;
         menuY = 100;
     }
-    menuCreateItems(0x50, menuY, 6, 1.0f, 1.0f, D_8036C130, count);
+    menuCreateItems(0x50, menuY, 6, 1.0f, 1.0f, sOptionMenuItems, count);
     func_80312F5C(1, 0xFF, 0xFF, 0xFF);
     func_80312F5C(0, 0xFF, 0xFF, 0x00);
 }
 
-void func_803161A8(void) {
-    D_8036C130[0] = 0xBD;  // "File 1"
-    D_8036C130[1] = 0x51;  // "File 2"
-    D_8036C130[2] = 0x11C; // "Return"
-    menuCreateItems(80, 100, 6, 1.0f, 1.0f, D_8036C130, 3);
+void optionsInitAlbum(void) {
+    sOptionMenuItems[0] = 0xBD;  // "File 1"
+    sOptionMenuItems[1] = 0x51;  // "File 2"
+    sOptionMenuItems[2] = 0x11C; // "Return"
+    menuCreateItems(80, 100, 6, 1.0f, 1.0f, sOptionMenuItems, 3);
     func_80312F5C(1, 0xFF, 0xFF, 0xFF);
     func_80312F5C(0, 0xFF, 0xFF, 0x00);
     D_8034F8F4 = 0;
 }
 
-void func_80316238(void) {
-    D_8036C130[0] = 0x4B;  // "Stereo"
-    D_8036C130[1] = 0xCE;  // "Sound Track"
-    D_8036C130[2] = 0x133; // "Vol. 1" (Sound Track)
-    D_8036C130[3] = 0x64;  // "Vol. 1" (Sound Effects)
-    D_8036C130[4] = 0x11C; // "Return"
-    menuCreateItems(40, 70, 6, 1.0f, 1.0f, D_8036C130, 5);
+void optionsInitSound(void) {
+    sOptionMenuItems[0] = 0x4B;  // "Stereo"
+    sOptionMenuItems[1] = 0xCE;  // "Sound Track"
+    sOptionMenuItems[2] = 0x133; // "Vol. 1" (Sound Track)
+    sOptionMenuItems[3] = 0x64;  // "Vol. 1" (Sound Effects)
+    sOptionMenuItems[4] = 0x11C; // "Return"
+    menuCreateItems(40, 70, 6, 1.0f, 1.0f, sOptionMenuItems, 5);
     func_80312F5C(1, 0xFF, 0xFF, 0xFF);
     func_80312F5C(0, 0xFF, 0xFF, 0);
-    func_80316BEC(0, sStereoMono);
-    func_80316D34(1, sSoundTrack);
-    func_80316BEC(2, sVolumeMusic);
-    func_80316BEC(3, sVolumeSfx);
+    optionsSetSetting(0, sStereoMono);
+    optionsSetTrack(1, sSoundTrack);
+    optionsSetSetting(2, sVolumeMusic);
+    optionsSetSetting(3, sVolumeSfx);
     func_80312FF8(6);
 }
 
-void func_8031631C(void) {
+void optionsDeinit(void) {
     menuSetProps();
 }
 
-s32 func_8031633C(void) {
-    switch (D_8036C120) {
+s32 optionsMenuHandler(void) {
+    switch (sOptionsPanel) {
     case 0:
-        return func_803163B8();
+        return optionsHandlerMain();
     case 1:
-        return func_80316528();
+        return optionsHandlerAlbum();
     case 2:
-        return func_80316634();
+        return optionsHandlerSound();
     default:
         _uvDebugPrintf("option_update : unknown panel!\n");
         return 0;
     }
 }
 
-s32 func_803163B8(void) {
+s32 optionsHandlerMain(void) {
     s32 temp_v0;
     u32 temp_t7;
 
@@ -175,22 +175,22 @@ s32 func_803163B8(void) {
     if (D_8036C128) {
         switch (temp_t7) {
         case 1:
-            D_8036C120 = 1;
+            sOptionsPanel = 1;
             func_8032D51C(0);
-            func_80315F0C();
+            optionsInit();
             return -1;
         case 2:
-            D_8036C120 = 2;
+            sOptionsPanel = 2;
             func_8032D51C(0);
-            func_80315F0C();
+            optionsInit();
             return -1;
         case 3:
             func_8033FB14();
             func_8033F964(1);
             func_8032D51C(0);
             func_8030CCFC();
-            func_80316B80();
-            func_803160B0();
+            options_80316B80();
+            optionsInitMain();
             return -1;
         case 0:
         case 4:
@@ -202,14 +202,14 @@ s32 func_803163B8(void) {
     } else {
         switch (temp_v0) {
         case 0:
-            D_8036C120 = 1;
+            sOptionsPanel = 1;
             func_8032D51C(0);
-            func_80315F0C();
+            optionsInit();
             return -1;
         case 1:
-            D_8036C120 = 2;
+            sOptionsPanel = 2;
             func_8032D51C(0);
-            func_80315F0C();
+            optionsInit();
             return -1;
         case -1:
         case 2:
@@ -221,7 +221,7 @@ s32 func_803163B8(void) {
     }
 }
 
-s32 func_80316528(void) {
+s32 optionsHandlerAlbum(void) {
     s32 temp_v0;
 
     temp_v0 = menu_8030B50C();
@@ -232,8 +232,8 @@ s32 func_80316528(void) {
         if (func_8033E3A8(0) != 0) {
             saveFileWrite(D_8036C129);
         }
-        func_80316B80();
-        func_803161A8();
+        options_80316B80();
+        optionsInitAlbum();
         return -1;
     case 1:
         D_8036C129 = 1;
@@ -241,24 +241,24 @@ s32 func_80316528(void) {
         if (func_8033E3A8(0) != 0) {
             saveFileWrite(D_8036C129);
         }
-        func_80316B80();
-        func_803161A8();
+        options_80316B80();
+        optionsInitAlbum();
         menu_8030B69C(1);
         return -1;
     case 2:
         func_8032D51C(0);
         return 0;
     case -1:
-        D_8036C120 = 0;
+        sOptionsPanel = 0;
         func_8032D51C(0);
-        func_80315F0C();
+        optionsInit();
         return -1;
     default:
         return -1;
     }
 }
 
-s32 func_80316634(void) {
+s32 optionsHandlerSound(void) {
     s32 sp24;
     s32 menuItem;
     s32 optInc;
@@ -268,9 +268,9 @@ s32 func_80316634(void) {
     menuItem = menu_8030B668();
     if (sp24 == -1) {
         if (menuItem != 1) {
-            D_8036C120 = 0;
+            sOptionsPanel = 0;
             func_8032D51C(0);
-            func_80315F0C();
+            optionsInit();
             return -1;
         } else {
             D_8034F8F4 = 0;
@@ -295,7 +295,7 @@ s32 func_80316634(void) {
     switch (menuItem) {
     case 0:
         sStereoMono += optInc;
-        sStereoMono = func_80316D88(sStereoMono, 0, 1);
+        sStereoMono = optionsItemWrap(sStereoMono, 0, 1);
         if (sStereoMono == 0) {
             func_80200180(0, 8, 2, 0);
         } else {
@@ -304,11 +304,11 @@ s32 func_80316634(void) {
         if (optInc != 0) {
             snd_play_sfx(0x54);
         }
-        func_80316BEC(0, sStereoMono);
+        optionsSetSetting(0, sStereoMono);
         return -1;
     case 1:
         sSoundTrack += optInc;
-        sSoundTrack = func_80316D88(sSoundTrack, 0, 30);
+        sSoundTrack = optionsItemWrap(sSoundTrack, 0, 30);
         if (sp24 == menuItem) {
             func_8033F748(sSoundTrack);
             func_8033F964(0);
@@ -317,7 +317,7 @@ s32 func_80316634(void) {
         if (optInc != 0) {
             snd_play_sfx(0x54);
         }
-        func_80316D34(1, sSoundTrack);
+        optionsSetTrack(1, sSoundTrack);
         return -1;
     case 2:
         sVolumeMusic += optInc;
@@ -326,7 +326,7 @@ s32 func_80316634(void) {
         } else if (sVolumeMusic >= 5) {
             sVolumeMusic = 4;
         }
-        func_80316BEC(2, sVolumeMusic);
+        optionsSetSetting(2, sVolumeMusic);
         func_8033FA88(sVolume[sVolumeMusic]);
         func_8033FD94(0xFF, sVolume[sVolumeSfx], sVolume[sVolumeMusic]);
         return -1;
@@ -340,7 +340,7 @@ s32 func_80316634(void) {
         } else if (sVolumeSfx >= 5) {
             sVolumeSfx = 4;
         }
-        func_80316BEC(3, sVolumeSfx);
+        optionsSetSetting(3, sVolumeSfx);
         func_8033FAD4(sVolume[sVolumeSfx]);
         func_8033FD94(0xFF, sVolume[sVolumeSfx], sVolume[sVolumeMusic]);
         return -1;
@@ -356,36 +356,36 @@ s32 func_80316634(void) {
     }
 }
 
-void func_80316A28(void) {
-    switch (D_8036C120) {
+void optionsDrawPanel(void) {
+    switch (sOptionsPanel) {
     case 0:
-        func_80316A90();
+        optionsPanel0();
         break;
     case 1:
-        func_80316AB8();
+        optionsPanel1();
         break;
     case 2:
-        func_80316AE0();
+        optionsPanel2();
         break;
     }
 }
 
-void func_80316A90(void) {
+void optionsPanel0(void) {
     menuInit();
     uvFont_80219EA8();
 }
 
-void func_80316AB8(void) {
+void optionsPanel1(void) {
     menuInit();
     uvFont_80219EA8();
 }
 
-void func_80316AE0(void) {
+void optionsPanel2(void) {
     menuInit();
     uvFont_80219EA8();
 }
 
-void func_80316B08(void) {
+void optionsDrawBorder(void) {
     uvSprtDraw(0);
     uvGfx_80223A28(0xFFF);
     uvVtxRect(0, 18, 319, 0);
@@ -394,7 +394,7 @@ void func_80316B08(void) {
     uvVtxRect(310, 232, 319, 18);
 }
 
-void func_80316B80(void) {
+void options_80316B80(void) {
     uvLevelInit();
     uvLevelAppend(0x70);
     uvLevelAppend(0x2E);
@@ -402,7 +402,7 @@ void func_80316B80(void) {
     textLoadBlock(0x42);
 }
 
-void func_80316BEC(s32 menuIdx, s32 setting) {
+void optionsSetSetting(s32 menuIdx, s32 setting) {
     s32 menuStr;
 
     switch (menuIdx) {
@@ -455,25 +455,25 @@ void func_80316BEC(s32 menuIdx, s32 setting) {
         }
         break;
     }
-    D_8036C130[menuIdx] = menuStr;
+    sOptionMenuItems[menuIdx] = menuStr;
     menuSetItem(menuIdx, textGetDataByIdx(menuStr));
 }
 
-void func_80316D34(s32 arg0, s32 arg1) {
-    s16* str;
+void optionsSetTrack(s32 menuItem, s32 trackIdx) {
+    s16* trackStr;
 
-    if (arg0 == 1) {
-        str = textGetDataByIdx(0xCE); // "Sound Track"
-        textFmtIntAt(str, arg1 + 1, 2, 13);
-        menuSetItem(1, str);
+    if (menuItem == 1) {
+        trackStr = textGetDataByIdx(0xCE); // "Sound Track"
+        textFmtIntAt(trackStr, trackIdx + 1, 2, 13);
+        menuSetItem(1, trackStr);
     }
 }
 
-s32 func_80316D88(s32 val, s32 arg1, s32 arg2) {
-    if (val < arg1) {
-        val = arg2;
-    } else if (val > arg2) {
-        val = arg1;
+s32 optionsItemWrap(s32 val, s32 first, s32 last) {
+    if (val < first) {
+        val = last;
+    } else if (val > last) {
+        val = first;
     }
     return val;
 }
