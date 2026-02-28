@@ -364,6 +364,8 @@ gCurTestIdx               = 0x803509B4;
 
 sOptionsPanel             = 0x8036C120; // type:s16
 sStickHeld                = 0x8036C124;
+sGameComplete             = 0x8036C128;
+sSaveFileIdx              = 0x8036C129;
 sOptionMenuItems          = 0x8036C130; // size:0x14
 
 sTextName                 = 0x80377F10; // size:0x6E0

@@ -23,13 +23,13 @@ static s32 sStereoMono = 0;
 static s32 sSoundTrack = 0;
 static s32 sVolumeMusic = 4;
 static s32 sVolumeSfx = 4;
-static s32 D_8034F8F4 = 0;
+static s32 D_8034F8F4 = 0; // unused, only ever set to 0
 
-extern s16 sOptionsPanel;
-extern s32 sStickHeld;
-extern u8 D_8036C128; // flag to determine if game is complete
-extern u8 D_8036C129;
-extern s32 sOptionMenuItems[5]; // menu items, at least 5
+static s16 sOptionsPanel;
+static s32 sStickHeld;
+static u8 sGameComplete; // flag to determine if game is complete
+static u8 sSaveFileIdx;
+static s32 sOptionMenuItems[5]; // menu items, at least 5
 
 // forward declarations
 void optionsInit(void);
@@ -69,13 +69,13 @@ s32 optionsTopRender(void) {
 void optionsInit(void) {
     D_80362690->unk0[D_80362690->unk9C + 1].debugFlag = 0;
     saveFileLoad(D_80362690->unk0[D_80362690->unk9C + 1].debugFlag);
-    D_8036C128 = func_8030CC48();
+    sGameComplete = func_8030CC48();
 
     D_80362690->unk0[D_80362690->unk9C + 1].debugFlag = 1;
     saveFileLoad(D_80362690->unk0[D_80362690->unk9C + 1].debugFlag);
 
-    if (D_8036C128 < func_8030CC48()) {
-        D_8036C128 = func_8030CC48();
+    if (sGameComplete < func_8030CC48()) {
+        sGameComplete = func_8030CC48();
     } else {
         D_80362690->unk0[D_80362690->unk9C + 1].debugFlag = 0;
         saveFileLoad(D_80362690->unk0[D_80362690->unk9C + 1].debugFlag);
@@ -103,7 +103,7 @@ void optionsInitMain(void) {
     s32 count;
 
     saveFileLoad(D_80362690->unk0[D_80362690->unk9C + 1].debugFlag);
-    if (D_8036C128 != 0) {
+    if (sGameComplete != 0) {
         sOptionMenuItems[0] = 0xC2;  // "Check album"
         sOptionMenuItems[1] = 0xBE;  // "Sound"
         sOptionMenuItems[2] = 0x13;  // "Congratulations!"
@@ -172,7 +172,7 @@ s32 optionsHandlerMain(void) {
 
     temp_v0 = menu_8030B50C();
     temp_t7 = temp_v0 + 1;
-    if (D_8036C128) {
+    if (sGameComplete) {
         switch (temp_t7) {
         case 1:
             sOptionsPanel = 1;
@@ -227,19 +227,19 @@ s32 optionsHandlerAlbum(void) {
     temp_v0 = menu_8030B50C();
     switch (temp_v0) {
     case 0:
-        D_8036C129 = 0;
-        saveFileLoad(D_8036C129);
+        sSaveFileIdx = 0;
+        saveFileLoad(sSaveFileIdx);
         if (func_8033E3A8(0) != 0) {
-            saveFileWrite(D_8036C129);
+            saveFileWrite(sSaveFileIdx);
         }
         options_80316B80();
         optionsInitAlbum();
         return -1;
     case 1:
-        D_8036C129 = 1;
-        saveFileLoad(D_8036C129);
+        sSaveFileIdx = 1;
+        saveFileLoad(sSaveFileIdx);
         if (func_8033E3A8(0) != 0) {
-            saveFileWrite(D_8036C129);
+            saveFileWrite(sSaveFileIdx);
         }
         options_80316B80();
         optionsInitAlbum();

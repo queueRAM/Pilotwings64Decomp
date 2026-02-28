@@ -626,6 +626,8 @@ segments:
       - { type: bss, vram: 0x80362500, name: app_bss_80362500 }
       - { type: .bss, vram: 0x80369F10, name: app/menu }
       - { type: bss, vram: 0x80369F30, name: app_bss_80369F10 }
+      - { type: .bss, vram: 0x8036C120, name: app/options }
+      - { type: bss, vram: 0x8036C150, name: app_bss_8036C150 }
       - { type: .bss, vram: 0x803718F0, name: app/results }
       - { type: bss, vram: 0x80371960, name: app_bss_80371960 }
       - { type: .bss, vram: 0x80377F10, name: app/text_data }
