@@ -278,7 +278,7 @@ s32 func_80316634(void) {
         }
     }
     sp1C = 0;
-    stickX = demoGetInputs(0, 0);
+    stickX = demoGetInputs(0, INPUT_AXIS_X);
     if (ABS_NOEQ(stickX) < 0.75f) {
         D_8036C124 = FALSE;
     } else if (!D_8036C124) {
