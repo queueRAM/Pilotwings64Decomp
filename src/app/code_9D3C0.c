@@ -42,6 +42,9 @@ void func_80316B80(void);
 void func_80316BEC(s32, s32);
 void func_80316D34(s32, s32);
 s32 func_80316D88(f32, s32, s32);
+void func_80316A90(void);
+void func_80316AB8(void);
+void func_80316AE0(void);
 
 s32 func_80315E90(void) {
     s32 temp_v0;
@@ -352,7 +355,19 @@ s32 func_80316634(void) {
 }
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316A28.s")
+void func_80316A28(void) {
+    switch (D_8036C120) {
+    case 0:
+        func_80316A90();
+        break;
+    case 1:
+        func_80316AB8();
+        break;
+    case 2:
+        func_80316AE0();
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_9D3C0/func_80316A90.s")
 
