@@ -2,6 +2,8 @@
 #include <uv_controller.h>
 #include <uv_dobj.h>
 #include <uv_event.h>
+#include <uv_font.h>
+#include <uv_janim.h>
 #include <uv_level.h>
 #include <uv_math.h>
 #include <uv_vector.h>
@@ -15,6 +17,7 @@
 #include "demo.h"
 #include "hud.h"
 #include "snd.h"
+#include "text_data.h"
 
 s32 D_8034EA40 = 0;
 u16 D_8034EA44 = 0xFFFF;
@@ -217,7 +220,82 @@ s32 func_802DAA34(void) {
     return 8;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DAB18.s")
+void func_802DAB18(Unk802D3658_Arg0* arg0) {
+    f32 var_fs0;
+    Mtx4F spC4;
+    Mtx4F sp84;
+    Mtx4F sp44;
+    u32 temp_v0;
+
+    var_fs0 = (D_80359C40 - 1.0f) / 4;
+    if (var_fs0 < 0.0) {
+        var_fs0 = 0.0f;
+    }
+    temp_v0 = func_802DA530();
+    switch (temp_v0) {
+    case 0:
+        if ((D_80359C88 > 0.45f) && (var_fs0 < 0.54f) && ((D_8034EA48 & 1) == 0)) {
+            snd_play_sfx(0x61);
+            D_8034EA48 |= 1;
+        }
+        var_fs0 = (f32)(var_fs0 * 2.55);
+        break;
+    case 1:
+        if ((D_80359C88 > 0.0f) && (var_fs0 < 0.1f) && ((D_8034EA48 & 2) == 0)) {
+            snd_play_sfx(0x63);
+            D_8034EA48 |= 2;
+        }
+        break;
+    case 2:
+        if ((D_80359C88 > 0.0f) && (var_fs0 < 0.5f) && ((D_8034EA48 & 3) == 0)) {
+            snd_play_sfx(0x65);
+            D_8034EA48 |= 3;
+        }
+        break;
+    case 3:
+        if ((D_80359C88 > 0.5f) && (var_fs0 < 0.8f) && ((D_8034EA48 & 4) == 0)) {
+            snd_play_sfx(0x62);
+            D_8034EA48 |= 4;
+        }
+        var_fs0 = (f32)(var_fs0 * 1.5);
+        break;
+    case 4:
+        if ((D_80359C88 > 0.5f) && (var_fs0 < 1.0f) && ((D_8034EA48 & 5) == 0)) {
+            snd_play_sfx(0x64);
+            D_8034EA48 |= 5;
+        }
+        var_fs0 = (f32)(var_fs0 * 1.5);
+        break;
+    case 5:
+        if ((D_80359C88 > 0.25f) && (var_fs0 < 0.75f) && !(D_8034EA48 & 6)) {
+            snd_play_sfx(0x66);
+            D_8034EA48 |= 6;
+        }
+        break;
+    }
+    if (var_fs0 > 1.0) {
+        var_fs0 = 1.0f;
+    }
+    if (D_80359C44 == 0x6D) {
+        uvMat4Copy(&spC4, &D_80359C48);
+        uvMat4LocalTranslate(&spC4, 0.0f, 0.0f, func_80313F08(&D_8034EAAC, var_fs0));
+        uvDobjPosm(D_8034EA44, 0, &spC4);
+    }
+    func_80200B00(D_8034EA44, D_80359C44, var_fs0);
+    func_80204B34(arg0->unk22C, &arg0->unk108);
+    uvGfxSetViewport(0, 0, 0x140, 0, 0xF0);
+    uvMat4SetOrtho(&sp84, 0.0f, 319.0f, 0.0f, 239.0f);
+    uvGfxMtxProjPushF(&sp84);
+    uvMat4SetIdentity(&sp44);
+    uvGfxMtxViewLoad(&sp44, 1);
+    uvFontSet(6);
+    uvFont_80219550(1, 1);
+    uvFont_8021956C(0xFF, 0xFF, 0xFF, 0xFF);
+    func_80219874(0x8C, 0x19, textGetDataByIdx(D_8034EA7C[D_8034EA40]), 0x64, 0xFFE);
+    func_80204FC4(arg0->unk22C);
+    func_80313D74();
+    D_80359C88 = var_fs0;
+}
 
 s32 func_802DB050(Unk802D3658_Unk111C* arg0, Unk802D3658_Unk1224* arg1, u16 arg2, u8 arg3, Mtx4F* arg4) {
     Unk802D3658_Unk1120* var_s5;
