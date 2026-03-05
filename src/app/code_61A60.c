@@ -91,7 +91,24 @@ s32 func_802DA628(u32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA684.s")
+s32 func_802DA684(u32 arg0) {
+    switch (arg0) {
+    case 0:
+        return 0x15A;
+    case 1:
+        return 0x15B;
+    case 2:
+        return 0x15C;
+    case 3:
+        return 0x15D;
+    case 4:
+        return 0x15E;
+    case 5:
+        return 0x15F;
+    default:
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA6E0.s")
 
