@@ -1,10 +1,12 @@
 #include "common.h"
 #include <uv_dobj.h>
+#include <uv_event.h>
 #include <uv_level.h>
 #include <uv_math.h>
 #include <uv_vector.h>
 #include "code_61A60.h"
 #include "code_69BF0.h"
+#include "code_72B70.h"
 #include "code_9A960.h"
 #include "code_B3A70.h"
 #include "code_D2B10.h"
@@ -179,7 +181,14 @@ void func_802DA6E0(Unk80362690* arg0, s32 arg1) {
     D_80359C40 = 0.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA9E0.s")
+void func_802DA9E0(void) {
+    uvEventPost(0xD, 0);
+    uvDobjModel(D_8034EA44, 0xFFFF);
+    D_8034EA44 = 0xFFFF;
+    level_8030BA60();
+    uvLevelInit();
+    func_802EBBB8();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DAA34.s")
 

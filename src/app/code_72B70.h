@@ -152,6 +152,7 @@ typedef struct {
 } Unk80367704;
 
 void func_802EB9C0(void);
+void func_802EBBB8(void);
 void func_802EBC30(void);
 void func_802EDDEC(Mtx4F*);
 void func_802EDAF0(void*, Mtx4F*, s32, s32, f32, f32, f32, u32, s32, s32, s32);
