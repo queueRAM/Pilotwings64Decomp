@@ -39,7 +39,9 @@ s32 func_802DB6D4(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 s32 func_802DB9B8(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 s32 func_802DBCB0(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA530.s")
+s32 func_802DA530(void) {
+    return D_8034EA64[D_8034EA40];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA54C.s")
 
