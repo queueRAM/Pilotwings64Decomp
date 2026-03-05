@@ -72,7 +72,24 @@ s32 func_802DA574(Unk80362690* arg0) {
     return sp24;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA628.s")
+s32 func_802DA628(u32 arg0) {
+    switch (arg0) {
+    case 0:
+        return 0x55;
+    case 1:
+        return 0x56;
+    case 2:
+        return 0x57;
+    case 3:
+        return 0x58;
+    case 4:
+        return 0x59;
+    case 5:
+        return 0x5A;
+    default:
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA684.s")
 
