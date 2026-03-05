@@ -4,8 +4,11 @@
 #include <uv_math.h>
 #include <uv_vector.h>
 #include "code_61A60.h"
+#include "code_69BF0.h"
 #include "code_9A960.h"
 #include "code_B3A70.h"
+#include "code_D2B10.h"
+#include "hud.h"
 
 s32 D_8034EA40 = 0;
 u16 D_8034EA44 = 0xFFFF;
@@ -13,27 +16,26 @@ s32 D_8034EA48 = 0;
 
 // This struct should be used for Unk8034EA4C */
 typedef struct {
-    f32 unk0;
-    f32 unk4;
-    f32 unk8;
+    Vec3F unk0;
     f32 unkC;
     f32 unk10;
     f32 unk14;
 } Unk8034EA4C;
-f32 D_8034EA4C[] = {
-    -68.08f,
-    -302.14f,
-    10.74f,
+Unk8034EA4C D_8034EA4C = {
+    { -68.08f, -302.14f, 10.74f },
+    -0.0174533f, 0.1f, 0.0f
 };
-
-f32 D_8034EA58 = -0.0174533f; // almost DEG_TO_RAD(1)
-f32 D_8034EA5C = 0.1f;
-f32 padD_8034EA60 = 0.0f;
 
 s32 D_8034EA64[] = { 0, 3, 1, 4, 2, 5 };
 s32 D_8034EA7C[] = { 0x35, 0x14C, 0x9C, 0x1A7, 0x85, 0x128 };
 s32 D_8034EA94[] = { 2, 2, 2, 2, 2, 2 };
 Unk803599D0 D_8034EAAC = { 8, 0.36f, 0.0f, 0.412f, 0.1f, 0.465f, 0.25f, 0.517f, 0.475f, 0.568f, 0.5f, 0.62f, 0.475f, 0.673f, 0.25f, 0.725f, 0.0f, 0, 0, 0, 0 };
+
+// .bss
+extern f32 D_80359C40;
+extern s32 D_80359C44;
+extern Mtx4F D_80359C48;
+extern f32 D_80359C88;
 
 // forward declarations
 void func_802DA6E0(Unk80362690*, s32);
@@ -110,7 +112,72 @@ s32 func_802DA684(u32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA6E0.s")
+void func_802DA6E0(Unk80362690* arg0, s32 arg1) {
+    Unk802D3658_Arg0* temp_s0;
+
+    temp_s0 = arg0->unk0[arg0->unk9C].unkC.unk70;
+    D_8034EA48 = 0;
+    D_80359C88 = 0.0f;
+    func_802E26C0();
+    arg0->unk0[0].map = 1;
+    arg0->unk0[0].unk6 = 0;
+    arg0->unk0[0].unk8 = (u16)D_8034EA94[D_8034EA40];
+    levelLoad(1, arg1, 0, 1);
+    uvLevelAppend(func_802DA628(arg1));
+    func_80204BD4(temp_s0->unk22C, 1, 1.0f);
+    func_80204A8C(temp_s0->unk22C, 3);
+    uvChanTerra(temp_s0->unk22C, arg0->unk0[0].unk6);
+    uvLevelAppend(func_802DA628(arg1));
+    uvChanEnv(temp_s0->unk22C, arg0->unk0[0].unk8);
+    func_8034B5E0(temp_s0->unk22C, temp_s0);
+    func_80204A8C(temp_s0->unk22C, 3);
+    uvMat4SetIdentity(&temp_s0->unk108);
+    uvMat4RotateAxis(&temp_s0->unk108, D_8034EA4C.unkC, 'z');
+    uvMat4RotateAxis(&temp_s0->unk108, D_8034EA4C.unk10, 'x');
+    uvMat4RotateAxis(&temp_s0->unk108, D_8034EA4C.unk14, 'y');
+    temp_s0->unk108.m[3][0] = D_8034EA4C.unk0.x;
+    temp_s0->unk108.m[3][1] = D_8034EA4C.unk0.y;
+    temp_s0->unk108.m[3][2] = D_8034EA4C.unk0.z;
+    func_80204B34(temp_s0->unk22C, &temp_s0->unk108);
+    D_8034EA44 = uvDobjAllocIdx();
+    uvDobjModel(D_8034EA44, func_802DA684((u32)arg1));
+    uvMat4SetIdentity(&D_80359C48);
+    if (arg1 != 3) {
+        uvMat4RotateAxis(&D_80359C48, 0.2f, 'z');
+    }
+    uvMat4RotateAxis(&D_80359C48, 0.2f, 'x');
+    uvMat4RotateAxis(&D_80359C48, 0.0f, 'y');
+    D_80359C48.m[3][0] = 0.0f;
+    D_80359C48.m[3][1] = 5.0f;
+    D_80359C48.m[3][2] = -1.2f;
+    uvMat4MulBA(&D_80359C48, &temp_s0->unk108, &D_80359C48);
+    uvDobjPosm(D_8034EA44, 0, &D_80359C48);
+    hudGetState()->renderFlags = 0;
+    switch (arg1) {
+    case 0:
+        D_80359C44 = 0x6D;
+        break;
+    case 1:
+        D_80359C44 = 0x6E;
+        break;
+    case 2:
+        D_80359C44 = 0x6F;
+        break;
+    case 3:
+        D_80359C44 = 0x70;
+        break;
+    case 4:
+        D_80359C44 = 0x71;
+        break;
+    case 5:
+        D_80359C44 = 0x72;
+        break;
+    default:
+        D_80359C44 = 0x6D;
+        break;
+    }
+    D_80359C40 = 0.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA9E0.s")
 
