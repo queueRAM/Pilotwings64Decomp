@@ -43,7 +43,12 @@ s32 func_802DA530(void) {
     return D_8034EA64[D_8034EA40];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA54C.s")
+void func_802DA54C(void) {
+    D_8034EA40++;
+    if (D_8034EA40 >= 6) {
+        D_8034EA40 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA574.s")
 
