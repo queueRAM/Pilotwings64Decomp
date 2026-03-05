@@ -1,4 +1,5 @@
 #include "common.h"
+#include <uv_controller.h>
 #include <uv_dobj.h>
 #include <uv_event.h>
 #include <uv_level.h>
@@ -9,8 +10,11 @@
 #include "code_72B70.h"
 #include "code_9A960.h"
 #include "code_B3A70.h"
+#include "code_C9B60.h"
 #include "code_D2B10.h"
+#include "demo.h"
 #include "hud.h"
+#include "snd.h"
 
 s32 D_8034EA40 = 0;
 u16 D_8034EA44 = 0xFFFF;
@@ -190,7 +194,28 @@ void func_802DA9E0(void) {
     func_802EBBB8();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DAA34.s")
+// func_802DAA34 returns:
+//  - 0: A/B/Start button was pressed
+//  - 9: 5 second time exceeded?
+//  - 8: none of the above
+s32 func_802DAA34(void) {
+    demo_80323020();
+    func_80313D74();
+    D_80359C40 += D_8034F854;
+    if (D_80359C40 >= 5.0f) {
+        return 9;
+    }
+    if (uvControllerButtonPress(D_80362690->unk9C, A_BUTTON | B_BUTTON | START_BUTTON)) {
+        func_80344258(0);
+        if (uvControllerButtonPress(D_80362690->unk9C, A_BUTTON | START_BUTTON)) {
+            snd_play_sfx(0x6E);
+        } else if (uvControllerButtonPress(D_80362690->unk9C, B_BUTTON)) {
+            snd_play_sfx(0x01);
+        }
+        return 0;
+    }
+    return 8;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DAB18.s")
 
