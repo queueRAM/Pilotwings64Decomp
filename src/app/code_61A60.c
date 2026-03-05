@@ -1,9 +1,11 @@
 #include "common.h"
 #include <uv_dobj.h>
+#include <uv_level.h>
 #include <uv_math.h>
 #include <uv_vector.h>
 #include "code_61A60.h"
 #include "code_9A960.h"
+#include "code_B3A70.h"
 
 s32 D_8034EA40 = 0;
 u16 D_8034EA44 = 0xFFFF;
@@ -34,6 +36,10 @@ s32 D_8034EA94[] = { 2, 2, 2, 2, 2, 2 };
 Unk803599D0 D_8034EAAC = { 8, 0.36f, 0.0f, 0.412f, 0.1f, 0.465f, 0.25f, 0.517f, 0.475f, 0.568f, 0.5f, 0.62f, 0.475f, 0.673f, 0.25f, 0.725f, 0.0f, 0, 0, 0, 0 };
 
 // forward declarations
+void func_802DA6E0(Unk80362690*, s32);
+void func_802DA9E0(void);
+s32 func_802DAA34(void);
+void func_802DAB18(Unk802D3658_Arg0*);
 s32 func_802DB38C(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 s32 func_802DB6D4(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 s32 func_802DB9B8(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
@@ -50,7 +56,21 @@ void func_802DA54C(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA574.s")
+s32 func_802DA574(Unk80362690* arg0) {
+    s32 sp24;
+    Unk80362690_Unk0_UnkC* temp_s0;
+
+    temp_s0 = &arg0->unk0[arg0->unk9C].unkC;
+    func_802DA6E0(arg0, D_8034EA64[D_8034EA40]);
+    while ((sp24 = func_802DAA34()) == 8) {
+        uvGfxBegin();
+        func_802DAB18(temp_s0->unk70);
+        uvGfxEnd();
+    }
+    func_8032D51C(0);
+    func_802DA9E0();
+    return sp24;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DA628.s")
 
