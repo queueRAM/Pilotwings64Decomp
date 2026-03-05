@@ -279,13 +279,13 @@ typedef struct ParsedUVAN_Unk0 {
     struct ParsedUVAN_Unk0* unk0;
     u16 unk4;
     u8 pad6[0x2];
-    s32 unk8;
+    u32 unk8;
     Unk8037DCA0_UnkC* unkC;
 } ParsedUVAN_Unk0;
 
 typedef struct {
     struct ParsedUVAN_Unk0* unk0;
-    u16 unk4;
+    u16 modelId;
     u16 unk6;
     u8 unk8;
     u8 unk9;
