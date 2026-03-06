@@ -410,9 +410,9 @@ void func_8022BEB8(s32 arg0) {
 
 void _uvScLogCpuEvent(s32 arg0) {
     s32 i;
-    s32 var_a3;
+    s32 rspStatus;
     f64 temp_fs0;
-    s32 var_v0;
+    s32 rdpStatus;
 
     temp_fs0 = D_802B9C30[(gSchedRingIdx + 1) % 5];
     if (D_802B9C88 == 0) {
@@ -463,16 +463,15 @@ void _uvScLogCpuEvent(s32 arg0) {
     _uvDebugPrintf("---------  RSP events ---------\n");
 
     for (i = 0; i < D_802B9C18[arg0]; i++) {
-
-        var_v0 = (u8)(D_802B92A0[arg0].unk0[i].unkC >> 0x18) & 0xFF;
-        if (var_v0 == 0) {
-            var_v0 = 0x20;
+        rspStatus = (u8)(D_802B92A0[arg0].unk0[i].unkC >> 0x18) & 0xFF;
+        if (rspStatus == 0) {
+            rspStatus = ' ';
         }
-        var_a3 = (u8)(D_802B92A0[arg0].unk0[i].unkC >> 0x10) & 0xFF;
-        if (var_a3 == 0) {
-            var_a3 = 0x20;
+        rdpStatus = (u8)(D_802B92A0[arg0].unk0[i].unkC >> 0x10) & 0xFF;
+        if (rdpStatus == 0) {
+            rdpStatus = ' ';
         }
-        _uvDebugPrintf("%d/%d time: %f  sp: %2c  dp: %2c  st: 0x%x   ", i + 1, D_802B9C18[arg0], D_802B92A0[arg0].unk0[i].unk0 - temp_fs0, var_v0, var_a3, D_802B92A0[arg0].unk0[i].unkC & 0xF);
+        _uvDebugPrintf("%d/%d time: %f  sp: %2c  dp: %2c  st: 0x%x   ", i + 1, D_802B9C18[arg0], D_802B92A0[arg0].unk0[i].unk0 - temp_fs0, rspStatus, rdpStatus, D_802B92A0[arg0].unk0[i].unkC & 0xF);
 
         switch (D_802B92A0[arg0].unk0[i].unk8) {
         case 0x2A:
@@ -535,4 +534,23 @@ void func_8022C34C(void) {
     D_802B9C00[gSchedRingIdx] = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sched/func_8022C3C0.s")
+void func_8022C3C0(u8 arg0, s32 arg1) {
+    Unk802B92A0_Unk0* var_v0;
+    u32 idx;
+
+    if (D_802B9C88) {
+        idx = gSchedRingIdx;
+        if ((D_802B9C00[idx] < 30) && (D_802B9C18[idx] < 30)) {
+            if (arg0 == 0) {
+                var_v0 = D_802B8940[idx].unk0;
+                var_v0 = &var_v0[D_802B9C00[idx]++];
+            } else {
+                var_v0 = D_802B92A0[idx].unk0;
+                var_v0 = &var_v0[D_802B9C18[idx]++];
+            }
+            var_v0->unk0 = uvClkGetSec(6);
+            var_v0->unk8 = arg1;
+            var_v0->unkC = (gSchedRspStatus << 0x18) | (gSchedRdpStatus << 0x10) | (D_802B9C6B << 1) | D_802B9C6C;
+        }
+    }
+}
