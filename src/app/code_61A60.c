@@ -55,6 +55,7 @@ s32 func_802DB38C(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 s32 func_802DB6D4(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 s32 func_802DB9B8(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 s32 func_802DBCB0(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
+void func_802DBE10(Unk802D3658_Unk1228*, s32, s32, f32, Vec3F*, Vec3F*);
 
 s32 func_802DA530(void) {
     return D_8034EA64[D_8034EA40];
@@ -371,7 +372,40 @@ s32 func_802DB224(Unk802D3658_Unk1224* arg0, u16 arg1, u16 arg2, u8 arg3, Vec3F*
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DB9B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DBCB0.s")
+s32 func_802DBCB0(Unk802D3658_Unk1228* arg0, Vec3F* arg1, Vec3F* arg2) {
+    f32 temp_fv1;
+    f32 var_ft4;
+    Vec3F sp44;
+    Vec3F sp38;
+    s32 pad;
+
+    if ((arg2->z > 0.0f) && (arg1->z > 0.0f)) {
+        return 0;
+    }
+    if ((arg2->z < 0.0f) && (arg1->z < 0.0f)) {
+        var_ft4 = 0.0f;
+    } else {
+        temp_fv1 = arg2->z - arg1->z;
+        if (temp_fv1 != 0.0f) {
+            if (arg2->z <= 0.0f) {
+                var_ft4 = -arg1->z / temp_fv1;
+            }
+            if (arg1->z <= 0.0f) {
+                var_ft4 = 1.0f - (arg2->z / temp_fv1);
+            }
+        } else {
+            var_ft4 = 0.0f;
+        }
+    }
+    sp44.x = arg1->x + ((arg2->x - arg1->x) * var_ft4);
+    sp44.y = arg1->y + ((arg2->y - arg1->y) * var_ft4);
+    sp44.z = arg1->z + ((arg2->z - arg1->z) * var_ft4);
+    sp38.x = 0.0f;
+    sp38.y = 0.0f;
+    sp38.z = 1.0f;
+    func_802DBE10(arg0, 4, -1, var_ft4, &sp44, &sp38);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DBE10.s")
 
