@@ -34,7 +34,6 @@ u32 D_802B8934;
 
 extern u8 kernel_TEXT_START[];
 
-
 extern u8 D_803805E0;
 
 void uvMemInitBlocks(void) {

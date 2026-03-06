@@ -456,7 +456,7 @@ void _uvScLogCpuEvent(s32 arg0) {
         case 0x35:
             _uvDebugPrintf("user3\n");
             break;
-        default:  
+        default:
             _uvDebugPrintf("unknown type %d\n", D_802B8940[arg0].unk0[i].unk8);
             break;
         }
@@ -473,7 +473,8 @@ void _uvScLogCpuEvent(s32 arg0) {
         if (rdpStatus == 0) {
             rdpStatus = ' ';
         }
-        _uvDebugPrintf("%d/%d time: %f  sp: %2c  dp: %2c  st: 0x%x   ", i + 1, D_802B9C18[arg0], D_802B92A0[arg0].unk0[i].unk0 - temp_fs0, rspStatus, rdpStatus, D_802B92A0[arg0].unk0[i].unkC & 0xF);
+        _uvDebugPrintf("%d/%d time: %f  sp: %2c  dp: %2c  st: 0x%x   ", i + 1, D_802B9C18[arg0], D_802B92A0[arg0].unk0[i].unk0 - temp_fs0, rspStatus, rdpStatus,
+                       D_802B92A0[arg0].unk0[i].unkC & 0xF);
 
         switch (D_802B92A0[arg0].unk0[i].unk8) {
         case 0x2A:
@@ -506,7 +507,7 @@ void _uvScLogCpuEvent(s32 arg0) {
         case 0x35:
             _uvDebugPrintf("user3\n");
             break;
-        default:  
+        default:
             _uvDebugPrintf("unknown type %d\n", D_802B92A0[arg0].unk0[i].unk8);
             break;
         }

@@ -1041,7 +1041,7 @@ void uvGfxClearFlags(s32 flags) {
     }
 }
 
-void uvGfx_80223A28(u32 flags) {
+void uvGfx_80223A28(s32 flags) {
     uvGfxState_t sp20;
     s32 pad;
 
