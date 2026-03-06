@@ -1,10 +1,9 @@
 #include "common.h"
 #include <uv_graphics.h>
 #include <uv_math.h>
-#include "kernel/code_58E0.h"
+#include "kernel/code_7150.h"
 #include "kernel/code_8170.h"
-
-void func_802300D0(Unk80225FBC_0x28* arg0);
+#include "kernel/code_30EA0.h"
 
 void func_8022FEF0(UnkStruct_80204D94* arg0, u16 arg1, uvUnkTileStruct* arg2, Unk80225FBC_0x28* arg3, u16 arg4, u8 arg5) {
     Unk80225FBC_0x28* var_s0;

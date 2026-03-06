@@ -6,18 +6,6 @@
 #include <uv_util.h>
 #include <uv_debug.h>
 
-typedef struct {
-    f64 unk0;
-    s32 unk8;
-    u8 padC[4];
-} Unk802B92A0_Unk0;
-
-typedef struct {
-    Unk802B92A0_Unk0 unk0[30];
-} Unk802B92A0;
-
-extern Unk802B92A0 D_802B8940[];
-extern Unk802B92A0 D_802B92A0[];
 extern s32 gSchedRingIdx;
 extern s32 D_802B9C00[];
 extern s32 D_802B9C18[];

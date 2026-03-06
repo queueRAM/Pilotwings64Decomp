@@ -8,6 +8,7 @@
 #include <libc/stdarg.h>
 #include <uv_graphics.h>
 #include "kernel/code_58E0.h"
+#include "kernel/code_7150.h"
 #include "kernel/code_8170.h"
 
 // TODO FIXME fix for gSPPerspNormalize, due to older f3d ucode

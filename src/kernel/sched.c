@@ -1,6 +1,7 @@
 #include <uv_clocks.h>
 #include <uv_math.h>
 #include <uv_sched.h>
+#include <uv_debug.h>
 
 #define VIDEO_MSG 666
 #define RSP_DONE_MSG 667
@@ -407,7 +408,109 @@ void func_8022BEB8(s32 arg0) {
     D_802B9C88 = arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/sched/_uvScLogCpuEvent.s")
+void _uvScLogCpuEvent(s32 arg0) {
+    s32 i;
+    s32 var_a3;
+    f64 temp_fs0;
+    s32 var_v0;
+
+    temp_fs0 = D_802B9C30[(gSchedRingIdx + 1) % 5];
+    if (D_802B9C88 == 0) {
+        return;
+    }
+
+    _uvDebugPrintf("-------- CPU events ---------\n");
+
+    for (i = 0; i < D_802B9C00[arg0]; i++) {
+        _uvDebugPrintf("%d/%d time: %f ", i + 1, D_802B9C00[arg0], D_802B8940[arg0].unk0[i].unk0 - temp_fs0);
+        switch (D_802B8940[arg0].unk0[i].unk8) {
+        case 0x2A:
+            _uvDebugPrintf("gfx start\n");
+            break;
+        case 0x2B:
+            _uvDebugPrintf("gfx done\n");
+            break;
+        case 0x2E:
+            _uvDebugPrintf("gfx sched\n");
+            break;
+        case 0x32:
+            _uvDebugPrintf("kernel wakeup\n");
+            break;
+        case 0x29:
+            _uvDebugPrintf("audio start\n");
+            break;
+        case 0x2C:
+            _uvDebugPrintf("audio done\n");
+            break;
+        case 0x2F:
+            _uvDebugPrintf("audio sched\n");
+            break;
+        case 0x33:
+            _uvDebugPrintf("user1\n");
+            break;
+        case 0x34:
+            _uvDebugPrintf("user2\n");
+            break;
+        case 0x35:
+            _uvDebugPrintf("user3\n");
+            break;
+        default:  
+            _uvDebugPrintf("unknown type %d\n", D_802B8940[arg0].unk0[i].unk8);
+            break;
+        }
+    }
+
+    _uvDebugPrintf("---------  RSP events ---------\n");
+
+    for (i = 0; i < D_802B9C18[arg0]; i++) {
+
+        var_v0 = (u8)(D_802B92A0[arg0].unk0[i].unkC >> 0x18) & 0xFF;
+        if (var_v0 == 0) {
+            var_v0 = 0x20;
+        }
+        var_a3 = (u8)(D_802B92A0[arg0].unk0[i].unkC >> 0x10) & 0xFF;
+        if (var_a3 == 0) {
+            var_a3 = 0x20;
+        }
+        _uvDebugPrintf("%d/%d time: %f  sp: %2c  dp: %2c  st: 0x%x   ", i + 1, D_802B9C18[arg0], D_802B92A0[arg0].unk0[i].unk0 - temp_fs0, var_v0, var_a3, D_802B92A0[arg0].unk0[i].unkC & 0xF);
+
+        switch (D_802B92A0[arg0].unk0[i].unk8) {
+        case 0x2A:
+            _uvDebugPrintf("gfx start\n");
+            break;
+        case 0x2B:
+            _uvDebugPrintf("gfx rsp done\n");
+            break;
+        case 0x2D:
+            _uvDebugPrintf("gfx yield\n");
+            break;
+        case 0x31:
+            _uvDebugPrintf("yield request\n");
+            break;
+        case 0x30:
+            _uvDebugPrintf("gfx rdp done\n");
+            break;
+        case 0x29:
+            _uvDebugPrintf("audio start\n");
+            break;
+        case 0x2C:
+            _uvDebugPrintf("audio done\n");
+            break;
+        case 0x33:
+            _uvDebugPrintf("user1\n");
+            break;
+        case 0x34:
+            _uvDebugPrintf("user2\n");
+            break;
+        case 0x35:
+            _uvDebugPrintf("user3\n");
+            break;
+        default:  
+            _uvDebugPrintf("unknown type %d\n", D_802B92A0[arg0].unk0[i].unk8);
+            break;
+        }
+    }
+}
 
 void _uvScLogIntoRing(void) {
     s32 ring;

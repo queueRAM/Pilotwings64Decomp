@@ -1,6 +1,7 @@
 #include "common.h"
 #include <libc/stdarg.h>
 #include <uv_graphics.h>
+#include <uv_environment.h>
 
 static Mtx4F D_80248DE0 = {
     1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,

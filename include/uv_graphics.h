@@ -484,11 +484,11 @@ typedef struct {
 /* 334 */ u8 pad334[0x3C];
 /* 370 */ u8 unk370;
 /* 374 */ UnkStruct_80204D94_Unk374 unk374;
-/* 38C */ s16 unk38C;
-/* 38E */ s16 unk38E;
-/* 390 */ s16 unk390;
-/* 392 */ s16 unk392;
-/* 394 */ u32 pad394;
+/* 38C */ u16 unk38C;
+/* 38E */ u16 unk38E;
+/* 390 */ u16 unk390;
+/* 392 */ u16 unk392;
+/* 394 */ s32 unk394;
 /* 398 */ void (*unk398)(void);
 /* 39C */ void (*unk39C)(void);
 } UnkStruct_80204D94; // size 3A0

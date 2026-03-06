@@ -1,7 +1,7 @@
 #include "common.h"
 #include <uv_graphics.h>
 #include <uv_math.h>
-#include "kernel/code_58E0.h"
+#include "kernel/code_7150.h"
 #include "kernel/code_2FE40.h"
 #include "kernel/code_30DF0.h"
 
@@ -404,7 +404,7 @@ extern Unk802C5BC0 D_802C5BC0[];
 extern s32 D_802C5FC0;
 extern u8 D_80263060[];
 
-void func_8022EE90(s32 arg0, ParsedUVTR* arg1, f32 arg2) {
+void func_8022EE90(UnkStruct_80204D94* arg0, ParsedUVTR* arg1, f32 arg2) {
     s32 i;
 
     for (i = 0; i < D_802C5FC0; i++) {
@@ -428,8 +428,6 @@ void func_8022EFB4(UnkStruct_80204D94* arg0, ParsedUVTR* arg1, f32 arg2) {
         func_8022FE40(arg0, D_802C5BC0[i].unk0, D_802C5BC0[i].unk6, D_802C5BC0[i].unk4, 0);
     }
 }
-
-s32 func_80207028(u8*, u8*, f32, f32, f32, f32);
 
 void _uvTerraDraw(UnkStruct_80204D94* arg0, u8 arg1) {
     s32 i;
@@ -556,7 +554,7 @@ void _uvTerraDraw(UnkStruct_80204D94* arg0, u8 arg1) {
             temp_fs0 = temp_fs4 - arg0->unk1D0;
             temp_fs1 = temp_ft4 - arg0->unk1D4;
             temp_fs2 = temp_ft5 - arg0->unk1D8;
-            if (!func_80207028(&arg0->unk250, arg0->unk2E0, temp_fs4, temp_ft4, temp_ft5, temp_s0->unk24)) {
+            if (!func_80207028(arg0->unk250, arg0->unk2E0, temp_fs4, temp_ft4, temp_ft5, temp_s0->unk24)) {
                 continue;
             }
             if (!func_80206F64(arg0->unk2E0, temp_fs0, temp_fs1, temp_fs2, temp_s0->unk24)) {

@@ -7,6 +7,7 @@
 #include <uv_vector.h>
 #include <libc/stdarg.h>
 #include "kernel/code_58E0.h"
+#include "kernel/code_7150.h"
 
 UnkModelDebrisStructure D_8028A0A0[4];
 UnkModelTrail D_8028AC40[4];
