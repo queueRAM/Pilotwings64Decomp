@@ -9,7 +9,7 @@
 s32 func_802DA530(void);
 void func_802DA54C(void);
 s32 func_802DB050(Unk802D3658_Unk111C*, Unk802D3658_Unk1224*, u16, u8, Mtx4F*);
-s32 func_802DB224(s32*, s32, u16, u8, Vec3F*, Vec3F*);
+s32 func_802DB224(Unk802D3658_Unk1224*, u16, u16, u8, Vec3F*, Vec3F*);
 void func_802DBE64(void*, void*, s32, Mtx4F*);
 s32 func_802DBF10(Unk802D3658_Unk111C*, Unk802D3658_Unk1224*, Vec3F*, Vec3F*);
 void func_802DC1DC(f32*, Vec3F*, Vec3F*, f32, f32, f32); // a0 might be Vec3F

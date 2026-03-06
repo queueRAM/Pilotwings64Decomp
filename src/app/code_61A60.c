@@ -335,7 +335,35 @@ s32 func_802DB050(Unk802D3658_Unk111C* arg0, Unk802D3658_Unk1224* arg1, u16 arg2
     return arg1->unk0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DB224.s")
+s32 func_802DB224(Unk802D3658_Unk1224* arg0, u16 arg1, u16 arg2, u8 arg3, Vec3F* arg4, Vec3F* arg5) {
+    u8 a1_lsb = arg1;
+    if ((arg2 != 0xFFFF) && (arg3 & 1)) {
+        uvDobjState(arg2, arg3 - 1);
+    }
+    arg0->unk0 = 0;
+    if (a1_lsb & 2) {
+        if (func_802DB6D4(&arg0->unk4[arg0->unk0], arg4, arg5)) {
+            arg0->unk0 += 1;
+        }
+    }
+    if (a1_lsb & 8) {
+        if (func_802DB9B8(&arg0->unk4[arg0->unk0], arg4, arg5)) {
+            arg0->unk0 += 1;
+        }
+    }
+    if (a1_lsb & 1) {
+        if (func_802DB38C(&arg0->unk4[arg0->unk0], arg4, arg5)) {
+            arg0->unk0 += 1;
+        }
+    }
+    if ((a1_lsb & 4) && func_802DBCB0(&arg0->unk4[arg0->unk0], arg4, arg5)) {
+        arg0->unk0 += 1;
+    }
+    if (arg2 != 0xFFFF) {
+        uvDobjState(arg2, arg3);
+    }
+    return arg0->unk0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_61A60/func_802DB38C.s")
 
