@@ -7,8 +7,8 @@
 #include "demo.h"
 #include "snd.h"
 
-extern EventCallbackInfo D_80359640;
-extern Unk803599D0 D_80359648;
+EventCallbackInfo D_80359640;
+Unk803599D0 D_80359648;
 
 // forward declarations
 void func_802D0D04(s32 eventType, Unk80367704*, s32 eventData);
