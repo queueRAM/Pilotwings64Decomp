@@ -6,45 +6,35 @@
 #include "demo.h"
 #include "snd.h"
 
-typedef struct {
-    u8 pad0[0x104];
-    u8 unk104;
-    u8 pad105[1];
-    u8 unk106;
-    u8 unk107;
-    u8 unk108[1];
-    u8 pad109[0x140 - 0x109];
-    f32 unk140[1];
-    u8 pad144[0x15C - 0x144];
-    u8 unk15C;
-    u8 pad15D[0x274 - 0x15D];
-    Vec3F unk274;
-    u8 pad280[0x2BC - 0x280];
-    f32 unk2BC;
-    u8 pad2C0[0x2CC - 0x2C0];
-    u8 unk2CC;
-    u8 pad2CD[3];
-    f32 unk2D0;
-    u8 pad2D4[0x410 - 0x2D4];
-    s32 unk410;
-    u8 unk414;
-    u8 unk415;
-    u8 pad416[0x41C - 0x416];
-    f32 unk41C;
-    f32 unk420;
-} Unk802D1534_Arg0;
-
 extern EventCallbackInfo D_80359640;
 extern Unk803599D0 D_80359648;
 
 // forward declarations
+void func_802D0D04(s32 eventType, Unk802D1534_Arg0*, s32 eventData);
 void func_802D112C(Unk802D1534_Arg0*);
 void func_802D12C4(Unk802D1534_Arg0*);
 void func_802D1320(Unk802D1534_Arg0*);
 void func_802D1334(Unk802D1534_Arg0*);
 void func_802D1534(Unk802D1534_Arg0*);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/bmsound/func_802D0BF0.s")
+void func_802D0BF0(Unk802D1534_Arg0* arg0) {
+    arg0->unk41C = 0.0f;
+    D_80359648.unk0 = 4;
+    D_80359648.unk4 = 0;
+    D_80359648.unk8 = 0.0f;
+    D_80359648.unkC = 0.01f;
+    D_80359648.unk10 = 0.4f;
+    D_80359648.unk14 = 9.0f;
+    D_80359648.unk18 = 0.8f;
+    D_80359648.unk1C = 10.0f;
+    D_80359648.unk20 = 1.0f;
+    arg0->unk414 = snd_makedev(0x13);
+    arg0->unk415 = snd_makedev(0x13);
+    D_80359640.unk0 = (EventCallback_t)func_802D0D04;
+    D_80359640.unk4 = (s32)arg0;
+    arg0->unk410 = -0x40;
+    uvEventMaxCb(D_80359640, 1, 0xD, 0x12, 0x13, 0x16, 0xC, 0x10, 0x24);
+}
 
 void func_802D0D04(s32 eventType, Unk802D1534_Arg0* arg1, s32 eventData) {
     f32 sp3C;
