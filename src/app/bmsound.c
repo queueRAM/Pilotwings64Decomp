@@ -2,6 +2,7 @@
 #include <uv_event.h>
 #include "bmsound.h"
 #include "code_5A6A0.h"
+#include "code_72B70.h"
 #include "code_9A960.h"
 #include "demo.h"
 #include "snd.h"
@@ -10,14 +11,14 @@ extern EventCallbackInfo D_80359640;
 extern Unk803599D0 D_80359648;
 
 // forward declarations
-void func_802D0D04(s32 eventType, Unk802D1534_Arg0*, s32 eventData);
-void func_802D112C(Unk802D1534_Arg0*);
-void func_802D12C4(Unk802D1534_Arg0*);
-void func_802D1320(Unk802D1534_Arg0*);
-void func_802D1334(Unk802D1534_Arg0*);
-void func_802D1534(Unk802D1534_Arg0*);
+void func_802D0D04(s32 eventType, Unk80367704*, s32 eventData);
+void func_802D112C(Unk80367704*);
+void func_802D12C4(Unk80367704*);
+void func_802D1320(Unk80367704*);
+void func_802D1334(Unk80367704*);
+void func_802D1534(Unk80367704*);
 
-void func_802D0BF0(Unk802D1534_Arg0* arg0) {
+void func_802D0BF0(Unk80367704* arg0) {
     arg0->unk41C = 0.0f;
     D_80359648.unk0 = 4;
     D_80359648.unk4 = 0;
@@ -32,11 +33,11 @@ void func_802D0BF0(Unk802D1534_Arg0* arg0) {
     arg0->unk415 = snd_makedev(0x13);
     D_80359640.unk0 = (EventCallback_t)func_802D0D04;
     D_80359640.unk4 = (s32)arg0;
-    arg0->unk410 = -0x40;
+    arg0->unk410 = 0xFFFFFFC0;
     uvEventMaxCb(D_80359640, 1, 0xD, 0x12, 0x13, 0x16, 0xC, 0x10, 0x24);
 }
 
-void func_802D0D04(s32 eventType, Unk802D1534_Arg0* arg1, s32 eventData) {
+void func_802D0D04(s32 eventType, Unk80367704* arg1, s32 eventData) {
     f32 sp3C;
     f32 temp_fv0;
     f32 var_fa1;
@@ -120,7 +121,7 @@ void func_802D0D04(s32 eventType, Unk802D1534_Arg0* arg1, s32 eventData) {
     }
 }
 
-void func_802D112C(Unk802D1534_Arg0* arg0) {
+void func_802D112C(Unk80367704* arg0) {
     Unk80362690_Unk0_UnkC* sp34;
     s32 sp30;
     f32 sp2C;
@@ -168,19 +169,19 @@ void func_802D112C(Unk802D1534_Arg0* arg0) {
     }
 }
 
-void func_802D12C4(Unk802D1534_Arg0* arg0) {
+void func_802D12C4(Unk80367704* arg0) {
     arg0->unk410 |= 1;
     func_8033F904(arg0->unk414, 1.0f, 0.0f, 0.0f);
     func_8033F904(arg0->unk415, 1.0f, 0.0f, 0.0f);
 }
 
-void func_802D1320(Unk802D1534_Arg0* arg0) {
+void func_802D1320(Unk80367704* arg0) {
     arg0->unk410 &= 0xFFFFFFFE;
 }
 
-void func_802D1334(Unk802D1534_Arg0* arg0) {
+void func_802D1334(Unk80367704* arg0) {
     f32 temp_fv1;
-    s32 i; // var_s3
+    s32 i;
 
     if (!(D_8034F850 < (arg0->unk41C + 0.5f))) {
         arg0->unk41C = D_8034F850;
@@ -189,8 +190,8 @@ void func_802D1334(Unk802D1534_Arg0* arg0) {
             switch (arg0->unk108[i]) {
             case 4:
                 if ((arg0->unk15C != 0) && (arg0->unk104 == 2)) {
-                    if (!(arg0->unk410 & 4)) {
-                        arg0->unk410 = arg0->unk410 | 4;
+                    if (!(arg0->unk410 & 0x04)) {
+                        arg0->unk410 |= 0x04;
                         snd_play_sfx(0x1A);
                     }
                 }
@@ -215,7 +216,7 @@ void func_802D1334(Unk802D1534_Arg0* arg0) {
     }
 }
 
-void func_802D1534(Unk802D1534_Arg0* arg0) {
+void func_802D1534(Unk80367704* arg0) {
     arg0->unk414 = func_8033F8CC(arg0->unk414);
     arg0->unk415 = func_8033F8CC(arg0->unk415);
     uvEventRemoveCb(D_80359640, 1, 0xD, 0x12, 0x13, 0x16, 0xC, 0x10, 0x24);
