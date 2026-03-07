@@ -3,6 +3,7 @@
 #include "bmsound.h"
 #include "code_5A6A0.h"
 #include "code_9A960.h"
+#include "demo.h"
 #include "snd.h"
 
 typedef struct {
@@ -16,24 +17,118 @@ typedef struct {
     f32 unk140[1];
     u8 pad144[0x15C - 0x144];
     u8 unk15C;
-    u8 pad15D[0x410 - 0x15D];
+    u8 pad15D[0x274 - 0x15D];
+    Vec3F unk274;
+    u8 pad280[0x2BC - 0x280];
+    f32 unk2BC;
+    u8 pad2C0[0x2CC - 0x2C0];
+    u8 unk2CC;
+    u8 pad2CD[3];
+    f32 unk2D0;
+    u8 pad2D4[0x410 - 0x2D4];
     s32 unk410;
     u8 unk414;
     u8 unk415;
     u8 pad416[0x41C - 0x416];
     f32 unk41C;
+    f32 unk420;
 } Unk802D1534_Arg0;
 
 extern EventCallbackInfo D_80359640;
 extern Unk803599D0 D_80359648;
 
 // forward declarations
+void func_802D112C(Unk802D1534_Arg0*);
 void func_802D12C4(Unk802D1534_Arg0*);
+void func_802D1320(Unk802D1534_Arg0*);
 void func_802D1334(Unk802D1534_Arg0*);
+void func_802D1534(Unk802D1534_Arg0*);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/bmsound/func_802D0BF0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/bmsound/func_802D0D04.s")
+void func_802D0D04(s32 eventType, Unk802D1534_Arg0* arg1, s32 eventData) {
+    f32 sp3C;
+    f32 temp_fv0;
+    f32 var_fa1;
+    f32 temp_ft3;
+    s32 pad;
+    f32 sp28;
+
+    if (eventData != 0) {
+        _uvDebugPrintf("bmsound Callback got non-zero eventData\n");
+    }
+    switch (eventType) {
+    case 13:
+        func_802D1534(arg1);
+        break;
+    case 12:
+        func_802D12C4(arg1);
+        break;
+    case 19:
+        func_802D1320(arg1);
+        break;
+    case 18:
+        func_802D12C4(arg1);
+        break;
+    case 22:
+        func_802D112C(arg1);
+        break;
+    case 16:
+        break;
+    case 1:
+        if (!(arg1->unk410 & 0x01)) {
+            sp28 = FABS(arg1->unk274.y);
+            var_fa1 = sp28 * 0.02f;
+            if (var_fa1 < 0) {
+                var_fa1 = 0;
+            } else if (var_fa1 > 1.0f) {
+                var_fa1 = 1.0f;
+            }
+            temp_ft3 = (demoRandF() - 0.5f);
+            sp3C = (1.3f * var_fa1) + 0.4f + (temp_ft3 * 0.3f);
+            sp28 = uvVec3Len(&arg1->unk274);
+            var_fa1 = (f32)((((demoRandF() * 0.4f) - 0.5f) + 1.0) * (0.02f * sp28));
+            if (var_fa1 < 0.0f) {
+                var_fa1 = 0.0f;
+            } else if (var_fa1 > 1.0f) {
+                var_fa1 = 1.0f;
+            }
+            func_8033F904(arg1->unk414, sp3C, var_fa1, -0.5f);
+
+            // effectively copy of code above with following differences:
+            //  - demoRandF() * 0.0f (not used)
+            //  - func_8033F904() un414/-0.5f -> unk415/0.5f
+            sp28 = FABS(arg1->unk274.y);
+            var_fa1 = sp28 * 0.02f;
+            if (var_fa1 < 0) {
+                var_fa1 = 0;
+            } else if (var_fa1 > 1.0f) {
+                var_fa1 = 1.0f;
+            }
+            temp_ft3 = demoRandF();
+            sp3C = (1.3f * var_fa1) + 0.4f + (temp_ft3 * 0.0f);
+            sp28 = uvVec3Len(&arg1->unk274);
+            var_fa1 = (f32)((((demoRandF() * 0.4f) - 0.5f) + 1.0) * (0.02f * sp28));
+            if (var_fa1 < 0) {
+                var_fa1 = 0;
+            } else if (var_fa1 > 1.0f) {
+                var_fa1 = 1.0f;
+            }
+            func_8033F904(arg1->unk415, sp3C, var_fa1, 0.5f);
+
+            if ((arg1->unk420 < 0.4f) && (arg1->unk2BC >= 0.4f) && (arg1->unk2CC != 0x1B)) {
+                temp_fv0 = (arg1->unk2D0 / 3.8f) + 0.4f;
+                sp28 = (temp_fv0 > 1.0f) ? 1.0f : temp_fv0;
+                func_8033F758(0x4D, sp28, 1.0f, 0.0f);
+            }
+            arg1->unk420 = arg1->unk2BC;
+        }
+        break;
+    default:
+        _uvDebugPrintf("Got unknown event type %d\n", eventType);
+        break;
+    }
+}
 
 void func_802D112C(Unk802D1534_Arg0* arg0) {
     Unk80362690_Unk0_UnkC* sp34;
