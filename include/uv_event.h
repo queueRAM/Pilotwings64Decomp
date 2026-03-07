@@ -21,6 +21,7 @@ typedef struct SystemEventCallbackInfo {
 } SystemEventCallbackInfo;
 
 void func_80202DA0(void);
+void uvEventRemoveCb(EventCallbackInfo arg0, ...);
 void func_80203434(s32, s32, s32);
 void func_802035AC(s32, s32, s32);
 void func_80203724(s32, s32, s32);
