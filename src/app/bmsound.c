@@ -27,11 +27,61 @@ typedef struct {
 extern EventCallbackInfo D_80359640;
 extern Unk803599D0 D_80359648;
 
+// forward declarations
+void func_802D12C4(Unk802D1534_Arg0*);
+void func_802D1334(Unk802D1534_Arg0*);
+
 #pragma GLOBAL_ASM("asm/nonmatchings/app/bmsound/func_802D0BF0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/bmsound/func_802D0D04.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/bmsound/func_802D112C.s")
+void func_802D112C(Unk802D1534_Arg0* arg0) {
+    Unk80362690_Unk0_UnkC* sp34;
+    s32 sp30;
+    f32 sp2C;
+
+    sp34 = &D_80362690->unk0[D_80362690->unk9C].unkC;
+    if (arg0->unk104 == 2) {
+        if (!(arg0->unk410 & 0x02)) {
+            arg0->unk410 |= 0x02;
+            snd_play_sfx(0x36);
+            if (!(arg0->unk410 & 0x10)) {
+                func_8033F748(0x1B);
+                func_8033F964(0);
+                func_8033FCD0(sp34->veh);
+            }
+            func_802D12C4(arg0);
+        }
+    } else {
+        if (arg0->unk104 == 1) {
+            if (!(arg0->unk410 & 0x10)) {
+                arg0->unk410 |= 0x10;
+                snd_getpilot(&sp30, &sp2C);
+                func_8033F758(sp30, 1.0f, sp2C, 0.0f);
+                func_8033F748(0x1B);
+                func_8033F964(0);
+                func_8033FCD0(sp34->veh);
+                func_802D12C4(arg0);
+            }
+        }
+        if (arg0->unk104 == 3) {
+            if (!(arg0->unk410 & 0x20)) {
+                arg0->unk410 |= 0x20;
+                func_8033F748(0x1A);
+                func_8033F964(0);
+                func_8033FCD0(sp34->veh);
+                func_802D12C4(arg0);
+            }
+        }
+        if (arg0->unk107 != 0) {
+            func_802D1334(arg0);
+            return;
+        }
+        if (!(arg0->unk410 & 0x10)) {
+            arg0->unk410 = 0xFFFFFFC0;
+        }
+    }
+}
 
 void func_802D12C4(Unk802D1534_Arg0* arg0) {
     arg0->unk410 |= 1;

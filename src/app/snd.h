@@ -15,6 +15,7 @@ void func_8033F964(s32);
 void func_8033FA88(f32);
 void func_8033FAD4(f32);
 void func_8033FB14(void);
+void snd_getpilot(s32*, f32*);
 void func_8033FCD0(u16);
 void func_8033FA88(f32);
 void func_8033FD94(s32, f32, f32);
