@@ -33,7 +33,11 @@ extern Unk803599D0 D_80359648;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/bmsound/func_802D112C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/bmsound/func_802D12C4.s")
+void func_802D12C4(Unk802D1534_Arg0* arg0) {
+    arg0->unk410 |= 1;
+    func_8033F904(arg0->unk414, 1.0f, 0.0f, 0.0f);
+    func_8033F904(arg0->unk415, 1.0f, 0.0f, 0.0f);
+}
 
 void func_802D1320(Unk802D1534_Arg0* arg0) {
     arg0->unk410 &= 0xFFFFFFFE;
