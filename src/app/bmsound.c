@@ -11,7 +11,7 @@ EventCallbackInfo D_80359640;
 Unk803599D0 D_80359648;
 
 // forward declarations
-void func_802D0D04(s32 eventType, Unk80367704*, s32 eventData);
+void func_802D0D04(s32 eventType, void*, s32 eventData);
 void func_802D112C(Unk80367704*);
 void func_802D12C4(Unk80367704*);
 void func_802D1320(Unk80367704*);
@@ -31,44 +31,46 @@ void func_802D0BF0(Unk80367704* arg0) {
     D_80359648.unk20 = 1.0f;
     arg0->unk414 = snd_makedev(0x13);
     arg0->unk415 = snd_makedev(0x13);
-    D_80359640.unk0 = (EventCallback_t)func_802D0D04;
-    D_80359640.unk4 = (s32)arg0;
+    D_80359640.cb = func_802D0D04;
+    D_80359640.arg = arg0;
     arg0->unk410 = 0xFFFFFFC0;
     uvEventMaxCb(D_80359640, 1, 0xD, 0x12, 0x13, 0x16, 0xC, 0x10, 0x24);
 }
 
-void func_802D0D04(s32 eventType, Unk80367704* arg1, s32 eventData) {
+void func_802D0D04(s32 eventType, void* arg1, s32 eventData) {
     f32 sp3C;
     f32 temp_fv0;
     f32 var_fa1;
     f32 temp_ft3;
-    s32 pad;
+    Unk80367704* a1;
     f32 sp28;
+
+    a1 = (Unk80367704*)arg1;
 
     if (eventData != 0) {
         _uvDebugPrintf("bmsound Callback got non-zero eventData\n");
     }
     switch (eventType) {
     case 13:
-        func_802D1534(arg1);
+        func_802D1534(a1);
         break;
     case 12:
-        func_802D12C4(arg1);
+        func_802D12C4(a1);
         break;
     case 19:
-        func_802D1320(arg1);
+        func_802D1320(a1);
         break;
     case 18:
-        func_802D12C4(arg1);
+        func_802D12C4(a1);
         break;
     case 22:
-        func_802D112C(arg1);
+        func_802D112C(a1);
         break;
     case 16:
         break;
     case 1:
-        if (!(arg1->unk410 & 0x01)) {
-            sp28 = FABS(arg1->unk274.y);
+        if (!(a1->unk410 & 0x01)) {
+            sp28 = FABS(a1->unk274.y);
             var_fa1 = sp28 * 0.02f;
             if (var_fa1 < 0) {
                 var_fa1 = 0;
@@ -77,19 +79,19 @@ void func_802D0D04(s32 eventType, Unk80367704* arg1, s32 eventData) {
             }
             temp_ft3 = (demoRandF() - 0.5f);
             sp3C = (1.3f * var_fa1) + 0.4f + (temp_ft3 * 0.3f);
-            sp28 = uvVec3Len(&arg1->unk274);
-            var_fa1 = (f32)((((demoRandF() * 0.4f) - 0.5f) + 1.0) * (0.02f * sp28));
+            sp28 = uvVec3Len(&a1->unk274);
+            var_fa1 = (f32) ((((demoRandF() * 0.4f) - 0.5f) + 1.0) * (0.02f * sp28));
             if (var_fa1 < 0.0f) {
                 var_fa1 = 0.0f;
             } else if (var_fa1 > 1.0f) {
                 var_fa1 = 1.0f;
             }
-            func_8033F904(arg1->unk414, sp3C, var_fa1, -0.5f);
+            func_8033F904(a1->unk414, sp3C, var_fa1, -0.5f);
 
             // effectively copy of code above with following differences:
             //  - demoRandF() * 0.0f (not used)
-            //  - func_8033F904() un414/-0.5f -> unk415/0.5f
-            sp28 = FABS(arg1->unk274.y);
+            //  - func_8033F904() un414/-0.5f -> unk415/0.5f 
+            sp28 = FABS(a1->unk274.y);
             var_fa1 = sp28 * 0.02f;
             if (var_fa1 < 0) {
                 var_fa1 = 0;
@@ -97,22 +99,22 @@ void func_802D0D04(s32 eventType, Unk80367704* arg1, s32 eventData) {
                 var_fa1 = 1.0f;
             }
             temp_ft3 = demoRandF();
-            sp3C = (1.3f * var_fa1) + 0.4f + (temp_ft3 * 0.0f);
-            sp28 = uvVec3Len(&arg1->unk274);
-            var_fa1 = (f32)((((demoRandF() * 0.4f) - 0.5f) + 1.0) * (0.02f * sp28));
+            sp3C = (1.3f * var_fa1) + 0.4f+ (temp_ft3 * 0.0f);
+            sp28 = uvVec3Len(&a1->unk274);
+            var_fa1 = (f32) ((((demoRandF() * 0.4f) - 0.5f) + 1.0) * (0.02f * sp28));
             if (var_fa1 < 0) {
                 var_fa1 = 0;
             } else if (var_fa1 > 1.0f) {
                 var_fa1 = 1.0f;
             }
-            func_8033F904(arg1->unk415, sp3C, var_fa1, 0.5f);
+            func_8033F904(a1->unk415, sp3C, var_fa1, 0.5f);
 
-            if ((arg1->unk420 < 0.4f) && (arg1->unk2BC >= 0.4f) && (arg1->unk2CC != 0x1B)) {
-                temp_fv0 = (arg1->unk2D0 / 3.8f) + 0.4f;
+            if ((a1->unk420 < 0.4f) && (a1->unk2BC >= 0.4f) && (a1->unk2CC != 0x1B)) {
+                temp_fv0 = (a1->unk2D0 / 3.8f) + 0.4f;
                 sp28 = (temp_fv0 > 1.0f) ? 1.0f : temp_fv0;
                 func_8033F758(0x4D, sp28, 1.0f, 0.0f);
             }
-            arg1->unk420 = arg1->unk2BC;
+            a1->unk420 = a1->unk2BC;
         }
         break;
     default:
