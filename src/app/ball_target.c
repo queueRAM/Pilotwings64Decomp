@@ -1,7 +1,10 @@
 #include "common.h"
 #include <uv_dobj.h>
 #include <uv_level.h>
+#include <uv_math.h>
+#include "balls.h"
 #include "ball_target.h"
+#include "snd.h"
 
 typedef struct {
     u16 objId;
@@ -95,7 +98,7 @@ void func_802D2ACC(void) {
         D_803597E4 = 0;
         return;
     }
-    
+
     if (D_803597E4 != 0) {
         uvLevelAppend(0x10);
         for (i = 0; i < D_803597E4; i++) {
@@ -118,7 +121,47 @@ void func_802D2ACC(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/ball_target/func_802D2C20.s")
+void func_802D2C20(BallTarget* bt) {
+    ParsedBALS* pb;
+    f32 temp_fa0;
+    f32 dx;
+    f32 dy;
+    f32 dz;
+    f32 dist;
+    f32 var_fv1;
+    s32 var_s2;
+    s32 i;
+
+    var_s2 = 0;
+    for (i = 0; i < gBallCount + gBallSplitCount; i++) {
+        pb = &gBalls[i];
+        if ((pb->unk94 != 0) || (pb->unk96 == 0)) {
+            continue;
+        }
+        dx = bt->unk4.x - pb->unk4.m[3][0];
+        dy = bt->unk4.y - pb->unk4.m[3][1];
+        dz = bt->unk4.z - pb->unk4.m[3][2];
+        dist = uvSqrtF(SQ(dx) + SQ(dy));
+        temp_fa0 = bt->unk50 - 0.25f;
+        var_fv1 = pb->unk7C * D_80359388;
+        if (((dist - var_fv1) <= temp_fa0) && ((var_fv1 + dist) >= temp_fa0)) {
+            var_s2 = 1;
+            snd_play_sfx(0x37);
+            dx = -(dx / dist);
+            dy = -(dy / dist);
+            dist = uvSqrtF(SQ(pb->unk44.x) + SQ(pb->unk44.y));
+            pb->unk44.x -= dist * dx;
+            pb->unk44.y -= dist * dy;
+        }
+        var_fv1 = pb->unk7C * D_80359388;
+        if (bt->unk54 <= (var_fv1 + dz)) {
+            if (var_s2 == 0) {
+                snd_play_sfx(0x37);
+            }
+            pb->unk44.z = -pb->unk44.z;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/ball_target/func_802D2E48.s")
 
