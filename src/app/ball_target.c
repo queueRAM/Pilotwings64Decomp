@@ -5,7 +5,14 @@
 
 typedef struct {
     u16 objId;
-    u8 pad2[0x5A - 0x2];
+    u8 pad2[0x2];
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    Mtx4F unk10;
+    f32 unk50;
+    f32 unk54;
+    u8 pad58[2];
     u8 unk5A;
     u8 unk5B;
     u8 unk5C;
@@ -41,19 +48,37 @@ void func_802D28D8(void) {
         if (D_80362690->unk0[D_80362690->unk9C].unkC.unk8 == D_803597E0[i].unkC) {
             var_s0->unk5D = 1;
             if (var_s0->objId != 0xFFFF) {
-                uvDobjSetState(var_s0->objId, 2);
+                uvDobjSetState(var_s0->objId, 0x2);
             }
         } else {
             _uvDebugPrintf("btgts_terra : %d btgt not in terra\n", i);
             var_s0->unk5D = 0;
             if (var_s0->objId != 0xFFFF) {
-                uvDobjClearState(var_s0->objId, 2);
+                uvDobjClearState(var_s0->objId, 0x2);
             }
         }
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/ball_target/func_802D29FC.s")
+void func_802D29FC(BallTarget* bt) {
+    f32 var_fa0;
+    s32 modelId;
+
+    bt->objId = uvDobjAllocIdx();
+    modelId = (bt->unk5B) ? 0xD2 : 0xF3; // MODEL_GREEN_GOAL
+    uvDobjModel(bt->objId, modelId);
+    uvMat4SetIdentity(&bt->unk10);
+    bt->unk10.m[0][0] = bt->unk50;
+    bt->unk10.m[1][1] = bt->unk50;
+    bt->unk10.m[2][2] = bt->unk54;
+    bt->unk10.m[3][0] = bt->unk4;
+    bt->unk10.m[3][1] = bt->unk8;
+    bt->unk10.m[3][2] = bt->unkC;
+    var_fa0 = MAX(bt->unk50, bt->unk54);
+    uvDobjProps(bt->objId, 3, var_fa0, 0);
+    uvDobjState(bt->objId, 2);
+    uvDobjPosm(bt->objId, 0, &bt->unk10);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/ball_target/func_802D2ACC.s")
 
