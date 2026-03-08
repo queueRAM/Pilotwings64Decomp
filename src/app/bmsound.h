@@ -4,6 +4,6 @@
 #include <PR/ultratypes.h>
 #include "code_72B70.h"
 
-void func_802D0BF0(Unk80367704*);
+void bmSoundInit(Unk80367704*);
 
 #endif // APP_BMSOUND_H
