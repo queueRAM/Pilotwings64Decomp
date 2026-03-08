@@ -264,9 +264,11 @@ typedef struct {
 typedef struct {
     Vec3F pos;
     s32 unkC;
-    u8 pad10[8];
+    f32 unk10;
+    f32 unk14;
     u8 unk18;
-    u8 pad19[3];
+    u8 unk19;
+    u8 pad1A[2];
 } LevelBTGT;
 
 typedef struct {

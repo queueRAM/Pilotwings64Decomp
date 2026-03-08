@@ -6,13 +6,12 @@
 typedef struct {
     u16 objId;
     u8 pad2[0x2];
-    f32 unk4;
-    f32 unk8;
-    f32 unkC;
+    Vec3F unk4;
     Mtx4F unk10;
     f32 unk50;
     f32 unk54;
-    u8 pad58[2];
+    u8 unk58;
+    u8 unk59;
     u8 unk5A;
     u8 unk5B;
     u8 unk5C;
@@ -71,16 +70,53 @@ void func_802D29FC(BallTarget* bt) {
     bt->unk10.m[0][0] = bt->unk50;
     bt->unk10.m[1][1] = bt->unk50;
     bt->unk10.m[2][2] = bt->unk54;
-    bt->unk10.m[3][0] = bt->unk4;
-    bt->unk10.m[3][1] = bt->unk8;
-    bt->unk10.m[3][2] = bt->unkC;
+    bt->unk10.m[3][0] = bt->unk4.x;
+    bt->unk10.m[3][1] = bt->unk4.y;
+    bt->unk10.m[3][2] = bt->unk4.z;
     var_fa0 = MAX(bt->unk50, bt->unk54);
     uvDobjProps(bt->objId, 3, var_fa0, 0);
     uvDobjState(bt->objId, 2);
     uvDobjPosm(bt->objId, 0, &bt->unk10);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/ball_target/func_802D2ACC.s")
+// ballTargetLoad
+void func_802D2ACC(void) {
+    BallTarget* bt;
+    LevelBTGT* lvlBt;
+    s32 i;
+
+    if (D_80362690->unkA0 == 0) {
+        return;
+    }
+
+    D_803597E4 = levelDataGetBTGT(&D_803597E0);
+    if (D_803597E4 > 5) {
+        _uvDebugPrintf("btgts : too many btgts defined in level [%d]\n", D_803597E4);
+        D_803597E4 = 0;
+        return;
+    }
+    
+    if (D_803597E4 != 0) {
+        uvLevelAppend(0x10);
+        for (i = 0; i < D_803597E4; i++) {
+            lvlBt = &D_803597E0[i];
+            bt = &D_803597E8[i];
+            if (bt->unk5B != 0) {
+                continue;
+            }
+            if (bt->unk5C == 0) {
+                bt->unk58 = lvlBt->unk18;
+                bt->unk59 = lvlBt->unk19;
+                bt->unk50 = lvlBt->unk10;
+                bt->unk54 = lvlBt->unk14;
+                uvVec3Copy(&bt->unk4, &lvlBt->pos);
+                bt->unk5C = 1;
+            }
+            func_802D29FC(bt);
+        }
+        func_802D28D8();
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/ball_target/func_802D2C20.s")
 
