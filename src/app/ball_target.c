@@ -2,15 +2,31 @@
 #include "ball_target.h"
 
 typedef struct {
-    u8 pad0[0x5B];
+    u16 unk0;
+    u8 pad2[0x5A - 0x2];
+    u8 unk5A;
     u8 unk5B;
-    u8 pad5C[0x60 - 0x5C];
+    s8 unk5C;
+    u8 pad5D[0x60 - 0x5D];
 } Unk803597E8;
 
 extern u8 D_803597E4;
-extern Unk803597E8 D_803597E8[];
+extern Unk803597E8 D_803597E8[5];
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/app/ball_target/func_802D2850.s")
+#else
+// needs some refinement on loop unrolling
+void func_802D2850(void) {
+    s32 i;
+    for (i = 0; i < ARRAY_COUNT(D_803597E8); i++) {
+        D_803597E8[i].unk0 = 0xFFFF;
+        D_803597E8[i].unk5B = 0x00;
+        D_803597E8[i].unk5C = 0x00;
+        D_803597E8[i].unk5A = 0xFF;
+    }
+}
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/ball_target/func_802D28D8.s")
 
