@@ -25,9 +25,9 @@ f32 D_803505A8 = 0.025f;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/snap/func_80337D50.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/snap/func_80337DB8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/snap/snapInit.s")
 
-void func_803383FC(void) {
+void snapDeinit(void) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/snap/func_80338404.s")

@@ -24,7 +24,6 @@
 #include "code_B2900.h"
 #include "code_D2D50.h"
 #include "code_D3810.h"
-#include "code_D4290.h"
 #include "environment.h"
 #include "falco.h"
 #include "mem.h"
@@ -35,7 +34,9 @@
 #include "snap.h"
 #include "snd.h"
 #include "targets.h"
+#include "task.h"
 #include "thermals.h"
+#include "wind.h"
 
 typedef struct {
     void* unk0;
@@ -72,6 +73,9 @@ extern s32 gLevelTest;
 extern s32 gLevelVehicle; // VehicleId
 extern Unk8037AA88 D_8037AA88[];
 
+// forward declarations
+void taskDeinit2(void);
+
 void level_803449B0(void) {
     s32 classIdx, testIdx, vehIdx;
     LevelCommObjects* obj;
@@ -81,20 +85,20 @@ void level_803449B0(void) {
     u8 sp60[0x28];
 
     thermInit();
-    func_803232F0();
-    func_8034CD60();
+    ringsInit();
+    windInit();
     bonusInit();
     ballsInit();
-    func_80316DC0();
-    func_80344290();
+    padsInit();
+    targetsInit();
     func_803097E0();
     ballTgtInit();
-    func_80337DB8();
-    func_802E37B0();
+    snapInit();
+    falcoInit();
     func_802EB3E0();
-    func_8032FAB0();
+    sdiveInit();
     func_802FAF80();
-    func_80335B94();
+    shadowInit();
     func_802E79D8();
     func_802EB0BC();
     func_80315474();
@@ -201,7 +205,7 @@ s32 levelGetTestCount(s32 classIdx, s32 vehicle) {
     return testCount;
 }
 
-s32 level_80344FC8(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* arg4, u16* arg5) {
+s32 taskInit(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* arg4, u16* arg5) {
     u8 tmp8;
 
     gLevelClass = classIdx;
@@ -249,22 +253,22 @@ s32 level_80344FC8(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* arg4, 
     }
 
     thermInit();
-    func_803232F0();
-    func_8034CD60();
+    ringsInit();
+    windInit();
     bonusInit();
     ballsInit();
-    func_80316DC0();
-    func_80344290();
+    padsInit();
+    targetsInit();
     func_803097E0();
     ballTgtInit();
-    func_80337DB8();
-    func_802E37B0();
-    func_8032FAB0();
+    snapInit();
+    falcoInit();
+    sdiveInit();
     func_802EB3E0();
     func_802FAF80();
     func_802E79D8();
     func_802EB0BC();
-    func_80335B94();
+    shadowInit();
     func_80315474();
     func_80315550();
     func_8034C224();
@@ -279,23 +283,23 @@ s32 level_80344FC8(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* arg4, 
     return 1;
 }
 
-void level_8034528C(void) {
+void taskLoad(void) {
     u16 veh;
 
     veh = D_80362690->unk0[D_80362690->unk9C].unkC.veh;
     D_8035079C = 1;
-    wind_render();
-    therm_8034662C();
-    func_80316E40();
-    func_802E1278();
+    windLoad();
+    thermLoad();
+    padsLoad();
+    envLoad();
     func_802EB598();
     if (D_803507A0 == 0) {
-        func_803239B4();
+        ringsLoad();
         ballsLoad();
-        func_803442F8();
+        targetsLoad();
         func_80309A64();
         ballTgtLoad();
-        func_802E3A5C();
+        falcoLoad();
         func_802FB22C();
         if ((veh != VEHICLE_CANNONBALL) && (veh != VEHICLE_SKY_DIVING)) {
             bonusLoad();
@@ -304,26 +308,26 @@ void level_8034528C(void) {
     D_803507A4 = 0;
 }
 
-void level_8034536C(void) {
-    level_803453AC();
-    therm_80346B84();
-    func_8034D4AC();
-    func_8031776C();
+void taskDeinit(void) {
+    taskDeinit2();
+    thermDeinit();
+    windDeinit();
+    padsDeinit();
     func_802EB5E4();
 }
 
-void level_803453AC(void) {
+void taskDeinit2(void) {
     u16 veh;
 
     veh = D_80362690->unk0[D_80362690->unk9C].unkC.veh;
     if (D_8035079C != 0) {
-        func_80324A34();
+        ringsDeinit();
         ballsDeinit();
-        func_8034467C();
+        targetsDeinit();
         func_80309FFC();
         ballTgtDeinit();
-        func_803383FC();
-        func_802E3E6C();
+        snapDeinit();
+        falcoDeinit();
         func_802FB518();
         if ((veh != VEHICLE_CANNONBALL) && (veh != VEHICLE_SKY_DIVING)) {
             bonusDeinit();
@@ -340,11 +344,11 @@ s32 level_80345464(Mtx4F* arg0, s32 arg1) {
     veh = D_80362690->unk0[D_80362690->unk9C].unkC.veh;
     sp18 = 0;
     therm_8034695C();
-    func_8034D548();
+    wind_8034D548();
     func_802E15F0();
     ballsFrameUpdate();
     func_802E3F7C();
-    func_80317634(arg0);
+    padsFrameUpdate(arg0);
     func_8034450C(arg0);
     func_80309D64(arg0);
     if ((veh != VEHICLE_CANNONBALL) && (veh != VEHICLE_SKY_DIVING)) {
@@ -387,7 +391,7 @@ s32 level_80345464(Mtx4F* arg0, s32 arg1) {
     }
     if ((D_80362690->unkA0 != 0) && (levelGet_80346364() == 3) && (func_8032C080(NULL) != 0)) {
         D_803507A0 = 1;
-        level_803453AC();
+        taskDeinit2();
         D_80362690->unkA0 = 0;
     }
     return sp18;
@@ -494,7 +498,7 @@ s32 levelDataGetTHER(LevelTHER** data) {
     return D_8035078C->comm.countTHER;
 }
 
-s32 levelDataGetLWIN(void** data) {
+s32 levelDataGetLWIN(LevelLWIN** data) {
     *data = D_8035078C->dataLWIN;
     return D_8035078C->comm.countLWIN;
 }
@@ -529,7 +533,7 @@ s32 levelDataGetLSTP(void** data) {
     return D_8035078C->comm.countLSTP;
 }
 
-s32 levelDataGetRNGS(void** data) {
+s32 levelDataGetRNGS(LevelRNGS** data) {
     *data = D_8035078C->dataRNGS;
     return D_8035078C->comm.countRNGS;
 }
@@ -617,8 +621,8 @@ LevelCommObjects* levelLoadCommObj(u32 arg0) {
             dst->dataTPAD = mem_get(dst->comm.countTPAD * sizeof(LevelTPAD));
             dst->dataLPAD = mem_get(dst->comm.countLPAD * 0x30);
             dst->dataLSTP = mem_get(dst->comm.countLSTP * 0x24);
-            dst->dataLWIN = mem_get(dst->comm.countLWIN * 0x54);
-            dst->dataRNGS = mem_get(dst->comm.countRNGS * 0x84);
+            dst->dataLWIN = mem_get(dst->comm.countLWIN * sizeof(LevelLWIN));
+            dst->dataRNGS = mem_get(dst->comm.countRNGS * sizeof(LevelRNGS));
             dst->dataTHER = mem_get(dst->comm.countTHER * sizeof(LevelTHER));
             dst->dataBALS = mem_get(dst->comm.countBALS * sizeof(LevelBALS));
             dst->dataTARG = mem_get(dst->comm.countTARG * 0x20);

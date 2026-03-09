@@ -28,7 +28,7 @@ MissileTarget* sMissileTargets;
 u8 sMissileTargetCount;
 Unk80378CF8 D_80378CF8[40];
 
-void func_80344290(void) {
+void targetsInit(void) {
     s32 i;
 
     for (i = 0; i < ARRAY_COUNT(D_80378CF8); i++) {
@@ -39,7 +39,7 @@ void func_80344290(void) {
     }
 }
 
-void func_803442F8(void) {
+void targetsLoad(void) {
     Unk80378CF8* var_s1;
     s32 i;
     MissileTarget* missileTarget;
@@ -125,7 +125,7 @@ void func_8034450C(Mtx4F* arg0) {
     }
 }
 
-void func_8034467C(void) {
+void targetsDeinit(void) {
     s32 i;
 
     for (i = 0; i < sMissileTargetCount; i++) {

@@ -5,8 +5,8 @@
 #include "code_72B70.h"
 
 void func_80337D50(void);
-void func_80337DB8(void);
-void func_803383FC(void);
+void snapInit(void);
+void snapDeinit(void);
 void func_80339E1C(Unk80367704*);
 s32 func_8033E3A8(s32);
 s32 func_8033F62C(void);

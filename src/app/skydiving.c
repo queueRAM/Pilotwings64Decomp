@@ -1,7 +1,7 @@
 #include "common.h"
 #include "skydiving.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/skydiving/func_8032FAB0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/skydiving/sdiveInit.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/skydiving/func_8032FACC.s")
 

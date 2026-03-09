@@ -22,6 +22,7 @@
 #include "rings.h"
 #include "snap.h"
 #include "snd.h"
+#include "task.h"
 #include "test_menu.h"
 #include "text_data.h"
 
@@ -166,7 +167,7 @@ void testMenuInit(Unk80367710* arg0, s32 arg1) {
             temp_v1->test = gCurTestIdx;
         }
     }
-    level_80344FC8(temp_v1->cls, temp_v1->veh, temp_v1->test, &D_80362690->unk0[0].map, &D_80362690->unk0[0].unk6, &D_80362690->unk0[0].unk8);
+    taskInit(temp_v1->cls, temp_v1->veh, temp_v1->test, &D_80362690->unk0[0].map, &D_80362690->unk0[0].unk6, &D_80362690->unk0[0].unk8);
     map3d(D_80362690, 0);
     if (arg1 == 0) {
         sTestMenuState = 0;
@@ -332,7 +333,7 @@ u8 testMenuHandler(Unk80367710* arg0) {
                     } else {
                         sp6C->test = gCurTestIdx;
                     }
-                    level_80344FC8(sp6C->cls, sp6C->veh, sp6C->test, &D_80362690->unk0[0].map, &D_80362690->unk0[0].unk6, &D_80362690->unk0[0].unk8);
+                    taskInit(sp6C->cls, sp6C->veh, sp6C->test, &D_80362690->unk0[0].map, &D_80362690->unk0[0].unk6, &D_80362690->unk0[0].unk8);
                     map3d(D_80362690, 0);
                     testMenuInitText(sp6C->test);
                 }
@@ -372,12 +373,12 @@ u8 testMenuHandler(Unk80367710* arg0) {
                     testMenu_8034A428();
                     hud_8031A2CC();
                     D_80362690->unkA0 = 1;
-                    func_803239B4();
+                    ringsLoad();
                     func_80309A64();
                     ballsLoad();
-                    func_802E3A5C();
-                    func_802E3E6C();
-                    func_80324A34();
+                    falcoLoad();
+                    falcoDeinit();
+                    ringsDeinit();
                     func_80309FFC();
                     ballsDeinit();
                     D_80362690->unkA0 = 0;

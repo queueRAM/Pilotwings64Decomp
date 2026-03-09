@@ -35,13 +35,13 @@ Unk8034EFB0 D_8034EF04 = { 0x3, &D_8035AF3C, 0 };
 // .bss
 extern Unk8035A5F8 D_8035A5F8[];
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E37B0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falcoInit.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E38F0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E3A5C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falcoLoad.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E3E6C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falcoDeinit.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E3F7C.s")
 

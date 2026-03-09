@@ -26,9 +26,10 @@
 #include "environment.h"
 #include "fdr.h"
 #include "hud.h"
+#include "results.h"
 #include "save.h"
 #include "snd.h"
-#include "results.h"
+#include "task.h"
 #include "text_data.h"
 
 // .data
@@ -828,11 +829,11 @@ s32 cannonLoad802D77D8(Unk80362690* arg0, Unk802D5B50_Arg2* arg1) {
     func_8031DAA8(0, 0);
     temp_s1_2->unk6 = 0;
     func_803214E4();
-    level_80344FC8((s32)temp_s1_2->unk4, (s32)temp_s1_2->unk2, (s32)temp_s1_2->unk6, &arg0->unk0[0].map, &arg0->unk0[0].unk6, &arg0->unk0[0].unk8);
+    taskInit(temp_s1_2->unk4, temp_s1_2->unk2, temp_s1_2->unk6, &arg0->unk0[0].map, &arg0->unk0[0].unk6, &arg0->unk0[0].unk8);
     levelLoad(arg0->unk0[0].map, temp_s1_2->pad0, temp_s1_2->unk2, 1);
     hudInit();
     func_8031A2CC();
-    level_8034528C();
+    taskLoad();
     func_8034E0B4();
     uvChanTerra(temp_s1_2->unk70->unk22C, (s32)arg0->unk0[0].unk6);
     uvEnvFunc(arg0->unk0[0].unk8, 0, func_802E0CF0);

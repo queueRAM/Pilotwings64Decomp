@@ -251,7 +251,7 @@ typedef struct {
     f32 unk5C;
     f32 unk60;
     f32 unk64;
-} LevelBALS;
+} LevelBALS; // size = 0x68
 
 typedef struct {
     Vec3F pos;
@@ -259,7 +259,7 @@ typedef struct {
     f32 unk10;
     f32 unk14;
     s32 unk18;
-} LevelBNUS;
+} LevelBNUS; // size = 0x1C
 
 typedef struct {
     Vec3F pos;
@@ -269,7 +269,7 @@ typedef struct {
     u8 unk18;
     u8 unk19;
     u8 pad1A[2];
-} LevelBTGT;
+} LevelBTGT; // size = 0x10
 
 typedef struct {
     u8 pad0[4];
@@ -278,7 +278,7 @@ typedef struct {
     f32 scale;
     f32 height;
     u8 pad1C[4];
-} LevelHOPD;
+} LevelHOPD; // size = 0x20
 
 typedef struct {
     u8 countESND;
@@ -291,11 +291,57 @@ typedef struct {
 } LevelLEVL;
 
 typedef struct {
+    Vec3F unk0;
+    Vec3F unkC;
+    Vec3F unk18;
+    Vec3F unk24;
+    Vec3F unk30;
+    s32 unk3C;
+    Vec3F unk40;
+    f32 unk4C;
+    u8 unk50;
+    u8 unk51;
+    u8 pad52[2];
+} LevelLWIN; // size = 0x54
+
+typedef struct {
     f32 x;
     f32 y;
     f32 z;
     f32 unkC;
-} LevelOBSV;
+} LevelOBSV; // size = 0x10
+
+typedef struct {
+    Vec3F pos;
+    Vec3F angle;
+    u8 pad18[5];
+    u8 unk1D;
+    u8 unk1E;
+    u8 pad1F[1];
+    s32 unk20[5]; // TODO: size?
+    u8 unk34;
+    u8 pad35[3];
+    s32 unk38[5]; // TODO: size?
+    u8 unk4C;
+    u8 unk4D;
+    u8 pad4E[0x50 - 0x4E];
+    f32 unk50;
+    u8 size; // 54
+    u8 unk55;
+    u8 pad56[2];
+    f32 unk58;
+    f32 unk5C;
+    u8 unk60;
+    u8 pad61[3];
+    f32 unk64;
+    f32 unk68;
+    f32 unk6C;
+    u8 axis; // 70
+    u8 unk71;
+    u8 unk72; // special
+    u8 unk73;
+    char unk74[0x10]; // string name?
+} LevelRNGS; // size = 0x84
 
 typedef struct {
     Vec3F pos;
@@ -306,7 +352,7 @@ typedef struct {
     f32 unk1C;
     f32 unk20;
     f32 unk24;
-} LevelTHER;
+} LevelTHER; // size = 0x28
 
 typedef struct {
     Vec3F pos;
@@ -316,7 +362,7 @@ typedef struct {
     u8 unk28;
     u8 pad29[3];
     f32 unk2C;
-} LevelTPAD;
+} LevelTPAD; // size = 0x30
 
 typedef struct {
     u8 unk0;
@@ -333,11 +379,11 @@ typedef struct {
     f32 unk28_X;
     f32 unk2C_Y;
     f32 unk30_Z;
-} LevelTPTS;
+} LevelTPTS; // size = 0x34
 
 typedef struct {
     s32 unk0[4];
-} LevelTOYS;
+} LevelTOYS; // size = 0x10
 
 typedef struct {
     u8 countESND;
@@ -397,11 +443,11 @@ typedef struct {
     void* dataINFO;
     void* dataJPTX;
     LevelTHER* dataTHER;
-    void* dataLWIN;
+    LevelLWIN* dataLWIN;
     void* dataTPAD;
     void* dataLPAD;
     void* dataLSTP;
-    void* dataRNGS;
+    LevelRNGS* dataRNGS;
     LevelBALS* dataBALS;
     void* dataTARG;
     void* dataHPAD;
@@ -439,8 +485,6 @@ void level_803449B0(void);
 s32 levelIsValidIndex(s32 classIdx, s32 testIdx, s32 vehicle);
 s32 level_80344E0C(s32 classIdx, s32 testIdx, s32 vehicle, char* arg3, char* arg4);
 s32 levelGetTestCount(s32 classIdx, s32 vehicle);
-s32 level_80344FC8(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* arg4, u16* arg5);
-void level_803453AC(void);
 s32 level_80345464(Mtx4F*, s32);
 s32 level_803456D8(Mtx4F*);
 void level_80345A24(void);
@@ -453,16 +497,15 @@ LevelCommObjects* levelLoadCommObj(u32 arg0);
 void level_803462D4(u16 idx);
 u8 levelGet_80346364(void);
 s32 level_80346370(s32 terra);
-void level_8034528C(void);
 u8 levelGet_80346468(void);
 s32 levelDataGetTHER(LevelTHER** data);
-s32 levelDataGetLWIN(void** data);
+s32 levelDataGetLWIN(LevelLWIN** data);
 s32 levelDataGetTPAD(LevelTPAD** data);
 s32 levelDataGetCNTG(void** data);
 s32 levelDataGetOBSV(LevelOBSV** data);
 s32 levelDataGetLPAD(void** data);
 s32 levelDataGetLSTP(void** data);
-s32 levelDataGetRNGS(void** data);
+s32 levelDataGetRNGS(LevelRNGS** data);
 s32 levelDataGetBALS(LevelBALS** data);
 s32 levelDataGetTARG(void** data);
 s32 levelDataGetHPAD(void** data);
