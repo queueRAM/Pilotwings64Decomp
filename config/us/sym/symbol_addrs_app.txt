@@ -131,6 +131,7 @@ envLoad             = 0x802E1278; // type:func
 env_loadtpal        = 0x802E1990; // type:func
 
 hoverPadLoad        = 0x80309A64; // type:func
+hoverPadObjSetup    = 0x803099A8; // type:func
 
 fx_create           = 0x802EA03C; // type:func
 fx_create_fire      = 0x802EA8E0; // type:func

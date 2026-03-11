@@ -5,9 +5,10 @@
 #include <uv_matrix.h>
 
 typedef struct {
-    u8 pad0[4];
+    u16 objId;
+    u8 pad2[2];
     Mtx4F unk4;
-    u8 unk44;
+    u8 type;
     u8 unk45;
     u8 pad46[2];
     f32 unk48;
@@ -17,7 +18,7 @@ typedef struct {
     u8 pad60[4];
     u8 unk68;
     u8 unk69;
-    u8 pad6A[1];
+    u8 unk6A;
     u8 unk6B;
     u8 unk6C;
     u8 unk6D;

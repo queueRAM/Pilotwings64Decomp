@@ -1,4 +1,5 @@
 #include "common.h"
+#include <uv_dobj.h>
 #include <uv_level.h>
 #include <uv_util.h>
 #include "code_9A960.h"
@@ -11,13 +12,29 @@ extern LevelHPAD* gRefHPAD;
 extern u8 gHoverPadCount;
 
 // forward declarations
-void func_803099A8(HoverPad*);
+void hoverPadObjSetup(HoverPad*);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_803097E0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309868.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_803099A8.s")
+void hoverPadObjSetup(HoverPad* hover) {
+    s32 var_a1;
+
+    hover->objId = uvDobjAllocIdx();
+    if (hover->unk6B != 0) {
+        if (hover->type > 1) {
+            _uvDebugPrintf("Bad hpad type %d\n", hover->type);
+            hover->type = 1;
+        }
+        uvDobjModel(hover->objId, D_8034F3F0[hover->type]);
+    } else {
+        uvDobjModel(hover->objId, 0xFA);
+    }
+    var_a1 = (hover->unk6A != 0) ? 3 : 0;
+    uvDobjState(hover->objId, var_a1);
+    uvDobjPosm(hover->objId, 0, &hover->unk4);
+}
 
 void hoverPadLoad(void) {
     HoverPad* hover;
@@ -43,7 +60,7 @@ void hoverPadLoad(void) {
             hpad = &gRefHPAD[i];
             if (hover->unk68 == 0) {
                 if (hover->unk69 == 0) {
-                    hover->unk44 = hpad->unk1C;
+                    hover->type = hpad->unk1C;
                     hover->unk6B = hpad->unk3C;
                     hover->unk4C = hpad->unk24;
                     hover->unk45 = hpad->unk1D;
@@ -63,7 +80,7 @@ void hoverPadLoad(void) {
                         hover->unk6D = hud_8031A6C8(hpad->unk0.x, hpad->unk0.y, hpad->unk0.z);
                     }
                 }
-                func_803099A8(hover);
+                hoverPadObjSetup(hover);
             }
         }
         func_80309868();
