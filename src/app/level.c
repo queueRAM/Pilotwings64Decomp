@@ -27,12 +27,12 @@ s32 gLevelCurMap = 0;
 s32 D_8034F410[] = { 0, 1, 2, 3 };
 
 // likely arrays of structs for level data
-extern s32 gLevelWOBJ[];
-extern PotentialLPAD gLevelLPAD[];
-extern LevelTPTS gLevelTPTS[];
-extern LevelTOYS gLevelTOYS[];
-extern s32 gLevelAPTS[];
-extern LevelBNUS gLevelBNUS[];
+extern s32 gLevelWOBJ[16];
+extern PotentialLPAD gLevelLPAD[14];
+extern LevelTPTS gLevelTPTS[16];
+extern LevelTOYS gLevelTOYS[16];
+extern s32 gLevelAPTS[20];
+extern LevelBNUS gLevelBNUS[2];
 extern LevelObjects gLevelObjects;
 
 void levelLoad(u8 map, u8 pilot, u8 vehicle, s32 animateToys) {
@@ -322,37 +322,37 @@ LevelObjects* levelLoadMapObjects(u8 mapIdx) {
             if (temp->countWOBJ >= 16) {
                 _uvAssertMsg("dst_level -> level . nwobjs < LEVEL_NWOBJS", "level.c", 642);
             }
-            if (temp->countWOBJ >= 17) {
+            if (temp->countWOBJ > ARRAY_COUNT(gLevelWOBJ)) {
                 _uvDebugPrintf("level : too many wind objects defined in level [%d]\n", temp->countWOBJ);
                 temp->countWOBJ = 0;
             }
 
             temp->countLPAD = ptr->countLPAD;
-            if (temp->countLPAD >= 15) {
+            if (temp->countLPAD > ARRAY_COUNT(gLevelLPAD)) {
                 _uvDebugPrintf("level : too many potential landing pads defined in level [%d]\n", temp->countLPAD);
                 temp->countLPAD = 0;
             }
 
             temp->countTOYS = ptr->countTOYS;
-            if (temp->countTOYS >= 17) {
+            if (temp->countTOYS > ARRAY_COUNT(gLevelTOYS)) {
                 _uvDebugPrintf("level : too many toys in level [%d]\n", temp->countTOYS);
                 temp->countTOYS = 0;
             }
 
             temp->countTPTS = ptr->countTPTS;
-            if (temp->countTPTS >= 17) {
+            if (temp->countTPTS > ARRAY_COUNT(gLevelTPTS)) {
                 _uvDebugPrintf("level : too many terra switch points in level [%d]\n", temp->countTPTS);
                 temp->countTPTS = 0;
             }
 
             temp->countAPTS = ptr->countAPTS;
-            if (temp->countAPTS >= 21) {
+            if (temp->countAPTS > ARRAY_COUNT(gLevelAPTS)) {
                 _uvDebugPrintf("level : too many audio switch points in level [%d]\n", temp->countAPTS);
                 temp->countAPTS = 0;
             }
 
             temp->countBNUS = ptr->countBNUS;
-            if (temp->countBNUS > 2) {
+            if (temp->countBNUS > ARRAY_COUNT(gLevelBNUS)) {
                 _uvDebugPrintf("level : too many bonus objects level [%d]\n", temp->countBNUS);
                 temp->countBNUS = 0;
             }
