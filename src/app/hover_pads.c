@@ -1,6 +1,30 @@
 #include "common.h"
 #include "hover_pads.h"
 
+s32 D_8034F3F0[4] = { 0xFC, 0xFB, 0, 0 };
+
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_803097E0.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309868.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_803099A8.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309A64.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309C48.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309D64.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309D6C.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309E68.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309EA8.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309F04.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309FFC.s")
+
 u8 func_8030A080(void) {
     u8 ret;
     s32 i;
@@ -13,9 +37,3 @@ u8 func_8030A080(void) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_8030A0DC.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/D_80353880.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/D_80353894.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/D_803538C4.s")

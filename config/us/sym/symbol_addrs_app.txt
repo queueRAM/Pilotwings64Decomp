@@ -434,6 +434,10 @@ D_803514A4 = 0x803514A4; // type:f32 force_migration:True
 D_803514A8 = 0x803514A8; // type:f32 force_migration:True
 
 D_80353578 = 0x80353578; // type:f64 force_migration:True
+D_80353730 = 0x80353730; // type:f32 force_migration:True
+D_80353734 = 0x80353734; // type:f32 force_migration:True
+D_80353738 = 0x80353738; // type:f32 force_migration:True
+D_8035373C = 0x8035373C; // type:f32 force_migration:True
 D_80355000 = 0x80355000; // type:f32 force_migration:True
 D_80355008 = 0x80355008; // type:f32 force_migration:True
 D_8035500C = 0x8035500C; // type:f32 force_migration:True
