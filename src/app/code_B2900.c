@@ -46,8 +46,8 @@ u8 func_8032BF54(void) {
         return 0;
     }
     return (func_80324AF4() != levelDataGetRNGS((LevelRNGS**)&tmp) || func_803448F4() != levelDataGetTARG(&tmp) || ballsGet_802CC15C() == 0 ||
-            func_8030A080() != levelDataGetHPAD(&tmp) || func_802E57C4() != D_8035A5F0 || ballTgtCount_5B() != levelDataGetBTGT((LevelBTGT**)&tmp) ||
-            func_802FB5A0() != levelDataGetHOPD((LevelHOPD**)&tmp));
+            func_8030A080() != levelDataGetHPAD((LevelHPAD**)&tmp) || func_802E57C4() != D_8035A5F0 ||
+            ballTgtCount_5B() != levelDataGetBTGT((LevelBTGT**)&tmp) || func_802FB5A0() != levelDataGetHOPD((LevelHOPD**)&tmp));
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B2900/func_8032C080.s")

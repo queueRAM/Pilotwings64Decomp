@@ -297,7 +297,7 @@ void taskLoad(void) {
         ringsLoad();
         ballsLoad();
         targetsLoad();
-        func_80309A64();
+        hoverPadLoad();
         ballTgtLoad();
         falcoLoad();
         func_802FB22C();
@@ -548,7 +548,7 @@ s32 levelDataGetTARG(void** data) {
     return D_8035078C->comm.countTARG;
 }
 
-s32 levelDataGetHPAD(void** data) {
+s32 levelDataGetHPAD(LevelHPAD** data) {
     *data = D_8035078C->dataHPAD;
     return D_8035078C->comm.countHPAD;
 }

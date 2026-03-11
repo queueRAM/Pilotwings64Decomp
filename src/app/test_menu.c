@@ -374,7 +374,7 @@ u8 testMenuHandler(Unk80367710* arg0) {
                     hud_8031A2CC();
                     D_80362690->unkA0 = 1;
                     ringsLoad();
-                    func_80309A64();
+                    hoverPadLoad();
                     ballsLoad();
                     falcoLoad();
                     falcoDeinit();

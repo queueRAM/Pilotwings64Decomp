@@ -130,6 +130,8 @@ db_getstart         = 0x802E0304; // type:func
 envLoad             = 0x802E1278; // type:func
 env_loadtpal        = 0x802E1990; // type:func
 
+hoverPadLoad        = 0x80309A64; // type:func
+
 fx_create           = 0x802EA03C; // type:func
 fx_create_fire      = 0x802EA8E0; // type:func
 hsound_callback     = 0x8030A390; // type:func
@@ -474,6 +476,10 @@ gBmSoundCbInfo            = 0x80359640;
 gRefBNUS                  = 0x80359730;
 gBonusStarCount           = 0x80359734;
 gBonusStars               = 0x80359738; // size:0xA0
+
+gRefHPAD                  = 0x80369580;
+gHoverPadCount            = 0x80369584;
+gHoverPads                = 0x80369588; // size:0x8C0
 
 sOptionsPanel             = 0x8036C120; // type:s16
 sStickHeld                = 0x8036C124;

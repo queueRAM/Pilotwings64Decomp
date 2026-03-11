@@ -290,6 +290,21 @@ typedef struct {
 } LevelHOPD; // size = 0x20
 
 typedef struct {
+    Vec3F unk0;
+    Vec3F unkC;
+    u8 pad18[4];
+    u8 unk1C;
+    u8 unk1D;
+    u8 pad1E[2];
+    f32 unk20;
+    u8 unk24;
+    u8 pad25[3];
+    s32 unk28[5]; // TODO: size
+    u8 unk3C;
+    u8 pad3D[3];
+} LevelHPAD; // size = 0x40
+
+typedef struct {
     u8 countESND;
     u8 countWOBJ;
     u8 countLPAD;
@@ -487,7 +502,7 @@ typedef struct {
     LevelRNGS* dataRNGS;
     LevelBALS* dataBALS;
     void* dataTARG;
-    void* dataHPAD;
+    LevelHPAD* dataHPAD;
     void* dataBTGT;
     void* dataPHTS;
     void* dataFALC;
@@ -545,7 +560,7 @@ s32 levelDataGetLSTP(LevelLSTP** data);
 s32 levelDataGetRNGS(LevelRNGS** data);
 s32 levelDataGetBALS(LevelBALS** data);
 s32 levelDataGetTARG(void** data);
-s32 levelDataGetHPAD(void** data);
+s32 levelDataGetHPAD(LevelHPAD** data);
 s32 levelDataGetBTGT(LevelBTGT** data);
 s32 levelDataGetPHTS(void** data);
 s32 levelDataGetFALC(void** data);
