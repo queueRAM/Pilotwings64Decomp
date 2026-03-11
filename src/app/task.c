@@ -91,7 +91,7 @@ void level_803449B0(void) {
     ballsInit();
     padsInit();
     targetsInit();
-    func_803097E0();
+    hoverPadInit();
     ballTgtInit();
     snapInit();
     falcoInit();
@@ -259,7 +259,7 @@ s32 taskInit(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* arg4, u16* a
     ballsInit();
     padsInit();
     targetsInit();
-    func_803097E0();
+    hoverPadInit();
     ballTgtInit();
     snapInit();
     falcoInit();
@@ -324,7 +324,7 @@ void taskDeinit2(void) {
         ringsDeinit();
         ballsDeinit();
         targetsDeinit();
-        func_80309FFC();
+        hoverPadDeinit();
         ballTgtDeinit();
         snapDeinit();
         falcoDeinit();
@@ -350,7 +350,7 @@ s32 level_80345464(Mtx4F* arg0, s32 arg1) {
     func_802E3F7C();
     padsFrameUpdate(arg0);
     func_8034450C(arg0);
-    func_80309D64(arg0);
+    hoverPadFrameUpdate(arg0);
     if ((veh != VEHICLE_CANNONBALL) && (veh != VEHICLE_SKY_DIVING)) {
         bonusFrameUpdate(arg0);
     }
@@ -488,7 +488,7 @@ void level_80345A24(void) {
         bonusUpdateState();
     }
     balls_802CAF50();
-    func_80309868();
+    hoverPad_80309868();
     ballTgtUpdateState();
     func_802FAFF0();
 }

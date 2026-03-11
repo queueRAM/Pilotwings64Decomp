@@ -130,8 +130,19 @@ db_getstart         = 0x802E0304; // type:func
 envLoad             = 0x802E1278; // type:func
 env_loadtpal        = 0x802E1990; // type:func
 
+hoverPadInit        = 0x803097E0; // type:func
+hoverPad_80309868   = 0x80309868; // type:func
 hoverPadLoad        = 0x80309A64; // type:func
 hoverPadObjSetup    = 0x803099A8; // type:func
+hoverPad_80309C48   = 0x80309C48; // type:func
+hoverPadFrameUpdate = 0x80309D64; // type:func
+hoverPad_80309D6C   = 0x80309D6C; // type:func
+hoverPad_80309E68   = 0x80309E68; // type:func
+hoverPad_80309EA8   = 0x80309EA8; // type:func
+hoverPad_80309F04   = 0x80309F04; // type:func
+hoverPadDeinit      = 0x80309FFC; // type:func
+hoverPad_8030A080   = 0x8030A080; // type:func
+hoverPad_8030A0DC   = 0x8030A0DC; // type:func
 
 fx_create           = 0x802EA03C; // type:func
 fx_create_fire      = 0x802EA8E0; // type:func

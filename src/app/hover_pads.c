@@ -14,9 +14,22 @@ extern u8 gHoverPadCount;
 // forward declarations
 void hoverPadObjSetup(HoverPad*);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_803097E0.s")
+void hoverPadInit(void) {
+    HoverPad* hover;
+    s32 i;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309868.s")
+    for (i = 0; i < ARRAY_COUNT(gHoverPads); i++) {
+        hover = &gHoverPads[i];
+        hover->objId = 0xFFFF;
+        hover->unk68 = 0;
+        hover->unk6B = 0;
+        hover->unk6C = 0;
+        hover->unk69 = 0;
+        hover->unk64 = 0.0f;
+    }
+}
+
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/hoverPad_80309868.s")
 
 void hoverPadObjSetup(HoverPad* hover) {
     s32 var_a1;
@@ -53,55 +66,57 @@ void hoverPadLoad(void) {
         return;
     }
 
-    if (gHoverPadCount != 0) {
-        uvLevelAppend(0x13);
-        for (i = 0; i < gHoverPadCount; i++) {
-            hover = &gHoverPads[i];
-            hpad = &gRefHPAD[i];
-            if (hover->unk68 == 0) {
-                if (hover->unk69 == 0) {
-                    hover->type = hpad->unk1C;
-                    hover->unk6B = hpad->unk3C;
-                    hover->unk4C = hpad->unk24;
-                    hover->unk45 = hpad->unk1D;
-                    hover->unk48 = hpad->unk20;
-
-                    for (j = 0; j < hover->unk4C; j++) {
-                        hover->unk50[j] = hpad->unk28[j];
-                    }
-
-                    if ((hover->unk6B != 0) && (hover->unk4C > 0)) {
-                        hover->unk6C = 1;
-                    }
-                    func_80313640(hpad->unk0.x, hpad->unk0.y, hpad->unk0.z, hpad->unkC.x * 0.0174533f, hpad->unkC.y * 0.0174533f, hpad->unkC.z * 0.0174533f,
-                                  &hover->unk4);
-                    hover->unk69 = 1;
-                    if (hover->unk6B != 0) {
-                        hover->unk6D = hud_8031A6C8(hpad->unk0.x, hpad->unk0.y, hpad->unk0.z);
-                    }
-                }
-                hoverPadObjSetup(hover);
-            }
-        }
-        func_80309868();
+    if (gHoverPadCount == 0) {
+        return;
     }
+
+    uvLevelAppend(0x13);
+    for (i = 0; i < gHoverPadCount; i++) {
+        hover = &gHoverPads[i];
+        hpad = &gRefHPAD[i];
+        if (hover->unk68 == 0) {
+            if (hover->unk69 == 0) {
+                hover->type = hpad->unk1C;
+                hover->unk6B = hpad->unk3C;
+                hover->unk4C = hpad->unk24;
+                hover->unk45 = hpad->unk1D;
+                hover->unk48 = hpad->unk20;
+
+                for (j = 0; j < hover->unk4C; j++) {
+                    hover->unk50[j] = hpad->unk28[j];
+                }
+
+                if ((hover->unk6B != 0) && (hover->unk4C > 0)) {
+                    hover->unk6C = 1;
+                }
+                func_80313640(hpad->unk0.x, hpad->unk0.y, hpad->unk0.z, hpad->unkC.x * 0.0174533f, hpad->unkC.y * 0.0174533f, hpad->unkC.z * 0.0174533f,
+                              &hover->unk4);
+                hover->unk69 = 1;
+                if (hover->unk6B != 0) {
+                    hover->unk6D = hud_8031A6C8(hpad->unk0.x, hpad->unk0.y, hpad->unk0.z);
+                }
+            }
+            hoverPadObjSetup(hover);
+        }
+    }
+    hoverPad_80309868();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309C48.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/hoverPad_80309C48.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309D64.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/hoverPadFrameUpdate.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309D6C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/hoverPad_80309D6C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309E68.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/hoverPad_80309E68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309EA8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/hoverPad_80309EA8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309F04.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/hoverPad_80309F04.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_80309FFC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/hoverPadDeinit.s")
 
-u8 func_8030A080(void) {
+u8 hoverPad_8030A080(void) {
     u8 ret;
     s32 i;
 
@@ -112,4 +127,4 @@ u8 func_8030A080(void) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/func_8030A0DC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/hover_pads/hoverPad_8030A0DC.s")
