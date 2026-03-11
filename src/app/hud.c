@@ -397,16 +397,16 @@ void hud_8031A378(void) {
         if (gLandingPads[i].unk14 == 0) {
             continue;
         }
-        radar->goals[idx].x = gLandingPads[i].x;
-        radar->goals[idx].y = gLandingPads[i].y;
+        radar->goals[idx].x = gLandingPads[i].pos.x;
+        radar->goals[idx].y = gLandingPads[i].pos.y;
         radar->goals[idx].unkC = 0;
         idx++;
     }
 
     for (i = 0; i < gLandingStripCount; i++) {
-        radar->goals[idx].x = gLandingStrips[i].x;
-        radar->goals[idx].y = gLandingStrips[i].y;
-        func_80313430(gLandingStrips[i].unkC - gLandingStrips[i].unk0, gLandingStrips[i].unk10 - gLandingStrips[i].unk4, 0.0f, &sp74, &sp70, &sp6C);
+        radar->goals[idx].x = gLandingStrips[i].dx;
+        radar->goals[idx].y = gLandingStrips[i].dy;
+        func_80313430(gLandingStrips[i].unkC.x - gLandingStrips[i].pos.x, gLandingStrips[i].unkC.y - gLandingStrips[i].pos.y, 0.0f, &sp74, &sp70, &sp6C);
         radar->goals[idx].unk8 = sp70;
         radar->goals[idx].unkC = 1;
         idx++;

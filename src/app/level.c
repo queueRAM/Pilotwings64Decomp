@@ -27,12 +27,12 @@ s32 gLevelCurMap = 0;
 s32 D_8034F410[] = { 0, 1, 2, 3 };
 
 // likely arrays of structs for level data
-extern s32 gLevelWOBJ;
-extern s32 gLevelLPAD;
-extern LevelTPTS gLevelTPTS;
-extern LevelTOYS gLevelTOYS;
-extern s32 gLevelAPTS;
-extern LevelBNUS gLevelBNUS;
+extern s32 gLevelWOBJ[];
+extern PotentialLPAD gLevelLPAD[];
+extern LevelTPTS gLevelTPTS[];
+extern LevelTOYS gLevelTOYS[];
+extern s32 gLevelAPTS[];
+extern LevelBNUS gLevelBNUS[];
 extern LevelObjects gLevelObjects;
 
 void levelLoad(u8 map, u8 pilot, u8 vehicle, s32 animateToys) {
@@ -253,7 +253,7 @@ u8 levelGetAPTS(void** data) {
     return D_8034F408->countAPTS;
 }
 
-u8 levelGetLPAD(void** data) {
+u8 levelGetLPAD(PotentialLPAD** data) {
     *data = D_8034F408->dataLPAD;
     return D_8034F408->countLPAD;
 }
@@ -277,12 +277,12 @@ LevelObjects* levelLoadMapObjects(u8 mapIdx) {
     idx = uvFileReadHeader((s32)func_802314D0(D_8034F410[mapIdx], 2));
     temp = &gLevelObjects;
     uvMemSet((void*)temp, 0, sizeof(LevelObjects));
-    gLevelObjects.dataWOBJ = &gLevelWOBJ;
-    gLevelObjects.dataLPAD = &gLevelLPAD;
-    gLevelObjects.dataTOYS = &gLevelTOYS;
-    gLevelObjects.dataTPTS = &gLevelTPTS;
-    gLevelObjects.dataAPTS = &gLevelAPTS;
-    gLevelObjects.dataBNUS = &gLevelBNUS;
+    gLevelObjects.dataWOBJ = gLevelWOBJ;
+    gLevelObjects.dataLPAD = gLevelLPAD;
+    gLevelObjects.dataTOYS = gLevelTOYS;
+    gLevelObjects.dataTPTS = gLevelTPTS;
+    gLevelObjects.dataAPTS = gLevelAPTS;
+    gLevelObjects.dataBNUS = gLevelBNUS;
 
     while ((tag = uvFileReadBlock(idx, &size, (void**)&srcPtr, 1)) != 0) {
         switch (tag) {

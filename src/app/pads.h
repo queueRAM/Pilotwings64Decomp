@@ -6,25 +6,25 @@
 
 typedef struct {
     u8 unk0[4];
-    f32 x;
-    f32 y;
-    s32 unkC;
-    u8 unk10[4];
+    Vec3F pos;
+    f32 unk10;
     u8 unk14;
     u8 unk15;
-    u8 pad16[2];
+    u8 unk16;
+    u8 unk17;
 } LandingPad; // size = 0x18
 
 typedef struct {
-    f32 unk0;
-    f32 unk4;
-    u8 pad8[4];
-    f32 unkC;
-    f32 unk10;
-    u8 pad14[0x10];
-    f32 x;
-    f32 y;
-    u8 unk2C[0x38 - 0x2C];
+    Vec3F pos;
+    Vec3F unkC;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 dx;
+    f32 dy;
+    f32 dz;
+    f32 unk30;
+    f32 unk34;
     u8 unk38;
     u8 unk39;
     u8 pad3A[2];

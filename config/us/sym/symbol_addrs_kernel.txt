@@ -536,11 +536,6 @@ gThermShouldDisable       = 0x803507F0;
 
 gTitleMenuDelay           = 0x80356A68;
 
-gLandingPadCount          = 0x8036C2B9;
-gLandingStripCount        = 0x8036C2BA;
-gLandingPads              = 0x8036C2E8; // size:0x150
-gLandingStrips            = 0x8036C438; // size:0x78
-
 gRadarThermCirc           = 0x8036C520; // size:0x88
 gHudState                 = 0x8036C5A8; // size:0xC7C
 

@@ -512,7 +512,7 @@ s32 levelDataGetTPAD(LevelTPAD** data) {
     return D_8035078C->comm.countTPAD;
 }
 
-s32 levelDataGetCNTG(void** data) {
+s32 levelDataGetCNTG(LevelCNTG** data) {
     *data = D_8035078C->dataCNTG;
     return D_8035078C->comm.countCNTG;
 }
@@ -523,12 +523,12 @@ s32 levelDataGetOBSV(LevelOBSV** data) {
 }
 
 // TODO: how is this different than levelGetLPAD from level.c?
-s32 levelDataGetLPAD(void** data) {
+s32 levelDataGetLPAD(LevelLPAD** data) {
     *data = D_8035078C->dataLPAD;
     return D_8035078C->comm.countLPAD;
 }
 
-s32 levelDataGetLSTP(void** data) {
+s32 levelDataGetLSTP(LevelLSTP** data) {
     *data = D_8035078C->dataLSTP;
     return D_8035078C->comm.countLSTP;
 }
@@ -619,8 +619,8 @@ LevelCommObjects* levelLoadCommObj(u32 arg0) {
             _uvMediaCopy(&dst->comm, data, sizeof(dst->comm));
             mem_init();
             dst->dataTPAD = mem_get(dst->comm.countTPAD * sizeof(LevelTPAD));
-            dst->dataLPAD = mem_get(dst->comm.countLPAD * 0x30);
-            dst->dataLSTP = mem_get(dst->comm.countLSTP * 0x24);
+            dst->dataLPAD = mem_get(dst->comm.countLPAD * sizeof(LevelLPAD));
+            dst->dataLSTP = mem_get(dst->comm.countLSTP * sizeof(LevelLSTP));
             dst->dataLWIN = mem_get(dst->comm.countLWIN * sizeof(LevelLWIN));
             dst->dataRNGS = mem_get(dst->comm.countRNGS * sizeof(LevelRNGS));
             dst->dataTHER = mem_get(dst->comm.countTHER * sizeof(LevelTHER));
@@ -630,7 +630,7 @@ LevelCommObjects* levelLoadCommObj(u32 arg0) {
             dst->dataBTGT = mem_get(dst->comm.countBTGT * 0x1C);
             dst->dataPHTS = mem_get(dst->comm.countPHTS * 0x14);
             dst->dataFALC = mem_get(dst->comm.countFALC * 0xAC);
-            dst->dataCNTG = mem_get(dst->comm.countCNTG * 0x1C);
+            dst->dataCNTG = mem_get(dst->comm.countCNTG * sizeof(LevelCNTG));
             dst->dataSDFM = mem_get(dst->comm.countSDFM * 0x4C);
             dst->dataHOPD = mem_get(dst->comm.countHOPD * 0x20);
             dst->dataOBSV = mem_get(dst->comm.countOBSV * sizeof(LevelOBSV));

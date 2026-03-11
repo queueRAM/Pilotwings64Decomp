@@ -272,6 +272,15 @@ typedef struct {
 } LevelBTGT; // size = 0x10
 
 typedef struct {
+    Vec3F pos;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    u8 unk18;
+    u8 pad19[3];
+} LevelCNTG; // size = 0x1C
+
+typedef struct {
     u8 pad0[4];
     Vec3F pos;
     s32 unk10;
@@ -289,6 +298,34 @@ typedef struct {
     u8 countAPTS;
     u8 countBNUS;
 } LevelLEVL;
+
+typedef struct {
+    Vec3F pos;
+    Vec3F angle;
+    u8 pad18[4];
+    Vec3F unk1C;
+    u8 unk28;
+    u8 pad29[3];
+    u8 unk2C;
+    u8 pad2D[3];
+} LevelLPAD; // size = 0x30
+
+typedef struct {
+    Vec3F pos;
+    f32 unkC;
+    s32 unk10;
+    u8 unk14;
+    u8 pad15[3];
+} PotentialLPAD; // size = 0x18
+
+typedef struct {
+    Vec3F pos;
+    Vec3F unkC;
+    u8 pad10[0x4];
+    u8 unk1C;
+    u8 pad1D[3];
+    f32 unk20;
+} LevelLSTP; // size = 0x24
 
 typedef struct {
     Vec3F unk0;
@@ -395,7 +432,7 @@ typedef struct {
     u8 countBNUS;
     u8 pad7;
     void* dataWOBJ;
-    void* dataLPAD;
+    PotentialLPAD* dataLPAD;
     LevelTPTS* dataTPTS;
     LevelTOYS* dataTOYS;
     void* dataAPTS;
@@ -444,9 +481,9 @@ typedef struct {
     void* dataJPTX;
     LevelTHER* dataTHER;
     LevelLWIN* dataLWIN;
-    void* dataTPAD;
-    void* dataLPAD;
-    void* dataLSTP;
+    LevelTPAD* dataTPAD;
+    LevelLPAD* dataLPAD;
+    LevelLSTP* dataLSTP;
     LevelRNGS* dataRNGS;
     LevelBALS* dataBALS;
     void* dataTARG;
@@ -455,7 +492,7 @@ typedef struct {
     void* dataPHTS;
     void* dataFALC;
     void* dataSDFM;
-    void* dataCNTG;
+    LevelCNTG* dataCNTG;
     void* dataHOPD;
     LevelOBSV* dataOBSV;
 } LevelCommObjects;
@@ -477,7 +514,7 @@ void level_8030BD20(void);
 u8 levelGetWOBJ(void** data);
 u8 levelGetTPTS(LevelTPTS** data);
 u8 levelGetAPTS(void** data);
-u8 levelGetLPAD(void** data);
+u8 levelGetLPAD(PotentialLPAD** data);
 u8 levelGetBNUS(LevelBNUS** data);
 LevelObjects* levelLoadMapObjects(u8 mapIdx);
 
@@ -501,10 +538,10 @@ u8 levelGet_80346468(void);
 s32 levelDataGetTHER(LevelTHER** data);
 s32 levelDataGetLWIN(LevelLWIN** data);
 s32 levelDataGetTPAD(LevelTPAD** data);
-s32 levelDataGetCNTG(void** data);
+s32 levelDataGetCNTG(LevelCNTG** data);
 s32 levelDataGetOBSV(LevelOBSV** data);
-s32 levelDataGetLPAD(void** data);
-s32 levelDataGetLSTP(void** data);
+s32 levelDataGetLPAD(LevelLPAD** data);
+s32 levelDataGetLSTP(LevelLSTP** data);
 s32 levelDataGetRNGS(LevelRNGS** data);
 s32 levelDataGetBALS(LevelBALS** data);
 s32 levelDataGetTARG(void** data);

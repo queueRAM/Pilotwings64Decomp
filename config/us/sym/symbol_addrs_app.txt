@@ -477,6 +477,22 @@ sGameComplete             = 0x8036C128;
 sSaveFileIdx              = 0x8036C129;
 sOptionMenuItems          = 0x8036C130; // size:0x14
 
+gRefLPAD                  = 0x8036C150;
+gRefLSTP                  = 0x8036C154;
+gRefTPAD                  = 0x8036C158;
+gRefCNTG                  = 0x8036C15C;
+gRefPotLPAD               = 0x8036C160;
+
+gPotLandPadCount          = 0x8036C2B8;
+gLandingPadCount          = 0x8036C2B9;
+gLandingStripCount        = 0x8036C2BA;
+gTakeoffPadCount          = 0x8036C2BB;
+gCannonTargetCount        = 0x8036C2BC;
+gTakeoffPads              = 0x8036C2C0; // size:0x24
+gLandingPads              = 0x8036C2E8; // size:0x150
+gLandingStrips            = 0x8036C438; // size:0x78
+gCannonTargets            = 0x8036C4B0; // size:0x48
+
 sTextName                 = 0x80377F10; // size:0x6E0
 sTextData                 = 0x803785F0; // size:0x6DC
 sTextDataCount            = 0x80378CCC;
