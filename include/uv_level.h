@@ -445,6 +445,14 @@ typedef struct {
 
 typedef struct {
     Vec3F pos;
+    Vec3F rot;
+    u8 targetType;
+    u8 unk19;
+    s32 pad1C;
+} LevelTARG; // size = 0x20
+
+typedef struct {
+    Vec3F pos;
     f32 scale;
     f32 height;
     s32 unk14;
@@ -549,7 +557,7 @@ typedef struct {
     LevelLSTP* dataLSTP;
     LevelRNGS* dataRNGS;
     LevelBALS* dataBALS;
-    void* dataTARG;
+    LevelTARG* dataTARG;
     LevelHPAD* dataHPAD;
     void* dataBTGT;
     void* dataPHTS;
@@ -607,7 +615,7 @@ s32 levelDataGetLPAD(LevelLPAD** data);
 s32 levelDataGetLSTP(LevelLSTP** data);
 s32 levelDataGetRNGS(LevelRNGS** data);
 s32 levelDataGetBALS(LevelBALS** data);
-s32 levelDataGetTARG(void** data);
+s32 levelDataGetTARG(LevelTARG** data);
 s32 levelDataGetHPAD(LevelHPAD** data);
 s32 levelDataGetBTGT(LevelBTGT** data);
 s32 levelDataGetPHTS(void** data);

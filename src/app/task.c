@@ -349,7 +349,7 @@ s32 level_80345464(Mtx4F* arg0, s32 arg1) {
     ballsFrameUpdate();
     func_802E3F7C();
     padsFrameUpdate(arg0);
-    func_8034450C(arg0);
+    targetsFrameUpdate(arg0);
     hoverPadFrameUpdate(arg0);
     if ((veh != VEHICLE_CANNONBALL) && (veh != VEHICLE_SKY_DIVING)) {
         bonusFrameUpdate(arg0);
@@ -543,7 +543,7 @@ s32 levelDataGetBALS(LevelBALS** data) {
     return D_8035078C->comm.countBALS;
 }
 
-s32 levelDataGetTARG(void** data) {
+s32 levelDataGetTARG(LevelTARG** data) {
     *data = D_8035078C->dataTARG;
     return D_8035078C->comm.countTARG;
 }

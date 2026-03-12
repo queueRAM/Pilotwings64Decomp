@@ -329,7 +329,11 @@ falcoDeinit         = 0x802E3E6C; // type:func
 
 targetsInit         = 0x80344290; // type:func
 targetsLoad         = 0x803442F8; // type:func
+targetsFrameUpdate  = 0x8034450C; // type:func
 targetsDeinit       = 0x8034467C; // type:func
+targets_8034473C    = 0x8034473C; // type:func
+targets_803448F4    = 0x803448F4; // type:func
+targets_80344948    = 0x80344948; // type:func
 
 level_803449B0      = 0x803449B0; // type:func
 levelIsValidIndex   = 0x80344CD0; // type:func
@@ -520,8 +524,9 @@ sTextData                 = 0x803785F0; // size:0x6DC
 sTextDataCount            = 0x80378CCC;
 sTextNameCount            = 0x80378CD0;
 
-sMissileTargets           = 0x80378CF0;
+sRefTARG                  = 0x80378CF0;
 sMissileTargetCount       = 0x80378CF4;
+sMissileTargets           = 0x80378CF8; // size:0xBE0
 
 sRefLWIN                  = 0x8037F510;
 sLocalWindCount           = 0x8037F514;
