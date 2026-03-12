@@ -563,7 +563,7 @@ s32 levelDataGetPHTS(void** data) {
     return D_8035078C->comm.countPHTS;
 }
 
-s32 levelDataGetFALC(void** data) {
+s32 levelDataGetFALC(LevelFALC** data) {
     if (data != NULL) {
         *data = D_8035078C->dataFALC;
     }
