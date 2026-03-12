@@ -558,7 +558,7 @@ s32 levelDataGetBTGT(LevelBTGT** data) {
     return D_8035078C->comm.countBTGT;
 }
 
-s32 levelDataGetPHTS(void** data) {
+s32 levelDataGetPHTS(LevelPHTS** data) {
     *data = D_8035078C->dataPHTS;
     return D_8035078C->comm.countPHTS;
 }
@@ -625,14 +625,14 @@ LevelCommObjects* levelLoadCommObj(u32 arg0) {
             dst->dataRNGS = mem_get(dst->comm.countRNGS * sizeof(LevelRNGS));
             dst->dataTHER = mem_get(dst->comm.countTHER * sizeof(LevelTHER));
             dst->dataBALS = mem_get(dst->comm.countBALS * sizeof(LevelBALS));
-            dst->dataTARG = mem_get(dst->comm.countTARG * 0x20);
-            dst->dataHPAD = mem_get(dst->comm.countHPAD * 0x40);
-            dst->dataBTGT = mem_get(dst->comm.countBTGT * 0x1C);
-            dst->dataPHTS = mem_get(dst->comm.countPHTS * 0x14);
-            dst->dataFALC = mem_get(dst->comm.countFALC * 0xAC);
+            dst->dataTARG = mem_get(dst->comm.countTARG * sizeof(LevelTARG));
+            dst->dataHPAD = mem_get(dst->comm.countHPAD * sizeof(LevelHPAD));
+            dst->dataBTGT = mem_get(dst->comm.countBTGT * sizeof(LevelBTGT));
+            dst->dataPHTS = mem_get(dst->comm.countPHTS * sizeof(LevelPHTS));
+            dst->dataFALC = mem_get(dst->comm.countFALC * sizeof(LevelFALC));
             dst->dataCNTG = mem_get(dst->comm.countCNTG * sizeof(LevelCNTG));
-            dst->dataSDFM = mem_get(dst->comm.countSDFM * 0x4C);
-            dst->dataHOPD = mem_get(dst->comm.countHOPD * 0x20);
+            dst->dataSDFM = mem_get(dst->comm.countSDFM * sizeof(LevelSDFM));
+            dst->dataHOPD = mem_get(dst->comm.countHOPD * sizeof(LevelHOPD));
             dst->dataOBSV = mem_get(dst->comm.countOBSV * sizeof(LevelOBSV));
             break;
         case 'THER': // 0x54484552

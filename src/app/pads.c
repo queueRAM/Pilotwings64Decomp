@@ -6,6 +6,7 @@
 #include <uv_vector.h>
 #include "code_9A960.h"
 #include "hud.h"
+#include "macros.h"
 #include "pads.h"
 
 typedef struct {
@@ -26,19 +27,19 @@ typedef struct {
     Vec3F pos;
 } TakeoffPad; // size = 0xC
 
-extern LevelLPAD* gRefLPAD;        // 8036C150 | LPADS
-extern LevelLSTP* gRefLSTP;        // 8036C154 | LSTP
-extern LevelTPAD* gRefTPAD;        // 8036C158 |
-extern LevelCNTG* gRefCNTG;        // 8036C15C |
-extern PotentialLPAD* gRefPotLPAD; // 8036C160 | *potential* LPADS - different struct
+extern LevelLPAD* gRefLPAD;
+extern LevelLSTP* gRefLSTP;
+extern LevelTPAD* gRefTPAD;
+extern LevelCNTG* gRefCNTG;
+extern PotentialLPAD* gRefPotLPAD;
 
 extern Unk8036C168 D_8036C168[];
-extern u8 gPotLandPadCount;   // 8036C2B8
-extern u8 gTakeoffPadCount;   // 8036C2BB
-extern u8 gCannonTargetCount; // 8036C2BC
+extern u8 gPotLandPadCount;
+extern u8 gTakeoffPadCount;
+extern u8 gCannonTargetCount;
 
-extern TakeoffPad gTakeoffPads[3];     // 8036C2C0 | takeoff pads
-extern CannonTarget gCannonTargets[1]; // 8036C4B0 | parsed cannon targets
+extern TakeoffPad gTakeoffPads[3];
+extern CannonTarget gCannonTargets[1];
 extern u16 D_8036C4F8[];
 
 s8 D_8034F900 = 0;
@@ -67,35 +68,35 @@ void padsInit(void) {
 }
 
 void padsLoad(void) {
-    LandingPad* landpad; // temp_s2
+    LandingPad* landpad;
     LandingStrip* landstrip;
-    LevelLSTP* lstp; // temp_s2_3'
+    LevelLSTP* lstp;
     s32 pad1;
-    PotentialLPAD* plpad; // temp_v0_2, temp_v1, var_v1
+    PotentialLPAD* plpad;
     LevelLPAD* lpad;
-    f32 minVal; // var_fs1;
+    f32 minVal;
     s32 var_s0;
-    s32 j;      // var_s0_2;
-    s32 minIdx; // var_s3;
-    s32 i;      // var_s6;
+    s32 j;
+    s32 minIdx;
+    s32 i;
     f32 dx;
     f32 dy;
     f32 dz;
-    LevelCNTG* cntg;         // cntg
-    CannonTarget* cannontgt; // var_s1_5
+    LevelCNTG* cntg;
+    CannonTarget* cannontgt;
     s32 pad0;
     Mtx4F spA4;
     f32 temp_fv0;
 
     gPotLandPadCount = levelGetLPAD(&gRefPotLPAD);
-    if (gPotLandPadCount > 14) {
+    if (gPotLandPadCount > ARRAY_COUNT(gLandingPads)) {
         _uvDebugPrintf("pads : too many potential landing pads defined in level [%d]\n", gPotLandPadCount);
         gPotLandPadCount = 0;
         return;
     }
 
     gLandingPadCount = levelDataGetLPAD(&gRefLPAD);
-    if (gLandingPadCount > 14) {
+    if (gLandingPadCount > ARRAY_COUNT(gLandingPads)) {
         _uvDebugPrintf("pads : too many landing pads defined in level [%d]\n", gLandingPadCount);
         gLandingPadCount = 0;
         return;
@@ -135,7 +136,7 @@ void padsLoad(void) {
     }
 
     gLandingStripCount = levelDataGetLSTP(&gRefLSTP);
-    if (gLandingStripCount > 2) {
+    if (gLandingStripCount > ARRAY_COUNT(gLandingStrips)) {
         _uvDebugPrintf("pads : too many landing strips defined in level [%d]\n", gLandingStripCount);
         gLandingStripCount = 0;
         return;
