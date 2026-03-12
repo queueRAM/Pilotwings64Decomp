@@ -99,7 +99,9 @@ enum Models {
     MODEL_GREEN_3D_ARROW_THING                                       = 0x0CE, // Green 3D Arrow thing
     MODEL_CANON_ON_A_TALL_RED_PEDESTAL                               = 0x0CF, // Canon on a tall red pedestal
 
-    MODEL_GREEN_BALL_OR_JUMBLE_HOPPER_GOAL                           = 0x0D1, // Green Ball or Jumble Hopper goal
+    MODEL_RED_WHITE_GOAL                                             = 0x0D1, // Red/white goal used in Jumble Hopper
+
+    MODEL_GREEN_BLUE_GOAL_0                                          = 0x0D2, // Green/blue goal used in Rocket Belt
 
     MODEL_MECCA_HAWK                                                 = 0x0D3, // Mecca Hawk
     MODEL_LANDING_PAD_EMPTY_NO_TARGET                                = 0x0D4, // Yellow-stripe-bordered landing pad (empty, no target)
@@ -113,6 +115,8 @@ enum Models {
     MODEL_RED_RING                                                   = 0x0E2, // Red Ring
 
     MODEL_BONUS_STAR                                                 = 0x0F2, // Bonus star
+
+    MODEL_GREEN_BLUE_GOAL_1                                          = 0x0F3, // Green/blue goal used in Rocket Belt (more translucent)
 
     MODEL_ORANGE_BALL                                                = 0x0F4, // Orange ball
 
@@ -129,6 +133,10 @@ enum Models {
     MODEL_LANDING_PAD_WITH_RED_TARGET                                = 0x103, // Landing Pad with Red Target
 
     MODEL_105                                                        = 0x105,
+
+    MODEL_CANNON_TARGET_0                                            = 0x106,
+    MODEL_CANNON_TARGET_1                                            = 0x107,
+    MODEL_CANNON_TARGET_2                                            = 0x108,
 
     MODEL_LOW_RES_GOOSE_HG                                           = 0x10B, // Low Res Goose HG Model
 

@@ -18,7 +18,7 @@ typedef struct {
 } Unk8036C168;
 
 typedef struct {
-    u16 unk0;
+    u16 objId;
     u8 unk2;
     u8 pad3[1];
     Mtx4F unk4;
@@ -219,30 +219,30 @@ void padsLoad(void) {
         for (i = 0; i < gCannonTargetCount; i++) {
             cntg = &gRefCNTG[i];
             cannontgt = &gCannonTargets[i];
-            cannontgt->unk0 = uvDobjAllocIdx();
+            cannontgt->objId = uvDobjAllocIdx();
             cannontgt->unk2 = hudAddWaypoint(cntg->pos.x, cntg->pos.y, cntg->pos.z);
             switch (cntg->unk18) {
             case 0:
-                uvDobjModel(cannontgt->unk0, 0x106); // MODEL_CANNON_TARGET_0
+                uvDobjModel(cannontgt->objId, MODEL_CANNON_TARGET_0);
                 cannontgt->unk44 = 35.0f;
                 break;
             case 1:
-                uvDobjModel(cannontgt->unk0, 0x107); // MODEL_CANNON_TARGET_1
+                uvDobjModel(cannontgt->objId, MODEL_CANNON_TARGET_1);
                 cannontgt->unk44 = 42.5f;
                 break;
             case 2:
-                uvDobjModel(cannontgt->unk0, 0x108); // MODEL_CANNON_TARGET_2
+                uvDobjModel(cannontgt->objId, MODEL_CANNON_TARGET_2);
                 cannontgt->unk44 = 50.0f;
                 break;
             default:
                 _uvDebugPrintf("pads : unknown cannon target type [%d]\n", cntg->unk18);
-                uvDobjModel(cannontgt->unk0, 0x108); // MODEL_CANNON_TARGET_2
+                uvDobjModel(cannontgt->objId, MODEL_CANNON_TARGET_2);
                 cannontgt->unk44 = 50.0f;
                 break;
             }
             func_80313640(cntg->pos.x, cntg->pos.y, cntg->pos.z, cntg->unkC * 0.01745329f, cntg->unk10 * 0.01745329f, cntg->unk14 * 0.01745329f,
                           &cannontgt->unk4);
-            uvDobjPosm(cannontgt->unk0, 0, &cannontgt->unk4);
+            uvDobjPosm(cannontgt->objId, 0, &cannontgt->unk4);
         }
     }
 }

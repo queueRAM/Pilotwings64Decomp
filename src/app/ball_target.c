@@ -65,7 +65,7 @@ void ballTgtInitDobj(BallTarget* bt) {
     s32 modelId;
 
     bt->objId = uvDobjAllocIdx();
-    modelId = (bt->unk5B) ? 0xD2 : 0xF3; // MODEL_GREEN_GOAL
+    modelId = (bt->unk5B) ? MODEL_GREEN_BLUE_GOAL_0 : MODEL_GREEN_BLUE_GOAL_1;
     uvDobjModel(bt->objId, modelId);
     uvMat4SetIdentity(&bt->unk10);
     bt->unk10.m[0][0] = bt->unk50;
