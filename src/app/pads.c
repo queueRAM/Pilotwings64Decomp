@@ -1,13 +1,15 @@
 #include "common.h"
 #include <uv_dobj.h>
-#include <uv_level.h>
 #include <uv_math.h>
 #include <uv_matrix.h>
+#include <uv_texture.h>
 #include <uv_vector.h>
 #include "code_9A960.h"
 #include "hud.h"
+#include "level.h"
 #include "macros.h"
 #include "pads.h"
+#include "task.h"
 
 typedef struct {
     u8 pad0[0x10];
@@ -95,7 +97,7 @@ void padsLoad(void) {
         return;
     }
 
-    gLandingPadCount = levelDataGetLPAD(&gRefLPAD);
+    gLandingPadCount = taskGetLPAD(&gRefLPAD);
     if (gLandingPadCount > ARRAY_COUNT(gLandingPads)) {
         _uvDebugPrintf("pads : too many landing pads defined in level [%d]\n", gLandingPadCount);
         gLandingPadCount = 0;
@@ -135,7 +137,7 @@ void padsLoad(void) {
         }
     }
 
-    gLandingStripCount = levelDataGetLSTP(&gRefLSTP);
+    gLandingStripCount = taskGetLSTP(&gRefLSTP);
     if (gLandingStripCount > ARRAY_COUNT(gLandingStrips)) {
         _uvDebugPrintf("pads : too many landing strips defined in level [%d]\n", gLandingStripCount);
         gLandingStripCount = 0;
@@ -163,7 +165,7 @@ void padsLoad(void) {
         landstrip->unk39 = 1;
     }
 
-    gTakeoffPadCount = levelDataGetTPAD(&gRefTPAD);
+    gTakeoffPadCount = taskGetTPAD(&gRefTPAD);
     if (gTakeoffPadCount > 3) {
         _uvDebugPrintf("pads : too many takeoff pads defined in level [%d]\n", gTakeoffPadCount);
         gTakeoffPadCount = 0;
@@ -203,7 +205,7 @@ void padsLoad(void) {
     }
 
     if (D_80362690->unk0[D_80362690->unk9C].unkC.unk7B == 0) {
-        gCannonTargetCount = levelDataGetCNTG(&gRefCNTG);
+        gCannonTargetCount = taskGetCNTG(&gRefCNTG);
         if (gCannonTargetCount > 1) {
             _uvDebugPrintf("pads : too many cannon targets defined in level [%d]\n", gCannonTargetCount);
             gCannonTargetCount = 0;

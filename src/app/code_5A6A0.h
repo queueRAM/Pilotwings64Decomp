@@ -3,7 +3,7 @@
 
 #include <uv_matrix.h>
 #include <uv_vector.h>
-#include <uv_level.h>
+#include "code_72B70.h"
 
 typedef struct {
     s32 unk0;

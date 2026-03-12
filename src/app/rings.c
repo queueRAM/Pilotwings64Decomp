@@ -1,9 +1,11 @@
 #include "common.h"
 #include <uv_dobj.h>
 #include <uv_string.h>
+#include <uv_texture.h>
 #include "code_9A960.h"
 #include "hud.h"
 #include "rings.h"
+#include "task.h"
 
 void func_803234A4(ParsedRing*);
 void func_80323720(ParsedRing*);
@@ -56,7 +58,7 @@ void ringsLoad(void) {
         return;
     }
 
-    D_8036DA74 = levelDataGetRNGS(&D_8036DA70);
+    D_8036DA74 = taskGetRNGS(&D_8036DA70);
     if (D_8036DA74 > ARRAY_COUNT(D_8036DA78)) {
         _uvDebugPrintf("rings : too many rings defined in level [%d]\n", D_8036DA74);
         D_8036DA74 = 0;

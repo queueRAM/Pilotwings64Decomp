@@ -2,11 +2,13 @@
 #include <uv_dobj.h>
 #include <uv_fx.h>
 #include <uv_model.h>
+#include <uv_texture.h>
 #include "code_9A960.h"
 #include "code_B2900.h"
 #include "hud.h"
 #include "snd.h"
 #include "targets.h"
+#include "task.h"
 #include "text_data.h"
 
 f32 D_803506A0[] = {
@@ -39,7 +41,7 @@ void targetsLoad(void) {
     if (D_80362690->unkA0 == 0) {
         return;
     }
-    sMissileTargetCount = levelDataGetTARG(&sRefTARG);
+    sMissileTargetCount = taskGetTARG(&sRefTARG);
     if (sMissileTargetCount > ARRAY_COUNT(sMissileTargets)) {
         _uvDebugPrintf("targets : too many missile targets defined in level [%d]\n", sMissileTargetCount);
         sMissileTargetCount = 0;

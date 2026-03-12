@@ -1,9 +1,10 @@
 #include "common.h"
 #include <uv_dobj.h>
-#include <uv_level.h>
 #include <uv_math.h>
 #include <uv_util.h>
 #include "code_69BF0.h"
+#include "code_72B70.h"
+#include "task.h"
 #include "wind.h"
 
 typedef struct {
@@ -49,7 +50,7 @@ void windLoad(void) {
         return;
     }
 
-    sLocalWindCount = levelDataGetLWIN(&sRefLWIN);
+    sLocalWindCount = taskGetLWIN(&sRefLWIN);
     if (sLocalWindCount > ARRAY_COUNT(sLocalWinds)) {
         _uvDebugPrintf("wind : too many local winds defined in level [%d]\n", sLocalWindCount);
         sLocalWindCount = 0;

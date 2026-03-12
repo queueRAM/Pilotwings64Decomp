@@ -1,7 +1,7 @@
 #include "common.h"
-#include <uv_level.h>
 #include "ball_target.h"
 #include "balls.h"
+#include "code_72B70.h"
 #include "code_82520.h"
 #include "code_94E60.h"
 #include "code_B2900.h"
@@ -9,6 +9,7 @@
 #include "hover_pads.h"
 #include "rings.h"
 #include "targets.h"
+#include "task.h"
 
 s32 D_8034FBD0 = 0;
 u16 D_8034FBD4[][3] = {
@@ -42,12 +43,12 @@ u8 func_8032BF54(void) {
     void* tmp;
 
     tmp = NULL;
-    if (levelGet_80346364() != 2) {
+    if (taskGet_80346364() != 2) {
         return 0;
     }
-    return (func_80324AF4() != levelDataGetRNGS((LevelRNGS**)&tmp) || targets_803448F4() != levelDataGetTARG((LevelTARG**)&tmp) || ballsGet_802CC15C() == 0 ||
-            hoverPad_8030A080() != levelDataGetHPAD((LevelHPAD**)&tmp) || falco_802E57C4() != D_8035A5F0 ||
-            ballTgtCount_5B() != levelDataGetBTGT((LevelBTGT**)&tmp) || func_802FB5A0() != levelDataGetHOPD((LevelHOPD**)&tmp));
+    return (func_80324AF4() != taskGetRNGS((LevelRNGS**)&tmp) || targets_803448F4() != taskGetTARG((LevelTARG**)&tmp) || ballsGet_802CC15C() == 0 ||
+            hoverPad_8030A080() != taskGetHPAD((LevelHPAD**)&tmp) || falco_802E57C4() != D_8035A5F0 || ballTgtCount_5B() != taskGetBTGT((LevelBTGT**)&tmp) ||
+            func_802FB5A0() != taskGetHOPD((LevelHOPD**)&tmp));
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_B2900/func_8032C080.s")
@@ -68,7 +69,7 @@ s32 func_8032C174(s32* arg0, u16 arg1, u8 arg2) {
 
     if (i == 3) {
         if (unkC->veh < 3) {
-            *arg0 = 100 * levelGetTestCount(arg2, unkC->veh) - arg1;
+            *arg0 = 100 * taskGetTestCount(arg2, unkC->veh) - arg1;
         } else {
             *arg0 = 100 - arg1;
         }

@@ -1,10 +1,11 @@
 #include "common.h"
 #include <uv_dobj.h>
-#include <uv_level.h>
 #include <uv_math.h>
+#include <uv_texture.h>
 #include "code_69BF0.h"
 #include "code_9A960.h"
 #include "hud.h"
+#include "task.h"
 #include "thermals.h"
 
 #define THERM_ENABLE_DURATION (4 * 60) // 4 minutes in sec
@@ -40,7 +41,7 @@ void thermLoad(void) {
     s32 i;
 
     if (D_80362690->unk0[D_80362690->unk9C].unkC.unk7B == 0) {
-        gThermalCount = levelDataGetTHER(&gLevelTHER);
+        gThermalCount = taskGetTHER(&gLevelTHER);
         if (gThermalCount > ARRAY_COUNT(gThermals)) {
             _uvDebugPrintf("thermals : too many thermals defined in level [%d]\n", gThermalCount);
             gThermalCount = 0;

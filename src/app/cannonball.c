@@ -4,7 +4,6 @@
 #include <uv_controller.h>
 #include <uv_dobj.h>
 #include <uv_event.h>
-#include <uv_level.h>
 #include <uv_math.h>
 #include <uv_matrix.h>
 #include <uv_memory.h>
@@ -829,7 +828,7 @@ s32 cannonLoad802D77D8(Unk80362690* arg0, Unk802D5B50_Arg2* arg1) {
     func_8031DAA8(0, 0);
     temp_s1_2->unk6 = 0;
     func_803214E4();
-    taskInit(temp_s1_2->unk4, temp_s1_2->unk2, temp_s1_2->unk6, &arg0->unk0[0].map, &arg0->unk0[0].unk6, &arg0->unk0[0].unk8);
+    taskInitTest(temp_s1_2->unk4, temp_s1_2->unk2, temp_s1_2->unk6, &arg0->unk0[0].map, &arg0->unk0[0].unk6, &arg0->unk0[0].unk8);
     levelLoad(arg0->unk0[0].map, temp_s1_2->pad0, temp_s1_2->unk2, 1);
     hudInit();
     func_8031A2CC();
@@ -925,7 +924,7 @@ s32 cannonLandedFrame(Unk802D5B50_Arg2* arg0) {
     if (D_8034F850 < D_8034EA00) {
         cannonPilotLand(arg0);
         func_80313D74();
-        level_80345464(&temp_s0->unk2C, temp_s0->unk20);
+        taskFrameUpdate(&temp_s0->unk2C, temp_s0->unk20);
         uvGfxBegin();
         func_8034B624(temp_s0->unk70);
         uvGfxEnd();

@@ -1,13 +1,14 @@
 #include "common.h"
 #include <uv_filesystem.h>
 #include <uv_graphics.h>
-#include <uv_level.h>
 #include <uv_memory.h>
+#include <uv_texture.h>
 #include <uv_util.h>
 #include "code_58B00.h"
 #include "code_69BF0.h"
 #include "code_6ECD0.h"
 #include "code_722D0.h"
+#include "code_72B70.h"
 #include "code_78620.h"
 #include "code_9C080.h"
 #include "code_9CF50.h"
@@ -16,7 +17,9 @@
 #include "code_D2D50.h"
 #include "code_D3810.h"
 #include "environment.h"
+#include "level.h"
 #include "shadow.h"
+#include "task.h"
 #include "text_data.h"
 #include "toys.h"
 
@@ -265,10 +268,10 @@ u8 levelGetBNUS(LevelBNUS** data) {
 
 LevelObjects* levelLoadMapObjects(u8 mapIdx) {
     s32 i;
-    s32 idx;  // spC0
-    u32 size; // spBC
+    s32 idx;
+    u32 size;
     u32 tag;
-    u8* srcPtr; // spB4
+    u8* srcPtr;
     Unk802E27A8_Arg0 sp3C;
     LevelLEVL* ptr;
     LevelObjects* temp;

@@ -2,7 +2,7 @@
 #define APP_SAVE_H
 
 #include <PR/ultratypes.h>
-#include <uv_level.h>
+#include "task.h"
 
 typedef struct {
     u8 unk0;

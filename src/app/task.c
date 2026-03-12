@@ -1,7 +1,6 @@
 #include "common.h"
 #include <uv_filesystem.h>
 #include <uv_graphics.h>
-#include <uv_level.h>
 #include <uv_math.h>
 #include <uv_matrix.h>
 #include <uv_memory.h>
@@ -26,6 +25,7 @@
 #include "environment.h"
 #include "falco.h"
 #include "hover_pads.h"
+#include "level.h"
 #include "mem.h"
 #include "pads.h"
 #include "rings.h"
@@ -49,13 +49,13 @@ typedef struct {
     u8 unk0[0x30];
 } Unk8037AA88;
 
-u8 gLevelClassU8 = 0;
-u8 gLevelVehicleU8 = 0;
-u8 gLevelTestU8 = 0;
+u8 gTaskClassU8 = 0;
+u8 gTaskVehicleU8 = 0;
+u8 gTaskTestU8 = 0;
 u8 D_8035079C = 0;
 u8 D_803507A0 = 0;
 u8 D_803507A4 = 0;
-u8 gMapLookup[] = { 1, 3, 5, 10 };
+u8 gTaskMapLookup[] = { MAP_HOLIDAY_ISLAND, MAP_CRESCENT_ISLAND, MAP_LITTLE_STATES, MAP_EVER_FROST_ISLAND };
 u8 D_803507AC[] = {
     0x27, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3A, 0x3B, 0x3C, 0x3D,
     0x3E, 0x3F, 0x40, 0x41, 0x11, 0x12, 0x13, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x14, 0x15, 0x16, 0x17,
@@ -63,22 +63,22 @@ u8 D_803507AC[] = {
 };
 
 extern Unk803798E0 D_803798E0[MAX_CLASSES][MAX_TESTS][VEHICLE_COUNT];
-extern LevelCommObjects* D_8035078C;
+extern TaskObjects* D_8035078C;
 
-extern LevelCommObjects gLevelCommObjs;
+extern TaskObjects gTaskObjects;
 
 // begins 0x8037AA78
-extern s32 gLevelClass; // ClassId
-extern s32 gLevelTest;
-extern s32 gLevelVehicle; // VehicleId
+extern s32 gTaskClass; // ClassId
+extern s32 gTaskTest;
+extern s32 gTaskVehicle; // VehicleId
 extern Unk8037AA88 D_8037AA88[];
 
 // forward declarations
-void taskDeinit2(void);
+void taskDeinit(void);
 
-void level_803449B0(void) {
+void taskInit(void) {
     s32 classIdx, testIdx, vehIdx;
-    LevelCommObjects* obj;
+    TaskObjects* obj;
     Unk803798E0* temp_s0_2;
     s32 i;
     u8 sp88[0x28];
@@ -120,7 +120,7 @@ void level_803449B0(void) {
     }
 
     for (i = 0; i < 0x3D; i++) {
-        obj = levelLoadCommObj(i);
+        obj = taskLoadCommObj(i);
         classIdx = obj->comm.classNum;
         testIdx = obj->comm.testNum;
         vehIdx = obj->comm.vehNum;
@@ -149,7 +149,7 @@ void level_803449B0(void) {
     }
 }
 
-s32 levelIsValidIndex(s32 classIdx, s32 testIdx, s32 vehicle) {
+s32 taskIsValidIndex(s32 classIdx, s32 testIdx, s32 vehicle) {
     if (D_803798E0[classIdx][testIdx][vehicle].unk8 == 0xFF) {
         return 0;
     }
@@ -167,7 +167,7 @@ void strToUpper(char* str, s32 length) {
     }
 }
 
-s32 level_80344E0C(s32 classIdx, s32 testIdx, s32 vehicle, char* arg3, char* arg4) {
+s32 taskLoadNames(s32 classIdx, s32 testIdx, s32 vehicle, char* arg3, char* arg4) {
     u8 sp48[0x28];
     u8 sp20[0x28];
     Unk803798E0* sp18;
@@ -185,7 +185,7 @@ s32 level_80344E0C(s32 classIdx, s32 testIdx, s32 vehicle, char* arg3, char* arg
     return 1;
 }
 
-s32 levelGetTestCount(s32 classIdx, s32 vehicle) {
+s32 taskGetTestCount(s32 classIdx, s32 vehicle) {
     s32 testCount;
     s32 i;
 
@@ -205,12 +205,12 @@ s32 levelGetTestCount(s32 classIdx, s32 vehicle) {
     return testCount;
 }
 
-s32 taskInit(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* arg4, u16* arg5) {
+s32 taskInitTest(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* arg4, u16* arg5) {
     u8 tmp8;
 
-    gLevelClass = classIdx;
-    gLevelVehicle = vehicle;
-    gLevelTest = testIdx;
+    gTaskClass = classIdx;
+    gTaskVehicle = vehicle;
+    gTaskTest = testIdx;
 
     if (classIdx > MAX_CLASSES) {
         return 0;
@@ -226,12 +226,12 @@ s32 taskInit(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* arg4, u16* a
     if (tmp8 == 0xFF) {
         return 0;
     }
-    D_8035078C = levelLoadCommObj(tmp8);
-    gLevelClassU8 = (u8)classIdx;
-    gLevelVehicleU8 = (u8)vehicle;
-    gLevelTestU8 = (u8)testIdx;
+    D_8035078C = taskLoadCommObj(tmp8);
+    gTaskClassU8 = (u8)classIdx;
+    gTaskVehicleU8 = (u8)vehicle;
+    gTaskTestU8 = (u8)testIdx;
 
-    *map = gMapLookup[D_8035078C->comm.unk3];
+    *map = gTaskMapLookup[D_8035078C->comm.unk3];
     switch (*map) {
     case MAP_CRESCENT_ISLAND:
         *arg4 = 1;
@@ -308,15 +308,15 @@ void taskLoad(void) {
     D_803507A4 = 0;
 }
 
-void taskDeinit(void) {
-    taskDeinit2();
+void taskDeinitLevel(void) {
+    taskDeinit();
     thermDeinit();
     windDeinit();
     padsDeinit();
     func_802EB5E4();
 }
 
-void taskDeinit2(void) {
+void taskDeinit(void) {
     u16 veh;
 
     veh = D_80362690->unk0[D_80362690->unk9C].unkC.veh;
@@ -336,7 +336,7 @@ void taskDeinit2(void) {
     }
 }
 
-s32 level_80345464(Mtx4F* arg0, s32 arg1) {
+s32 taskFrameUpdate(Mtx4F* arg0, s32 arg1) {
     u16 veh;
     s32 sp18;
     s32 temp_v0;
@@ -379,25 +379,25 @@ s32 level_80345464(Mtx4F* arg0, s32 arg1) {
     if ((D_80362690->unk0[D_80362690->unk9C].unkC.veh == VEHICLE_JUMBLE_HOPPER) && (func_802FB308(D_80362690->unk0[D_80362690->unk9C].unkC.unk6C) == 1)) {
         sp18 = 1;
     }
-    temp_v0 = level_803456D8(arg0);
+    temp_v0 = task_803456D8(arg0);
     switch (temp_v0) {
     case 1:
-        level_80345A24();
+        taskUpdateState();
         func_802EDDEC(arg0);
         break;
     case 2:
         func_802EDDEC(arg0);
         break;
     }
-    if ((D_80362690->unkA0 != 0) && (levelGet_80346364() == 3) && (func_8032C080(NULL) != 0)) {
+    if ((D_80362690->unkA0 != 0) && (taskGet_80346364() == 3) && (func_8032C080(NULL) != 0)) {
         D_803507A0 = 1;
-        taskDeinit2();
+        taskDeinit();
         D_80362690->unkA0 = 0;
     }
     return sp18;
 }
 
-s32 level_803456D8(Mtx4F* arg0) {
+s32 task_803456D8(Mtx4F* arg0) {
     LevelTPTS* sp8C;
     f32 temp_fv0;
     u8 temp_v0;
@@ -460,7 +460,7 @@ s32 level_803456D8(Mtx4F* arg0) {
         return 0;
     }
     D_80362690->unk0[D_80362690->unk9C].unkC.unk8 = (u16)var_s2;
-    temp_v0_2 = level_80346370(var_s2);
+    temp_v0_2 = task_80346370(var_s2);
     temp_s0 = &sp8C[sp85];
     uvChanTerra(D_80362690->unk0[D_80362690->unk9C].unkC.unk70->unk22C, temp_v0_2);
     if (temp_v0_2 != D_80362690->unk0[0].unk6) {
@@ -479,7 +479,7 @@ s32 level_803456D8(Mtx4F* arg0) {
     return 0;
 }
 
-void level_80345A24(void) {
+void taskUpdateState(void) {
     u16 veh;
 
     veh = D_80362690->unk0[D_80362690->unk9C].unkC.veh;
@@ -493,116 +493,115 @@ void level_80345A24(void) {
     func_802FAFF0();
 }
 
-s32 levelDataGetTHER(LevelTHER** data) {
+s32 taskGetTHER(LevelTHER** data) {
     *data = D_8035078C->dataTHER;
     return D_8035078C->comm.countTHER;
 }
 
-s32 levelDataGetLWIN(LevelLWIN** data) {
+s32 taskGetLWIN(LevelLWIN** data) {
     *data = D_8035078C->dataLWIN;
     return D_8035078C->comm.countLWIN;
 }
 
-s32* func_80345AEC(void) {
+s32* taskGet_80345AEC(void) {
     return &D_8035078C->comm.unk10;
 }
 
-s32 levelDataGetTPAD(LevelTPAD** data) {
+s32 taskGetTPAD(LevelTPAD** data) {
     *data = D_8035078C->dataTPAD;
     return D_8035078C->comm.countTPAD;
 }
 
-s32 levelDataGetCNTG(LevelCNTG** data) {
+s32 taskGetCNTG(LevelCNTG** data) {
     *data = D_8035078C->dataCNTG;
     return D_8035078C->comm.countCNTG;
 }
 
-s32 levelDataGetOBSV(LevelOBSV** data) {
+s32 taskGetOBSV(LevelOBSV** data) {
     *data = D_8035078C->dataOBSV;
     return D_8035078C->comm.countOBSV;
 }
 
-// TODO: how is this different than levelGetLPAD from level.c?
-s32 levelDataGetLPAD(LevelLPAD** data) {
+s32 taskGetLPAD(LevelLPAD** data) {
     *data = D_8035078C->dataLPAD;
     return D_8035078C->comm.countLPAD;
 }
 
-s32 levelDataGetLSTP(LevelLSTP** data) {
+s32 taskGetLSTP(LevelLSTP** data) {
     *data = D_8035078C->dataLSTP;
     return D_8035078C->comm.countLSTP;
 }
 
-s32 levelDataGetRNGS(LevelRNGS** data) {
+s32 taskGetRNGS(LevelRNGS** data) {
     *data = D_8035078C->dataRNGS;
     return D_8035078C->comm.countRNGS;
 }
 
-s32 levelDataGetBALS(LevelBALS** data) {
+s32 taskGetBALS(LevelBALS** data) {
     *data = D_8035078C->dataBALS;
     return D_8035078C->comm.countBALS;
 }
 
-s32 levelDataGetTARG(LevelTARG** data) {
+s32 taskGetTARG(LevelTARG** data) {
     *data = D_8035078C->dataTARG;
     return D_8035078C->comm.countTARG;
 }
 
-s32 levelDataGetHPAD(LevelHPAD** data) {
+s32 taskGetHPAD(LevelHPAD** data) {
     *data = D_8035078C->dataHPAD;
     return D_8035078C->comm.countHPAD;
 }
 
-s32 levelDataGetBTGT(LevelBTGT** data) {
+s32 taskGetBTGT(LevelBTGT** data) {
     *data = D_8035078C->dataBTGT;
     return D_8035078C->comm.countBTGT;
 }
 
-s32 levelDataGetPHTS(LevelPHTS** data) {
+s32 taskGetPHTS(LevelPHTS** data) {
     *data = D_8035078C->dataPHTS;
     return D_8035078C->comm.countPHTS;
 }
 
-s32 levelDataGetFALC(LevelFALC** data) {
+s32 taskGetFALC(LevelFALC** data) {
     if (data != NULL) {
         *data = D_8035078C->dataFALC;
     }
     return D_8035078C->comm.countFALC;
 }
 
-s32* levelGet_80345C80(void) {
+s32* taskGet_80345C80(void) {
     return &D_8035078C->comm.unk48;
 }
 
-s32* levelGet_80345C90(void) {
+s32* taskGet_80345C90(void) {
     return &D_8035078C->comm.unk2C;
 }
 
-f32 levelGet_80345CA0(void) {
+f32 taskGet_80345CA0(void) {
     return D_8035078C->comm.unk44;
 }
 
-u8* levelGet_80345CB0(void) {
+u8* taskGet_80345CB0(void) {
     return D_8035078C->comm.unk8;
 }
 
-void levelGet_80345CC0(f32* arg0, f32* arg1) {
+void taskGet_80345CC0(f32* arg0, f32* arg1) {
     *arg0 = D_8035078C->comm.unk404;
     *arg1 = D_8035078C->comm.unk408;
 }
 
-LevelCommObjects* levelLoadCommObj(u32 arg0) {
+TaskObjects* taskLoadCommObj(u32 arg0) {
     void* sp34;
     s32 idx;
     u32 size;
     u32 tag;
     void* data;
-    LevelCommObjects* dst;
+    TaskObjects* dst;
 
-    dst = &gLevelCommObjs;
+    dst = &gTaskObjects;
     sp34 = func_802314D0(D_803507AC[arg0], 2);
     idx = uvFileReadHeader((s32)sp34);
-    uvMemSet(&gLevelCommObjs, 0, sizeof(gLevelCommObjs));
+    uvMemSet(&gTaskObjects, 0, sizeof(gTaskObjects));
 
     while ((tag = uvFileReadBlock(idx, &size, &data, 2)) != 0) {
         switch (tag) {
@@ -686,10 +685,10 @@ LevelCommObjects* levelLoadCommObj(u32 arg0) {
         }
     }
     uvFile_80223F30(idx);
-    return &gLevelCommObjs;
+    return &gTaskObjects;
 }
 
-void level_803462D4(u16 idx) {
+void task_803462D4(u16 idx) {
     Unk8037AA88* src;
     if (idx > 3) {
         _uvDebugPrintf("task_birdpad : level out of valid range [%d] - set to 0\n", idx);
@@ -699,17 +698,17 @@ void level_803462D4(u16 idx) {
     _uvMediaCopy((void*)D_8035078C->dataTPAD, src, 0x30);
 }
 
-void levelGetClsVehTest(u16* classIdx, u16* vehIdx, u16* testIdx) {
-    *classIdx = gLevelClass;
-    *vehIdx = gLevelVehicle;
-    *testIdx = gLevelTest;
+void taskGetClsVehTest(u16* classIdx, u16* vehIdx, u16* testIdx) {
+    *classIdx = gTaskClass;
+    *vehIdx = gTaskVehicle;
+    *testIdx = gTaskTest;
 }
 
-u8 levelGet_80346364(void) {
-    return gLevelCommObjs.comm.unk4;
+u8 taskGet_80346364(void) {
+    return gTaskObjects.comm.unk4;
 }
 
-// level_80346370 does not initialize the return value `ret`
+// task_80346370 does not initialize the return value `ret`
 #if defined(__clang__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsometimes-uninitialized"
@@ -717,7 +716,7 @@ u8 levelGet_80346364(void) {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
-s32 level_80346370(s32 terra) {
+s32 task_80346370(s32 terra) {
     s32 ret;
     switch (D_80362690->unk0[0].map) {
     case MAP_CRESCENT_ISLAND:
@@ -765,11 +764,11 @@ s32 level_80346370(s32 terra) {
 #pragma GCC diagnostic pop
 #endif
 
-u8 levelGet_80346468(void) {
+u8 taskGet_80346468(void) {
     return D_803507A4;
 }
 
-s32 levelDataGetHOPD(LevelHOPD** data) {
+s32 taskGetHOPD(LevelHOPD** data) {
     *data = D_8035078C->dataHOPD;
     return D_8035078C->comm.countHOPD;
 }

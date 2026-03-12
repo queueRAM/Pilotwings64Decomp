@@ -2,6 +2,7 @@
 #define APP_CODE_9A960_H
 
 #include <uv_matrix.h>
+#include <uv_vector.h>
 #include "code_5A6A0.h"
 
 typedef struct {

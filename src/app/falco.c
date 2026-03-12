@@ -1,8 +1,10 @@
 #include "common.h"
-#include <uv_level.h>
 #include <uv_math.h>
+#include <uv_texture.h>
+#include "code_72B70.h"
 #include "demo.h"
 #include "falco.h"
+#include "task.h"
 
 typedef struct {
     s32 unk0;
@@ -181,7 +183,7 @@ void falcoLoad(void) {
         return;
     }
 
-    gFalcoCount = levelDataGetFALC(&gRefFALC);
+    gFalcoCount = taskGetFALC(&gRefFALC);
     if (gFalcoCount > 12) {
         _uvDebugPrintf("falcos : too many falcos domains defined in level [%d]\n", gFalcoCount);
         gFalcoCount = 0;

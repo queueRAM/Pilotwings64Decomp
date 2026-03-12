@@ -2,7 +2,6 @@
 #define APP_RINGS_H
 
 #include <PR/ultratypes.h>
-#include <uv_level.h>
 #include <uv_matrix.h>
 
 typedef struct {

@@ -1,10 +1,13 @@
 #include "common.h"
 #include <uv_dobj.h>
-#include <uv_level.h>
 #include <uv_math.h>
+#include <uv_matrix.h>
+#include <uv_texture.h>
+#include <uv_vector.h>
 #include "balls.h"
 #include "ball_target.h"
 #include "snd.h"
+#include "task.h"
 
 typedef struct {
     u16 objId;
@@ -86,7 +89,7 @@ void ballTgtLoad(void) {
         return;
     }
 
-    sBallTgtCount = levelDataGetBTGT(&sRefBTGT);
+    sBallTgtCount = taskGetBTGT(&sRefBTGT);
     if (sBallTgtCount > 5) {
         _uvDebugPrintf("btgts : too many btgts defined in level [%d]\n", sBallTgtCount);
         sBallTgtCount = 0;

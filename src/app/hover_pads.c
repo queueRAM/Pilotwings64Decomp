@@ -1,10 +1,11 @@
 #include "common.h"
 #include <uv_dobj.h>
-#include <uv_level.h>
+#include <uv_texture.h>
 #include <uv_util.h>
 #include "code_9A960.h"
 #include "hover_pads.h"
 #include "hud.h"
+#include "task.h"
 
 s32 D_8034F3F0[4] = { 0xFC, 0xFB, 0, 0 };
 
@@ -59,7 +60,7 @@ void hoverPadLoad(void) {
         return;
     }
 
-    gHoverPadCount = levelDataGetHPAD(&gRefHPAD);
+    gHoverPadCount = taskGetHPAD(&gRefHPAD);
     if (gHoverPadCount > ARRAY_COUNT(gHoverPads)) {
         _uvDebugPrintf("hpads : too many hpads defined in level [%d]\n", gHoverPadCount);
         gHoverPadCount = 0;

@@ -3,11 +3,11 @@
 #include <uv_font.h>
 #include <uv_geometry.h>
 #include <uv_graphics.h>
-#include <uv_level.h>
 #include <uv_math.h>
 #include <uv_matrix.h>
 #include <uv_sprite.h>
 #include <uv_string.h>
+#include <uv_texture.h>
 #include <uv_vector.h>
 #include "demo.h"
 #include "code_9A960.h"
@@ -16,6 +16,7 @@
 #include "pads.h"
 #include "snap.h"
 #include "snd.h"
+#include "task.h"
 #include "text_data.h"
 #include "thermals.h"
 
@@ -379,14 +380,14 @@ void hud_8031A378(void) {
     LevelBTGT* btgt;
 
     idx = 0;
-    for (i = 0; i < levelDataGetHOPD(&hopd); i++) {
+    for (i = 0; i < taskGetHOPD(&hopd); i++) {
         radar->goals[idx].x = hopd[i].pos.x;
         radar->goals[idx].y = hopd[i].pos.y;
         radar->goals[idx].unkC = 0;
         idx++;
     }
 
-    for (i = 0; i < levelDataGetBTGT(&btgt); i++) {
+    for (i = 0; i < taskGetBTGT(&btgt); i++) {
         radar->goals[idx].x = btgt[i].pos.x;
         radar->goals[idx].y = btgt[i].pos.y;
         radar->goals[idx].unkC = 0;

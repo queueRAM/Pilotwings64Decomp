@@ -3,11 +3,11 @@
 #include <uv_dobj.h>
 #include <uv_matrix.h>
 #include <uv_model.h>
-#include <uv_level.h>
 #include "code_9A960.h"
 #include "code_D2D50.h"
 #include "hud.h"
 #include "proxanim.h"
+#include "task.h"
 
 // .data
 s32 D_803509C0 = 0xFFFF;
@@ -194,7 +194,7 @@ void func_8034BEDC(void) {
         uvDobjState(D_803509C0, 0);
         D_803509CC = func_80321210(func_8034BDCC, func_8034BC68, sp30, 450.0f, 0.0f, 4);
         D_803509D0 = 0.0f;
-        levelGetClsVehTest(&sp46, &sp44, &sp42);
+        taskGetClsVehTest(&sp46, &sp44, &sp42);
         var_v1 = (sp42 == 0 && sp46 == 1 && sp44 == 0) || (sp42 == 1 && sp46 == 2 && sp44 == 0) || (sp42 == 2 && sp46 == 3 && sp44 == 0);
         if (var_v1) {
             D_803509C8 = hudAddWaypoint(750.0f, 100.0f, 4.5f);

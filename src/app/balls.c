@@ -2,16 +2,17 @@
 #include <uv_audio.h>
 #include <uv_dobj.h>
 #include <uv_event.h>
-#include <uv_level.h>
 #include <uv_math.h>
 #include <uv_memory.h>
 #include <uv_model.h>
+#include <uv_texture.h>
 #include "balls.h"
 #include "code_61A60.h"
 #include "code_66160.h"
 #include "code_7FED0.h"
 #include "code_9A960.h"
 #include "hud.h"
+#include "task.h"
 
 // .data
 // list of model ids
@@ -130,7 +131,7 @@ void ballsLoad(void) {
     LevelBALS* ball;
 
     if (D_80362690->unkA0) {
-        gBallCount = levelDataGetBALS(&sRefBALS);
+        gBallCount = taskGetBALS(&sRefBALS);
         if (gBallCount >= 0x15) {
             _uvDebugPrintf("balls : too many balls defined in level [%d]\n", gBallCount);
             gBallCount = 0;
