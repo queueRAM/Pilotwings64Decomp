@@ -46,7 +46,7 @@ u8 func_8032BF54(void) {
         return 0;
     }
     return (func_80324AF4() != levelDataGetRNGS((LevelRNGS**)&tmp) || targets_803448F4() != levelDataGetTARG((LevelTARG**)&tmp) || ballsGet_802CC15C() == 0 ||
-            hoverPad_8030A080() != levelDataGetHPAD((LevelHPAD**)&tmp) || func_802E57C4() != D_8035A5F0 ||
+            hoverPad_8030A080() != levelDataGetHPAD((LevelHPAD**)&tmp) || falco_802E57C4() != D_8035A5F0 ||
             ballTgtCount_5B() != levelDataGetBTGT((LevelBTGT**)&tmp) || func_802FB5A0() != levelDataGetHOPD((LevelHOPD**)&tmp));
 }
 

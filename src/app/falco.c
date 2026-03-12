@@ -98,7 +98,7 @@ typedef struct {
 f32 D_8034EFA0 = 0.0f;
 s32 padD_8034EFA4[3] = { 0 };
 
-extern LevelFALC* D_8035AF20;
+extern LevelFALC* gRefFALC;
 
 extern f32 D_8035AF30;
 extern f32 D_8035AF34;
@@ -116,15 +116,15 @@ Unk8034EFB0 D_8034EFF8 = { 0x4, &D_8035AF3C, 0 };
 Unk8034EFB0 D_8034EF04 = { 0x3, &D_8035AF3C, 0 };
 
 // .bss
-extern Falco D_8035A5F8[1];
-extern s32 D_8035A850;
+extern Falco gFalcos[1];
+extern s32 gFalcoCount;
 extern Unk8035A858 D_8035A858[];
 extern s32 D_8035A918;
 extern Unk8035A920 D_8035A920[16];
 
 // forward declarations
-void func_802E38F0(Falco*, LevelFALC*);
-void func_802E478C(Falco*, Unk8035A858*);
+void falco_802E38F0(Falco*, LevelFALC*);
+void falco_802E478C(Falco*, Unk8035A858*);
 
 void falcoInit(void) {
     Falco* falco;
@@ -136,8 +136,8 @@ void falcoInit(void) {
         uvRandSeed((s32)(demoRandF() * 32768.0f) | 1);
     }
 
-    for (i = 0; i < ARRAY_COUNT(D_8035A5F8); i++) {
-        falco = &D_8035A5F8[i];
+    for (i = 0; i < ARRAY_COUNT(gFalcos); i++) {
+        falco = &gFalcos[i];
         falco->unk0 = 0xFFFF;
         falco->unk4 = 0xFFFF;
         falco->unk8 = 0xFFFF;
@@ -165,10 +165,10 @@ void falcoInit(void) {
         D_8035A920[i].unk0 = 0xFFFF;
     }
 
-    D_8035A850 = D_8035A918 = D_8035A5F0 = 0;
+    gFalcoCount = D_8035A918 = D_8035A5F0 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E38F0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E38F0.s")
 
 void falcoLoad(void) {
     Falco* pFalco;
@@ -181,34 +181,34 @@ void falcoLoad(void) {
         return;
     }
 
-    D_8035A850 = levelDataGetFALC(&D_8035AF20);
-    if (D_8035A850 > 12) {
-        _uvDebugPrintf("falcos : too many falcos domains defined in level [%d]\n", D_8035A850);
-        D_8035A850 = 0;
+    gFalcoCount = levelDataGetFALC(&gRefFALC);
+    if (gFalcoCount > 12) {
+        _uvDebugPrintf("falcos : too many falcos domains defined in level [%d]\n", gFalcoCount);
+        gFalcoCount = 0;
         return;
     }
 
-    if (D_8035A850 > 0) {
+    if (gFalcoCount > 0) {
         D_8035A5F0 = 1;
         uvLevelAppend(0x14);
 
         falcoCount = 0;
-        for (i = 0; i < D_8035A850; i++) {
-            falc = &D_8035AF20[i];
+        for (i = 0; i < gFalcoCount; i++) {
+            falc = &gRefFALC[i];
             var_s2 = &D_8035A858[i];
-            if (falcoCount < ARRAY_COUNT(D_8035A5F8)) {
-                pFalco = &D_8035A5F8[falcoCount];
+            if (falcoCount < ARRAY_COUNT(gFalcos)) {
+                pFalco = &gFalcos[falcoCount];
             } else {
                 _uvDebugPrintf("ERROR: too many falcos defined in task.  Max of %d falcos\n", 1);
-                pFalco = &D_8035A5F8[0];
+                pFalco = &gFalcos[0];
             }
             uvVec3Copy(&var_s2->unk0, &falc->unk0);
             var_s2->unkC = falc->unkC;
             if (falc->unk10 != 0) {
                 if (pFalco->unk255 == 0) {
-                    func_802E478C(pFalco, var_s2);
+                    falco_802E478C(pFalco, var_s2);
                 }
-                func_802E38F0(pFalco, falc);
+                falco_802E38F0(pFalco, falc);
                 pFalco->unk255 = 1;
                 pFalco->unkD4 = falc->unk11 / 100.0f;
                 pFalco->unkD8 = (falc->unk12 + falc->unk11) / 100.0f;
@@ -263,71 +263,71 @@ void falcoLoad(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falcoDeinit.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E3F7C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falcoFrameUpdate.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E43C4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E43C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E45B0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E45B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E478C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E478C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E4794.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E4794.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E49B0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E49B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E4AA8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E4AA8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E4E70.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E4E70.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E51E8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E51E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E55A0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E55A0.s")
 
-s32 func_802E57C4(void) {
+s32 falco_802E57C4(void) {
     s32 ret;
     s32 i;
 
     ret = 0;
     for (i = 0; i < D_8035A5F0; i++) {
-        ret += D_8035A5F8[i].unk254;
+        ret += gFalcos[i].unk254;
     }
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E5818.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E5818.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E587C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E587C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E5AFC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E5AFC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E5BF8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E5BF8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E5D78.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E5D78.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E5F44.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E5F44.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E5F90.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E5F90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E60A4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E60A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E60E8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E60E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E6128.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E6128.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E6184.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E6184.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E61E4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E61E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E6224.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E6224.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E6284.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E6284.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E62E4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E62E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E6344.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E6344.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E6380.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E6380.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E63BC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E63BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/func_802E64E0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/falco/falco_802E64E0.s")

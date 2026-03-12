@@ -347,7 +347,7 @@ s32 level_80345464(Mtx4F* arg0, s32 arg1) {
     wind_8034D548();
     func_802E15F0();
     ballsFrameUpdate();
-    func_802E3F7C();
+    falcoFrameUpdate();
     padsFrameUpdate(arg0);
     targetsFrameUpdate(arg0);
     hoverPadFrameUpdate(arg0);
