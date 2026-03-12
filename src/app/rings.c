@@ -128,7 +128,7 @@ void ringsLoad(void) {
             ring->unk1B5 = 1;
         }
         if ((ring->unk1B7 != 0) && (ring->unk147 != 2)) {
-            ring->unk1CA = hud_8031A6C8(rngs->pos.x, rngs->pos.y, rngs->pos.z);
+            ring->unk1CA = hudAddWaypoint(rngs->pos.x, rngs->pos.y, rngs->pos.z);
         }
         func_803234A4(ring);
         if ((ring->unk180 != 0) && (ring->unk1B7 != 0)) {

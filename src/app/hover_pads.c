@@ -93,7 +93,7 @@ void hoverPadLoad(void) {
                               &hover->unk4);
                 hover->unk69 = 1;
                 if (hover->unk6B != 0) {
-                    hover->unk6D = hud_8031A6C8(hpad->unk0.x, hpad->unk0.y, hpad->unk0.z);
+                    hover->unk6D = hudAddWaypoint(hpad->unk0.x, hpad->unk0.y, hpad->unk0.z);
                 }
             }
             hoverPadObjSetup(hover);

@@ -234,7 +234,7 @@ typedef struct {
     f32 unk1C;
     u8 type; // 0x20
     u8 unk21;
-    u8 pad22[0x24 - 0x22];
+    u8 pad22[2];
     f32 unk24;
     f32 unk28;
     f32 unk2C;
@@ -347,7 +347,7 @@ typedef struct {
     f32 unk20;
     u8 unk24;
     u8 pad25[3];
-    s32 unk28[5]; // TODO: size
+    s32 unk28[5]; // size unknown
     u8 unk3C;
     u8 pad3D[3];
 } LevelHPAD; // size = 0x40
@@ -426,15 +426,15 @@ typedef struct {
     u8 unk1D;
     u8 unk1E;
     u8 pad1F[1];
-    s32 unk20[5]; // TODO: size?
+    s32 unk20[5]; // size unknown
     u8 unk34;
     u8 pad35[3];
-    s32 unk38[5]; // TODO: size?
+    s32 unk38[5]; // size unknown
     u8 unk4C;
     u8 unk4D;
-    u8 pad4E[0x50 - 0x4E];
+    u8 pad4E[2];
     f32 unk50;
-    u8 size; // 54
+    u8 size;
     u8 unk55;
     u8 pad56[2];
     f32 unk58;
@@ -444,7 +444,7 @@ typedef struct {
     f32 unk64;
     f32 unk68;
     f32 unk6C;
-    u8 axis; // 70
+    u8 axis;
     u8 unk71;
     u8 unk72; // special
     u8 unk73;

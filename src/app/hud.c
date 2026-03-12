@@ -442,7 +442,7 @@ void hud_8031A66C(s32 idx, s32 arg1) {
     }
 }
 
-s32 hud_8031A6C8(f32 arg0, f32 arg1, f32 arg2) {
+s32 hudAddWaypoint(f32 x, f32 y, f32 z) {
     HUDRadar* radar = &gHudState.radar;
     s32 idx;
     s32 i;
@@ -460,11 +460,11 @@ s32 hud_8031A6C8(f32 arg0, f32 arg1, f32 arg2) {
         return 0xFF;
     }
 
-    radar->waypoints[idx].unk0 = arg0;
-    radar->waypoints[idx].unk4 = arg1;
+    radar->waypoints[idx].x = x;
+    radar->waypoints[idx].y = y;
+    radar->waypoints[idx].z = z;
     radar->waypoints[idx].unk14 = 0;
     radar->waypoints[idx].unk18 = 0xFF;
-    radar->waypoints[idx].unk8 = arg2;
     radar->waypoints[idx].unk1C = D_8036D224 - 1;
     if (radar->unk4 < idx) {
         radar->unk4 = idx;
@@ -472,7 +472,7 @@ s32 hud_8031A6C8(f32 arg0, f32 arg1, f32 arg2) {
     return idx;
 }
 
-void hud_8031A794(s32 idx, f32 arg1, f32 arg2, f32 arg3) {
+void hudMoveWaypoint(s32 idx, f32 x, f32 y, f32 z) {
     HUDRadar* radar = &gHudState.radar;
 
     if ((idx >= ARRAY_COUNT(gHudState.radar.waypoints)) || (idx < 0)) {
@@ -481,9 +481,9 @@ void hud_8031A794(s32 idx, f32 arg1, f32 arg2, f32 arg3) {
     }
 
     if (radar->waypoints[idx].unk1C != 0xFE) {
-        radar->waypoints[idx].unk0 = arg1;
-        radar->waypoints[idx].unk4 = arg2;
-        radar->waypoints[idx].unk8 = arg3;
+        radar->waypoints[idx].x = x;
+        radar->waypoints[idx].y = y;
+        radar->waypoints[idx].z = z;
     }
 }
 
@@ -754,8 +754,8 @@ void hudDrawRadar(s32 x, s32 y, f32 xOff, f32 yOff, f32 heading, f32 pitch, HUDR
     uvGfxStatePop();
 
     for (i = 0; i <= radar->unk4; i++) {
-        temp_fa0 = radar->waypoints[i].unk0 - xOff;
-        var_fa1 = radar->waypoints[i].unk4 - yOff;
+        temp_fa0 = radar->waypoints[i].x - xOff;
+        var_fa1 = radar->waypoints[i].y - yOff;
         if ((temp_fa0 == 0.0f) && (var_fa1 == 0.0f)) {
             sp94 = 0.0f;
             sp98 = 0.001f;
@@ -794,7 +794,7 @@ void hudDrawRadar(s32 x, s32 y, f32 xOff, f32 yOff, f32 heading, f32 pitch, HUDR
             break;
         }
 
-        temp_fv0_3 = radar->waypoints[idx].unk8 - heading;
+        temp_fv0_3 = radar->waypoints[idx].z - heading;
         if (radar->waypoints[idx].unk14 > 0) {
             radar->waypoints[idx].unk18 -= 50;
             if (radar->waypoints[idx].unk18 < 0) {

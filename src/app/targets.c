@@ -64,7 +64,7 @@ void targetsLoad(void) {
                 var_s1->unk47 = 1;
             }
             var_s1->objId = uvDobjAllocIdx();
-            var_s1->unk48 = hud_8031A6C8(missileTarget->pos.x, missileTarget->pos.y, missileTarget->pos.z);
+            var_s1->unk48 = hudAddWaypoint(missileTarget->pos.x, missileTarget->pos.y, missileTarget->pos.z);
             switch (missileTarget->targetType) {
             case 0:
                 uvDobjModel(var_s1->objId, MODEL_F9);

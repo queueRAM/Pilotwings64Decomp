@@ -175,7 +175,7 @@ void ballsLoad(void) {
                     pb->unk4.m[3][2] = ball->pos.z;
                     ballsInitBall(&gBalls[i]);
                     pb->unk95 = 1;
-                    pb->unk1A8 = hud_8031A6C8(ball->pos.x, ball->pos.y, ball->pos.z);
+                    pb->unk1A8 = hudAddWaypoint(ball->pos.x, ball->pos.y, ball->pos.z);
                 } else {
                     ballsInitBall(&gBalls[i]);
                 }
@@ -281,7 +281,7 @@ void ballsFrameUpdateOne(ParsedBALS* pb) {
     func_802E07D8(&pb->unk4);
     uvDobjPosm(pb->objId, 0, &pb->unk4);
     if (pb->unk1A8 != 0xFF) {
-        hud_8031A794(pb->unk1A8, pb->unk4.m[3][0], pb->unk4.m[3][1], pb->unk4.m[3][2]);
+        hudMoveWaypoint(pb->unk1A8, pb->unk4.m[3][0], pb->unk4.m[3][1], pb->unk4.m[3][2]);
     }
 }
 
@@ -375,7 +375,7 @@ void balls_802CB9B4(ParsedBALS* pb) {
             alloc->unk44.x = sp90;
             alloc->unk44.y = sp8C;
             alloc->unk44.z = 0.0f;
-            alloc->unk1A8 = hud_8031A6C8(sp90, sp8C, sp88);
+            alloc->unk1A8 = hudAddWaypoint(sp90, sp8C, sp88);
             if (alloc->unk6C == 0) {
                 alloc->unk6C = 1.0f;
             }

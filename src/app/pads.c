@@ -218,7 +218,7 @@ void padsLoad(void) {
             cntg = &gRefCNTG[i];
             cannontgt = &gCannonTargets[i];
             cannontgt->unk0 = uvDobjAllocIdx();
-            cannontgt->unk2 = hud_8031A6C8(cntg->pos.x, cntg->pos.y, cntg->pos.z);
+            cannontgt->unk2 = hudAddWaypoint(cntg->pos.x, cntg->pos.y, cntg->pos.z);
             switch (cntg->unk18) {
             case 0:
                 uvDobjModel(cannontgt->unk0, 0x106); // MODEL_CANNON_TARGET_0
