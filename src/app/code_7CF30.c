@@ -682,7 +682,7 @@ void func_802F7224(GyrocopterData* arg0) {
                         if (temp_v0_2 != 4) {
                             targets_8034473C(spF4, 0);
                             var_s2 = falco_802E51E8(spF4, sp100, spFC, spF8);
-                            func_80348418(spF4, sp100, spFC, spF8, 3);
+                            toy_80348418(spF4, sp100, spFC, spF8, 3);
                         }
                         if (var_s2 == 0) {
                             func_8030B240(&var_s0->unk0);

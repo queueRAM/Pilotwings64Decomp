@@ -10,7 +10,7 @@
 void func_803234A4(ParsedRing*);
 void func_80323720(ParsedRing*);
 
-extern LevelRNGS* D_8036DA70;
+extern TaskRNGS* D_8036DA70;
 extern u8 D_8036DA74; // count of rings stored in D_8036DA78
 // extern ParsedRing D_8036DA78[30]; // stored here, exported in header
 extern u8 D_80371060[5];
@@ -48,7 +48,7 @@ void ringsInit(void) {
 
 void ringsLoad(void) {
     ParsedRing* ring;
-    LevelRNGS* rngs;
+    TaskRNGS* rngs;
     s32 var_a0;
     s32 i;
     s32 j;

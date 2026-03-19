@@ -88,7 +88,7 @@ typedef struct {
     f32 unk5C;
     f32 unk60;
     f32 unk64;
-} LevelBALS; // size = 0x68
+} TaskBALS; // size = 0x68
 
 typedef struct {
     Vec3F pos;
@@ -98,7 +98,7 @@ typedef struct {
     u8 unk18;
     u8 unk19;
     u8 pad1A[2];
-} LevelBTGT; // size = 0x10
+} TaskBTGT; // size = 0x1C
 
 typedef struct {
     Vec3F pos;
@@ -107,7 +107,7 @@ typedef struct {
     f32 unk14;
     u8 unk18;
     u8 pad19[3];
-} LevelCNTG; // size = 0x1C
+} TaskCNTG; // size = 0x1C
 
 typedef struct {
     Vec3F unk0;
@@ -154,7 +154,7 @@ typedef struct {
     f32 unkA0;
     f32 unkA4;
     f32 unkA8;
-} LevelFALC; // size = 0xAC
+} TaskFALC; // size = 0xAC
 
 typedef struct {
     s32 unk0;
@@ -163,7 +163,7 @@ typedef struct {
     f32 scale;
     f32 height;
     u8 pad1C[4];
-} LevelHOPD; // size = 0x20
+} TaskHOPD; // size = 0x20
 
 typedef struct {
     Vec3F unk0;
@@ -178,17 +178,7 @@ typedef struct {
     s32 unk28[5]; // size unknown
     u8 unk3C;
     u8 pad3D[3];
-} LevelHPAD; // size = 0x40
-
-typedef struct {
-    u8 countESND;
-    u8 countWOBJ;
-    u8 countLPAD;
-    u8 countTOYS;
-    u8 countTPTS;
-    u8 countAPTS;
-    u8 countBNUS;
-} LevelLEVL;
+} TaskHPAD; // size = 0x40
 
 typedef struct {
     Vec3F pos;
@@ -199,7 +189,7 @@ typedef struct {
     u8 pad29[3];
     u8 unk2C;
     u8 pad2D[3];
-} LevelLPAD; // size = 0x30
+} TaskLPAD; // size = 0x30
 
 typedef struct {
     Vec3F pos;
@@ -208,7 +198,7 @@ typedef struct {
     u8 unk1C;
     u8 pad1D[3];
     f32 unk20;
-} LevelLSTP; // size = 0x24
+} TaskLSTP; // size = 0x24
 
 typedef struct {
     Vec3F unk0;
@@ -222,14 +212,14 @@ typedef struct {
     u8 unk50;
     u8 unk51;
     u8 pad52[2];
-} LevelLWIN; // size = 0x54
+} TaskLWIN; // size = 0x54
 
 typedef struct {
     f32 x;
     f32 y;
     f32 z;
     f32 unkC;
-} LevelOBSV; // size = 0x10
+} TaskOBSV; // size = 0x10
 
 typedef struct {
     s32 unk0;
@@ -237,7 +227,7 @@ typedef struct {
     f32 unk8;
     f32 unkC;
     f32 unk10;
-} LevelPHTS; // size = 0x14
+} TaskPHTS; // size = 0x14
 
 typedef struct {
     Vec3F pos;
@@ -269,11 +259,11 @@ typedef struct {
     u8 unk72;
     u8 unk73;
     char unk74[0x10]; // string name?
-} LevelRNGS; // size = 0x84
+} TaskRNGS; // size = 0x84
 
 typedef struct {
     u8 pad0[0x4C];
-} LevelSDFM; // size = 0x4C
+} TaskSDFM; // size = 0x4C
 
 typedef struct {
     Vec3F pos;
@@ -281,7 +271,7 @@ typedef struct {
     u8 targetType;
     u8 unk19;
     s32 pad1C;
-} LevelTARG; // size = 0x20
+} TaskTARG; // size = 0x20
 
 typedef struct {
     Vec3F pos;
@@ -292,7 +282,7 @@ typedef struct {
     f32 unk1C;
     f32 unk20;
     f32 unk24;
-} LevelTHER; // size = 0x28
+} TaskTHER; // size = 0x28
 
 typedef struct {
     Vec3F pos;
@@ -302,7 +292,7 @@ typedef struct {
     u8 unk28;
     u8 pad29[3];
     f32 unk2C;
-} LevelTPAD; // size = 0x30
+} TaskTPAD; // size = 0x30
 
 typedef struct {
     s32 unk0;
@@ -382,22 +372,22 @@ typedef struct {
     void* dataNAME;
     void* dataINFO;
     void* dataJPTX;
-    LevelTHER* dataTHER;
-    LevelLWIN* dataLWIN;
-    LevelTPAD* dataTPAD;
-    LevelLPAD* dataLPAD;
-    LevelLSTP* dataLSTP;
-    LevelRNGS* dataRNGS;
-    LevelBALS* dataBALS;
-    LevelTARG* dataTARG;
-    LevelHPAD* dataHPAD;
-    LevelBTGT* dataBTGT;
-    LevelPHTS* dataPHTS;
-    LevelFALC* dataFALC;
-    LevelSDFM* dataSDFM;
-    LevelCNTG* dataCNTG;
-    LevelHOPD* dataHOPD;
-    LevelOBSV* dataOBSV;
+    TaskTHER* dataTHER;
+    TaskLWIN* dataLWIN;
+    TaskTPAD* dataTPAD;
+    TaskLPAD* dataLPAD;
+    TaskLSTP* dataLSTP;
+    TaskRNGS* dataRNGS;
+    TaskBALS* dataBALS;
+    TaskTARG* dataTARG;
+    TaskHPAD* dataHPAD;
+    TaskBTGT* dataBTGT;
+    TaskPHTS* dataPHTS;
+    TaskFALC* dataFALC;
+    TaskSDFM* dataSDFM;
+    TaskCNTG* dataCNTG;
+    TaskHOPD* dataHOPD;
+    TaskOBSV* dataOBSV;
 } TaskObjects;
 
 void taskInit(void);
@@ -411,32 +401,32 @@ void taskDeinit(void);
 s32 taskFrameUpdate(Mtx4F*, f32);
 s32 task_803456D8(Mtx4F*);
 void taskUpdateState(void);
-s32 taskGetTHER(LevelTHER** data);
-s32 taskGetLWIN(LevelLWIN** data);
+s32 taskGetTHER(TaskTHER** data);
+s32 taskGetLWIN(TaskLWIN** data);
 s32* taskGet_80345AEC(void);
-s32 taskGetTPAD(LevelTPAD** data);
-s32 taskGetCNTG(LevelCNTG** data);
-s32 taskGetOBSV(LevelOBSV** data);
-s32 taskGetLPAD(LevelLPAD** data);
-s32 taskGetLSTP(LevelLSTP** data);
-s32 taskGetRNGS(LevelRNGS** data);
-s32 taskGetBALS(LevelBALS** data);
-s32 taskGetTARG(LevelTARG** data);
-s32 taskGetHPAD(LevelHPAD** data);
-s32 taskGetBTGT(LevelBTGT** data);
-s32 taskGetPHTS(LevelPHTS** data);
-s32 taskGetFALC(LevelFALC** data);
+s32 taskGetTPAD(TaskTPAD** data);
+s32 taskGetCNTG(TaskCNTG** data);
+s32 taskGetOBSV(TaskOBSV** data);
+s32 taskGetLPAD(TaskLPAD** data);
+s32 taskGetLSTP(TaskLSTP** data);
+s32 taskGetRNGS(TaskRNGS** data);
+s32 taskGetBALS(TaskBALS** data);
+s32 taskGetTARG(TaskTARG** data);
+s32 taskGetHPAD(TaskHPAD** data);
+s32 taskGetBTGT(TaskBTGT** data);
+s32 taskGetPHTS(TaskPHTS** data);
+s32 taskGetFALC(TaskFALC** data);
 Unk80345C80* taskGet_80345C80(void);
 s32* taskGet_80345C90(void);
 f32 taskGet_80345CA0(void);
 u8* taskGet_80345CB0(void);
 void taskGet_80345CC0(f32*, f32*);
-TaskObjects* taskLoadCommObj(u32);
-void task_803462D4(u16 idx);
+TaskObjects* taskLoadCommObj(u32 taskIdx);
+void taskBirdmanPad(u16 mapIdx);
 void taskGetClsVehTest(u16* classIdx, u16* vehIdx, u16* testIdx);
 u8 taskGet_80346364(void);
 s32 task_80346370(s32 terra);
 u8 taskGet_80346468(void);
-s32 taskGetHOPD(LevelHOPD** data);
+s32 taskGetHOPD(TaskHOPD** data);
 
 #endif // APP_TASK_H

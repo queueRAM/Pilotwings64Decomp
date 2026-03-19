@@ -23,7 +23,7 @@ u8 gBallCount;
 u8 gBallSplitCount;
 ParsedBALS gBalls[20];
 f32 D_80359388; // always set to 5.3241148?
-LevelBALS* sRefBALS;
+TaskBALS* sRefBALS;
 
 // forward declarations
 void ballsMotionUpdate(ParsedBALS*);
@@ -130,7 +130,7 @@ void balls_802CAF50(void) {
 void ballsLoad(void) {
     s32 i;
     ParsedBALS* pb;
-    LevelBALS* ball;
+    TaskBALS* ball;
 
     if (D_80362690->unkA0) {
         gBallCount = taskGetBALS(&sRefBALS);
@@ -345,7 +345,7 @@ s32 balls_802CB6D4(ParsedBALS* pb) {
 }
 
 void balls_802CB9B4(ParsedBALS* pb) {
-    LevelBALS* ball;
+    TaskBALS* ball;
     ParsedBALS* alloc;
     f32 temp_fs0;
     s32 i;

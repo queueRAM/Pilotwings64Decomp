@@ -18,7 +18,7 @@ f32 D_803506A0[] = {
 };
 s32 D_8035078C = 0;
 
-LevelTARG* sRefTARG;
+TaskTARG* sRefTARG;
 u8 sMissileTargetCount;
 MissileTarget sMissileTargets[40];
 
@@ -36,7 +36,7 @@ void targetsInit(void) {
 void targetsLoad(void) {
     MissileTarget* var_s1;
     s32 i;
-    LevelTARG* missileTarget;
+    TaskTARG* missileTarget;
 
     if (D_80362690->unkA0 == 0) {
         return;

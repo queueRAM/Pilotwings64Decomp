@@ -130,6 +130,15 @@ db_getstart         = 0x802E0304; // type:func
 envLoad             = 0x802E1278; // type:func
 env_loadtpal        = 0x802E1990; // type:func
 
+envSoundInit        = 0x802E26C0; // type:func
+envSoundLoad        = 0x802E27A8; // type:func
+envSound_802E2904   = 0x802E2904; // type:func
+envSound_802E2A00   = 0x802E2A00; // type:func
+envSound_802E3250   = 0x802E3250; // type:func
+envSound_802E3310   = 0x802E3310; // type:func
+envSound_802E3398   = 0x802E3398; // type:func
+envSoundFrameUpdate = 0x802E344C; // type:func
+
 hoverPadInit        = 0x803097E0; // type:func
 hoverPad_80309868   = 0x80309868; // type:func
 hoverPadLoad        = 0x80309A64; // type:func
@@ -221,7 +230,7 @@ demoRecGetStickX    = 0x803227D0; // type:func
 demoRecGetStickY    = 0x80322828; // type:func
 demoRecGetButtons   = 0x80322880; // type:func
 demoPackInputs      = 0x80322890; // type:func
-demo_803229EC       = 0x803229EC; // type:func
+demoGetUserFileIdx  = 0x803229EC; // type:func
 demoGet_80322B60    = 0x80322B60; // type:func
 demoGet_80322B6C    = 0x80322B6C; // type:func
 demoGet_80322B78    = 0x80322B78; // type:func
@@ -283,7 +292,16 @@ spath_free          = 0x80340800; // type:func
 spath_update2       = 0x80340868; // type:func
 spath_update        = 0x80340B74; // type:func
 splash_add          = 0x803417CC; // type:func
-toy_animate         = 0x80347E9C; // type:func
+
+toyInit             = 0x80347BD0; // type:func
+toy_80347C2C        = 0x80347C2C; // type:func
+toyAnimate          = 0x80347E9C; // type:func
+toy_8034819C        = 0x8034819C; // type:func
+toy_80348214        = 0x80348214; // type:func
+toyLoad             = 0x80348280; // type:func
+toy_803483AC        = 0x803483AC; // type:func
+toy_80348418        = 0x80348418; // type:func
+toy_803485F0        = 0x803485F0; // type:func
 
 windInit            = 0x8034CD60; // type:func
 windLoad            = 0x8034CD68; // type:func
@@ -401,7 +419,7 @@ taskGet_80345CA0    = 0x80345CA0; // type:func
 taskGet_80345CB0    = 0x80345CB0; // type:func
 taskGet_80345CC0    = 0x80345CC0; // type:func
 taskLoadCommObj     = 0x80345CE4; // type:func
-task_803462D4       = 0x803462D4; // type:func
+taskBirdmanPad      = 0x803462D4; // type:func
 taskGetClsVehTest   = 0x8034633C; // type:func
 taskGet_80346364    = 0x80346364; // type:func
 task_80346370       = 0x80346370; // type:func
@@ -424,12 +442,12 @@ totResultDeinit     = 0x80347694; // type:func
 totResultMenuChoose = 0x8034769C; // type:func
 totResultDrawTally  = 0x80347780; // type:func
 
-testMenuShutterBug   = 0x80348710; // type:func
-testMenuInitText     = 0x803487A4; // type:func
-testMenuInit         = 0x80348B84; // type:func
-testMenuHandler      = 0x8034926C; // type:func
-testMenuDraw         = 0x80349C38; // type:func
-testMenu_8034A428    = 0x8034A428; // type:func
+testMenuShutterBug  = 0x80348710; // type:func
+testMenuInitText    = 0x803487A4; // type:func
+testMenuInit        = 0x80348B84; // type:func
+testMenuHandler     = 0x8034926C; // type:func
+testMenuDraw        = 0x80349C38; // type:func
+testMenu_8034A428   = 0x8034A428; // type:func
 
 userPathInit        = 0x8034A450; // type:func
 userPath_8034A4F8   = 0x8034A4F8; // type:func
@@ -437,7 +455,11 @@ userPathFree        = 0x8034A840; // type:func
 userPath_8034A8B0   = 0x8034A8B0; // type:func
 userPath_8034A950   = 0x8034A950; // type:func
 
-windObjectsInit     = 0x8034E080; // type:func
+windObjInit         = 0x8034E080; // type:func
+windObjLoad         = 0x8034E0B4; // type:func
+windObjFrameUpdate  = 0x8034E274; // type:func
+windObjDeinit       = 0x8034E628; // type:func
+windObjIsLoadedId   = 0x8034E6AC; // type:func
 
 mem_get             = 0x80312740; // type:func
 mem_init            = 0x803127BC; // type:func
@@ -535,6 +557,21 @@ D_8035AF34 = 0x8035AF34; // type:f32
 D_8035AF38 = 0x8035AF38; // type:f32
 D_8035AF3C = 0x8035AF3C; // type:f32
 
+D_8034EF30                = 0x8034EF30; // size:0x70
+
+gLevelCurMap              = 0x8034F40C;
+gLevelObjHeapPtr          = 0x8034F840;
+
+sFileMenuTextIds          = 0x8034F0E0; // size:0xC
+sFileMenuConfirm          = 0x8034F0EC; // size:0x8
+sFileMenuCurMenu          = 0x8034F0F4;
+sFileMenu_8034F0F8        = 0x8034F0F8;
+sFileMenuFadeTime         = 0x8034F114;
+sFileMenuFadeRate         = 0x8034F118;
+
+gLevelCurObjects          = 0x8034F408;
+gLevelUserFileLookup      = 0x8034F410;
+
 gMedalPointRequirements   = 0x8034FBD4;
 
 sShutterBugTestItems      = 0x8034FC10; // size:0x10
@@ -545,10 +582,15 @@ gTaskClassU8              = 0x80350790;
 gTaskVehicleU8            = 0x80350794;
 gTaskTestU8               = 0x80350798;
 gTaskMapLookup            = 0x803507A8;
+gTaskUserFileIdxLookup    = 0x803507AC;
+
+gThermShouldDisable       = 0x803507F0;
 
 gClassShortNames          = 0x80350988; // size:0x10
 gVehShortNames            = 0x80350998; // size:0x1C
 gCurTestIdx               = 0x803509B4;
+
+gTitleMenuDelay           = 0x80356A68;
 
 gBallCount                = 0x80357210;
 gBallSplitCount           = 0x80357211;
@@ -565,11 +607,37 @@ gFalcos                   = 0x8035A5F8; // size:0x258
 gFalcoCount               = 0x8035A850;
 gRefFALC                  = 0x8035AF20;
 
+sFileMenu_803624E0        = 0x803624E0; // size:0x3
+sFileMenu_803624E3        = 0x803624E3;
+sFileColorR1              = 0x803624E4;
+sFileColorR2              = 0x803624E8;
+sFileColorG1              = 0x803624EC;
+sFileColorG2              = 0x803624F0;
+sFileColorB1              = 0x803624F4;
+sFileColorB2              = 0x803624F8;
+
 D_80368B20                = 0x80368B20; // size:0x54
 
 gRefHPAD                  = 0x80369580;
 gHoverPadCount            = 0x80369584;
 gHoverPads                = 0x80369588; // size:0x8C0
+
+gMenuItems                = 0x80369F10; // size:0x14
+gMenuSpriteIdBase         = 0x80369F24;
+gMenuSpriteHeight         = 0x80369F26;
+gMenuCountVarHeight       = 0x80369F28;
+
+gLevelWOBJ                = 0x80369F30;
+gLevelLPAD                = 0x8036A030;
+gLevelTPTS                = 0x8036A180;
+gLevelTOYS                = 0x8036A4C0;
+gLevelAPTS                = 0x8036A5C0;
+gLevelBNUS                = 0x8036A840;
+gLevelObjects             = 0x8036A878;
+
+gLevelObjHeap             = 0x8036AA60; // size:5000
+
+gFcnDrawMenuItem          = 0x8036BE08;
 
 sOptionsPanel             = 0x8036C120; // type:s16
 sStickHeld                = 0x8036C124;
@@ -593,6 +661,11 @@ gLandingPads              = 0x8036C2E8; // size:0x150
 gLandingStrips            = 0x8036C438; // size:0x78
 gCannonTargets            = 0x8036C4B0; // size:0x48
 
+gRadarThermCirc           = 0x8036C520; // size:0x88
+gHudState                 = 0x8036C5A8; // size:0xC7C
+
+gDemoUserFileIdx          = 0x8036D330;
+
 sTextName                 = 0x80377F10; // size:0x6E0
 sTextData                 = 0x803785F0; // size:0x6DC
 sTextDataCount            = 0x80378CCC;
@@ -606,7 +679,20 @@ gTaskObjects              = 0x8037A600; // size:0x478
 gTaskClass                = 0x8037AA78;
 gTaskTest                 = 0x8037AA7C;
 gTaskVehicle              = 0x8037AA80;
+gTaskTakeoffPads          = 0x8037AA88;
+
+gLevelTHER                = 0x8037AB50;
+gThermalCount             = 0x8037AB54;
+gThermals                 = 0x8037AB58; // size:0x180
+gThermReady               = 0x8037ACD8;
+
+gToyCount                 = 0x8037AD70;
+gToys                     = 0x8037AD78; // size:0x2EE0
 
 sRefLWIN                  = 0x8037F510;
 sLocalWindCount           = 0x8037F514;
 sLocalWinds               = 0x8037F518; // size:0x3F0
+
+sWindObjectsData          = 0x8037F910;
+sWindObjectsInLevel       = 0x8037F914;
+sWindObjects              = 0x8037F918;

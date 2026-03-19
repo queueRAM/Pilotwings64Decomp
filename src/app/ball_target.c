@@ -25,7 +25,7 @@ typedef struct {
     u8 pad5E[0x60 - 0x5E];
 } BallTarget;
 
-static LevelBTGT* sRefBTGT;
+static TaskBTGT* sRefBTGT;
 static u8 sBallTgtCount;
 static BallTarget sBallTgts[5];
 
@@ -82,7 +82,7 @@ void ballTgtInitDobj(BallTarget* bt) {
 
 void ballTgtLoad(void) {
     BallTarget* bt;
-    LevelBTGT* lvlBt;
+    TaskBTGT* lvlBt;
     s32 i;
 
     if (D_80362690->unkA0 == 0) {
