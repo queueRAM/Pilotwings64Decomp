@@ -65,7 +65,7 @@ void windLoad(void) {
         esnd.unk0.m[3][0] = lwin->unk0.f[0];
         esnd.unk0.m[3][1] = lwin->unk0.f[1];
         esnd.unk0.m[3][2] = lwin->unk0.f[2];
-        esnd.unk58 = 0xB;
+        esnd.sndId = 0xB;
         esnd.unk5C = 1.0f;
         esnd.unk64 = 0;
         esnd.unk68 = lwin->unk4C;

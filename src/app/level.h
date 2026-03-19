@@ -73,7 +73,7 @@ typedef struct {
 } Unk80364210; // size = 0x34E0
 
 typedef struct {
-    Vec3F unk0;
+    Vec3F pos;
     f32 unkC;
     f32 unk10;
     s32 unk14;
@@ -93,7 +93,7 @@ typedef struct {
     Mtx4F unk0;
     Vec3F unk40;
     Vec3F unk4C;
-    u8 unk58;
+    u8 sndId;
     u8 pad59[3];
     f32 unk5C;
     f32 unk60;

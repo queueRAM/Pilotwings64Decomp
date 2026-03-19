@@ -72,7 +72,7 @@ void thermLoad(void) {
                 esnd.unk0.m[3][0] = 0.0f;
                 esnd.unk0.m[3][1] = 0.0f;
                 esnd.unk0.m[3][2] = 0.0f;
-                esnd.unk58 = 2;
+                esnd.sndId = 2;
                 esnd.unk5C = 1.0f;
                 esnd.unk64 = 0;
                 esnd.unk68 = maxDim;

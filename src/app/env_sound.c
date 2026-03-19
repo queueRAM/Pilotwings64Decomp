@@ -9,6 +9,7 @@
 #include "code_61A60.h"
 #include "code_6ECD0.h"
 #include "code_72B70.h"
+#include "code_9A960.h"
 #include "code_A7460.h"
 #include "demo.h"
 #include "env_sound.h"
@@ -18,18 +19,18 @@
 
 typedef struct {
     f32 unk0;
-    u8 unk4;
-    u8 unk5;
+    u8 objId;
+    u8 sndId;
     u8 unk6;
     u8 pad7[1];
-} Unk80359DC8_Unk0;
+} EnvSoundEmitter;
 
 typedef struct {
-    Unk80359DC8_Unk0 unk0[255];
+    EnvSoundEmitter emitters[255];
     s32 unk7F8;
-    s32 unk7FC;
-    s32 unk800;
-} Unk80359DC8; // size = 0x804
+    s32 count;
+    s32 flags;
+} EnvSoundState; // size = 0x804
 
 typedef struct {
     Mtx4F unk0;
@@ -47,60 +48,58 @@ typedef struct {
     s32 unk74;
 } Unk802E27A8_Arg0; // size = 0x78
 
-extern s32 D_8034EF20;
-extern s32 D_8034EF24;
-extern s32 D_8034EF28;
-extern s32 D_8034EF2C;
-extern s32 D_8034EF30[28];
-extern f32 D_8034F850;
+s32 D_8034EF20 = 0;
+s32 D_8034EF24 = 0;
+s32 D_8034EF28 = 0;
+s32 gEnvSoundIsInit = FALSE;
+s32 gEnvSoundModelIdLookup[28] = { 0x0D, 0x0E, 0x2A, 0x25, 0x29, 0x0D, 0x40, 0x41, 0x14, 0x47, 0x21, 0x07, 0x21, 0x21,
+                                   0x21, 0x21, 0x21, 0x21, 0x2F, 0x2F, 0x2F, 0x6B, 0x6B, 0x6B, 0x6B, 0x51, 0x6B, 0x00 };
 
-extern EventCallbackInfo D_80359DC0;
-extern Unk80359DC8 D_80359DC8;
-
-extern s32 D_8035A5C8;
-extern f32 D_8035A5CC;
-extern u8 D_8035A5D0[20];
+EventCallbackInfo gEnvSoundEventCb;
+EnvSoundState gEnvSoundState;
+f32 gEnvSoundFutureTime; // time set +4 seconds, only set
+u8 gEnvSoundStateCount[20];
 
 // forward declarations
-void envSound_802E2904(Unk80359DC8*);
+void envSound_802E2904(EnvSoundState*);
 void envSound_802E2A00(s32 eventType, void* arg1, s32 eventData);
-void envSound_802E3250(Unk80359DC8*);
-void envSound_802E3310(Unk80359DC8*);
-void envSound_802E3398(Unk80359DC8*);
+void envSound_802E3250(EnvSoundState*);
+void envSound_802E3310(EnvSoundState*);
+void envSound_802E3398(EnvSoundState*);
 
 void envSoundInit(void) {
     s32 i;
 
-    for (i = 0; i < ARRAY_COUNT(D_8035A5D0); i++) {
-        D_8035A5D0[i] = 0;
+    for (i = 0; i < ARRAY_COUNT(gEnvSoundStateCount); i++) {
+        gEnvSoundStateCount[i] = 0;
     }
 
-    D_8035A5CC = 0.0f;
-    D_8034EF2C = 1;
-    envSound_802E2904(&D_80359DC8);
-    D_80359DC0.cb = &envSound_802E2A00;
-    D_80359DC0.arg = &D_80359DC8;
-    uvEventMaxCb(D_80359DC0, 1, 0xD, 0x12, 0x13, 0xB, 0x17, 0x18, 0x19, 0xC, 0xE, 0x24);
+    gEnvSoundFutureTime = 0.0f;
+    gEnvSoundIsInit = TRUE;
+    envSound_802E2904(&gEnvSoundState);
+    gEnvSoundEventCb.cb = &envSound_802E2A00;
+    gEnvSoundEventCb.arg = &gEnvSoundState;
+    uvEventMaxCb(gEnvSoundEventCb, 1, 0xD, 0x12, 0x13, 0xB, 0x17, 0x18, 0x19, 0xC, 0xE, 0x24);
 }
 
 void envSoundLoad(LevelESND* arg0) {
     s32 idx;
     u8 objId;
-    Unk80359DC8* ptr = &D_80359DC8;
+    EnvSoundState* ptr = &gEnvSoundState;
 
-    idx = ptr->unk7FC;
+    idx = ptr->count;
 
-    if (D_8034EF2C == 0) {
+    if (!gEnvSoundIsInit) {
         return;
     }
 
-    ptr->unk7FC++;
-    ptr->unk0[idx].unk0 = arg0->unk60;
-    ptr->unk0[idx].unk5 = arg0->unk58;
-    ptr->unk0[idx].unk6 = arg0->unk70;
-    ptr->unk0[idx].unk4 = uvEmitterLookup();
-    objId = ptr->unk0[idx].unk4;
-    uvEmitterFromModel(objId, D_8034EF30[arg0->unk58]);
+    ptr->count++;
+    ptr->emitters[idx].unk0 = arg0->unk60;
+    ptr->emitters[idx].sndId = arg0->sndId;
+    ptr->emitters[idx].unk6 = arg0->unk70;
+    ptr->emitters[idx].objId = uvEmitterLookup();
+    objId = ptr->emitters[idx].objId;
+    uvEmitterFromModel(objId, gEnvSoundModelIdLookup[arg0->sndId]);
     uvEmitterSetMatrix(objId, &arg0->unk0);
     if (arg0->unk74 & 0x2) {
         uvEmitter_80201494(objId, arg0->unk40, arg0->unk4C);
@@ -111,22 +110,22 @@ void envSoundLoad(LevelESND* arg0) {
     uvEmitterProp(objId, 5, arg0->unk74, 1, arg0->unk68, 2, arg0->unk6C, 0);
 }
 
-void envSound_802E2904(Unk80359DC8* arg0) {
+void envSound_802E2904(EnvSoundState* arg0) {
     s32 i;
 
-    for (i = 0; i < arg0->unk7FC; i++) {
-        uvEmitterSetUnk70(arg0->unk0[i].unk4, 0.0f);
-        func_8033F8CC(arg0->unk0[i].unk4);
+    for (i = 0; i < arg0->count; i++) {
+        uvEmitterSetUnk70(arg0->emitters[i].objId, 0.0f);
+        func_8033F8CC(arg0->emitters[i].objId);
     }
 
-    for (i = 0; i < ARRAY_COUNT(arg0->unk0); i++) {
-        arg0->unk0[i].unk4 = 0xFF;
-        arg0->unk0[i].unk5 = 0xFF;
-        arg0->unk0[i].unk6 = 0xFF;
+    for (i = 0; i < ARRAY_COUNT(arg0->emitters); i++) {
+        arg0->emitters[i].objId = 0xFF;
+        arg0->emitters[i].sndId = 0xFF;
+        arg0->emitters[i].unk6 = 0xFF;
     }
     arg0->unk7F8 = 0xFF;
-    arg0->unk7FC = 0;
-    arg0->unk800 = -0x40;
+    arg0->count = 0;
+    arg0->flags = 0xFFFFFFC0;
 }
 
 #ifndef NON_MATCHING
@@ -134,11 +133,11 @@ void envSound_802E2904(Unk80359DC8* arg0) {
 #else
 void envSound_802E2A00(s32 eventType, void* arg1, s32 eventData) {
     s32 i;
-    Unk80359DC8* sp270;
+    EnvSoundState* state;
     s32 sp26C;
     Mtx4F sp22C;
     Vec3F sp220;
-    Unk80359DC8_Unk0* var_s0;
+    EnvSoundEmitter* emitter;
     f32 temp_fs0;
     f32 temp_fs1;
     Vec3F sp208;
@@ -154,7 +153,7 @@ void envSound_802E2A00(s32 eventType, void* arg1, s32 eventData) {
     Vec3F sp9C;
     Mtx4F sp5C;
 
-    sp270 = arg1;
+    state = arg1;
     switch (eventType) {
     case 14:
         if (D_8034EF24 == 0) {
@@ -171,26 +170,26 @@ void envSound_802E2A00(s32 eventType, void* arg1, s32 eventData) {
         }
         break;
     case 23:
-        func_802E2904(sp270);
+        envSound_802E2904(state);
         break;
     case 24:
-        sp270->unk7F8 = 0xFF;
-        func_802E3310(sp270);
+        state->unk7F8 = 0xFF;
+        envSound_802E3310(state);
         break;
     case 13:
         if (eventData == 0) {
-            func_802E3398(sp270);
+            envSound_802E3398(state);
         }
         break;
     case 25:
-        func_802E3398(sp270);
+        envSound_802E3398(state);
         break;
     case 19:
         if (D_8034EF24 == 0) {
             D_8034EF24 = 1;
             D_8034EF20 = 0;
             D_8034EF28 = 0;
-            sp270->unk7F8 = 0xFF;
+            state->unk7F8 = 0xFF;
         }
         break;
     case 18:
@@ -200,7 +199,7 @@ void envSound_802E2A00(s32 eventType, void* arg1, s32 eventData) {
         }
         break;
     case 1:
-        if (sp270->unk800 & 1) {
+        if (state->flags & 1) {
             return;
         }
 
@@ -219,103 +218,103 @@ void envSound_802E2A00(s32 eventType, void* arg1, s32 eventData) {
 
         if (D_8034EF28 >= 2) {
             if (D_8034EF28 == 2) {
-                func_802E3310(sp270);
+                envSound_802E3310(state);
             }
             if (D_80362690->map == MAP_CRESCENT_ISLAND) {
                 sp26C = D_80362690->unkC[D_80362690->unk9C].unk8;
-                if (sp26C != sp270->unk7F8) {
-                    func_802E3250(sp270);
+                if (sp26C != state->unk7F8) {
+                    envSound_802E3250(state);
                 }
             }
 
-            for (i = 0; i < sp270->unk7FC; i++) {
-                var_s0 = &sp270->unk0[i];
+            for (i = 0; i < state->count; i++) {
+                emitter = &state->emitters[i];
                 if (D_8034EF20 != 0) {
-                    uvEmitterSetUnk70(var_s0->unk4, uvEmitterGetUnk70(var_s0->unk4) * 0.95f);
+                    uvEmitterSetUnk70(emitter->objId, uvEmitterGetUnk70(emitter->objId) * 0.95f);
                 } else {
-                    if ((sp26C == var_s0->unk6) || (var_s0->unk6 == 0xA)) {
-                        switch (var_s0->unk5) { // sound id
+                    if ((sp26C == emitter->unk6) || (emitter->unk6 == 0xA)) {
+                        switch (emitter->sndId) {
                         case 0:
                             temp_fs1 = ((demoRandF() - 0.5f) * 0.1f) + 0.8f;
                             temp_fs0 = ((demoRandF() - 0.5f) * 0.2f) + 0.9f;
-                            uvEmitterSetUnk74(var_s0->unk4, temp_fs1);
-                            uvEmitterSetUnk70(var_s0->unk4, temp_fs0);
+                            uvEmitterSetUnk74(emitter->objId, temp_fs1);
+                            uvEmitterSetUnk70(emitter->objId, temp_fs0);
                             break;
                         case 1:
                             temp_fs1 = ((demoRandF() - 0.5f) * 0.1f) + 0.8f;
                             temp_fs0 = ((demoRandF() - 0.5f) * 0.1f) + 0.95f;
-                            uvEmitterSetUnk74(var_s0->unk4, temp_fs1);
-                            uvEmitterSetUnk70(var_s0->unk4, temp_fs0);
+                            uvEmitterSetUnk74(emitter->objId, temp_fs1);
+                            uvEmitterSetUnk70(emitter->objId, temp_fs0);
                             break;
                         case 2:
                             temp_fs1 = ((demoRandF() - 0.5f) * 0.1f) + 0.8f;
-                            uvEmitterSetUnk74(var_s0->unk4, temp_fs1);
+                            uvEmitterSetUnk74(emitter->objId, temp_fs1);
                             break;
                         case 3:
                             temp_fs1 = 1.0f;
                             temp_fs0 = ((demoRandF() - 0.5f) * 0.2f) + 0.9f;
-                            uvEmitterSetUnk74(var_s0->unk4, temp_fs1);
-                            uvEmitterSetUnk70(var_s0->unk4, temp_fs0);
+                            uvEmitterSetUnk74(emitter->objId, temp_fs1);
+                            uvEmitterSetUnk70(emitter->objId, temp_fs0);
                             break;
                         case 4:
                             temp_fs1 = ((demoRandF() - 0.5f) * 0.1f) + 0.8f;
                             temp_fs0 = ((demoRandF() - 0.5f) * 0.2f) + 0.9f;
-                            uvEmitterSetUnk74(var_s0->unk4, temp_fs1);
-                            uvEmitterSetUnk70(var_s0->unk4, temp_fs0);
+                            uvEmitterSetUnk74(emitter->objId, temp_fs1);
+                            uvEmitterSetUnk70(emitter->objId, temp_fs0);
                             break;
                         case 5:
                             temp_fs1 = ((demoRandF() - 0.5f) * 0.1f) + 1.8f;
                             temp_fs0 = ((demoRandF() - 0.5f) * 0.2f) + 0.7f;
-                            uvEmitterSetUnk74(var_s0->unk4, temp_fs1);
-                            uvEmitterSetUnk70(var_s0->unk4, temp_fs0);
+                            uvEmitterSetUnk74(emitter->objId, temp_fs1);
+                            uvEmitterSetUnk70(emitter->objId, temp_fs0);
                             break;
                         case 9:
                             temp_fs1 = ((demoRandF() - 0.5f) * 0.1f) + 1.00f; // + 1.0f
                             temp_fs0 = ((demoRandF() - 0.5f) * 0.1f) + 0.95f;
-                            uvEmitterSetUnk74(var_s0->unk4, temp_fs1);
-                            uvEmitterSetUnk70(var_s0->unk4, temp_fs0);
+                            uvEmitterSetUnk74(emitter->objId, temp_fs1);
+                            uvEmitterSetUnk70(emitter->objId, temp_fs0);
                             break;
                         case 11:
                             temp_fs1 = ((demoRandF() - 0.5f) * 0.1f) + 0.4f;
-                            uvEmitterSetUnk74(var_s0->unk4, temp_fs1);
+                            uvEmitterSetUnk74(emitter->objId, temp_fs1);
                             break;
                         case 26:
                             func_802E7CB8(&sp208);
                             sp1C8.m[3][0] = sp208.x;
                             sp1C8.m[3][1] = sp208.y;
                             sp1C8.m[3][2] = sp208.z;
-                            uvEmitterSetMatrix(var_s0->unk4, &sp1C8);
+                            uvEmitterSetMatrix(emitter->objId, &sp1C8);
                             break;
                         case 23:
                             func_803203D0(0, &sp1BC);
                             sp17C.m[3][0] = sp1BC.x;
                             sp17C.m[3][1] = sp1BC.y;
                             sp17C.m[3][2] = sp1BC.z;
-                            uvEmitterSetMatrix(var_s0->unk4, &sp17C);
+                            uvEmitterSetMatrix(emitter->objId, &sp17C);
                             break;
                         case 24:
                             func_803203D0(1, &sp170);
                             sp130.m[3][0] = sp170.x;
                             sp130.m[3][1] = sp170.y;
                             sp130.m[3][2] = sp170.z;
-                            uvEmitterSetMatrix(var_s0->unk4, &sp130);
+                            uvEmitterSetMatrix(emitter->objId, &sp130);
                             break;
                         case 21:
                             if (func_802D2018(0, &spF0) != 0) {
-                                uvEmitterSetMatrix(var_s0->unk4, &spF0);
+                                uvEmitterSetMatrix(emitter->objId, &spF0);
                             } else {
-                                uvEmitterRelease(var_s0->unk4);
+                                uvEmitterRelease(emitter->objId);
                             }
                             break;
                         case 22:
                             if (func_802D2018(1, &spAC) != 0) {
-                                uvEmitterSetMatrix(var_s0->unk4, &spAC);
+                                uvEmitterSetMatrix(emitter->objId, &spAC);
                             } else {
-                                uvEmitterRelease(var_s0->unk4);
+                                uvEmitterRelease(emitter->objId);
                             }
                             break;
                         case 17:
-                            uvEmitterGetMatrix(var_s0->unk4, &sp22C);
+                            uvEmitterGetMatrix(emitter->objId, &sp22C);
                             func_802E1754(sp22C.m[3][0], sp22C.m[3][1], sp22C.m[3][2], &sp220);
 
                             //---------------------------------------------------------------
@@ -330,43 +329,43 @@ void envSound_802E2A00(s32 eventType, void* arg1, s32 eventData) {
                             }
                             //---------------------------------------------------------------
 
-                            uvEmitterSetUnk74(var_s0->unk4, temp_fs1);
-                            uvEmitterSetUnk70(var_s0->unk4, temp_fs0);
+                            uvEmitterSetUnk74(emitter->objId, temp_fs1);
+                            uvEmitterSetUnk70(emitter->objId, temp_fs0);
                             break;
                         case 20:
                             temp_v0_3 = func_80335F84(); // shuttle state
                             switch (temp_v0_3) {
                             case 0:
-                                uvEmitterSetUnk74(var_s0->unk4, 1.0f);
-                                uvEmitterSetUnk70(var_s0->unk4, 0.0f);
+                                uvEmitterSetUnk74(emitter->objId, 1.0f);
+                                uvEmitterSetUnk70(emitter->objId, 0.0f);
                                 break;
                             case 1:
-                                uvEmitterSetUnk74(var_s0->unk4, 0.20f); // 0.2f
-                                uvEmitterSetUnk70(var_s0->unk4, 1.0f);
+                                uvEmitterSetUnk74(emitter->objId, 0.20f); // 0.2f
+                                uvEmitterSetUnk70(emitter->objId, 1.0f);
                                 break;
                             case 2:
-                                uvEmitterSetUnk74(var_s0->unk4, 0.33f);
-                                uvEmitterSetUnk70(var_s0->unk4, 1.0f);
+                                uvEmitterSetUnk74(emitter->objId, 0.33f);
+                                uvEmitterSetUnk70(emitter->objId, 1.0f);
                                 func_80335F24(&sp9C);
                                 uvMat4SetIdentity(&sp5C);
                                 sp5C.m[3][0] = sp9C.x;
                                 sp5C.m[3][1] = sp9C.y;
                                 sp5C.m[3][2] = sp9C.z;
-                                uvEmitterSetMatrix(var_s0->unk4, &sp5C);
+                                uvEmitterSetMatrix(emitter->objId, &sp5C);
                                 break;
                             case 3:
-                                uvEmitterSetUnk74(var_s0->unk4, 1.0f);
-                                uvEmitterSetUnk70(var_s0->unk4, 0.5f);
+                                uvEmitterSetUnk74(emitter->objId, 1.0f);
+                                uvEmitterSetUnk70(emitter->objId, 0.5f);
                                 func_80335F24(&sp9C);
                                 uvMat4SetIdentity(&sp5C);
                                 sp5C.m[3][0] = sp9C.x;
                                 sp5C.m[3][1] = sp9C.y;
                                 sp5C.m[3][2] = sp9C.z;
-                                uvEmitterSetMatrix(var_s0->unk4, &sp5C);
+                                uvEmitterSetMatrix(emitter->objId, &sp5C);
                                 break;
                             case 4:
-                                uvEmitterSetUnk74(var_s0->unk4, 1.0f);
-                                uvEmitterSetUnk70(var_s0->unk4, 0.0f);
+                                uvEmitterSetUnk74(emitter->objId, 1.0f);
+                                uvEmitterSetUnk70(emitter->objId, 0.0f);
                                 break;
                             default:
                                 _uvDebugPrintf("got unkown shuttle state\n");
@@ -386,45 +385,45 @@ void envSound_802E2A00(s32 eventType, void* arg1, s32 eventData) {
 }
 #endif
 
-void envSound_802E3250(Unk80359DC8* arg0) {
-    Unk80359DC8_Unk0* var_s0;
+void envSound_802E3250(EnvSoundState* arg0) {
+    EnvSoundEmitter* var_s0;
     s32 i;
     s32 temp_s4;
 
     temp_s4 = D_80362690->unkC[D_80362690->unk9C].unk8;
-    for (i = 0; i < arg0->unk7FC; i++) {
-        var_s0 = &arg0->unk0[i];
+    for (i = 0; i < arg0->count; i++) {
+        var_s0 = &arg0->emitters[i];
         if (temp_s4 == var_s0->unk6) {
-            uvEmitterTrigger(var_s0->unk4);
+            uvEmitterTrigger(var_s0->objId);
         } else if (var_s0->unk6 != 0xA) {
-            uvEmitterRelease(var_s0->unk4);
+            uvEmitterRelease(var_s0->objId);
         }
     }
     arg0->unk7F8 = temp_s4;
 }
 
-void envSound_802E3310(Unk80359DC8* arg0) {
-    Unk80359DC8_Unk0* var_s0;
+void envSound_802E3310(EnvSoundState* arg0) {
+    EnvSoundEmitter* var_s0;
     s32 i;
 
     D_8034EF24 = 1;
     D_8034EF20 = 0;
-    arg0->unk800 = -0x40;
-    for (i = 0; i < arg0->unk7FC; i++) {
-        var_s0 = &arg0->unk0[i];
-        uvEmitterSetUnk70(var_s0->unk4, var_s0->unk0);
-        uvEmitterTrigger(var_s0->unk4);
+    arg0->flags = 0xFFFFFFC0;
+    for (i = 0; i < arg0->count; i++) {
+        var_s0 = &arg0->emitters[i];
+        uvEmitterSetUnk70(var_s0->objId, var_s0->unk0);
+        uvEmitterTrigger(var_s0->objId);
     }
 }
 
-void envSound_802E3398(Unk80359DC8* arg0) {
+void envSound_802E3398(EnvSoundState* arg0) {
     D_8034EF20 = 0;
     D_8034EF24 = 0;
     D_8034EF28 = 0;
-    D_8034EF2C = 0;
-    D_8035A5CC = 0.0f;
+    gEnvSoundIsInit = FALSE;
+    gEnvSoundFutureTime = 0.0f;
     envSound_802E2904(arg0);
-    uvEventRemoveCb(D_80359DC0, 1, 0xD, 0x12, 0x13, 0xB, 0x17, 0x18, 0x19, 0xC, 0xE, 0x24);
+    uvEventRemoveCb(gEnvSoundEventCb, 1, 0xD, 0x12, 0x13, 0xB, 0x17, 0x18, 0x19, 0xC, 0xE, 0x24);
 }
 
 void envSoundFrameUpdate(Mtx4F* arg0) {
@@ -443,15 +442,15 @@ void envSoundFrameUpdate(Mtx4F* arg0) {
     Unk802D3658_Unk1224 sp70;
 
     aptCount = levelGetAPTS(&aptsRef);
-    if ((aptCount == 0) || (D_8035A5C8 & 1)) {
+    if ((aptCount == 0) || (gEnvSoundState.flags & 1)) {
         return;
     }
 
     for (i = 0; i < aptCount; i++) {
         apt = &aptsRef[i];
-        sp1E8.x = arg0->m[3][0] - apt->unk0.x;
-        sp1E8.y = arg0->m[3][1] - apt->unk0.y;
-        sp1E8.z = arg0->m[3][2] - apt->unk0.z;
+        sp1E8.x = arg0->m[3][0] - apt->pos.x;
+        sp1E8.y = arg0->m[3][1] - apt->pos.y;
+        sp1E8.z = arg0->m[3][2] - apt->pos.z;
         temp_fs0 = uvVec3Len(&sp1E8);
         sp1DC.x = uvCosF((apt->unkC + 90.0f) * 0.01745329f);
         sp1DC.y = uvSinF((apt->unkC + 90.0f) * 0.01745329f);
@@ -461,10 +460,10 @@ void envSoundFrameUpdate(Mtx4F* arg0) {
             switch (apt->unk14) {
             case 0:
                 if (temp_fv0 > 0.0f) {
-                    D_8035A5D0[0] = 0;
+                    gEnvSoundStateCount[0] = 0;
                     var_ft0 = ((apt->unk1C - apt->unk18) * (apt->unk10 - temp_fs0)) / (2.0f * apt->unk10);
                 } else {
-                    D_8035A5D0[0] = 1;
+                    gEnvSoundStateCount[0] = 1;
                     var_ft0 = ((apt->unk1C - apt->unk18) * (apt->unk10 + temp_fs0)) / (2.0f * apt->unk10);
                 }
                 func_80200180(0, 4, var_ft0, 0);
@@ -475,20 +474,20 @@ void envSoundFrameUpdate(Mtx4F* arg0) {
                 sp1B4.z = arg0->m[3][2];
                 sp1C0.z = apt->unk10 + sp1B4.z;
                 if (func_802DB224(&sp70, 0xB, 0xFFFF, 0, &sp1B4, &sp1C0) != 0) {
-                    D_8035A5D0[1]++;
+                    gEnvSoundStateCount[1]++;
                 } else {
-                    if ((D_8035A5D0[1] > 0) && (D_80362690->unkC[0].unkA != 4) && (D_80362690->unkC[0].veh != VEHICLE_JUMBLE_HOPPER)) {
-                        if (D_8035A5CC < D_8034F850) {
-                            D_8035A5CC = D_8034F850 + 4.0f;
+                    if ((gEnvSoundStateCount[1] > 0) && (D_80362690->unkC[0].unkA != 4) && (D_80362690->unkC[0].veh != VEHICLE_JUMBLE_HOPPER)) {
+                        if (gEnvSoundFutureTime < D_8034F850) {
+                            gEnvSoundFutureTime = D_8034F850 + 4.0f;
                             snd_play_sfx(0x50);
                         }
                     }
-                    D_8035A5D0[1] = 0;
+                    gEnvSoundStateCount[1] = 0;
                 }
                 break;
             }
         } else if (apt->unk14 == 0) {
-            if (D_8035A5D0[0] == 0) {
+            if (gEnvSoundStateCount[0] == 0) {
                 func_80200180(0, 4, apt->unk18, 0);
             } else {
                 func_80200180(0, 4, apt->unk1C, 0);

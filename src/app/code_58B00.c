@@ -265,10 +265,10 @@ void func_802D1F58(s32 arg0) {
     temp_v0 = &D_803596A0[arg0];
     if (temp_v0->unk0 != 0xFFFF) {
         if (temp_v0->unk4 == 0x29) {
-            esnd.unk58 = 0x16;
+            esnd.sndId = 0x16;
             esnd.unk5C = 1.6f;
         } else if (temp_v0->unk4 == 3) {
-            esnd.unk58 = 0x15;
+            esnd.sndId = 0x15;
             esnd.unk5C = 2.0f;
         } else {
             return;
