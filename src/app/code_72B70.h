@@ -14,8 +14,13 @@
 extern Unk80364210 D_80364210[];
 
 typedef struct {
+    u8 unk0[0x44];
+} Unk80367710_Unk4; // size = 0x44
+
+typedef struct {
     u8 testCount;
-    u8 pad1[0x157];
+    u8 pad1[3];
+    Unk80367710_Unk4 unk4[5];
 } Unk80367710;
 
 typedef struct {

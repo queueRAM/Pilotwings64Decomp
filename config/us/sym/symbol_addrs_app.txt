@@ -441,6 +441,7 @@ totResultDeinit     = 0x80347694; // type:func
 totResultMenuChoose = 0x8034769C; // type:func
 totResultDrawTally  = 0x80347780; // type:func
 
+testMenuMainRender  = 0x803485F0; // type:func
 testMenuShutterBug  = 0x80348710; // type:func
 testMenuInitText    = 0x803487A4; // type:func
 testMenuInit        = 0x80348B84; // type:func
