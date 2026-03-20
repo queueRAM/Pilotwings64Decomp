@@ -111,7 +111,62 @@ s32 toy_80347C2C(Vec3F arg0, Toy* arg3) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/toys/toyAnimate.s")
+void toyAnimate(Toy* toy) {
+    s32 i;
+    f32 temp_fv0;
+    Mtx4F sp40;
+    f32 temp_fs0;
+    Mtx4F* mtx0;
+
+    switch (toy->toyType) {
+    case 2:
+        uvMat4RotateAxis(&toy->unkC, 0.6981316f * D_8034F854, 'y');
+        uvSobjPosm(toy->terraId, 0, &toy->unkC);
+        break;
+    case 0:
+        uvMat4RotateAxis(&toy->unkC, 0.1745329f * D_8034F854, 'z');
+        uvSobjPosm(toy->terraId, 1, &toy->unkC);
+        break;
+    case 1:
+        temp_fv0 = 0.29670593f * D_8034F854;
+        uvMat4RotateAxis(&toy->unkC, temp_fv0, 'y');
+        uvSobjPosm(toy->terraId, 1, &toy->unkC);
+        for (i = 0; i < ARRAY_COUNT(toy->unk4C); i++) {
+            uvMat4RotateAxis(&toy->unk4C[i], -temp_fv0, 'y');
+        }
+        uvSobjPosm(toy->terraId, 2, &toy->unk4C[0]);
+        uvSobjPosm(toy->terraId, 3, &toy->unk4C[1]);
+        uvSobjPosm(toy->terraId, 4, &toy->unk4C[2]);
+        uvSobjPosm(toy->terraId, 5, &toy->unk4C[3]);
+        uvSobjPosm(toy->terraId, 6, &toy->unk4C[4]);
+        uvSobjPosm(toy->terraId, 7, &toy->unk4C[5]);
+        uvSobjPosm(toy->terraId, 8, &toy->unk4C[6]);
+        uvSobjPosm(toy->terraId, 9, &toy->unk4C[7]);
+        break;
+    case 3:
+        toy->unk254 += 1.1344639f * D_8034F854;
+        if (toy->unk254 > 6.2831855f) {
+            toy->unk254 -= 6.2831855f;
+        }
+        temp_fs0 = toy->unk254;
+        uvMat4Copy(&sp40, &toy->unkC);
+        uvMat4RotateAxis(&sp40, temp_fs0 + 4.712389f, 'x');
+        uvSobjPosm(toy->terraId, 1, &sp40);
+        temp_fs0 = uvAtan2F(uvSinF(temp_fs0) * 1.16, toy->unk24C);
+        uvMat4Copy(&sp40, &toy->unk4C[0]);
+        uvMat4RotateAxis(&sp40, temp_fs0, 'x');
+        uvSobjPosm(toy->terraId, 2, &sp40);
+        uvMat4Copy(&sp40, &toy->unk4C[1]);
+        uvMat4RotateAxis(&sp40, -temp_fs0, 'x');
+        uvSobjPosm(toy->terraId, 3, &sp40);
+        break;
+    default:
+        _uvDebugPrintf("Update got an unknown toy type\n");
+        break;
+    case 4:
+        break;
+    }
+}
 
 s32 toy_8034819C(s32 arg0, s32 arg1, s32 toy) {
     Unk803216A4* tmp;
