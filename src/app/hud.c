@@ -657,8 +657,8 @@ void hud_8031A378(void) {
     f32 sp70;
     f32 sp6C;
     s32 i;
-    LevelHOPD* hopd;
-    LevelBTGT* btgt;
+    TaskHOPD* hopd;
+    TaskBTGT* btgt;
 
     idx = 0;
     for (i = 0; i < taskGetHOPD(&hopd); i++) {

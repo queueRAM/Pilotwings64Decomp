@@ -29,11 +29,11 @@ typedef struct {
     Vec3F pos;
 } TakeoffPad; // size = 0xC
 
-extern LevelLPAD* gRefLPAD;
-extern LevelLSTP* gRefLSTP;
-extern LevelTPAD* gRefTPAD;
-extern LevelCNTG* gRefCNTG;
-extern PotentialLPAD* gRefPotLPAD;
+extern TaskLPAD* gRefLPAD;
+extern TaskLSTP* gRefLSTP;
+extern TaskTPAD* gRefTPAD;
+extern TaskCNTG* gRefCNTG;
+extern LevelLPAD* gRefPotLPAD;
 
 extern Unk8036C168 D_8036C168[];
 extern u8 gPotLandPadCount;
@@ -72,10 +72,10 @@ void padsInit(void) {
 void padsLoad(void) {
     LandingPad* landpad;
     LandingStrip* landstrip;
-    LevelLSTP* lstp;
+    TaskLSTP* lstp;
     s32 pad1;
-    PotentialLPAD* plpad;
-    LevelLPAD* lpad;
+    LevelLPAD* plpad;
+    TaskLPAD* lpad;
     f32 minVal;
     s32 var_s0;
     s32 j;
@@ -84,7 +84,7 @@ void padsLoad(void) {
     f32 dx;
     f32 dy;
     f32 dz;
-    LevelCNTG* cntg;
+    TaskCNTG* cntg;
     CannonTarget* cannontgt;
     s32 pad0;
     Mtx4F spA4;

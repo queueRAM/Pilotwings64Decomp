@@ -312,9 +312,9 @@ STATIC_FUNC u8 func_8032BF54(void) {
     if (taskGet_80346364() != 2) {
         return 0;
     }
-    return (func_80324AF4() != taskGetRNGS((LevelRNGS**)&tmp) || targets_803448F4() != taskGetTARG((LevelTARG**)&tmp) || ballsGet_802CC15C() == 0 ||
-            hoverPad_8030A080() != taskGetHPAD((LevelHPAD**)&tmp) || falco_802E57C4() != D_8035A5F0 || ballTgtCount_5B() != taskGetBTGT((LevelBTGT**)&tmp) ||
-            func_802FB5A0() != taskGetHOPD((LevelHOPD**)&tmp));
+    return (func_80324AF4() != taskGetRNGS((TaskRNGS**)&tmp) || targets_803448F4() != taskGetTARG((TaskTARG**)&tmp) || ballsGet_802CC15C() == 0 ||
+            hoverPad_8030A080() != taskGetHPAD((TaskHPAD**)&tmp) || falco_802E57C4() != D_8035A5F0 || ballTgtCount_5B() != taskGetBTGT((TaskBTGT**)&tmp) ||
+            func_802FB5A0() != taskGetHOPD((TaskHOPD**)&tmp));
 }
 
 u8 func_8032C080(s32* arg0) {

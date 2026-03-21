@@ -9,7 +9,7 @@
 
 s32 D_8034F3F0[2] = { MODEL_RB_HOVERPAD_LARGE, MODEL_RB_HOVERPAD_STANDARD };
 
-LevelHPAD* gRefHPAD;
+TaskHPAD* gRefHPAD;
 u8 gHoverPadCount;
 HoverPad gHoverPads[20];
 
@@ -53,7 +53,7 @@ void hoverPadObjSetup(HoverPad* hover) {
 
 void hoverPadLoad(void) {
     HoverPad* hover;
-    LevelHPAD* hpad;
+    TaskHPAD* hpad;
     s32 i;
     s32 j;
 
