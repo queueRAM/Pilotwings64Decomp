@@ -62,6 +62,6 @@ void ringsLoad(void);
 s32 func_803243D8(Mtx4F*);
 void ringsDeinit(void);
 u8 func_80324AF4(void);
-s16 func_80324B60(void*);
+s16 func_80324B60(f32*);
 
 #endif // APP_RINGS_H

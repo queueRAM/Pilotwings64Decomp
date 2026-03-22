@@ -327,7 +327,9 @@ typedef struct {
     Unk803599D0 unkFC;
     Unk803599D0 unk150;
     // maybe more Unk803599D0 here
-    u8 pad1A4[0x3B4-0x1A4];
+    u8 pad1A4[0x39C-0x1A4];
+    s16 unk39C[4];
+    f32 unk3A4[4];
     s32 unk3B4;
     s32 unk3B8;
     f32 unk3BC;

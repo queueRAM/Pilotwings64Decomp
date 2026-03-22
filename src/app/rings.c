@@ -447,4 +447,26 @@ u8 func_80324AF4(void) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_80324B60.s")
+s16 func_80324B60(f32* arg0) {
+    Unk80345C80* temp_v0;
+    s16 ret;
+    s32 idx;
+    s32 i;
+
+    ret = 0;
+    temp_v0 = taskGet_80345C80();
+
+    for (i = 0; i < gRingsCount; i++) {
+        switch (gRings[i].unk1B4) {
+        case 1:
+            idx = gRings[i].unk146;
+            ret += temp_v0->unk39C[idx];
+            *arg0 += temp_v0->unk3A4[idx];
+            break;
+        case 2:
+            ret += gRings[i].unk148;
+            break;
+        }
+    }
+    return ret;
+}
