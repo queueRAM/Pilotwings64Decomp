@@ -9,7 +9,7 @@
 #include "task.h"
 
 void rings_803234A4(Ring*);
-void func_80323720(Ring*);
+void rings_80323720(Ring*);
 
 extern TaskRNGS* gRefRNGS;
 extern u8 gRingsCount; // count of rings stored in gRings
@@ -121,7 +121,31 @@ void rings_803234A4(Ring* ring) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_80323720.s")
+void rings_80323720(Ring* ring) {
+    f32 sp6C;
+    f32 sp68;
+    Mtx4F sp28;
+
+    if ((ring->unk180 != 0) && (ring->unk1B7 != 0)) {
+        sp68 = ring->unk180 * 0.31415927f; // DEG_TO_RAD(18)
+        sp6C = 0.0f;
+        if (sp68 < 0.0f) {
+            sp68 = 0.0f;
+        } else if (sp68 > 6.2831855f) {
+            sp68 = 6.2831855f;
+        }
+        if (ring->unk1A0 == 0x79) {
+            sp6C = 0.0f - ring->unk1A8;
+            sp68 -= ring->unk1A8;
+        }
+        uvMat4Copy(&sp28, &ring->unkC4);
+        uvMat4RotateAxis(&sp28, sp6C, 'y');
+        uvDobjPosm(ring->unk0, (ring->unk144 == 0) ? 2 : 5, &sp28);
+        uvMat4Copy(&sp28, &ring->unk104);
+        uvMat4RotateAxis(&sp28, sp68, 'y');
+        uvDobjPosm(ring->unk0, (ring->unk144 == 0) ? 3 : 6, &sp28);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_80323864.s")
 
@@ -217,7 +241,7 @@ void ringsLoad(void) {
         if ((ring->unk180 != 0) && (ring->unk1B7 != 0)) {
             uvDobjProps(ring->unk0, 4, (ring->unk144 == 0) ? 2 : 5, 0);
             uvDobjProps(ring->unk0, 4, (ring->unk144 == 0) ? 3 : 6, 0);
-            func_80323720(ring);
+            rings_80323720(ring);
         }
     }
     rings_80323364();
