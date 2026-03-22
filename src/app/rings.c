@@ -419,7 +419,22 @@ s32 func_80323FFC(s32 ringIdx) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_803243D8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/rings/ringsDeinit.s")
+void ringsDeinit(void) {
+    Ring* ring;
+    s32 i;
+
+    for (i = 0; i < gRingsCount; i++) {
+        ring = &gRings[i];
+        if (ring->unk0 != 0xFFFF) {
+            uvDobjModel(ring->unk0, 0xFFFF);
+            ring->unk0 = 0xFFFF;
+            if (ring->unk1CA != 0xFF) {
+                hud_8031A8E0(ring->unk1CA);
+                ring->unk1CA = 0xFF;
+            }
+        }
+    }
+}
 
 u8 func_80324AF4(void) {
     u8 ret;
