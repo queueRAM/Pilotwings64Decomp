@@ -159,7 +159,17 @@ void rings_80323864(Ring* ring) {
     rings_80323720(ring);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_8032390C.s")
+void rings_8032390C(Ring* ring) {
+    ring->unk1B8 = 1;
+    ring->unk180 = 0.0f;
+    ring->unk147 = ring->unk146;
+    uvDobjModel(ring->unk0, 0xFFFF);
+    rings_803234A4(ring);
+    if (ring->unk1B7 != 0) {
+        uvDobjProps(ring->unk0, 5, (ring->unk144 == 0) ? 2 : 5, 0);
+        uvDobjProps(ring->unk0, 5, (ring->unk144 == 0) ? 3 : 6, 0);
+    }
+}
 
 void ringsLoad(void) {
     Ring* ring;
