@@ -267,7 +267,52 @@ void ringsLoad(void) {
     rings_80323364();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_80323DCC.s")
+void rings_80323DCC(Ring* ring) {
+    Ring* childRing;
+    s32 timeRingIdx;
+    s32 childIdx;
+    s32 i;
+
+    ring->unk1B9 = 0;
+    for (i = 0; i < ring->unk149; i++) {
+        childIdx = ring->unk14C[i];
+        D_80371060[i] = childIdx;
+        childRing = &gRings[childIdx];
+        if (childRing->unk1B7 != 0) {
+            _uvDebugPrintf("rings : Ring %d already active\n");
+        } else if (childRing->unk1B4 != 0) {
+            _uvDebugPrintf("rings : Activating consumed ring %d\n");
+        } else {
+            childRing->unk1B7 = 1;
+            childRing->unk1B9 = 1;
+            if (childRing->unk0 != 0xFFFF) {
+                uvDobjModel(childRing->unk0, 0xFFFF);
+            }
+            rings_803234A4(childRing);
+            if (childRing->unk147 != 2) {
+                childRing->unk1CA = hudAddWaypoint(childRing->unk4.m[3][0], childRing->unk4.m[3][1], childRing->unk4.m[3][2]);
+            }
+            if (childRing->unk180 != 0.0f) {
+                uvDobjProps(childRing->unk0, 4, (childRing->unk144 == 0) ? 2 : 5, 0);
+                uvDobjProps(childRing->unk0, 4, (childRing->unk144 == 0) ? 3 : 6, 0);
+                rings_80323720(childRing);
+            }
+        }
+    }
+
+    for (i = 0; i < ring->unk160; i++) {
+        timeRingIdx = ring->unk164[i];
+        childRing = &gRings[timeRingIdx];
+        if (childRing->unk1B4 == 0) {
+            if (childRing->unk178 == 0) {
+                _uvDebugPrintf("rings: Untimed ring index %d in ring %d's timechild list\n", timeRingIdx, i);
+            } else {
+                hudWarningText(0x3D, 3.0f, 8.0f); // "Time ring start"
+                rings_80323864(childRing);
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_80323FFC.s")
 
