@@ -4,9 +4,12 @@
 #include <uv_string.h>
 #include <uv_texture.h>
 #include "code_9A960.h"
+#include "code_B2900.h"
 #include "hud.h"
 #include "rings.h"
+#include "snd.h"
 #include "task.h"
+#include "text_data.h"
 
 void rings_803234A4(Ring*);
 void rings_80323720(Ring*);
@@ -314,7 +317,105 @@ void rings_80323DCC(Ring* ring) {
     }
 }
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_80323FFC.s")
+#else
+s32 func_80323FFC(s32 ringIdx) {
+    Unk80364210* temp_s0;
+    s32 i;
+    s32 var_a0;
+    s16* textStr;
+    s32 sp54;
+    s32 pad3;
+    Ring* ring; // sp3C
+    Ring* childRing;
+    u8 temp_v0;
+
+    temp_s0 = func_8032BE10();
+    temp_s0->unk24 = func_80324AF4();
+    func_8032C080(&sp54);
+    ring = &gRings[ringIdx];
+    ring->unk1B4 = (ring->unk180 > 0.0f) ? 2 : 1;
+    if (ring->unk147 != 2) {
+        func_8033F758(0xF, 1.0f, (ring->unk146 * 0.05f) + 0.95f, 0.0f);
+    }
+
+    var_a0 = 0;
+    for (i = 0; i < ARRAY_COUNT(D_80371060); i++) {
+        temp_v0 = D_80371060[i];
+        if ((temp_v0 != 0xFF) && (ringIdx == temp_v0)) {
+            if ((ring->unk147 != 3) && (ring->unk147 != 2)) {
+                if (ring->unk147 == 1) {
+                    hudText_8031D8E0(0x69, 3.0f, 8.0f); // "Bonus ring cleared"
+                } else {
+                    hudText_8031D8E0(0x108, 3.0f, 8.0f); // "Ring cleared"
+                }
+                if (sp54 >= 2) {
+                    textStr = textGetDataByIdx(0x29);
+                    textFmtIntAt(textStr, sp54 - 1, 2, 0);
+                    hudWarningText(0x29, 3.0f, 8.0f); // "to go"
+                }
+            }
+            var_a0 = 1;
+            break;
+        }
+    }
+
+    if (var_a0 != 0) {
+        for (i = 0; i < ARRAY_COUNT(D_80371060); i++) {
+            temp_v0 = D_80371060[i];
+            childRing = &gRings[temp_v0];
+            if ((temp_v0 != 0xFF) && (ringIdx != temp_v0)) {
+                // --------------------------------
+                // issue ordering of this store
+                D_80371060[i] = 0xFF;
+                // --------------------------------
+                childRing->unk1B4 = 3;
+                if (childRing->unk0 != 0xFFFF) {
+                    uvDobjModel(childRing->unk0, 0xFFFF);
+                    childRing->unk0 = 0xFFFF;
+                }
+                if (childRing->unk1CA != 0xFF) {
+                    hud_8031A8E0(childRing->unk1CA);
+                    childRing->unk1CA = 0xFF;
+                }
+            }
+            D_80371060[i] = 0xFF;
+        }
+    } else if (ring->unk180 > 0.0f) {
+        hudText_8031D8E0(0x17E, 3.0f, 8.0f); // "Time ring cleared"
+        if (sp54 > 1) {
+            textStr = textGetDataByIdx(0x29);
+            textFmtIntAt(textStr, sp54 - 1, 2, 0);
+            hudWarningText(0x29, 3.0f, 8.0f);
+        }
+    } else {
+        switch (ring->unk147) {
+        case 0:
+            hudText_8031D8E0(0xF6, 3.0f, 8.0f); // "Ring cleared"
+            if (sp54 > 1) {
+                textStr = textGetDataByIdx(0x29);
+                textFmtIntAt(textStr, sp54 - 1, 2, 0);
+                hudWarningText(0x29, 3.0f, 8.0f); // "to go"
+            }
+            break;
+        case 1:
+            hudText_8031D8E0(0x69, 3.0f, 8.0f); // "Bonus ring cleared"
+            if (sp54 > 0) {
+                textStr = textGetDataByIdx(0x29);
+                textFmtIntAt(textStr, sp54 - 1, 2, 0);
+                hudWarningText(0x29, 3.0f, 8.0f); // "to go"
+            }
+            break;
+        }
+    }
+    rings_80323DCC(ring);
+    if (ring->unk147 == 3) {
+        return 1;
+    }
+    return 0;
+}
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_803243D8.s")
 
