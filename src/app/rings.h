@@ -10,9 +10,10 @@ typedef struct {
     Mtx4F unk4;
     Mtx4F unk44;
     Mtx4F unk84;
-    u8 padC4[0x144 - 0xC4];
+    Mtx4F unkC4;
+    Mtx4F unk104;
     u8 unk144;
-    u8 unk145;
+    u8 type;
     u8 unk146;
     u8 unk147;
     u8 unk148;
@@ -26,7 +27,7 @@ typedef struct {
     u8 pad179[3];
     f32 unk17C;
     f32 unk180;
-    u8 unk184;
+    u8 size;
     u8 pad185[3];
     f32 unk188;
     f32 unk18C;

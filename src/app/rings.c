@@ -1,5 +1,6 @@
 #include "common.h"
 #include <uv_dobj.h>
+#include <uv_model.h>
 #include <uv_string.h>
 #include <uv_texture.h>
 #include "code_9A960.h"
@@ -7,13 +8,16 @@
 #include "rings.h"
 #include "task.h"
 
-void func_803234A4(Ring*);
+void rings_803234A4(Ring*);
 void func_80323720(Ring*);
 
 extern TaskRNGS* gRefRNGS;
 extern u8 gRingsCount; // count of rings stored in gRings
 // extern Ring gRings[30]; // stored here, exported in header
 extern u8 D_80371060[5];
+
+// .data
+extern s32 gRingModelIdLookup[/* likely 2 */][4][5];
 
 void ringsInit(void) {
     Ring* var_v1;
@@ -60,7 +64,62 @@ void rings_80323364(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_803234A4.s")
+// load models, set props
+void rings_803234A4(Ring* ring) {
+    s32 state;
+    s32 modelId;
+
+    ring->unk0 = uvDobjAllocIdx();
+    if (ring->unk1B7 != 0) {
+        if (ring->type >= 2) {
+            _uvDebugPrintf("rings : Bad ring rtype %d\n", ring->type);
+            ring->type = 0;
+        }
+        if (ring->unk147 >= 4) {
+            ring->unk147 = 1;
+        }
+        if (ring->size >= 5) {
+            _uvDebugPrintf("rings : Bad ring size %d\n", ring->size);
+            ring->size = 2;
+        }
+        if (ring->unk147 < 2) {
+            modelId = gRingModelIdLookup[ring->type][ring->unk147][ring->size];
+            uvDobjModel(ring->unk0, modelId);
+            if (ring->unk144 == 0) {
+                uvDobjProps(ring->unk0, 5, 4, 0);
+            } else {
+                uvDobjProps(ring->unk0, 5, 1, 0);
+            }
+            uvModelGetPosm(modelId, (ring->unk144 == 0) ? 2 : 5, &ring->unkC4);
+            uvModelGetPosm(modelId, (ring->unk144 == 0) ? 3 : 6, &ring->unk104);
+            uvDobjProps(ring->unk0, 5, 2, 0);
+            uvDobjProps(ring->unk0, 5, 3, 0);
+            uvDobjProps(ring->unk0, 5, 5, 0);
+            uvDobjProps(ring->unk0, 5, 6, 0);
+        } else if (ring->unk147 == 3) {
+            uvDobjModel(ring->unk0, 0xF1);
+        } else {
+            ring->unk0 = 0xFFFF;
+        }
+    } else {
+        switch (ring->unk147) {
+        case 0:
+            uvDobjModel(ring->unk0, 0xEF);
+            break;
+        case 1:
+        case 3:
+            uvDobjModel(ring->unk0, 0xF0);
+            break;
+        default:
+            ring->unk0 = 0xFFFF;
+        }
+    }
+    state = (ring->unk1B6 != 0) ? 2 : 0;
+    if (ring->unk0 != 0xFFFF) {
+        uvDobjState(ring->unk0, state);
+        uvDobjPosm(ring->unk0, 0, &ring->unk4);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_80323720.s")
 
@@ -106,7 +165,7 @@ void ringsLoad(void) {
             }
             unk72 = rngs->unk72;
             ring->unk147 = ring->unk146 = unk72;
-            ring->unk184 = rngs->size;
+            ring->size = rngs->size;
             ring->unk1B7 = rngs->unk55;
             ring->unk149 = rngs->unk1D;
             if (ring->unk1B7 && (ring->unk149 > 0)) {
@@ -121,9 +180,9 @@ void ringsLoad(void) {
                 ring->unk164[j] = rngs->unk38[j];
             }
             if ((ring->unk1B7 == 0) || (ring->unk149 != 0)) {
-                ring->unk145 = 1;
+                ring->type = 1;
             } else {
-                ring->unk145 = 0;
+                ring->type = 0;
             }
             ring->unk178 = rngs->unk4D;
             ring->unk17C = rngs->unk50;
@@ -154,7 +213,7 @@ void ringsLoad(void) {
         if ((ring->unk1B7 != 0) && (ring->unk147 != 2)) {
             ring->unk1CA = hudAddWaypoint(rngs->pos.x, rngs->pos.y, rngs->pos.z);
         }
-        func_803234A4(ring);
+        rings_803234A4(ring);
         if ((ring->unk180 != 0) && (ring->unk1B7 != 0)) {
             uvDobjProps(ring->unk0, 4, (ring->unk144 == 0) ? 2 : 5, 0);
             uvDobjProps(ring->unk0, 4, (ring->unk144 == 0) ? 3 : 6, 0);

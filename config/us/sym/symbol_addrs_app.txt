@@ -252,6 +252,7 @@ demoRandF           = 0x803232A0; // type:func
 
 ringsInit           = 0x803232F0; // type:func
 rings_80323364      = 0x80323364; // type:func
+rings_803234A4      = 0x803234A4; // type:func
 ringsLoad           = 0x803239B4; // type:func
 ringsDeinit         = 0x80324A34; // type:func
 
@@ -572,6 +573,8 @@ sFileMenuFadeRate         = 0x8034F118;
 
 gLevelCurObjects          = 0x8034F408;
 gLevelUserFileLookup      = 0x8034F410;
+
+gRingModelIdLookup        = 0x8034FAF4; // size:0xA0
 
 gMedalPointRequirements   = 0x8034FBD4;
 
