@@ -203,7 +203,7 @@ s32 func_8032B560(Unk80364210* arg0, u8 classIdx, u8 testIdx, u8 vehIdx) {
     }
     temp_v1->unk1E = 0;
     if (arg0->unk0 & 0x4000) {
-        temp_v1->unk1E = hoverPad_8030A0DC();
+        temp_v1->unk1E = hoverPadGetPoints();
     }
     temp_v1->unk20 = 0;
     if (arg0->unk0 & 0x8000) {
@@ -313,7 +313,7 @@ STATIC_FUNC u8 func_8032BF54(void) {
         return 0;
     }
     return (func_80324AF4() != taskGetRNGS((TaskRNGS**)&tmp) || targets_803448F4() != taskGetTARG((TaskTARG**)&tmp) || ballsGet_802CC15C() == 0 ||
-            hoverPad_8030A080() != taskGetHPAD((TaskHPAD**)&tmp) || falco_802E57C4() != D_8035A5F0 || ballTgtCount_5B() != taskGetBTGT((TaskBTGT**)&tmp) ||
+            hoverPadGetCount() != taskGetHPAD((TaskHPAD**)&tmp) || falco_802E57C4() != D_8035A5F0 || ballTgtCount_5B() != taskGetBTGT((TaskBTGT**)&tmp) ||
             func_802FB5A0() != taskGetHOPD((TaskHOPD**)&tmp));
 }
 
@@ -329,7 +329,7 @@ u8 func_8032C080(s32* arg0) {
         }
         return 0;
     }
-    var_v1 = sp2C->unk3C4 - (ballTgtCount_5B() + (falco_802E57C4() + (hoverPad_8030A080() + (targets_803448F4() + (func_80324AF4() + func_802FB5A0())))));
+    var_v1 = sp2C->unk3C4 - (ballTgtCount_5B() + (falco_802E57C4() + (hoverPadGetCount() + (targets_803448F4() + (func_80324AF4() + func_802FB5A0())))));
     if (var_v1 < 0) {
         var_v1 = 0;
     }

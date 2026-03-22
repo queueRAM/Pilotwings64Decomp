@@ -166,17 +166,17 @@ typedef struct {
 } TaskHOPD; // size = 0x20
 
 typedef struct {
-    Vec3F unk0;
-    Vec3F unkC;
-    u8 pad18[4];
-    u8 unk1C;
-    u8 unk1D;
+    Vec3F pos;
+    Vec3F rot;
+    s32 unk18;
+    u8 type;
+    u8 points;
     u8 pad1E[2];
-    f32 unk20;
-    u8 unk24;
+    f32 fuelAdded;
+    u8 nextHpadCount;
     u8 pad25[3];
-    s32 unk28[5]; // size unknown
-    u8 unk3C;
+    s32 nextHpads[5];
+    u8 active;
     u8 pad3D[3];
 } TaskHPAD; // size = 0x40
 

@@ -80,11 +80,19 @@ using f32 = be float;
 struct VecTimeVal {
     f32 time;
     f32 value;
-} [[static]]; // size = 0x8
+} [[static, format("format_VecTimeVal")]]; // size = 0x8
+
+fn format_VecTimeVal(VecTimeVal v) {
+    return std::format("[ {}, {}, {} ]", v.time, v.value);
+};
 
 struct Vec3F {
     f32 x, y, z;
-} [[static]]; // size = 0xC
+} [[static, format("format_Vec3F")]]; // size = 0xC
+
+fn format_Vec3F(Vec3F v) {
+    return std::format("[ {}, {}, {} ]", v.x, v.y, v.z);
+};
 
 struct Vec4F {
     f32 x, y, z, w;
@@ -659,18 +667,23 @@ struct TaskHOPD {
     u8 pad1C[4];
 } [[static]]; // size = 0x20
 
+enum HPADType : u8 {
+    Large = 0x00,
+    Small = 0x01,
+};
+
 struct TaskHPAD {
-    Vec3F unk0;
-    Vec3F unkC;
-    u8 pad18[4];
-    u8 unk1C;
-    u8 unk1D;
+    Vec3F pos [[comment("position vector")]];
+    Vec3F rot [[comment("rotation vector (degrees)")]];
+    s32 unk18;
+    HPADType type;
+    u8 points;
     u8 pad1E[2];
-    f32 unk20;
-    u8 unk24;
+    f32 fuelAdded;
+    u8 nextHpadCount [[comment("number of HPADs to activate")]];
     u8 pad25[3];
-    s32 unk28[5]; // size unknown
-    u8 unk3C;
+    s32 nextHpads[5] [[comment("array of HPADs to activate")]];
+    u8 active [[comment("active at start")]];
     padding[3];
 } [[static]] ; // size = 0x40
 

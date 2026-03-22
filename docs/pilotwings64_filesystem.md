@@ -634,23 +634,21 @@ gyrocopter tests where Falco must be defeated.
 
 #### UPWT::HPAD / hover pad
 
-`HPAD` are the hovering pads used in some rocket belt tests.
+`HPAD` are the hovering pads used in two of the rocket belt tests.
 
 | Offset | Type   | Description
-|--------|--------|------------
+|--------|--------|--------------------------------------
 |  0x00  | Vec3F  | position
-|  0x0C  | f32    | TBD
-|  0x10  | f32    | TBD
-|  0x14  | f32    | TBD
-|  0x18  | pad[4] | TBD
-|  0x1C  | u8     | TBD
-|  0x1D  | u8     | TBD
+|  0x0C  | Vec3F  | rotation (degrees)
+|  0x18  | s32    | TBD (always 0)
+|  0x1C  | u8     | type (0=large, 1=standard)
+|  0x1D  | u8     | points if landed on (typically 5 or 3)
 |  0x1E  | pad[2] |
-|  0x20  | f32    | TBD
-|  0x24  | u8     | TBD
+|  0x20  | f32    | fuel added upon landing [0.0-1.0]
+|  0x24  | u8     | number of hover pads to activate next
 |  0x25  | pad[3] |
-|  0x28  | s32[5] | TBD
-|  0x3C  | u8     | TBD
+|  0x28  | s32[5] | array of HPADs to activate
+|  0x3C  | u8     | active at start
 |  0x3D  | pad[3] |
 |  0x40  |        | **Total length**
 
