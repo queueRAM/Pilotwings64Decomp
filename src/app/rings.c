@@ -142,7 +142,7 @@ void rings_80323720(Ring* ring) {
         } else if (sp68 > 6.2831855f) {
             sp68 = 6.2831855f;
         }
-        if (ring->unk1A0 == 0x79) {
+        if (ring->axis == 0x79) {
             sp6C = 0.0f - ring->unk1A8;
             sp68 -= ring->unk1A8;
         }
@@ -223,7 +223,7 @@ void ringsLoad(void) {
             if (ring->unk1B7 && (ring->unk149 > 0)) {
                 ring->unk1B9 = 1;
             }
-            ring->unk160 = (u8)rngs->unk34;
+            ring->unk160 = rngs->unk34;
             for (j = 0; j < ring->unk149; j++) {
                 ring->unk14C[j] = rngs->unk20[j];
             }
@@ -250,7 +250,7 @@ void ringsLoad(void) {
             ring->unk194 = rngs->unk64;
             ring->unk198 = rngs->unk68;
             ring->unk19C = rngs->unk6C;
-            ring->unk1A0 = rngs->axis; // unk70
+            ring->axis = rngs->axis;
             ring->unk1BA = rngs->unk73;
             uvSprintf(ring->unk1BB, "%s", rngs->unk74);
             func_80313640(rngs->pos.x, rngs->pos.y, rngs->pos.z, rngs->angle.x * 0.0174533f, rngs->angle.y * 0.0174533f, rngs->angle.z * 0.0174533f,
@@ -323,7 +323,7 @@ void rings_80323DCC(Ring* ring) {
 }
 
 s32 rings_80323FFC(s32 ringIdx) {
-    Unk80364210* temp_s0;
+    s32 pad0;
     s32 i;
     s32 var_a0;
     s16* textStr;
@@ -331,10 +331,9 @@ s32 rings_80323FFC(s32 ringIdx) {
     s32 pad3;
     Ring* ring;
     Ring* childRing;
-    s32 var_s0;
+    s32 pad1;
 
-    temp_s0 = func_8032BE10();
-    temp_s0->unk24 = ringsGetCleared();
+    func_8032BE10()->unk24 = ringsGetCleared();
     func_8032C080(&sp54);
     ring = &gRings[ringIdx];
     ring->unk1B4 = (ring->unk180 > 0.0f) ? 2 : 1;
@@ -364,7 +363,7 @@ s32 rings_80323FFC(s32 ringIdx) {
 
     if (var_a0 != 0) {
         for (i = 0; i < ARRAY_COUNT(D_80371060); i++) {
-            if ((D_80371060[i] != 0xFF) && (ringIdx != D_80371060[i])) {
+            if ((D_80371060[i] != 0xFF) && (D_80371060[i] != ringIdx)) {
                 childRing = &gRings[D_80371060[i]];
                 D_80371060[i] = 0xFF;
                 childRing->unk1B4 = 3;
@@ -387,8 +386,7 @@ s32 rings_80323FFC(s32 ringIdx) {
             hudWarningText(0x29, 3.0f, 8.0f);
         }
     } else {
-        var_s0 = ring->unk147;
-        switch (var_s0) {
+        switch (ring->unk147) {
         case 0:
             hudText_8031D8E0(0xF6, 3.0f, 8.0f); // "Ring cleared"
             if (sp54 > 1) {
@@ -406,8 +404,6 @@ s32 rings_80323FFC(s32 ringIdx) {
             }
             break;
         }
-        // fakematch
-        if (var_s0) { }
     }
     rings_80323DCC(ring);
     if (ring->unk147 == 3) {
@@ -485,7 +481,7 @@ s32 rings_803243D8(Mtx4F* arg0) {
             uvMat4LocalTranslate(&poseMtx, ring->unk18C, 0.0f, 0.0f);
             break;
         }
-        switch (ring->unk1A0) {
+        switch (ring->axis) {
         case 'y':
             uvMat4RotateAxis(&poseMtx, ring->unk1A8, 'y');
             if ((ring->unk1B7 != 0) && (ring->unk147 == 3)) {

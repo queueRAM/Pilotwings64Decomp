@@ -23,7 +23,7 @@ typedef struct {
     u8 unk160;
     u8 pad161[3];
     s32 unk164[5]; // TODO: size
-    u8 unk178;
+    u8 unk178; // is timed ring?
     u8 pad179[3];
     f32 unk17C;
     f32 unk180;
@@ -36,7 +36,7 @@ typedef struct {
     f32 unk194;
     f32 unk198;
     f32 unk19C;
-    u8 unk1A0;
+    u8 axis;
     u8 pad1A1[3];
     f32 unk1A4;
     f32 unk1A8;
