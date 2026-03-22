@@ -234,32 +234,31 @@ typedef struct {
     Vec3F angle;
     s32 unk18;
     u8 pad1C[1];
-    u8 unk1D;
-    u8 unk1E;
-    u8 pad1F[1];
-    s32 unk20[5]; // size unknown
-    u8 unk34;
+    u8 childCount;
+    u8 pad1E[2];
+    s32 childRings[5];
+    u8 timedChildRingCount;
     u8 pad35[3];
-    s32 unk38[5]; // size unknown
-    u8 unk4C;
-    u8 unk4D;
+    s32 timeChildRings[5];
+    u8 points;
+    u8 untimed;
     u8 pad4E[2];
-    f32 unk50;
+    f32 timeRingDuration;
     u8 size;
-    u8 unk55;
+    u8 isActive;
     u8 pad56[2];
-    f32 unk58;
-    f32 unk5C;
-    u8 unk60;
+    f32 rotationRate0;
+    f32 translation;
+    u8 rotAxis0;
     u8 pad61[3];
-    f32 unk64;
-    f32 unk68;
-    f32 unk6C;
+    f32 rotationRateTimedOut1;
+    f32 rotationRateTiming1;
+    f32 rotationRate1;
     u8 axis;
-    u8 unk71;
-    u8 unk72;
-    u8 unk73;
-    char unk74[0x10]; // string name?
+    u8 type2;
+    u8 ringType;
+    u8 unk73; // copied, unused
+    char name[0x10];
 } TaskRNGS; // size = 0x84
 
 typedef struct {
