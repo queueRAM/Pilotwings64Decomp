@@ -322,9 +322,6 @@ void rings_80323DCC(Ring* ring) {
     }
 }
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_80323FFC.s")
-#else
 s32 func_80323FFC(s32 ringIdx) {
     Unk80364210* temp_s0;
     s32 i;
@@ -334,7 +331,7 @@ s32 func_80323FFC(s32 ringIdx) {
     s32 pad3;
     Ring* ring; // sp3C
     Ring* childRing;
-    u8 temp_v0;
+    s32 var_s0;
 
     temp_s0 = func_8032BE10();
     temp_s0->unk24 = func_80324AF4();
@@ -347,8 +344,7 @@ s32 func_80323FFC(s32 ringIdx) {
 
     var_a0 = 0;
     for (i = 0; i < ARRAY_COUNT(D_80371060); i++) {
-        temp_v0 = D_80371060[i];
-        if ((temp_v0 != 0xFF) && (ringIdx == temp_v0)) {
+        if ((D_80371060[i] != 0xFF) && (ringIdx == D_80371060[i])) {
             if ((ring->unk147 != 3) && (ring->unk147 != 2)) {
                 if (ring->unk147 == 1) {
                     hudText_8031D8E0(0x69, 3.0f, 8.0f); // "Bonus ring cleared"
@@ -368,13 +364,9 @@ s32 func_80323FFC(s32 ringIdx) {
 
     if (var_a0 != 0) {
         for (i = 0; i < ARRAY_COUNT(D_80371060); i++) {
-            temp_v0 = D_80371060[i];
-            childRing = &gRings[temp_v0];
-            if ((temp_v0 != 0xFF) && (ringIdx != temp_v0)) {
-                // --------------------------------
-                // issue ordering of this store
+            if ((D_80371060[i] != 0xFF) && (ringIdx != D_80371060[i])) {
+                childRing = &gRings[D_80371060[i]];
                 D_80371060[i] = 0xFF;
-                // --------------------------------
                 childRing->unk1B4 = 3;
                 if (childRing->unk0 != 0xFFFF) {
                     uvDobjModel(childRing->unk0, 0xFFFF);
@@ -395,7 +387,8 @@ s32 func_80323FFC(s32 ringIdx) {
             hudWarningText(0x29, 3.0f, 8.0f);
         }
     } else {
-        switch (ring->unk147) {
+        var_s0 = ring->unk147;
+        switch (var_s0) {
         case 0:
             hudText_8031D8E0(0xF6, 3.0f, 8.0f); // "Ring cleared"
             if (sp54 > 1) {
@@ -413,6 +406,8 @@ s32 func_80323FFC(s32 ringIdx) {
             }
             break;
         }
+        // fakematch
+        if (var_s0) { }
     }
     rings_80323DCC(ring);
     if (ring->unk147 == 3) {
@@ -420,7 +415,6 @@ s32 func_80323FFC(s32 ringIdx) {
     }
     return 0;
 }
-#endif
 
 s32 func_803243D8(Mtx4F* arg0) {
     f32 spFC;
