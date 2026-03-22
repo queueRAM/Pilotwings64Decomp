@@ -36,7 +36,29 @@ void ringsInit(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_80323364.s")
+void rings_80323364(void) {
+    s32 i;
+
+    for (i = 0; i < D_8036DA74; i++) {
+        if (D_80362690->unkC[D_80362690->unk9C].unk8 == D_8036DA70[i].unk18) {
+            D_8036DA78[i].unk1B6 = 1;
+            if (D_8036DA78[i].unk0 != 0xFFFF) {
+                uvDobjSetState(D_8036DA78[i].unk0, 2);
+            }
+            if (D_8036DA78[i].unk1CA != 0xFF) {
+                hud_8031A874(D_8036DA78[i].unk1CA);
+            }
+        } else {
+            D_8036DA78[i].unk1B6 = 0;
+            if (D_8036DA78[i].unk0 != 0xFFFF) {
+                uvDobjClearState(D_8036DA78[i].unk0, 2);
+            }
+            if (D_8036DA78[i].unk1CA != 0xFF) {
+                hud_8031A810(D_8036DA78[i].unk1CA);
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_803234A4.s")
 
@@ -139,7 +161,7 @@ void ringsLoad(void) {
             func_80323720(ring);
         }
     }
-    func_80323364();
+    rings_80323364();
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_80323DCC.s")

@@ -232,7 +232,8 @@ typedef struct {
 typedef struct {
     Vec3F pos;
     Vec3F angle;
-    u8 pad18[5];
+    s32 unk18;
+    u8 pad1C[1];
     u8 unk1D;
     u8 unk1E;
     u8 pad1F[1];

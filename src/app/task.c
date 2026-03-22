@@ -480,7 +480,7 @@ void taskUpdateState(void) {
     u16 veh;
 
     veh = D_80362690->unkC[D_80362690->unk9C].veh;
-    func_80323364();
+    rings_80323364();
     if ((veh != VEHICLE_CANNONBALL) && (veh != VEHICLE_SKY_DIVING)) {
         bonusUpdateState();
     }

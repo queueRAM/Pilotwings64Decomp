@@ -251,6 +251,7 @@ demoButtonRelease   = 0x80323240; // type:func
 demoRandF           = 0x803232A0; // type:func
 
 ringsInit           = 0x803232F0; // type:func
+rings_80323364      = 0x80323364; // type:func
 ringsLoad           = 0x803239B4; // type:func
 ringsDeinit         = 0x80324A34; // type:func
 

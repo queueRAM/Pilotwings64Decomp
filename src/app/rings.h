@@ -43,7 +43,7 @@ typedef struct {
     f32 unk1B0;
     u8 unk1B4;
     u8 unk1B5;
-    u8 pad1B6[1];
+    u8 unk1B6;
     u8 unk1B7;
     u8 unk1B8;
     u8 unk1B9;
@@ -56,7 +56,7 @@ typedef struct {
 extern ParsedRing D_8036DA78[30];
 
 void ringsInit(void);
-void func_80323364(void);
+void rings_80323364(void);
 void ringsLoad(void);
 s32 func_803243D8(Mtx4F*);
 void ringsDeinit(void);
