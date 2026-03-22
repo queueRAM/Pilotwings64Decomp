@@ -147,7 +147,17 @@ void rings_80323720(Ring* ring) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_80323864.s")
+void rings_80323864(Ring* ring) {
+    ring->unk147 = 1;
+    ring->unk180 = ring->unk17C;
+    uvDobjModel(ring->unk0, 0xFFFF);
+    rings_803234A4(ring);
+    if (ring->unk1B7 != 0) {
+        uvDobjProps(ring->unk0, 4, (ring->unk144 == 0) ? 2 : 5, 0);
+        uvDobjProps(ring->unk0, 4, (ring->unk144 == 0) ? 3 : 6, 0);
+    }
+    rings_80323720(ring);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_8032390C.s")
 
