@@ -211,11 +211,11 @@ void ringsLoad(void) {
         }
 
         if (!ring->initialized) {
-            ring->type2 = rngs->type2;
-            if (rngs->ringType > 3) {
-                rngs->ringType = 3;
+            ring->type2 = rngs->ringType0;
+            if (rngs->ringType1 > 3) {
+                rngs->ringType1 = 3;
             }
-            ringType = rngs->ringType;
+            ringType = rngs->ringType1;
             ring->ringType = ring->scoreType = ringType;
             ring->size = rngs->size;
             ring->isActive = rngs->isActive;
@@ -244,13 +244,13 @@ void ringsLoad(void) {
             ring->time1B0 = 1000000.0f;
             ring->rotation1 = 0.0f;
             ring->rotation0 = 0.0f;
-            ring->rotationRate0 = rngs->rotationRate0;
+            ring->rotationRate0 = rngs->rotRate0;
             ring->translation = rngs->translation;
             ring->rotAxis0 = rngs->rotAxis0;
-            ring->rotationRateTimedOut1 = rngs->rotationRateTimedOut1;
-            ring->rotationRateTiming1 = rngs->rotationRateTiming1;
-            ring->rotationRate1 = rngs->rotationRate1;
-            ring->rotAxis1 = rngs->axis;
+            ring->rotationRateTimedOut1 = rngs->rotRateTimedOut1;
+            ring->rotationRateTiming1 = rngs->rotRateTiming1;
+            ring->rotationRate1 = rngs->rotRate1;
+            ring->rotAxis1 = rngs->rotAxis1;
             ring->unk1BA = rngs->unk73;
             uvSprintf(ring->name, "%s", rngs->name);
             func_80313640(rngs->pos.x, rngs->pos.y, rngs->pos.z, rngs->angle.x * 0.0174533f, rngs->angle.y * 0.0174533f, rngs->angle.z * 0.0174533f,

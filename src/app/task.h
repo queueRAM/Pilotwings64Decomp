@@ -247,16 +247,16 @@ typedef struct {
     u8 size;
     u8 isActive;
     u8 pad56[2];
-    f32 rotationRate0;
+    f32 rotRate0;
     f32 translation;
     u8 rotAxis0;
     u8 pad61[3];
-    f32 rotationRateTimedOut1;
-    f32 rotationRateTiming1;
-    f32 rotationRate1;
-    u8 axis;
-    u8 type2;
-    u8 ringType;
+    f32 rotRateTimedOut1;
+    f32 rotRateTiming1;
+    f32 rotRate1;
+    u8 rotAxis1;
+    u8 ringType0;
+    u8 ringType1;
     u8 unk73; // copied, unused
     char name[0x10];
 } TaskRNGS; // size = 0x84
