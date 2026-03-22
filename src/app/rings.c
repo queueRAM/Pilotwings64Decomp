@@ -25,7 +25,7 @@ extern s32 gRingModelIdLookup[/* likely 2 */][4][5];
 // forward declarations
 void rings_803234A4(Ring* ring);
 void rings_80323720(Ring* ring);
-s32 func_80323FFC(s32 ringIdx);
+s32 rings_80323FFC(s32 ringIdx);
 
 void ringsInit(void) {
     Ring* var_v1;
@@ -322,19 +322,19 @@ void rings_80323DCC(Ring* ring) {
     }
 }
 
-s32 func_80323FFC(s32 ringIdx) {
+s32 rings_80323FFC(s32 ringIdx) {
     Unk80364210* temp_s0;
     s32 i;
     s32 var_a0;
     s16* textStr;
     s32 sp54;
     s32 pad3;
-    Ring* ring; // sp3C
+    Ring* ring;
     Ring* childRing;
     s32 var_s0;
 
     temp_s0 = func_8032BE10();
-    temp_s0->unk24 = func_80324AF4();
+    temp_s0->unk24 = ringsGetCleared();
     func_8032C080(&sp54);
     ring = &gRings[ringIdx];
     ring->unk1B4 = (ring->unk180 > 0.0f) ? 2 : 1;
@@ -416,20 +416,20 @@ s32 func_80323FFC(s32 ringIdx) {
     return 0;
 }
 
-s32 func_803243D8(Mtx4F* arg0) {
-    f32 spFC;
-    f32 sp108;
-    f32 sp104;
-    f32 sp100;
+s32 rings_803243D8(Mtx4F* arg0) {
+    f32 sum;
+    f32 vx;
+    f32 vy;
+    f32 vz;
     f32 dx;
     f32 dy;
     f32 dz;
     Ring* ring;
     s32 i;
     f32 var_fv0;
-    Mtx4F spA8;
+    Mtx4F poseMtx;
     s32 ret;
-    Mtx4F sp64;
+    Mtx4F yRotMtx;
 
     ret = 0;
     if (D_80362690->unkA0 == 0) {
@@ -469,45 +469,45 @@ s32 func_803243D8(Mtx4F* arg0) {
                 hud_8031A66C(ring->unk1CA, 0);
             }
         }
-        uvMat4SetIdentity(&spA8);
+        uvMat4SetIdentity(&poseMtx);
         ring->unk1A4 += ring->unk188 * D_8034F854;
         switch (ring->unk190) {
         case 'x':
-            uvMat4RotateAxis(&spA8, ring->unk1A4 * 0.5f, 'x');
-            uvMat4LocalTranslate(&spA8, 0.0f, 0.0f, ring->unk18C);
+            uvMat4RotateAxis(&poseMtx, ring->unk1A4 * 0.5f, 'x');
+            uvMat4LocalTranslate(&poseMtx, 0.0f, 0.0f, ring->unk18C);
             break;
         case 'y':
-            uvMat4RotateAxis(&spA8, ring->unk1A4 * 0.5f, 'y');
-            uvMat4LocalTranslate(&spA8, ring->unk18C, 0.0f, 0.0f);
+            uvMat4RotateAxis(&poseMtx, ring->unk1A4 * 0.5f, 'y');
+            uvMat4LocalTranslate(&poseMtx, ring->unk18C, 0.0f, 0.0f);
             break;
         case 'z':
-            uvMat4RotateAxis(&spA8, ring->unk1A4 * 0.5f, 'z');
-            uvMat4LocalTranslate(&spA8, ring->unk18C, 0.0f, 0.0f);
+            uvMat4RotateAxis(&poseMtx, ring->unk1A4 * 0.5f, 'z');
+            uvMat4LocalTranslate(&poseMtx, ring->unk18C, 0.0f, 0.0f);
             break;
         }
         switch (ring->unk1A0) {
         case 'y':
-            uvMat4RotateAxis(&spA8, ring->unk1A8, 'y');
+            uvMat4RotateAxis(&poseMtx, ring->unk1A8, 'y');
             if ((ring->unk1B7 != 0) && (ring->unk147 == 3)) {
-                uvMat4SetIdentity(&sp64);
-                uvMat4RotateAxis(&sp64, -ring->unk1A8, 'y');
-                uvDobjPosm(ring->unk0, 1, &sp64);
+                uvMat4SetIdentity(&yRotMtx);
+                uvMat4RotateAxis(&yRotMtx, -ring->unk1A8, 'y');
+                uvDobjPosm(ring->unk0, 1, &yRotMtx);
             }
             break;
         case 'x':
-            uvMat4RotateAxis(&spA8, ring->unk1A8, 'x');
+            uvMat4RotateAxis(&poseMtx, ring->unk1A8, 'x');
             break;
         case 'z':
-            uvMat4RotateAxis(&spA8, ring->unk1A8, 'z');
+            uvMat4RotateAxis(&poseMtx, ring->unk1A8, 'z');
             break;
         }
-        uvMat4MulBA(&ring->unk84, &ring->unk4, &spA8);
+        uvMat4MulBA(&ring->unk84, &ring->unk4, &poseMtx);
         uvDobjPosm(ring->unk0, 0, &ring->unk84);
     }
 
-    sp108 = arg0->m[3][0];
-    sp104 = arg0->m[3][1];
-    sp100 = arg0->m[3][2];
+    vx = arg0->m[3][0];
+    vy = arg0->m[3][1];
+    vz = arg0->m[3][2];
     for (i = 0; i < gRingsCount; i++) {
         ring = &gRings[i];
         if ((ring->unk1B4 != 0) || (ring->unk1B6 == 0)) {
@@ -516,12 +516,12 @@ s32 func_803243D8(Mtx4F* arg0) {
         if ((ring->type == 1) && (ring->unk1B7 == 0)) {
             continue;
         }
-        dx = ring->unk84.m[3][0] - sp108;
-        dy = ring->unk84.m[3][1] - sp104;
-        dz = ring->unk84.m[3][2] - sp100;
+        dx = ring->unk84.m[3][0] - vx;
+        dy = ring->unk84.m[3][1] - vy;
+        dz = ring->unk84.m[3][2] - vz;
         if (uvLength3D(dx, dy, dz) < D_8034FAE0[ring->size]) {
-            var_fv0 = (dx * ring->unk84.m[1][0]) + (dy * ring->unk84.m[1][1]) + (ring->unk84.m[1][2] * dz);
-            if (var_fv0 > 0.0f) {
+            sum = (dx * ring->unk84.m[1][0]) + (dy * ring->unk84.m[1][1]) + (ring->unk84.m[1][2] * dz);
+            if (sum > 0.0f) {
                 ring->unk1AC = D_8034F850;
             } else {
                 ring->unk1B0 = D_8034F850;
@@ -529,14 +529,14 @@ s32 func_803243D8(Mtx4F* arg0) {
             switch (ring->unk144) {
             case 0:
                 if (ring->unk1AC < ring->unk1B0) {
-                    ret = func_80323FFC(i);
+                    ret = rings_80323FFC(i);
                 } else if ((D_8034F850 == ring->unk1B0) && (ring->unk146 != 2)) {
                     func_8033F758(0x31, 1.0f, 1.0f, 0.0f);
                 }
                 break;
             case 1:
                 if ((ring->unk1AC != 1000000.0f) && (ring->unk1B0 != 1000000.0f)) {
-                    ret = func_80323FFC(i);
+                    ret = rings_80323FFC(i);
                 }
                 break;
             }
@@ -575,18 +575,18 @@ void ringsDeinit(void) {
     }
 }
 
-u8 func_80324AF4(void) {
+u8 ringsGetCleared(void) {
     u8 ret;
     s32 i;
 
     ret = 0;
     for (i = 0; i < gRingsCount; i++) {
-        ret += (gRings[i].unk1B4 != 0) ? 1 : 0;
+        ret += (gRings[i].unk1B4) ? 1 : 0;
     }
     return ret;
 }
 
-s16 func_80324B60(f32* arg0) {
+s16 ringsGetPoints(f32* arg0) {
     Unk80345C80* temp_v0;
     s16 ret;
     s32 idx;

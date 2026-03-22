@@ -363,7 +363,7 @@ s32 taskFrameUpdate(Mtx4F* arg0, f32 arg1) {
             func_8033FCD0(D_80362690->unkC[0].veh);
         }
     }
-    if (func_803243D8(arg0) == 1) {
+    if (rings_803243D8(arg0) == 1) {
         D_803507A4 = 1;
         sp18 = 1;
         D_80362690->unkC[0].veh = VEHICLE_ROCKET_BELT;

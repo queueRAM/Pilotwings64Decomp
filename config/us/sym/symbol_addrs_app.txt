@@ -258,7 +258,11 @@ rings_80323864      = 0x80323864; // type:func
 rings_8032390C      = 0x8032390C; // type:func
 ringsLoad           = 0x803239B4; // type:func
 rings_80323DCC      = 0x80323DCC; // type:func
+rings_80323FFC      = 0x80323FFC; // type:func
+rings_803243D8      = 0x803243D8; // type:func
 ringsDeinit         = 0x80324A34; // type:func
+ringsGetCleared     = 0x80324AF4; // type:func
+ringsGetPoints      = 0x80324B60; // type:func
 
 testGetPointCount         = 0x8032BE1C; // type:func
 levelGetTotalPoints       = 0x8032BD20; // type:func

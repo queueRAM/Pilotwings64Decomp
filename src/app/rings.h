@@ -59,9 +59,9 @@ extern Ring gRings[30];
 void ringsInit(void);
 void rings_80323364(void);
 void ringsLoad(void);
-s32 func_803243D8(Mtx4F*);
+s32 rings_803243D8(Mtx4F*);
 void ringsDeinit(void);
-u8 func_80324AF4(void);
-s16 func_80324B60(f32*);
+u8 ringsGetCleared(void);
+s16 ringsGetPoints(f32*);
 
 #endif // APP_RINGS_H
