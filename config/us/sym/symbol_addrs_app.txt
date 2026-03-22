@@ -667,6 +667,10 @@ gHudState                 = 0x8036C5A8; // size:0xC7C
 
 gDemoUserFileIdx          = 0x8036D330;
 
+gRefRNGS                  = 0x8036DA70;
+gRingsCount               = 0x8036DA74;
+gRings                    = 0x8036DA78; // size:0x35E8
+
 sTextName                 = 0x80377F10; // size:0x6E0
 sTextData                 = 0x803785F0; // size:0x6DC
 sTextDataCount            = 0x80378CCC;

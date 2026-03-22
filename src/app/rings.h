@@ -51,9 +51,9 @@ typedef struct {
     char unk1BB[0xF]; // TODO: size?
     u8 unk1CA;
     u8 pad1CB[1];
-} ParsedRing; // size = 0x1CC
+} Ring; // size = 0x1CC
 
-extern ParsedRing D_8036DA78[30];
+extern Ring gRings[30];
 
 void ringsInit(void);
 void rings_80323364(void);

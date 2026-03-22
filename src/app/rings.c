@@ -7,20 +7,20 @@
 #include "rings.h"
 #include "task.h"
 
-void func_803234A4(ParsedRing*);
-void func_80323720(ParsedRing*);
+void func_803234A4(Ring*);
+void func_80323720(Ring*);
 
-extern TaskRNGS* D_8036DA70;
-extern u8 D_8036DA74; // count of rings stored in D_8036DA78
-// extern ParsedRing D_8036DA78[30]; // stored here, exported in header
+extern TaskRNGS* gRefRNGS;
+extern u8 gRingsCount; // count of rings stored in gRings
+// extern Ring gRings[30]; // stored here, exported in header
 extern u8 D_80371060[5];
 
 void ringsInit(void) {
-    ParsedRing* var_v1;
+    Ring* var_v1;
     s32 i;
 
-    for (i = 0; i < ARRAY_COUNT(D_8036DA78); i++) {
-        var_v1 = &D_8036DA78[i];
+    for (i = 0; i < ARRAY_COUNT(gRings); i++) {
+        var_v1 = &gRings[i];
         var_v1->unk0 = 0xFFFF;
         var_v1->unk1B4 = 0;
         var_v1->unk1B7 = 0;
@@ -39,22 +39,22 @@ void ringsInit(void) {
 void rings_80323364(void) {
     s32 i;
 
-    for (i = 0; i < D_8036DA74; i++) {
-        if (D_80362690->unkC[D_80362690->unk9C].unk8 == D_8036DA70[i].unk18) {
-            D_8036DA78[i].unk1B6 = 1;
-            if (D_8036DA78[i].unk0 != 0xFFFF) {
-                uvDobjSetState(D_8036DA78[i].unk0, 2);
+    for (i = 0; i < gRingsCount; i++) {
+        if (D_80362690->unkC[D_80362690->unk9C].unk8 == gRefRNGS[i].unk18) {
+            gRings[i].unk1B6 = 1;
+            if (gRings[i].unk0 != 0xFFFF) {
+                uvDobjSetState(gRings[i].unk0, 2);
             }
-            if (D_8036DA78[i].unk1CA != 0xFF) {
-                hud_8031A874(D_8036DA78[i].unk1CA);
+            if (gRings[i].unk1CA != 0xFF) {
+                hud_8031A874(gRings[i].unk1CA);
             }
         } else {
-            D_8036DA78[i].unk1B6 = 0;
-            if (D_8036DA78[i].unk0 != 0xFFFF) {
-                uvDobjClearState(D_8036DA78[i].unk0, 2);
+            gRings[i].unk1B6 = 0;
+            if (gRings[i].unk0 != 0xFFFF) {
+                uvDobjClearState(gRings[i].unk0, 2);
             }
-            if (D_8036DA78[i].unk1CA != 0xFF) {
-                hud_8031A810(D_8036DA78[i].unk1CA);
+            if (gRings[i].unk1CA != 0xFF) {
+                hud_8031A810(gRings[i].unk1CA);
             }
         }
     }
@@ -69,7 +69,7 @@ void rings_80323364(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rings/func_8032390C.s")
 
 void ringsLoad(void) {
-    ParsedRing* ring;
+    Ring* ring;
     TaskRNGS* rngs;
     s32 var_a0;
     s32 i;
@@ -80,21 +80,21 @@ void ringsLoad(void) {
         return;
     }
 
-    D_8036DA74 = taskGetRNGS(&D_8036DA70);
-    if (D_8036DA74 > ARRAY_COUNT(D_8036DA78)) {
-        _uvDebugPrintf("rings : too many rings defined in level [%d]\n", D_8036DA74);
-        D_8036DA74 = 0;
+    gRingsCount = taskGetRNGS(&gRefRNGS);
+    if (gRingsCount > ARRAY_COUNT(gRings)) {
+        _uvDebugPrintf("rings : too many rings defined in level [%d]\n", gRingsCount);
+        gRingsCount = 0;
         return;
     }
 
-    if (D_8036DA74 == 0) {
+    if (gRingsCount == 0) {
         return;
     }
 
     uvLevelAppend(0xE);
-    for (i = 0; i < D_8036DA74; i++) {
-        rngs = &D_8036DA70[i];
-        ring = &D_8036DA78[i];
+    for (i = 0; i < gRingsCount; i++) {
+        rngs = &gRefRNGS[i];
+        ring = &gRings[i];
         if (ring->unk1B4 != 0) {
             continue;
         }
@@ -177,8 +177,8 @@ u8 func_80324AF4(void) {
     s32 i;
 
     ret = 0;
-    for (i = 0; i < D_8036DA74; i++) {
-        ret += (D_8036DA78[i].unk1B4 != 0) ? 1 : 0;
+    for (i = 0; i < gRingsCount; i++) {
+        ret += (gRings[i].unk1B4 != 0) ? 1 : 0;
     }
     return ret;
 }
