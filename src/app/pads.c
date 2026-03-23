@@ -288,7 +288,27 @@ s32 func_80317764(void) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/pads/padsDeinit.s")
+void padsDeinit(void) {
+    CannonTarget* canTarg;
+    s32 i;
+
+    for (i = 0; i < gPotLandPadCount; i++) {
+        if (D_8036C4F8[i] != 0xFFFF) {
+            uvDobjModel(D_8036C4F8[i], 0xFFFF);
+            D_8036C4F8[i] = 0xFFFF;
+        }
+    }
+    
+    D_8034F900 = 0;
+    for (i = 0; i < gCannonTargetCount; i++) {
+        canTarg= &gCannonTargets[i];
+        if (canTarg->objId != 0xFFFF) {
+            hud_8031A8E0(canTarg->unk2);
+            uvDobjModel(canTarg->objId, 0xFFFF);
+            canTarg->objId = 0xFFFF;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/pads/func_80317854.s")
 
