@@ -343,11 +343,11 @@ elaborating more details on the landing pad to use for a given test.
 |  0x08  | LPAD[]  | array of entries
 
 | Entry  | Type   | Description
-|--------|--------|------------
+|--------|--------|--------------------------------------------
 |  0x00  | Vec3F  | position
 |  0x0C  | f32    | heading
 |  0x10  | s32    | TBD (always 0x0)
-|  0x14  | u8     | TBD (always 0x0)
+|  0x14  | u8     | landing pad type (0, 1, 2). updated from `UWPT::LPAD`
 |  0x15  | pad[3] |
 | *0x18* |        | **Total length**
 

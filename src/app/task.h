@@ -103,10 +103,8 @@ typedef struct {
 
 typedef struct {
     Vec3F pos;
-    f32 unkC;
-    f32 unk10;
-    f32 unk14;
-    u8 unk18;
+    Vec3F angle;
+    u8 type;
     u8 pad19[3];
 } TaskCNTG; // size = 0x1C
 
@@ -188,7 +186,7 @@ typedef struct {
     Vec3F unk1C;
     u8 unk28;
     u8 pad29[3];
-    u8 unk2C;
+    u8 type;
     u8 pad2D[3];
 } TaskLPAD; // size = 0x30
 

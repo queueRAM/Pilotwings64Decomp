@@ -438,7 +438,7 @@ struct LevelLPAD {
     Vec3F pos;
     f32 unkC;
     s32 unk10;
-    u8 unk14;
+    u8 type [[comment("type of landing pad model. updated from UWPT::LPAD")]];
     padding[3];
 } [[static]]; // size = 0x18
 

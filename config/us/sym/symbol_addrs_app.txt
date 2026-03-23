@@ -672,6 +672,7 @@ gTakeoffPads              = 0x8036C2C0; // size:0x24
 gLandingPads              = 0x8036C2E8; // size:0x150
 gLandingStrips            = 0x8036C438; // size:0x78
 gCannonTargets            = 0x8036C4B0; // size:0x48
+gLandingPadObjIds         = 0x8036C4F8; // size:0x28
 
 gRadarThermCirc           = 0x8036C520; // size:0x88
 gHudState                 = 0x8036C5A8; // size:0xC7C

@@ -11,18 +11,14 @@ typedef struct {
     u8 unk14;
     u8 unk15;
     u8 unk16;
-    u8 unk17;
+    u8 type;
 } LandingPad; // size = 0x18
 
 typedef struct {
-    Vec3F pos;
-    Vec3F unkC;
-    f32 unk18;
-    f32 unk1C;
-    f32 unk20;
-    f32 dx;
-    f32 dy;
-    f32 dz;
+    Vec3F pos0;
+    Vec3F pos1;
+    Vec3F normal;
+    Vec3F midpoint;
     f32 unk30;
     f32 unk34;
     u8 unk38;
