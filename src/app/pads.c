@@ -48,6 +48,9 @@ extern u16 D_8036C4F8[];
 s8 D_8034F900 = 0;
 u16 D_8034F904[] = { 0x0102, 0x0103, 0x0104, 0x0000, 0x0000, 0x0000 };
 
+// forward declarations
+f32 func_80317C2C(f32, f32, f32, LandingStrip*);
+
 void padsInit(void) {
     Unk8036C168* var_a0;
     LandingPad* pad;
@@ -298,10 +301,10 @@ void padsDeinit(void) {
             D_8036C4F8[i] = 0xFFFF;
         }
     }
-    
+
     D_8034F900 = 0;
     for (i = 0; i < gCannonTargetCount; i++) {
-        canTarg= &gCannonTargets[i];
+        canTarg = &gCannonTargets[i];
         if (canTarg->objId != 0xFFFF) {
             hud_8031A8E0(canTarg->unk2);
             uvDobjModel(canTarg->objId, 0xFFFF);
@@ -326,7 +329,51 @@ void func_80317854(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/pads/func_80317978.s")
+f32 func_80317978(f32 x, f32 y, f32 arg2, u8* arg3) {
+    LandingPad* lpad;
+    LandingStrip* lstrip;
+    f32 dx;
+    f32 dist;
+    f32 dy;
+    f32 minDist;
+    s32 i;
+
+    minDist = 1000000.0f;
+
+    for (i = 0; i < gLandingPadCount; i++) {
+        lpad = &gLandingPads[i];
+        if (lpad->unk14 != 0) {
+            dx = lpad->pos.x - x;
+            dy = lpad->pos.y - y;
+            dist = uvSqrtF(SQ(dx) + SQ(dy));
+            if (dist < minDist) {
+                minDist = dist;
+            }
+            if (dist < lpad->unk10) {
+                *arg3 = i + 1;
+            }
+        }
+    }
+
+    for (i = 0; i < gLandingStripCount; i++) {
+        lstrip = &gLandingStrips[i];
+        if (lstrip->unk38 != 0) {
+            dx = lstrip->dx - x;
+            dy = lstrip->dy - y;
+            dist = uvSqrtF((dx * dx) + (dy * dy));
+            if (dist <= lstrip->unk30) {
+                dist = func_80317C2C(x, y, arg2, lstrip);
+                if (dist < (lstrip->unk34 * 0.5f)) {
+                    *arg3 = 0xFF;
+                }
+            }
+            if (dist < minDist) {
+                minDist = dist;
+            }
+        }
+    }
+    return minDist;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/pads/func_80317B50.s")
 
