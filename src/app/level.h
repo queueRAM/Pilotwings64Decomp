@@ -66,7 +66,7 @@ typedef struct {
     s32 unk34;
     s32 unk38;
     u8 unk3C;
-    s8 unk3D;
+    u8 unk3D;
     u8 pad3E;
     u8 pad3F;
     Unk80364210_Unk0 unk40[MAX_CLASSES];

@@ -5,6 +5,7 @@
 #include <uv_texture.h>
 #include <uv_vector.h>
 #include "code_9A960.h"
+#include "code_B2900.h"
 #include "hud.h"
 #include "level.h"
 #include "macros.h"
@@ -247,7 +248,41 @@ void padsLoad(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/pads/padsFrameUpdate.s")
+void padsFrameUpdate(Mtx4F* arg0) {
+    TakeoffPad* var_s0;
+    Unk80364210* temp_v0;
+    f32 x;
+    f32 y;
+    f32 z;
+    f32 dist;
+    f32 minDist;
+    f32 dx, dy, dz;
+    s32 i;
+
+    minDist = 1000000.0f;
+    x = arg0->m[3][0];
+    y = arg0->m[3][1];
+    z = arg0->m[3][2];
+    temp_v0 = func_8032BE10();
+    temp_v0->unk3D = 0;
+    if ((gLandingPadCount > 0) || (gLandingStripCount > 0)) {
+        temp_v0->unk8 = func_80317978(x, y, z, &temp_v0->unk3D);
+    }
+
+    for (i = 0; i < gTakeoffPadCount; i++) {
+        var_s0 = &gTakeoffPads[i];
+        dx = var_s0->pos.x - x;
+        dy = var_s0->pos.y - y;
+        dz = var_s0->pos.z - z;
+        dist = uvLength3D(dx, dy, dz);
+        if (dist < minDist) {
+            minDist = dist;
+        }
+    }
+    if (func_8032BE10()->unk4 < minDist) {
+        func_8032BE10()->unk4 = minDist;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/pads/func_80317764.s")
 
