@@ -21,7 +21,7 @@ typedef struct {
     Vec3F midpoint;
     f32 landingDistance;
     f32 landingAlignment;
-    u8 unk38;
+    u8 canLand;
     u8 unk39;
     u8 pad3A[2];
 } LandingStrip; // size = 0x3C

@@ -64,7 +64,7 @@ void padsInit(void) {
     }
     for (i = 0; i < ARRAY_COUNT(gLandingStrips); i++) {
         gLandingStrips[i].unk39 = 0;
-        gLandingStrips[i].unk38 = 0;
+        gLandingStrips[i].canLand = 0;
     }
     gLandingStripCount = 0;
     gLandingPadCount = 0;
@@ -151,9 +151,9 @@ void padsLoad(void) {
     for (i = 0; i < gLandingStripCount; i++) {
         lstp = &gRefLSTP[i];
         landstrip = &gLandingStrips[i];
-        landstrip->unk38 = lstp->unk1C;
-        uvVec3Copy(&landstrip->pos0, &lstp->pos);
-        uvVec3Copy(&landstrip->pos1, &lstp->unkC);
+        landstrip->canLand = lstp->canLand;
+        uvVec3Copy(&landstrip->pos0, &lstp->posUL);
+        uvVec3Copy(&landstrip->pos1, &lstp->posLR);
         landstrip->midpoint.x = (landstrip->pos0.x + landstrip->pos1.x) * 0.5f;
         landstrip->midpoint.y = (landstrip->pos0.y + landstrip->pos1.y) * 0.5f;
         landstrip->midpoint.z = (landstrip->pos0.z + landstrip->pos1.z) * 0.5f;
@@ -170,7 +170,7 @@ void padsLoad(void) {
     }
 
     gTakeoffPadCount = taskGetTPAD(&gRefTPAD);
-    if (gTakeoffPadCount > 3) {
+    if (gTakeoffPadCount > ARRAY_COUNT(gTakeoffPads)) {
         _uvDebugPrintf("pads : too many takeoff pads defined in level [%d]\n", gTakeoffPadCount);
         gTakeoffPadCount = 0;
         return;
@@ -210,7 +210,7 @@ void padsLoad(void) {
 
     if (D_80362690->unkC[D_80362690->unk9C].unk7B == 0) {
         gCannonTargetCount = taskGetCNTG(&gRefCNTG);
-        if (gCannonTargetCount > 1) {
+        if (gCannonTargetCount > ARRAY_COUNT(gCannonTargets)) {
             _uvDebugPrintf("pads : too many cannon targets defined in level [%d]\n", gCannonTargetCount);
             gCannonTargetCount = 0;
             return;
@@ -357,7 +357,7 @@ f32 padsLandedPadStrip(f32 x, f32 y, f32 z, u8* outIdx) {
 
     for (i = 0; i < gLandingStripCount; i++) {
         lstrip = &gLandingStrips[i];
-        if (lstrip->unk38 != 0) {
+        if (lstrip->canLand != 0) {
             dx = lstrip->midpoint.x - x;
             dy = lstrip->midpoint.y - y;
             dist = uvSqrtF(SQ(dx) + SQ(dy));

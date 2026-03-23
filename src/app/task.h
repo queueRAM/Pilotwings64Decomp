@@ -181,20 +181,19 @@ typedef struct {
 
 typedef struct {
     Vec3F pos;
-    Vec3F angle;
+    Vec3F unkC;
     u8 pad18[4];
     Vec3F unk1C;
-    u8 unk28;
-    u8 pad29[3];
+    u8 pad28[4];
     u8 type;
     u8 pad2D[3];
 } TaskLPAD; // size = 0x30
 
 typedef struct {
-    Vec3F pos;
-    Vec3F unkC;
+    Vec3F posUL; // upper-left position
+    Vec3F posLR; // lower-right position
     u8 pad10[0x4];
-    u8 unk1C;
+    u8 canLand;
     u8 pad1D[3];
     f32 landingAlignment;
 } TaskLSTP; // size = 0x24
