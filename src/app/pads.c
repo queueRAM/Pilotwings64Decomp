@@ -310,7 +310,21 @@ void padsDeinit(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/pads/func_80317854.s")
+void func_80317854(void) {
+    s32 i;
+    Mtx4F sp5C;
+
+    for (i = 0; i < gPotLandPadCount; i++) {
+        if (gRefPotLPAD[i].unk10 != 0) {
+            uvDobjModel(D_8036C4F8[i], 0xD4);
+        }
+        uvMat4SetIdentity(&sp5C);
+        func_80313640(gRefPotLPAD[i].pos.x, gRefPotLPAD[i].pos.y, gRefPotLPAD[i].pos.z, gRefPotLPAD[i].unkC, 0.0f, 0.0f, &sp5C);
+        uvDobjPosm(D_8036C4F8[i], 0, &sp5C);
+        gRefPotLPAD[i].unk10 = 0;
+        D_8034F900 = 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/pads/func_80317978.s")
 
