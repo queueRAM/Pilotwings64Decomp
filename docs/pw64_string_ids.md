@@ -29,33 +29,50 @@ ID    | String
  0x28 | "Jump to the goal area"
  0x29 | "to go"
  0x2c | "Congratulations!!!"
- 0x2f | <Empty>
+ 0x2f | <empty>
  0x30 | "Jump to the goal area"
  0x31 | "Sky Dive 1"
  0x32 | "Touch & Go 2"
- 0x33 | <Empty>
+ 0x33 | <empty>
  0x34 | "There's no test for Birdman"
  0x35 | "LARK"
  0x36 | "Meca Hawk Again"
  0x37 | "Albatross Nest"
  0x38 | "Jump to the goal area"
  0x39 | "Sky Dive 2"
- 0x3a | <Empty>
+ 0x3a | <empty>
  0x3b | "You can take photos with"
- 0x3c | <Empty>
+ 0x3c | <empty>
  0x3d | "Time ring start"
- 0x3e | <Empty>
+ 0x3e | <empty>
  0x3f | "Sky Dive 2"
  0x40 | "Missi the Monster"
- 0x46 | "<< Thermal >>" (HangGlider)
+ 0x41 | "Level 3"
+ 0x42 | "Failed"
+ 0x43 | <empty>
+ 0x44 | "When landing, press B to flap"
+ 0x45 | "<< Radar >>
+ 0x46 | "<< Thermal >>"
  0x47 | "and try again."
+ 0x48 | <empty>
+ 0x49 | "Fountain"
  0x4a | "Out of fuel!"
  0x4b | "Stereo"
+ 0x4c | <empty>
+ 0x4d | "When you land, you can take"
  0x4e | Option
  0x4f | "2 pts deducted"
+ 0x50 | <empty>
  0x51 | "File 2"
- 0x52 | "Second shot" (Canon)
+ 0x52 | "Second Shot"
+ 0x53 | <empty>
  0x54 | "Erase file"
+ 0x55 | <empty>
+ 0x56 | <empty>
+ 0x57 | "<< Rings >>"
+ 0x58 | <empty>
+ 0x59 | "<< Radar >>
+ 0x5a | <empty>
  0x5b | "Next"
  0x60 | "Replay"
  0x64 | "Vol. 1"
@@ -118,6 +135,7 @@ ID    | String
 0x15d | "Goal!"
 0x166 | "Another test"
 0x16a | "Start !"
+0x16c | "Balloon has split"
 0x16f | "Bull's eye!" (Canon)
 0x170 | "SELECT PILOT"
 0x174 | "Meca Hawk destroyed"

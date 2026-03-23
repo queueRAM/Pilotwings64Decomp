@@ -508,23 +508,24 @@ pop the balloon land and land on the designated landing area
 `BALS` are the balloons to pop or balls to push during rocket belt tests.
 
 | Offset | Type   | Description
-|--------|--------|------------
-|  0x00  | Vec3F  | position
-|  0x0C  | ??     | TBD
+|--------|--------|--------------------------------
+|  0x00  | Vec3F  | position vector
+|  0x0C  | Vec3F  | likely rotation vector (unused)
 |  0x18  | s32    | TBD
 |  0x1C  | f32    | TBD
-|  0x20  | u8     | type
-|  0x21  | u8     | TBD
+|  0x20  | u8     | type (0 = orange, 1 = green, 2 = blue)
+|  0x21  | u8     | will split into 5 balls when popped
 |  0x22  | pad[2] |
 |  0x24  | f32    | TBD
 |  0x28  | f32    | TBD
 |  0x2C  | f32    | TBD
 |  0x30  | f32    | scale
-|  0x34  | s32    | TBD
-|  0x38  | s32    | TBD
-|  0x3C  | f32    | TBD
-|  0x40  | f32    | TBD
-|  0x44  | pad[4] |
+|  0x34  | s32    | points for popping
+|  0x38  | s32    | copied, but unused
+|  0x3C  | f32    | drag coefficient
+|  0x40  | f32    | gravity
+|  0x44  | u8     | TBD
+|  0x45  | pad[3] |
 |  0x48  | f32    | TBD
 |  0x4C  | f32    | TBD
 |  0x50  | f32    | TBD
@@ -532,7 +533,7 @@ pop the balloon land and land on the designated landing area
 |  0x58  | s32    | TBD
 |  0x5C  | f32    | TBD
 |  0x60  | f32    | TBD
-|  0x64  | f32    | TBD
+|  0x64  | f32    | gravity for the balls split
 |  0x68  |        | **Total length**
 
 #### UPWT::BTGT / ball target

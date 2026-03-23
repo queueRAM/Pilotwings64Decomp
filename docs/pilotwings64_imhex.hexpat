@@ -565,23 +565,30 @@ struct UPWT_COMM {
     u8 countOBSV;
 } [[static]]; // size = 0x42C (padded to 0x430 in FS)
 
+enum BallType : u8 {
+    Orange = 0x00,
+    Green  = 0x01,
+    Blue   = 0x02,
+};
+
 struct TaskBALS {
-    Vec3F pos;
-    u8 padC[0x18 - 0xC];
+    Vec3F pos [[comment("position vector")]];
+    Vec3F rot [[comment("rotation vector (unused)")]];
     s32 unk18;
     f32 unk1C;
-    u8 type;
-    u8 unk21;
-    u8 pad22[2];
+    BallType type;
+    u8 willSplit [[comment("splits into 5 balls when popped")]];
+    padding[2];
     f32 unk24;
     f32 unk28;
     f32 unk2C;
     f32 scale;
-    s32 unk34;
-    s32 unk38;
-    f32 unk3C;
-    f32 unk40;
-    u8 pad44[4];
+    s32 points;
+    s32 unk38 [[comment("copied, but unused")]];
+    f32 dragCoef;
+    f32 gravity;
+    u8 unk44;
+    padding[3];
     f32 unk48;
     f32 unk4C;
     f32 unk50;
@@ -589,7 +596,7 @@ struct TaskBALS {
     s32 unk58;
     f32 unk5C;
     f32 unk60;
-    f32 unk64;
+    f32 splitBallGravity [[comment("gravity assigned to balls split off")]];
 } [[static]]; // size = 0x68
 
 struct TaskBTGT {

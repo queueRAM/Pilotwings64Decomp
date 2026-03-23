@@ -18,10 +18,10 @@ balls_802CB6D4      = 0x802CB6D4; // type:func
 balls_802CB9B4      = 0x802CB9B4; // type:func
 ballsCollision      = 0x802CBC9C; // type:func
 ballsPopped         = 0x802CBE94; // type:func
-ballsGet_802CC064   = 0x802CC064; // type:func
-balls_802CC0D4      = 0x802CC0D4; // type:func
+ballsGetPoints      = 0x802CC064; // type:func
+ballsObjIdExists    = 0x802CC0D4; // type:func
 ballsGetCount       = 0x802CC13C; // type:func
-ballsGet_802CC15C   = 0x802CC15C; // type:func
+ballsGetAllPopped   = 0x802CC15C; // type:func
 
 // birdman0
 bird_802CC1B0       = 0x802CC1B0; // type:func

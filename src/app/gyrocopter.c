@@ -1630,7 +1630,7 @@ void func_8030877C(GyrocopterData* arg0) {
 
     for (i = 0; i < sp247; i++) {
         temp_s3 = &D_80369178.unk4[i];
-        if ((temp_s3->unk4 != 2) || ((temp_s3->unk4 == 2) && (balls_802CC0D4(temp_s3->surfaceId) == 0))) {
+        if ((temp_s3->unk4 != 2) || ((temp_s3->unk4 == 2) && !ballsObjIdExists(temp_s3->surfaceId))) {
             func_802DC814(&D_80369178.unk4[i], (Vec3F*)arg0->unk10.m[3]);
         }
         uvVec3Copy(&sp2E4[i], &temp_s3->unk28);

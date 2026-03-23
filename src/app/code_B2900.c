@@ -176,7 +176,7 @@ s32 func_8032B560(Unk80364210* arg0, u8 classIdx, u8 testIdx, u8 vehIdx) {
     }
     temp_v1->unk16 = 0;
     if (arg0->unk0 & 0x200) {
-        temp_v1->unk16 = ballsGet_802CC064();
+        temp_v1->unk16 = ballsGetPoints();
     }
     temp_v1->unkC = 0;
     if ((arg0->unk0 & 0x800) && sp74->unkFC.unk0 > 0) {
@@ -312,7 +312,7 @@ STATIC_FUNC u8 func_8032BF54(void) {
     if (taskGet_80346364() != 2) {
         return 0;
     }
-    return (ringsGetCleared() != taskGetRNGS((TaskRNGS**)&tmp) || targets_803448F4() != taskGetTARG((TaskTARG**)&tmp) || ballsGet_802CC15C() == 0 ||
+    return (ringsGetCleared() != taskGetRNGS((TaskRNGS**)&tmp) || targets_803448F4() != taskGetTARG((TaskTARG**)&tmp) || ballsGetAllPopped() == 0 ||
             hoverPadGetCount() != taskGetHPAD((TaskHPAD**)&tmp) || falco_802E57C4() != D_8035A5F0 || ballTgtCount_5B() != taskGetBTGT((TaskBTGT**)&tmp) ||
             func_802FB5A0() != taskGetHOPD((TaskHOPD**)&tmp));
 }

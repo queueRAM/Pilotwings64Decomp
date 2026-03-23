@@ -69,17 +69,18 @@ typedef struct {
     s32 unk18;
     f32 unk1C;
     u8 type;
-    u8 unk21;
+    u8 willSplit;
     u8 pad22[2];
     f32 unk24;
     f32 unk28;
     f32 unk2C;
     f32 scale;
-    s32 unk34;
-    s32 unk38;
-    f32 unk3C;
-    f32 unk40;
-    u8 pad44[4];
+    s32 points;
+    s32 unk38; // copied, but unused
+    f32 dragCoef;
+    f32 gravity;
+    u8 unk44;
+    u8 pad45[3];
     f32 unk48;
     f32 unk4C;
     f32 unk50;
@@ -87,7 +88,7 @@ typedef struct {
     s32 unk58;
     f32 unk5C;
     f32 unk60;
-    f32 unk64;
+    f32 splitBallGravity;
 } TaskBALS; // size = 0x68
 
 typedef struct {
