@@ -284,7 +284,9 @@ void padsFrameUpdate(Mtx4F* arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/pads/func_80317764.s")
+s32 func_80317764(void) {
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/pads/padsDeinit.s")
 
