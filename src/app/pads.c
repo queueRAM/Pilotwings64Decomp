@@ -375,6 +375,30 @@ f32 func_80317978(f32 x, f32 y, f32 arg2, u8* arg3) {
     return minDist;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/pads/func_80317B50.s")
+f32 func_80317B50(f32 arg0, f32 arg1, f32 arg2, u16 arg3) {
+    Mtx4F sp48;
+    Vec3F sp3C;
+    Vec3F sp30;
+    s32 i;
+    s32 pad;
+
+    for (i = 0; i < gCannonTargetCount; i++) {
+        if (arg3 == gCannonTargets[i].objId) {
+            break;
+        }
+    }
+    if (i == gCannonTargetCount) {
+        return 1000.0f;
+    } 
+
+    sp30.x = arg0;
+    sp30.y = arg1;
+    sp30.z = arg2;
+    uvMat4InvertTranslationRotation(&sp48, &gCannonTargets[i].unk4);
+    uvMat4LocalToWorld(&sp48, &sp3C, &sp30);
+    sp3C.y = 0.0f;
+    sp3C.z -= gCannonTargets[i].unk44;
+    return uvVec3Len(&sp3C);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/pads/func_80317C2C.s")
