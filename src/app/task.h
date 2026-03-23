@@ -196,7 +196,7 @@ typedef struct {
     u8 pad10[0x4];
     u8 unk1C;
     u8 pad1D[3];
-    f32 unk20;
+    f32 landingAlignment;
 } TaskLSTP; // size = 0x24
 
 typedef struct {

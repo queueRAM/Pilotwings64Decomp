@@ -49,7 +49,7 @@ s8 gPadsInitialized = FALSE;
 u16 gLandingPadModels[] = { MODEL_LANDING_PAD_1, MODEL_LANDING_PAD_2, MODEL_LANDING_PAD_3, 0x0000, 0x0000, 0x0000 };
 
 // forward declarations
-f32 func_80317C2C(f32, f32, f32, LandingStrip*);
+f32 padsStripAlignment(f32, f32, f32, LandingStrip*);
 
 void padsInit(void) {
     Unk8036C168* var_a0;
@@ -59,7 +59,7 @@ void padsInit(void) {
 
     for (i = 0; i < ARRAY_COUNT(gLandingPads); i++) {
         gLandingPads[i].unk15 = 0;
-        gLandingPads[i].unk14 = 0;
+        gLandingPads[i].isUsed = FALSE;
         D_8036C168[i].unk10 = 0;
     }
     for (i = 0; i < ARRAY_COUNT(gLandingStrips); i++) {
@@ -124,7 +124,7 @@ void padsLoad(void) {
             length = landPad->pos.y - gRefPotLPAD[j].pos.y;
             height = landPad->pos.z - gRefPotLPAD[j].pos.z;
             diag = uvLength3D(width, length, height);
-            if ((diag < minVal) && (gRefPotLPAD[j].unk10 == 0)) {
+            if ((diag < minVal) && !gRefPotLPAD[j].isUsed) {
                 minVal = diag;
                 minIdx = j;
             }
@@ -133,9 +133,9 @@ void padsLoad(void) {
             gLandingPads[i].pos.x = gRefPotLPAD[minIdx].pos.x;
             gLandingPads[i].pos.y = gRefPotLPAD[minIdx].pos.y;
             gLandingPads[i].pos.z = gRefPotLPAD[minIdx].pos.z;
-            gRefPotLPAD[minIdx].unk10 = 1;
-            gLandingPads[i].unk14 = gRefPotLPAD[minIdx].unk10;
-            gLandingPads[i].unk10 = 30.0f;
+            gRefPotLPAD[minIdx].isUsed = TRUE;
+            gLandingPads[i].isUsed = gRefPotLPAD[minIdx].isUsed;
+            gLandingPads[i].landingDistance = 30.0f;
             gLandingPads[i].unk16 = minIdx;
             gRefPotLPAD[minIdx].type = gLandingPads[i].type;
         }
@@ -164,8 +164,8 @@ void padsLoad(void) {
         landstrip->normal.x = width / diag;
         landstrip->normal.y = length / diag;
         landstrip->normal.z = height / diag;
-        landstrip->unk30 = 0.5f * diag;
-        landstrip->unk34 = lstp->unk20;
+        landstrip->landingDistance = 0.5f * diag;
+        landstrip->landingAlignment = lstp->landingAlignment;
         landstrip->unk39 = 1;
     }
 
@@ -182,7 +182,7 @@ void padsLoad(void) {
 
     for (i = 0; i < gPotLandPadCount; i++) {
         plpad = &gRefPotLPAD[i];
-        if (plpad->unk10) {
+        if (plpad->isUsed) {
             uvLevelAppend(0x17);
             break;
         }
@@ -191,7 +191,7 @@ void padsLoad(void) {
     for (i = 0; i < gPotLandPadCount; i++) {
         uvMat4SetIdentity(&pose);
         gLandingPadObjIds[i] = uvDobjAllocIdx();
-        if (gRefPotLPAD[i].unk10 != 0) {
+        if (gRefPotLPAD[i].isUsed) {
             uvDobjModel(gLandingPadObjIds[i], gLandingPadModels[gRefPotLPAD[i].type]);
         } else {
             uvDobjModel(gLandingPadObjIds[i], MODEL_LANDING_PAD_NOTARGET);
@@ -251,7 +251,7 @@ void padsLoad(void) {
     }
 }
 
-void padsFrameUpdate(Mtx4F* arg0) {
+void padsFrameUpdate(Mtx4F* pose) {
     TakeoffPad* var_s0;
     Unk80364210* temp_v0;
     f32 x;
@@ -263,13 +263,13 @@ void padsFrameUpdate(Mtx4F* arg0) {
     s32 i;
 
     minDist = 1000000.0f;
-    x = arg0->m[3][0];
-    y = arg0->m[3][1];
-    z = arg0->m[3][2];
+    x = pose->m[3][0];
+    y = pose->m[3][1];
+    z = pose->m[3][2];
     temp_v0 = func_8032BE10();
     temp_v0->unk3D = 0;
     if ((gLandingPadCount > 0) || (gLandingStripCount > 0)) {
-        temp_v0->unk8 = func_80317978(x, y, z, &temp_v0->unk3D);
+        temp_v0->unk8 = padsLandedPadStrip(x, y, z, &temp_v0->unk3D);
     }
 
     for (i = 0; i < gTakeoffPadCount; i++) {
@@ -287,7 +287,7 @@ void padsFrameUpdate(Mtx4F* arg0) {
     }
 }
 
-s32 func_80317764(void) {
+s32 padsUnused(void) {
     return 1;
 }
 
@@ -313,23 +313,23 @@ void padsDeinit(void) {
     }
 }
 
-void func_80317854(void) {
+void padsInitLandingPads(void) {
     s32 i;
-    Mtx4F sp5C;
+    Mtx4F pose;
 
     for (i = 0; i < gPotLandPadCount; i++) {
-        if (gRefPotLPAD[i].unk10 != 0) {
+        if (gRefPotLPAD[i].isUsed) {
             uvDobjModel(gLandingPadObjIds[i], MODEL_LANDING_PAD_NOTARGET);
         }
-        uvMat4SetIdentity(&sp5C);
-        func_80313640(gRefPotLPAD[i].pos.x, gRefPotLPAD[i].pos.y, gRefPotLPAD[i].pos.z, gRefPotLPAD[i].angle, 0.0f, 0.0f, &sp5C);
-        uvDobjPosm(gLandingPadObjIds[i], 0, &sp5C);
-        gRefPotLPAD[i].unk10 = 0;
+        uvMat4SetIdentity(&pose);
+        func_80313640(gRefPotLPAD[i].pos.x, gRefPotLPAD[i].pos.y, gRefPotLPAD[i].pos.z, gRefPotLPAD[i].angle, 0.0f, 0.0f, &pose);
+        uvDobjPosm(gLandingPadObjIds[i], 0, &pose);
+        gRefPotLPAD[i].isUsed = FALSE;
         gPadsInitialized = TRUE;
     }
 }
 
-f32 func_80317978(f32 x, f32 y, f32 arg2, u8* arg3) {
+f32 padsLandedPadStrip(f32 x, f32 y, f32 z, u8* outIdx) {
     LandingPad* landPad;
     LandingStrip* lstrip;
     f32 dx;
@@ -342,15 +342,15 @@ f32 func_80317978(f32 x, f32 y, f32 arg2, u8* arg3) {
 
     for (i = 0; i < gLandingPadCount; i++) {
         landPad = &gLandingPads[i];
-        if (landPad->unk14 != 0) {
+        if (landPad->isUsed) {
             dx = landPad->pos.x - x;
             dy = landPad->pos.y - y;
             dist = uvSqrtF(SQ(dx) + SQ(dy));
             if (dist < minDist) {
                 minDist = dist;
             }
-            if (dist < landPad->unk10) {
-                *arg3 = i + 1;
+            if (dist < landPad->landingDistance) {
+                *outIdx = i + 1;
             }
         }
     }
@@ -360,11 +360,11 @@ f32 func_80317978(f32 x, f32 y, f32 arg2, u8* arg3) {
         if (lstrip->unk38 != 0) {
             dx = lstrip->midpoint.x - x;
             dy = lstrip->midpoint.y - y;
-            dist = uvSqrtF((dx * dx) + (dy * dy));
-            if (dist <= lstrip->unk30) {
-                dist = func_80317C2C(x, y, arg2, lstrip);
-                if (dist < (lstrip->unk34 * 0.5f)) {
-                    *arg3 = 0xFF;
+            dist = uvSqrtF(SQ(dx) + SQ(dy));
+            if (dist <= lstrip->landingDistance) {
+                dist = padsStripAlignment(x, y, z, lstrip);
+                if (dist < (lstrip->landingAlignment * 0.5f)) {
+                    *outIdx = 0xFF;
                 }
             }
             if (dist < minDist) {
@@ -372,10 +372,11 @@ f32 func_80317978(f32 x, f32 y, f32 arg2, u8* arg3) {
             }
         }
     }
+
     return minDist;
 }
 
-f32 func_80317B50(f32 x, f32 y, f32 z, u16 targetObjId) {
+f32 padsCannonTgtDist(f32 x, f32 y, f32 z, u16 targetObjId) {
     Mtx4F sp48;
     Vec3F sp3C;
     Vec3F sp30;
@@ -401,7 +402,7 @@ f32 func_80317B50(f32 x, f32 y, f32 z, u16 targetObjId) {
     return uvVec3Len(&sp3C);
 }
 
-f32 func_80317C2C(f32 x, f32 y, f32 z, LandingStrip* lstrip) {
+f32 padsStripAlignment(f32 x, f32 y, f32 z, LandingStrip* lstrip) {
     f32 nx, ny, nz;
     f32 dx, dy, dz;
     f32 tx, ty, tz;

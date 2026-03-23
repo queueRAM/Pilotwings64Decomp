@@ -676,7 +676,7 @@ void hud_8031A378(void) {
     }
 
     for (i = 0; i < gLandingPadCount; i++) {
-        if (gLandingPads[i].unk14 == 0) {
+        if (gLandingPads[i].isUsed == 0) {
             continue;
         }
         radar->goals[idx].x = gLandingPads[i].pos.x;

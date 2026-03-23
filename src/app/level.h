@@ -53,7 +53,7 @@ typedef struct {
     s32 unk0;
     f32 unk4;
     f32 unk8;
-    f32 unkC;
+    f32 landedDist;
     f32 unk10;
     f32 unk14;
     f32 unk18;
@@ -108,7 +108,7 @@ typedef struct {
 typedef struct {
     Vec3F pos;
     f32 angle;
-    s32 unk10;
+    s32 isUsed;
     u8 type;
     u8 pad15[3];
 } LevelLPAD; // size = 0x18
