@@ -6,8 +6,8 @@
 #include <uv_memory.h>
 #include "ball_target.h"
 #include "balls.h"
+#include "boats.h"
 #include "bonus.h"
-#include "code_58B00.h"
 #include "code_6ECD0.h"
 #include "code_722D0.h"
 #include "code_72910.h"
@@ -102,7 +102,7 @@ void taskInit(void) {
     func_8034C224();
     func_80315550();
     func_802F1FA0();
-    func_802D20F0();
+    boatsInit();
     planesInit();
     func_8034C848();
 
@@ -270,7 +270,7 @@ s32 taskInitTest(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* terraId,
     func_80315550();
     func_8034C224();
     func_802F1FA0();
-    func_802D20F0();
+    boatsInit();
     planesInit();
     func_8034C848();
     D_8035079C = 1;

@@ -4,7 +4,7 @@
 #include <uv_event.h>
 #include <uv_math.h>
 #include "kernel/code_1050.h"
-#include "code_58B00.h"
+#include "boats.h"
 #include "code_5A6A0.h"
 #include "code_61A60.h"
 #include "code_6ECD0.h"
@@ -296,14 +296,14 @@ void envSound_802E2A00(s32 eventType, void* arg1, s32 eventData) {
                         uvEmitterSetMatrix(emitter->objId, &sp130);
                         break;
                     case 21:
-                        if (func_802D2018(0, &spF0) != 0) {
+                        if (boatsGetPose(0, &spF0) != 0) {
                             uvEmitterSetMatrix(emitter->objId, &spF0);
                         } else {
                             uvEmitterRelease(emitter->objId);
                         }
                         break;
                     case 22:
-                        if (func_802D2018(1, &spAC) != 0) {
+                        if (boatsGetPose(1, &spAC) != 0) {
                             uvEmitterSetMatrix(emitter->objId, &spAC);
                         } else {
                             uvEmitterRelease(emitter->objId);

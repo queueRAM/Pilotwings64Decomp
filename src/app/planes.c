@@ -115,7 +115,6 @@ STATIC_FUNC void planesUpdate(s32 idx) {
     sPlanes[idx].unk18 = sp6C;
 }
 
-// get x,y,z at index idx
 void planesGetPos(s32 planeIdx, Vec3F* vec) {
     vec->x = sPlanes[planeIdx].pos.x;
     vec->y = sPlanes[planeIdx].pos.y;
@@ -166,67 +165,67 @@ STATIC_FUNC s32 planes_803204B0(s32 arg0, s32 arg1, s32 arg2) {
 
 void planesLoad(void) {
     s32 i;
-    Vec3F sp108;
-    LevelESND sp90;
+    Vec3F pos;
+    LevelESND envSnd;
 
     for (i = 0; i < ARRAY_COUNT(sPlanes); i++) {
         sPlanes[i].objId = uvDobjAllocIdx();
         if (sPlanes[i].objId != 0xFFFF) {
             switch (i) {
             case 0:
-                sp90.sndId = 0x17;
+                envSnd.sndId = 0x17;
                 uvDobjModel(sPlanes[i].objId, MODEL_BIG_WHITE_RED_PLANE);
                 uvDobjState(sPlanes[i].objId, 2);
                 sPlanes[i].spathId = spathLoadFile(0x6D);
                 sPlanes[i].unk10 = 120.0f;
                 sPlanes[i].unk30 = 150.0f;
                 sPlanes[i].unk14 = 42.43231f;
-                sp108.x = -1225.0f;
-                sp108.y = 454.0f;
-                sp108.z = 161.4f;
+                pos.x = -1225.0f;
+                pos.y = 454.0f;
+                pos.z = 161.4f;
                 break;
             case 1:
-                sp90.sndId = 0x18;
+                envSnd.sndId = 0x18;
                 uvDobjModel(sPlanes[i].objId, MODEL_YELLOW_WHITE_PLANE);
                 uvDobjState(sPlanes[i].objId, 2);
                 sPlanes[i].spathId = spathLoadFile(0x6E);
                 sPlanes[i].unk10 = 120.0f;
                 sPlanes[i].unk30 = 150.0f;
                 sPlanes[i].unk14 = 33.757683f;
-                sp108.x = -211.85f;
-                sp108.y = 884.5f;
-                sp108.z = 224.3f;
+                pos.x = -211.85f;
+                pos.y = 884.5f;
+                pos.z = 224.3f;
                 break;
             }
-            uvMat4SetIdentity(&sp90.unk0);
-            sp90.unk5C = 1.0f;
-            sp90.unk60 = 1.0f;
-            sp90.unk64 = 0;
-            sp90.unk68 = 0.0f;
-            sp90.unk6C = 200.0f;
-            sp90.unk74 = 8;
-            sp90.unk70 = 0;
-            sp90.unk0.m[3][0] = sp108.x;
-            sp90.unk0.m[3][1] = sp108.y;
-            sp90.unk0.m[3][2] = sp108.z;
-            envSoundLoad(&sp90);
-            sPlanes[i].unk8 = func_80321210(planes_803204B0, planes_8032040C, sp108, 4000.0f, 0.0f, i);
+            uvMat4SetIdentity(&envSnd.unk0);
+            envSnd.unk5C = 1.0f;
+            envSnd.unk60 = 1.0f;
+            envSnd.unk64 = 0;
+            envSnd.unk68 = 0.0f;
+            envSnd.unk6C = 200.0f;
+            envSnd.unk74 = 8;
+            envSnd.unk70 = 0;
+            envSnd.unk0.m[3][0] = pos.x;
+            envSnd.unk0.m[3][1] = pos.y;
+            envSnd.unk0.m[3][2] = pos.z;
+            envSoundLoad(&envSnd);
+            sPlanes[i].unk8 = func_80321210(planes_803204B0, planes_8032040C, pos, 4000.0f, 0.0f, i);
             planesUpdate(i);
         }
     }
 }
 
 void planesDeinit(void) {
-    Plane* var_s0;
+    Plane* plane;
     s32 i;
 
     for (i = 0; i < ARRAY_COUNT(sPlanes); i++) {
-        var_s0 = &sPlanes[i];
-        if (var_s0->objId != 0xFFFF) {
-            uvDobjModel(var_s0->objId, 0xFFFF);
-            var_s0->objId = 0xFFFF;
-            func_803212DC(var_s0->unk8);
-            spathFree(var_s0->spathId);
+        plane = &sPlanes[i];
+        if (plane->objId != 0xFFFF) {
+            uvDobjModel(plane->objId, 0xFFFF);
+            plane->objId = 0xFFFF;
+            func_803212DC(plane->unk8);
+            spathFree(plane->spathId);
         }
     }
 }
@@ -241,12 +240,12 @@ void planesInit(void) {
 
 void planesGetObjData(s32 planeIdx, s32* objId, f32* arg2, Vec3F* vec) {
     Mtx4F pose;
-    Plane* temp_v0;
+    Plane* plane;
 
-    temp_v0 = &sPlanes[planeIdx];
-    if (temp_v0->objId != 0xFFFF) {
-        *objId = temp_v0->objId;
-        *arg2 = temp_v0->unkC / temp_v0->unk10;
+    plane = &sPlanes[planeIdx];
+    if (plane->objId != 0xFFFF) {
+        *objId = plane->objId;
+        *arg2 = plane->unkC / plane->unk10;
         uvDobjGetPosm(*objId, 0, &pose);
         vec->x = pose.m[3][0];
         vec->y = pose.m[3][1];
@@ -261,25 +260,25 @@ void planesGetObjData(s32 planeIdx, s32* objId, f32* arg2, Vec3F* vec) {
 }
 
 void planesUpdateInterval(s32 planeIdx, f32 interval) {
-    Plane* temp_s0;
+    Plane* plane;
     f32 temp_fs1;
 
-    temp_s0 = &sPlanes[planeIdx];
-    if (temp_s0->objId != 0xFFFF) {
-        uvDobjState(temp_s0->objId, 2);
-        temp_fs1 = temp_s0->unk10 * interval;
+    plane = &sPlanes[planeIdx];
+    if (plane->objId != 0xFFFF) {
+        uvDobjState(plane->objId, 2);
+        temp_fs1 = plane->unk10 * interval;
 
         // this looks like for loop pattern with f32, but doesn't match
-        temp_s0->unkC = 0.0f;
+        plane->unkC = 0.0f;
         sPlaneInitialized[planeIdx] = FALSE;
         if (temp_fs1 > 0.0f) {
             do {
                 planesUpdate(planeIdx);
-                temp_s0->unkC += 1.0f;
-            } while (temp_s0->unkC < temp_fs1);
+                plane->unkC += 1.0f;
+            } while (plane->unkC < temp_fs1);
         }
 
-        temp_s0->unkC = temp_fs1;
+        plane->unkC = temp_fs1;
         planesUpdate(planeIdx);
     }
 }

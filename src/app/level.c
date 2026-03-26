@@ -4,7 +4,7 @@
 #include <uv_memory.h>
 #include <uv_texture.h>
 #include <uv_util.h>
-#include "code_58B00.h"
+#include "boats.h"
 #include "code_6ECD0.h"
 #include "code_722D0.h"
 #include "code_72B70.h"
@@ -90,12 +90,12 @@ void level_8030B868(void) {
         switch (gLevelCurMap) {
         case MAP_HOLIDAY_ISLAND:
             func_802F1AE8();
-            func_802D1CE8();
+            boatsLoadHoliday();
             break;
         case MAP_CRESCENT_ISLAND:
             func_8034BEDC();
             func_802EB0D4();
-            func_802D1A74();
+            boatsLoadCrescent();
             func_802F15C8();
             break;
         case MAP_LITTLE_STATES:
@@ -124,12 +124,12 @@ void level_8030B964(void) {
         switch (gLevelCurMap) {
         case MAP_HOLIDAY_ISLAND:
             func_802F1FF0();
-            func_802D206C();
+            boatsDeinit();
             break;
         case MAP_CRESCENT_ISLAND:
             func_8034C0BC();
             func_802EB270();
-            func_802D206C();
+            boatsDeinit();
             func_802F1FF0();
             break;
         case MAP_LITTLE_STATES:
