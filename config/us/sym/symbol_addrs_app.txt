@@ -221,6 +221,16 @@ skydivingLand       = 0x80331794; // type:func
 skydivingGetPoints  = 0x80331A78; // type:func
 skydivingBelow      = 0x80331B88; // type:func
 
+planesUpdate         = 0x8031FF30; // type:func
+planesGetPos         = 0x803203D0; // type:func
+planes_8032040C      = 0x8032040C; // type:func
+planes_803204B0      = 0x803204B0; // type:func
+planesLoad           = 0x80320534; // type:func
+planesDeinit         = 0x8032079C; // type:func
+planesInit           = 0x80320810; // type:func
+planesGetObjData     = 0x80320848; // type:func
+planesUpdateInterval = 0x80320900; // type:func
+
 demoAttInit         = 0x803209F0; // type:func
 demoAttLoadPos      = 0x80320A14; // type:func
 demoAttGetMtxRT     = 0x80320BF4; // type:func
@@ -307,11 +317,11 @@ snow_update         = 0x8033FFB4; // type:func
 spathCreate         = 0x80340610; // type:func
 spathLoadFile       = 0x80340668; // type:func
 spathFree           = 0x80340800; // type:func
-spathUpdate2        = 0x80340868; // type:func
+spathScaleUpdate    = 0x80340868; // type:func
 spathUpdate         = 0x80340B74; // type:func
 spath_80340CB8      = 0x80340CB8; // type:func
 spath_80340E7C      = 0x80340E7C; // type:func
-spath_80340FEC      = 0x80340FEC; // type:func
+spathInterpolate    = 0x80340FEC; // type:func
 
 splash_80341460     = 0x80341460; // type:func
 splash_803415C8     = 0x803415C8; // type:func
@@ -608,6 +618,8 @@ sShutterBugTestItems      = 0x8034FC10; // size:0x10
 sSkyDivingItems           = 0x8034FC20; // size:0x8
 sOtherItems               = 0x8034FC28; // size:0xC
 
+sSpathCoef                = 0x80350650; // size:0x40
+
 gTaskClassU8              = 0x80350790;
 gTaskVehicleU8            = 0x80350794;
 gTaskTestU8               = 0x80350798;
@@ -695,11 +707,16 @@ gLandingPadObjIds         = 0x8036C4F8; // size:0x28
 gRadarThermCirc           = 0x8036C520; // size:0x88
 gHudState                 = 0x8036C5A8; // size:0xC7C
 
+sPlanes                   = 0x8036D2B0; // size:0x68
+sPlaneInitialized         = 0x8036D318; // size:0x8
+
 gDemoUserFileIdx          = 0x8036D330;
 
 gRefRNGS                  = 0x8036DA70;
 gRingsCount               = 0x8036DA74;
 gRings                    = 0x8036DA78; // size:0x35E8
+
+sSpathData                = 0x80373F10; // size:0x2DA8
 
 sTextName                 = 0x80377F10; // size:0x6E0
 sTextData                 = 0x803785F0; // size:0x6DC

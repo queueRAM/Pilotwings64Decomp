@@ -17,13 +17,13 @@
 #include "code_78620.h"
 #include "code_9A960.h"
 #include "code_9C080.h"
-#include "code_A7460.h"
 #include "code_D1ED0.h"
 #include "code_D2D50.h"
 #include "code_D3810.h"
 #include "demo.h"
 #include "file_menu.h"
 #include "hud.h"
+#include "planes.h"
 #include "proxanim.h"
 #include "shadow.h"
 #include "snd.h"
@@ -350,7 +350,7 @@ void func_803386A4(s32 arg0, s32* arg1, s32* arg2, f32* arg3, f32* arg4, s32* ar
             func_802D2124(i, &sp90, &sp70, &sp84);
             break;
         case 8:
-            func_80320848(i, &sp90, &sp70, &sp84);
+            planesGetObjData(i, &sp90, &sp70, &sp84);
             break;
         case 9:
             func_802F205C(i, &sp90, &sp70, &sp84);
@@ -919,7 +919,7 @@ void func_8033A244(s32 arg0, Unk80373060* arg1) {
                 func_802F2110(arg1->unk64[i], arg1->unk4C[i]);
                 break;
             case 8:
-                func_80320900(arg1->unk64[i], arg1->unk4C[i]);
+                planesUpdateInterval(arg1->unk64[i], arg1->unk4C[i]);
                 break;
             }
         }
