@@ -14,7 +14,6 @@
 #include "code_9A960.h"
 #include "code_B3A70.h"
 #include "code_D1ED0.h"
-#include "code_D2D50.h"
 #include "demo.h"
 #include "environment.h"
 #include "fdr.h"
@@ -31,6 +30,7 @@
 #include "snow.h"
 #include "task.h"
 #include "text_data.h"
+#include "whale.h"
 #include "wind_objects.h"
 
 s32 sShutterBugTestItems[] = { 0xDC, 0x14E, 0x12F, 0x1D };
@@ -250,7 +250,7 @@ void func_8032CC44(Unk80362690* arg0) {
     sp2C = &arg0->unkC[arg0->unk9C];
     sp1B = 1;
     func_8032D51C(0);
-    func_8034C25C();
+    whaleStateSave();
     level_8030BA60();
     if (arg0->unkA0 == 0) {
         sp1B = 0;
@@ -338,7 +338,7 @@ void func_8032CC44(Unk80362690* arg0) {
     taskLoad();
     cannon_802D8A40(0, (CannonballData*)sp2C->vehicleData);
     hudInit();
-    func_8034C298();
+    whaleStateRestore();
 }
 
 s32 func_8032CF28(Unk80362690* arg0) {
