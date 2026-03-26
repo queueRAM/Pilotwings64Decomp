@@ -8,12 +8,12 @@
 #include "code_61A60.h"
 #include "code_6ECD0.h"
 #include "code_9A960.h"
-#include "code_A7460.h"
 #include "camera.h"
 #include "demo.h"
 #include "env_sound.h"
 #include "environment.h"
 #include "game.h"
+#include "planes.h"
 #include "shadow.h"
 #include "snd.h"
 
@@ -282,14 +282,14 @@ void envSound_802E2A00(s32 eventType, void* arg1, s32 eventData) {
                         uvEmitterSetMatrix(emitter->objId, &sp1C8);
                         break;
                     case 23:
-                        func_803203D0(0, &sp1BC);
+                        planesGetPos(0, &sp1BC);
                         sp17C.m[3][0] = sp1BC.x;
                         sp17C.m[3][1] = sp1BC.y;
                         sp17C.m[3][2] = sp1BC.z;
                         uvEmitterSetMatrix(emitter->objId, &sp17C);
                         break;
                     case 24:
-                        func_803203D0(1, &sp170);
+                        planesGetPos(1, &sp170);
                         sp130.m[3][0] = sp170.x;
                         sp130.m[3][1] = sp170.y;
                         sp130.m[3][2] = sp170.z;

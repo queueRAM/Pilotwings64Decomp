@@ -24,7 +24,7 @@ STATIC_FUNC void func_80336140(void) {
             if (D_80371DB0[i].unk4 >= 100.0f) {
                 D_80371DB0[i].unk4 -= 100.0f;
             }
-            spathUpdate2(&sp64, D_80371E58, D_80371DB0[i].unk4, 1.0f, 512.0f);
+            spathScaleUpdate(&sp64, D_80371E58, D_80371DB0[i].unk4, 1.0f, 512.0f);
             uvDobjPosm(D_80371DB0[i].objId, 0, &sp64);
         }
     }

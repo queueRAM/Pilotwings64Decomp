@@ -30,11 +30,11 @@ typedef struct Unk8034F970 {
 Unk8034F970* D_8034F970 = NULL;
 
 // .bss
-extern s32 D_8036D320;
-extern s32 D_8036D324;
-extern f32 D_8036D328;
-extern f32 D_8036D32C;
-extern s32 gDemoUserFileIdx;
+s32 D_8036D320;
+s32 D_8036D324;
+f32 D_8036D328;
+f32 D_8036D32C;
+s32 gDemoUserFileIdx;
 
 void demoAttInit(s32 userFileIdx) {
     gDemoUserFileIdx = userFileIdx;

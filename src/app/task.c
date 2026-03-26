@@ -16,7 +16,6 @@
 #include "code_82520.h"
 #include "code_9A960.h"
 #include "code_9C080.h"
-#include "code_A7460.h"
 #include "code_B2900.h"
 #include "code_D2D50.h"
 #include "code_D3810.h"
@@ -28,6 +27,7 @@
 #include "level.h"
 #include "mem.h"
 #include "pads.h"
+#include "planes.h"
 #include "rings.h"
 #include "shadow.h"
 #include "skydiving.h"
@@ -103,7 +103,7 @@ void taskInit(void) {
     func_80315550();
     func_802F1FA0();
     func_802D20F0();
-    func_80320810();
+    planesInit();
     func_8034C848();
 
     for (classIdx = 0; classIdx < MAX_CLASSES; classIdx++) {
@@ -271,7 +271,7 @@ s32 taskInitTest(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* terraId,
     func_8034C224();
     func_802F1FA0();
     func_802D20F0();
-    func_80320810();
+    planesInit();
     func_8034C848();
     D_8035079C = 1;
     D_803507A0 = 0;

@@ -434,7 +434,7 @@ segments:
       - [0x9F2D0, c, app/hud]
       - [0xA6000, c, app/code_A6000]
       - [0xA64C0, c, app/code_A64C0]
-      - [0xA7460, c, app/code_A7460]
+      - [0xA7460, c, app/planes]
       - [0xA7F20, c, app/demo_attitude]
       - [0xA8630, c, app/proxanim]
       - [0xA8C30, c, app/code_A8C30]
@@ -597,7 +597,7 @@ segments:
       - [0xDBC60, .rodata, app/hud]
       - [0xDBE30, .rodata, app/code_A6000]
       - [0xDBE60, .rodata, app/code_A64C0]
-      - [0xDBFD0, .rodata, app/code_A7460]
+      - [0xDBFD0, .rodata, app/planes]
       - [0xDC000, .rodata, app/demo_attitude]
       - [0xDC060, .rodata, app/proxanim]
       - [0xDC250, .rodata, app/code_A8C30]
@@ -690,8 +690,8 @@ segments:
       - { type: .bss, vram: 0x8036C150, name: app/pads }
       - { type: .bss, vram: 0x8036C520, name: app/hud }
       - { type: bss, vram: 0x8036D230, name: app/code_A64C0 }
-      - { type: bss, vram: 0x8036D2B0, name: app/code_A7460 }
-      - { type: bss, vram: 0x8036D330, name: app/demo_attitude }
+      - { type: .bss, vram: 0x8036D2B0, name: app/planes }
+      - { type: .bss, vram: 0x8036D320, name: app/demo_attitude }
       - { type: bss, vram: 0x8036D340, name: app/proxanim }
       - { type: bss, vram: 0x8036D8E0, name: app/code_A8C30 }
       - { type: bss, vram: 0x8036DA30, name: app/demo }
@@ -709,7 +709,7 @@ segments:
       - { type: .bss, vram: 0x80373060, name: app/snap }
       - { type: bss, vram: 0x80373E20, name: app/snd }
       - { type: bss, vram: 0x80373EF0, name: app/snow }
-      - { type: bss, vram: 0x80373F10, name: app/spath }
+      - { type: .bss, vram: 0x80373F10, name: app/spath }
       - { type: bss, vram: 0x80376CC0, name: app/splash }
       - { type: .bss, vram: 0x80377F10, name: app/text_data }
       - { type: .bss, vram: 0x80378CE0, name: app/code_C9B60 }

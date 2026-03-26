@@ -5,7 +5,9 @@
 #include <uv_vector.h>
 
 typedef struct {
-    u8 pad0[0x14];
+    u8 pad0[0x8];
+    u8 unk8;
+    u8 pad9[0x14 - 0x9];
     s32 unk14;
     Vec3F unk18;
 } Unk803216A4; // size = unknown, >= 0x18

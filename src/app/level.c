@@ -11,13 +11,13 @@
 #include "code_78620.h"
 #include "code_9C080.h"
 #include "code_9CF50.h"
-#include "code_A7460.h"
 #include "code_BD670.h"
 #include "code_D2D50.h"
 #include "code_D3810.h"
 #include "env_sound.h"
 #include "environment.h"
 #include "level.h"
+#include "planes.h"
 #include "shadow.h"
 #include "task.h"
 #include "text_data.h"
@@ -103,7 +103,7 @@ void level_8030B868(void) {
             func_802E79F0();
             func_803151AC();
             func_802F182C();
-            func_80320534();
+            planesLoad();
             break;
         case MAP_EVER_FROST_ISLAND:
             func_80315D68();
@@ -137,7 +137,7 @@ void level_8030B964(void) {
             func_802E7C28();
             func_8031531C();
             func_802F1FF0();
-            func_8032079C();
+            planesDeinit();
             break;
         case MAP_EVER_FROST_ISLAND:
             func_80315E3C();
