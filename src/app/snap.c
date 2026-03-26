@@ -10,7 +10,7 @@
 #include <uv_memory.h>
 #include <uv_texture.h>
 #include <uv_vector.h>
-#include "code_58B00.h"
+#include "boats.h"
 #include "code_6ECD0.h"
 #include "code_722D0.h"
 #include "game.h"
@@ -347,7 +347,7 @@ void func_803386A4(s32 arg0, s32* arg1, s32* arg2, f32* arg3, f32* arg4, s32* ar
             func_8034CC10(i, &sp90, &sp70, &sp84);
             break;
         case 10:
-            func_802D2124(i, &sp90, &sp70, &sp84);
+            boatsGetObjData(i, &sp90, &sp70, &sp84);
             break;
         case 8:
             planesGetObjData(i, &sp90, &sp70, &sp84);
@@ -913,7 +913,7 @@ void func_8033A244(s32 arg0, Unk80373060* arg1) {
                 func_8034CCC4(arg1->unk64[i], arg1->unk4C[i]);
                 break;
             case 10:
-                func_802D21D8(arg1->unk64[i], arg1->unk4C[i]);
+                boatsUpdateInterval(arg1->unk64[i], arg1->unk4C[i]);
                 break;
             case 9:
                 func_802F2110(arg1->unk64[i], arg1->unk4C[i]);
