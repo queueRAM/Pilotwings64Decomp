@@ -30,7 +30,20 @@ void func_802F10F0(s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_78620/func_802F1D3C.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_78620/func_802F1FA0.s")
+#else
+// works when D_80368010 is mapped in .bss
+void func_802F1FA0(void) {
+    Unk80368010* glider;
+    s32 i;
+    for (i = 0; i < ARRAY_COUNT(D_80368010); i++) {
+        glider = &D_80368010[i];
+        glider->pathAngle = 0.0f;
+        glider->objId = 0xFFFF;
+    }
+}
+#endif
 
 void func_802F1FF0(void) {
     Unk80368010* glider;
