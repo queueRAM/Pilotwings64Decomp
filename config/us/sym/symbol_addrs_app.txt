@@ -304,6 +304,12 @@ resultGenTipText    = 0x8032EF10; // type:func
 
 shadowInit          = 0x80335B94; // type:func
 
+skiLiftUpdate       = 0x80336140; // type:func
+skiLift_80336248    = 0x80336248; // type:func
+skiLift_803362EC    = 0x803362EC; // type:func
+skiLiftLoad         = 0x803363E0; // type:func
+skiLiftDeinit       = 0x8033651C; // type:func
+
 smokeInit           = 0x803365A0; // type:func
 smokeCreate         = 0x80336934; // type:func
 smokeProps          = 0x80336A04; // type:func

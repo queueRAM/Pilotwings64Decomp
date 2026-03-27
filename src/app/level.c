@@ -11,12 +11,12 @@
 #include "code_78620.h"
 #include "code_9C080.h"
 #include "code_9CF50.h"
-#include "code_BD670.h"
 #include "env_sound.h"
 #include "environment.h"
 #include "level.h"
 #include "planes.h"
 #include "shadow.h"
+#include "ski_lift.h"
 #include "task.h"
 #include "text_data.h"
 #include "toys.h"
@@ -108,7 +108,7 @@ void level_8030B868(void) {
         case MAP_EVER_FROST_ISLAND:
             func_80315D68();
             func_80315734();
-            func_803363E0();
+            skiLiftLoad();
             func_802F1D3C();
             whalePodLoad();
             break;
@@ -142,7 +142,7 @@ void level_8030B964(void) {
         case MAP_EVER_FROST_ISLAND:
             func_80315E3C();
             func_8031596C();
-            func_8033651C();
+            skiLiftDeinit();
             func_802F1FF0();
             whalePodDeinit();
             break;
