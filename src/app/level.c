@@ -12,7 +12,6 @@
 #include "code_9C080.h"
 #include "code_9CF50.h"
 #include "code_BD670.h"
-#include "code_D3810.h"
 #include "env_sound.h"
 #include "environment.h"
 #include "level.h"
@@ -22,6 +21,7 @@
 #include "text_data.h"
 #include "toys.h"
 #include "whale.h"
+#include "whale_pod.h"
 
 s32 D_8034F400 = 0;
 s32 D_8034F404 = 0;
@@ -110,7 +110,7 @@ void level_8030B868(void) {
             func_80315734();
             func_803363E0();
             func_802F1D3C();
-            func_8034C964();
+            whalePodLoad();
             break;
         }
     }
@@ -144,7 +144,7 @@ void level_8030B964(void) {
             func_8031596C();
             func_8033651C();
             func_802F1FF0();
-            func_8034CB80();
+            whalePodDeinit();
             break;
         }
     }
