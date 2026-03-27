@@ -31,7 +31,26 @@ void func_802F10F0(s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_78620/func_802F1FF0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_78620/func_802F205C.s")
+void func_802F205C(s32 idx, s32* objId, f32* interval, Vec3F* pos) {
+    Mtx4F pose;
+    Unk80368010* glider;
+
+    glider = &D_80368010[idx];
+    if (glider->unk0 != 0xFFFF) {
+        *objId = glider->unk0;
+        *interval = glider->unk4 / 360.0f;
+        uvDobjGetPosm(*objId, 0, &pose);
+        pos->x = pose.m[3][0];
+        pos->y = pose.m[3][1];
+        pos->z = pose.m[3][2];
+    } else {
+        *objId = 0xFFFF;
+        *interval = 0.0f;
+        pos->x = 0.0f;
+        pos->y = 0.0f;
+        pos->z = 0.0f;
+    }
+}
 
 void func_802F2110(s32 idx, f32 interval) {
     if (D_80368010[idx].unk0 != 0xFFFF) {
