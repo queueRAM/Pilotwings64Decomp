@@ -18,7 +18,6 @@
 #include "code_9A960.h"
 #include "code_9C080.h"
 #include "code_D1ED0.h"
-#include "code_D3810.h"
 #include "demo.h"
 #include "file_menu.h"
 #include "hud.h"
@@ -29,6 +28,7 @@
 #include "snow.h"
 #include "text_data.h"
 #include "whale.h"
+#include "whale_pod.h"
 
 typedef struct Unk8033F050 {
     s16 unk0;
@@ -344,7 +344,7 @@ void func_803386A4(s32 arg0, s32* arg1, s32* arg2, f32* arg3, f32* arg4, s32* ar
     for (i = 0; i < sp74; i++) {
         switch (arg0) {
         case 7:
-            func_8034CC10(i, &sp90, &sp70, &sp84);
+            whalePodGetObjState(i, &sp90, &sp70, &sp84);
             break;
         case 10:
             boatsGetObjData(i, &sp90, &sp70, &sp84);
@@ -910,7 +910,7 @@ void func_8033A244(s32 arg0, Unk80373060* arg1) {
                 func_802E7D18(arg1->unk4C[i]);
                 break;
             case 7:
-                func_8034CCC4(arg1->unk64[i], arg1->unk4C[i]);
+                whalePodSetInterval(arg1->unk64[i], arg1->unk4C[i]);
                 break;
             case 10:
                 boatsUpdateInterval(arg1->unk64[i], arg1->unk4C[i]);
