@@ -428,7 +428,7 @@ segments:
       - [0x9A960, c, app/code_9A960]
       - [0x9B960, c, app/code_9B960]
       - [0x9C080, c, app/code_9C080]
-      - [0x9CF50, c, app/code_9CF50]
+      - [0x9CF50, c, app/oil]
       - [0x9D3C0, c, app/options]
       - [0x9E2F0, c, app/pads]
       - [0x9F2D0, c, app/hud]
@@ -511,7 +511,7 @@ segments:
       - [0xD6D70, .data, app/mem]
       - [0xD6D80, .data, app/code_9A960]
       - [0xD6D90, .data, app/code_9C080]
-      - [0xD6DE0, .data, app/code_9CF50]
+      - [0xD6DE0, .data, app/oil]
       - [0xD6E00, .data, app/options]
       - [0xD6E30, .data, app/pads]
       - [0xD6E40, .data, app/hud]
@@ -685,7 +685,7 @@ segments:
       - { type: bss, vram: 0x8036BDF0, name: app/code_99D40 }
       - { type: bss, vram: 0x8036BE30, name: app/code_9B960 }
       - { type: bss, vram: 0x8036BFF0, name: app/code_9C080 }
-      - { type: bss, vram: 0x8036C0D0, name: app/code_9CF50 }
+      - { type: .bss, vram: 0x8036C0D0, name: app/oil }
       - { type: .bss, vram: 0x8036C120, name: app/options }
       - { type: .bss, vram: 0x8036C150, name: app/pads }
       - { type: .bss, vram: 0x8036C520, name: app/hud }

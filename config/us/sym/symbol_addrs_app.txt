@@ -215,6 +215,13 @@ app_entrypoint      = 0x8030FE20; // type:func
 map3d               = 0x8030FF00; // type:func
 map3d_mslot         = 0x80312684; // type:func
 
+oilUpdatePos        = 0x80315A20; // type:func
+oilUpdate           = 0x80315AB0; // type:func
+oil_80315BB8        = 0x80315BB8; // type:func
+oil_80315C84        = 0x80315C84; // type:func
+oilInit             = 0x80315D68; // type:func
+oilDeinit           = 0x80315E3C; // type:func
+
 padsInit            = 0x80316DC0; // type:func
 padsLoad            = 0x80316E40; // type:func
 padsFrameUpdate     = 0x80317634; // type:func

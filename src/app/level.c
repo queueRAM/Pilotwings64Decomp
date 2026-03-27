@@ -6,7 +6,6 @@
 #include <uv_util.h>
 #include "boats.h"
 #include "code_9C080.h"
-#include "code_9CF50.h"
 #include "env_sound.h"
 #include "environment.h"
 #include "ferry.h"
@@ -14,6 +13,7 @@
 #include "game.h"
 #include "glider_toys.h"
 #include "level.h"
+#include "oil.h"
 #include "planes.h"
 #include "shadow.h"
 #include "ski_lift.h"
@@ -106,7 +106,7 @@ void level_8030B868(void) {
             planesLoad();
             break;
         case MAP_EVER_FROST_ISLAND:
-            func_80315D68();
+            oilInit();
             func_80315734();
             skiLiftLoad();
             gliderToyLoadEFrost();
@@ -140,7 +140,7 @@ void level_8030B964(void) {
             planesDeinit();
             break;
         case MAP_EVER_FROST_ISLAND:
-            func_80315E3C();
+            oilDeinit();
             func_8031596C();
             skiLiftDeinit();
             gliderToyDeinit();
