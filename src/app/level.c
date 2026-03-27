@@ -5,7 +5,6 @@
 #include <uv_texture.h>
 #include <uv_util.h>
 #include "boats.h"
-#include "code_722D0.h"
 #include "code_72B70.h"
 #include "code_78620.h"
 #include "code_9C080.h"
@@ -13,6 +12,7 @@
 #include "env_sound.h"
 #include "environment.h"
 #include "ferry.h"
+#include "fountain.h"
 #include "level.h"
 #include "planes.h"
 #include "shadow.h"
@@ -94,7 +94,7 @@ void level_8030B868(void) {
             break;
         case MAP_CRESCENT_ISLAND:
             whaleLoad();
-            func_802EB0D4();
+            fountainLoad();
             boatsLoadCrescent();
             func_802F15C8();
             break;
@@ -128,7 +128,7 @@ void level_8030B964(void) {
             break;
         case MAP_CRESCENT_ISLAND:
             whaleDeinit();
-            func_802EB270();
+            fountainDeinit();
             boatsDeinit();
             func_802F1FF0();
             break;
