@@ -30,8 +30,64 @@ s32 func_802F13C0(s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_78620/func_802F15C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/code_78620/func_802F182C.s")
+// load for map?
+void func_802F182C(void) {
+    Unk80368010* glider;
+    s32 i;
 
+    for (i = 0; i < ARRAY_COUNT(D_80368010); i++) {
+        D_80368010[i].objId = 0xFFFF;
+    }
+
+    for (i = 0; i < ARRAY_COUNT(D_80368010); i++) {
+        glider = &D_80368010[i];
+        glider->objId = uvDobjAllocIdx();
+        if (glider->objId != 0xFFFF) {
+            switch (i) {
+            case 0:
+                glider->unk8 = 17.0f;
+                uvDobjModel(glider->objId, func_802F13C0(0));
+                uvDobjState(glider->objId, 2);
+                glider->unk18 = 30.0f;
+                glider->unkC.x = 1666.32f;
+                glider->unkC.y = -1099.06f;
+                glider->unkC.z = 100.0f;
+                break;
+            case 1:
+                glider->unk8 = 13.0f;
+                uvDobjModel(glider->objId, func_802F13C0(1));
+                uvDobjState(glider->objId, 2);
+                glider->unk18 = 60.0f;
+                glider->unkC.x = 3293.09f;
+                glider->unkC.y = 931.19f;
+                glider->unkC.z = 150.0f;
+                break;
+            case 2:
+                glider->unk8 = 18.0f;
+                uvDobjModel(glider->objId, func_802F13C0(2));
+                uvDobjState(glider->objId, 2);
+                glider->unk18 = 30.0f;
+                glider->unkC.x = -2294.23f;
+                glider->unkC.y = -791.48f;
+                glider->unkC.z = 150.0f;
+                break;
+            case 3:
+                glider->unk8 = 18.0f;
+                uvDobjModel(glider->objId, func_802F13C0(3));
+                uvDobjState(glider->objId, 2);
+                glider->unk18 = 50.0f;
+                glider->unkC.x = -2290.23f;
+                glider->unkC.y = -791.48f;
+                glider->unkC.z = 170.0f;
+                break;
+            }
+            glider->proxId = func_80321210(func_802F12BC, func_802F11F8, glider->unkC, 2500.0f, 0.0f, i);
+            func_802F10F0(i);
+        }
+    }
+}
+
+// load for map?
 void func_802F1AE8(void) {
     Unk80368010* glider;
     s32 i;
@@ -79,6 +135,7 @@ void func_802F1AE8(void) {
     }
 }
 
+// load for map?
 void func_802F1D3C(void) {
     Unk80368010* glider;
     s32 i;
@@ -130,6 +187,7 @@ void func_802F1D3C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_78620/func_802F1FA0.s")
 #else
 // works when D_80368010 is mapped in .bss
+// init
 void func_802F1FA0(void) {
     Unk80368010* glider;
     s32 i;
@@ -141,6 +199,7 @@ void func_802F1FA0(void) {
 }
 #endif
 
+// deinit
 void func_802F1FF0(void) {
     Unk80368010* glider;
     s32 i;
@@ -155,6 +214,7 @@ void func_802F1FF0(void) {
     }
 }
 
+// get obj state
 void func_802F205C(s32 idx, s32* objId, f32* interval, Vec3F* pos) {
     Mtx4F pose;
     Unk80368010* glider;
@@ -176,6 +236,7 @@ void func_802F205C(s32 idx, s32* objId, f32* interval, Vec3F* pos) {
     }
 }
 
+// set interval
 void func_802F2110(s32 idx, f32 interval) {
     if (D_80368010[idx].objId != 0xFFFF) {
         uvDobjState(D_80368010[idx].objId, 2);
