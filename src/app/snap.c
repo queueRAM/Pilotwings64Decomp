@@ -12,7 +12,6 @@
 #include <uv_vector.h>
 #include "boats.h"
 #include "code_9A960.h"
-#include "code_9C080.h"
 #include "code_D1ED0.h"
 #include "demo.h"
 #include "ferry.h"
@@ -21,6 +20,7 @@
 #include "game.h"
 #include "glider_toys.h"
 #include "hud.h"
+#include "missi.h"
 #include "planes.h"
 #include "proxanim.h"
 #include "shadow.h"
@@ -206,7 +206,7 @@ void snapInit(void) {
     D_80373B70[0].unk42 = 1;
     D_80373B70[0].unk43[0] = 6;
     D_80373B70[0].unk4C[0] = 0;
-    func_803159F4(&D_80373B70[0].unk0);
+    missiGetInitPos(&D_80373B70[0].unk0);
     D_80373B70[0].unkC.x = 0.0f;
     D_80373B70[0].unkC.y = 0.0f;
     D_80373B70[0].unkC.z = 0.0f;
@@ -248,7 +248,7 @@ void snapInit(void) {
     D_803738D0[0].unk42 = 1;
     D_803738D0[0].unk43[0] = 3;
     D_803738D0[0].unk4C[0] = 0.0f;
-    func_803153AC(&D_803738D0[0].unk0);
+    missiGetCurPos(&D_803738D0[0].unk0);
     D_803738D0[0].unk0.x -= uvCosF(0.26179948f) * 70.0f;
     D_803738D0[0].unk0.z += uvSinF(0.26179948f) * 70.0f;
     D_803738D0[0].unkC.x = -90.0f;
@@ -482,8 +482,8 @@ void func_80338A14(void) {
             }
             break;
         case 3:
-            if (func_80314B50() != 0) {
-                func_803153AC(&spFC);
+            if (missiIsActive() != 0) {
+                missiGetCurPos(&spFC);
                 if (func_80338964(temp_s1->unk0, spFC, &temp_s4->unk70->unk108) != 0) {
                     func_8034B354(0, spFC, &spA8);
                     if ((spA8.x < -50.0f) || (spA8.x > 370.0f) || (spA8.y < -50.0f) || (spA8.y > 290.0f)) {
@@ -495,7 +495,7 @@ void func_80338A14(void) {
                         var_s2 = 1;
                         var_fs0 = temp_fv0;
                         spBC[0] = &temp_s5[7];
-                        temp_s1->unk4C[0] = func_80315394();
+                        temp_s1->unk4C[0] = missiGetInterval();
                         spF0 = spFC;
                     }
                 }
@@ -542,8 +542,8 @@ void func_80338A14(void) {
             }
             break;
         case 6:
-            if (func_8031555C() != 0) {
-                func_803159F4(&spFC);
+            if (missiInProximity()) {
+                missiGetInitPos(&spFC);
                 if (func_80338964(temp_s1->unk0, spFC, &temp_s4->unk70->unk108) != 0) {
                     func_8034B354(0, spFC, &spA8);
                     if ((spA8.x < -50.0f) || (spA8.x > 370.0f) || (spA8.y < -50.0f) || (spA8.y > 290.0f)) {
@@ -881,7 +881,7 @@ void func_8033A244(s32 arg0, Unk80373060* arg1) {
                 whaleStateSave();
                 break;
             case 3:
-                func_803154C0();
+                missiStateSave();
                 break;
             case 1:
                 func_80336094();
@@ -901,7 +901,7 @@ void func_8033A244(s32 arg0, Unk80373060* arg1) {
                 whaleSetInterval(arg1->unk4C[i]);
                 break;
             case 3:
-                func_80315418(arg1->unk4C[i]);
+                missiSetInterval(arg1->unk4C[i]);
                 break;
             case 1:
                 func_80335FD8(arg1->unk4C[i]);
@@ -939,7 +939,7 @@ void func_8033A244(s32 arg0, Unk80373060* arg1) {
                 whaleStateRestore();
                 break;
             case 3:
-                func_80315508();
+                missiStateRestore();
                 break;
             case 1:
                 func_803360E8();

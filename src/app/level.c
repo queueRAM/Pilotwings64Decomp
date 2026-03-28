@@ -5,7 +5,6 @@
 #include <uv_texture.h>
 #include <uv_util.h>
 #include "boats.h"
-#include "code_9C080.h"
 #include "env_sound.h"
 #include "environment.h"
 #include "ferry.h"
@@ -13,6 +12,7 @@
 #include "game.h"
 #include "glider_toys.h"
 #include "level.h"
+#include "missi.h"
 #include "oil.h"
 #include "planes.h"
 #include "shadow.h"
@@ -101,13 +101,13 @@ void level_8030B868(void) {
         case MAP_LITTLE_STATES:
             func_80335BE4();
             ferryLoad();
-            func_803151AC();
+            missiLoadLStates();
             gliderToyLoadLStates();
             planesLoad();
             break;
         case MAP_EVER_FROST_ISLAND:
             oilInit();
-            func_80315734();
+            missiLoadEFrost();
             skiLiftLoad();
             gliderToyLoadEFrost();
             whalePodLoad();
@@ -135,13 +135,13 @@ void level_8030B964(void) {
         case MAP_LITTLE_STATES:
             func_80335E44();
             ferryDeinit();
-            func_8031531C();
+            missiDeinitLStates();
             gliderToyDeinit();
             planesDeinit();
             break;
         case MAP_EVER_FROST_ISLAND:
             oilDeinit();
-            func_8031596C();
+            missiDeinitEFrost();
             skiLiftDeinit();
             gliderToyDeinit();
             whalePodDeinit();
