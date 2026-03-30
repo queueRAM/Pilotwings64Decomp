@@ -89,7 +89,7 @@ STATIC_FUNC void boatsUpdate(s32 boatId) {
     }
 }
 
-STATIC_FUNC s32 boatsProxEventCb(s32 proxId, s32 eventType, s32 arg) {
+STATIC_FUNC s32 boatsProxEventCb(UNUSED s32 proxId, s32 eventType, UNUSED s32 clientData) {
     s32 i;
     switch (eventType) {
     case 0:
@@ -108,7 +108,7 @@ STATIC_FUNC s32 boatsProxEventCb(s32 proxId, s32 eventType, s32 arg) {
     return 0;
 }
 
-STATIC_FUNC s32 boatsProxAnimCb(s32 proxId, f32 timeout, s32 arg) {
+STATIC_FUNC s32 boatsProxAnimCb(s32 proxId, UNUSED f32 timeout, UNUSED s32 clientData) {
     ProxAnim* tmp;
     s32 idx;
     s32 res;
@@ -117,7 +117,7 @@ STATIC_FUNC s32 boatsProxAnimCb(s32 proxId, f32 timeout, s32 arg) {
 
     res = 0;
     tmp = proxAnimGetHandle(proxId);
-    idx = tmp->arg;
+    idx = tmp->clientData;
     boat = &sBoats[idx];
     if (proxAnimGetRange(proxId) > 1500.0f) {
         if (boat->active) {

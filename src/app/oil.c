@@ -45,7 +45,7 @@ STATIC_FUNC void oilUpdate(void) {
     }
 }
 
-STATIC_FUNC s32 oilProxEventCb(s32 proxId, s32 eventType, s32 arg) {
+STATIC_FUNC s32 oilProxEventCb(UNUSED s32 proxId, s32 eventType, UNUSED s32 clientData) {
     switch (eventType) {
     case 0:
         sOilActive = FALSE;
@@ -65,7 +65,7 @@ STATIC_FUNC s32 oilProxEventCb(s32 proxId, s32 eventType, s32 arg) {
     return 0;
 }
 
-STATIC_FUNC s32 oilProxAnimCb(s32 proxId, f32 timeout, s32 arg) {
+STATIC_FUNC s32 oilProxAnimCb(s32 proxId, UNUSED f32 timeout, UNUSED s32 clientData) {
     f32 dist;
     s32 ret;
 

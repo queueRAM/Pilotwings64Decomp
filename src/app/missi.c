@@ -103,7 +103,7 @@ STATIC_FUNC void missiUpdate(void) {
     }
 }
 
-STATIC_FUNC s32 missiEventCbLStates(s32 proxId, s32 eventType, s32 arg) {
+STATIC_FUNC s32 missiEventCbLStates(UNUSED s32 proxId, s32 eventType, UNUSED s32 clientData) {
     Mtx4F rotMtx;
     Mtx4F xlatMtx;
 
@@ -135,7 +135,7 @@ STATIC_FUNC s32 missiEventCbLStates(s32 proxId, s32 eventType, s32 arg) {
     return 0;
 }
 
-STATIC_FUNC s32 missiAnimCbLStates(s32 proxId, f32 timeout, s32 arg) {
+STATIC_FUNC s32 missiAnimCbLStates(s32 proxId, UNUSED f32 timeout, UNUSED s32 clientData) {
     f32 range;
     s32 ret;
 
@@ -264,7 +264,7 @@ s32 missiInProximity(void) {
     return sMissiProximity;
 }
 
-STATIC_FUNC s32 missiEventCbEFrost(s32 proxId, s32 eventType, s32 arg) {
+STATIC_FUNC s32 missiEventCbEFrost(UNUSED s32 proxId, s32 eventType, UNUSED s32 clientData) {
     switch (eventType) {
     case 0:
         break;
@@ -284,7 +284,7 @@ STATIC_FUNC s32 missiEventCbEFrost(s32 proxId, s32 eventType, s32 arg) {
     return 0;
 }
 
-STATIC_FUNC s32 missiAnimCbEFrost(s32 proxId, f32 timeout, s32 arg) {
+STATIC_FUNC s32 missiAnimCbEFrost(s32 proxId, UNUSED f32 timeout, UNUSED s32 clientData) {
     f32 range;
     s32 ret;
 

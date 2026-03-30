@@ -240,7 +240,8 @@ s32 demoGetRecMode(void) {
 
 void demoLogInput(void) {
     if (sDemoMode == 1) {
-        _uvDebugPrintf("%.10f(%.10f, %.10f)0x%x\n", D_8034F850 - sDemoRecStartTime, uvControllerGetStick(0, 0), uvControllerGetStick(0, 1), uvControllerGetButton(0));
+        _uvDebugPrintf("%.10f(%.10f, %.10f)0x%x\n", D_8034F850 - sDemoRecStartTime, uvControllerGetStick(0, 0), uvControllerGetStick(0, 1),
+                       uvControllerGetButton(0));
     }
     if (sDemoRecEndTime <= D_8034F850) {
         demoSetRecMode(0);

@@ -48,7 +48,7 @@ STATIC_FUNC void ferryUpdate(void) {
     ferryUpdatePos();
 }
 
-STATIC_FUNC s32 ferryProxEventCb(s32 proxId, s32 eventType, s32 arg) {
+STATIC_FUNC s32 ferryProxEventCb(UNUSED s32 proxId, s32 eventType, UNUSED s32 clientData) {
     switch (eventType) {
     case 0:
         break;
@@ -68,7 +68,7 @@ STATIC_FUNC s32 ferryProxEventCb(s32 proxId, s32 eventType, s32 arg) {
     return 0;
 }
 
-STATIC_FUNC s32 ferryProxAnimCb(s32 proxId, f32 timeout, s32 arg) {
+STATIC_FUNC s32 ferryProxAnimCb(s32 proxId, UNUSED f32 timeout, UNUSED s32 clientData) {
     f32 val;
     s32 ret;
 

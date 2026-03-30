@@ -477,7 +477,7 @@ toyAnimate          = 0x80347E9C; // type:func
 toyProxEventCb      = 0x8034819C; // type:func
 toyProxAnimCb       = 0x80348214; // type:func
 toyLoad             = 0x80348280; // type:func
-toy_803483AC        = 0x803483AC; // type:func
+toyDeinit           = 0x803483AC; // type:func
 toy_80348418        = 0x80348418; // type:func
 
 windInit            = 0x8034CD60; // type:func
@@ -990,4 +990,7 @@ sShuttleThrust            = 0x80350498;
 sShuttleAltitude          = 0x8035049C;
 sShuttleFlightTime        = 0x803504A8;
 sShuttleObjState          = 0x803504B0;
+sShuttleObjId             = 0x803504B4;
+sShuttleObjId2            = 0x803504B8;
 sShuttleRadarIdx          = 0x803504BC;
+sShuttleProxId            = 0x803504C0;

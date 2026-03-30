@@ -31,7 +31,7 @@ STATIC_FUNC void skiLiftUpdate(void) {
     }
 }
 
-STATIC_FUNC s32 skiLiftProxEventCb(s32 proxId, s32 eventType, s32 arg) {
+STATIC_FUNC s32 skiLiftProxEventCb(UNUSED s32 proxId, s32 eventType, UNUSED s32 clientData) {
     s32 i;
 
     switch (eventType) {
@@ -52,7 +52,7 @@ STATIC_FUNC s32 skiLiftProxEventCb(s32 proxId, s32 eventType, s32 arg) {
     return 0;
 }
 
-STATIC_FUNC s32 skiLiftProxAnimCb(s32 proxId, f32 timeout, s32 arg) {
+STATIC_FUNC s32 skiLiftProxAnimCb(s32 proxId, UNUSED f32 timeout, UNUSED s32 clientData) {
     s32 i;
     s32 ret;
 

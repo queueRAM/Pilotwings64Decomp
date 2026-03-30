@@ -36,7 +36,7 @@ STATIC_FUNC void gliderToyUpdate(s32 idx) {
     uvDobjPosm(glider->objId, 0, &pose);
 }
 
-STATIC_FUNC s32 gliderToyProxEventCb(s32 proxId, s32 eventType, s32 arg) {
+STATIC_FUNC s32 gliderToyProxEventCb(UNUSED s32 proxId, s32 eventType, UNUSED s32 clientData) {
     GliderToy* glider;
     s32 i;
 
@@ -63,14 +63,14 @@ STATIC_FUNC s32 gliderToyProxEventCb(s32 proxId, s32 eventType, s32 arg) {
     return 0;
 }
 
-STATIC_FUNC s32 gliderToyProxAnimCb(s32 proxId, f32 timeout, s32 arg) {
+STATIC_FUNC s32 gliderToyProxAnimCb(s32 proxId, UNUSED f32 timeout, UNUSED s32 clientData) {
     GliderToy* glider;
     s32 ret;
     s32 idx;
     f32 dist;
 
     ret = 0;
-    idx = proxAnimGetHandle(proxId)->arg;
+    idx = proxAnimGetHandle(proxId)->clientData;
     dist = proxAnimGetRange(proxId);
     if (dist > 2500.0f) {
         glider = &sGliderToys[idx];

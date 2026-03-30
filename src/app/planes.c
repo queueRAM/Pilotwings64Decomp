@@ -121,10 +121,10 @@ void planesGetPos(s32 planeIdx, Vec3F* vec) {
     vec->z = sPlanes[planeIdx].pos.z;
 }
 
-STATIC_FUNC s32 planesProxEventCb(s32 proxId, s32 arg1, s32 arg) {
+STATIC_FUNC s32 planesProxEventCb(UNUSED s32 proxId, s32 eventType, UNUSED s32 clientData) {
     s32 i;
 
-    switch (arg1) {
+    switch (eventType) {
     case 0:
         break;
     case 2:
@@ -141,7 +141,7 @@ STATIC_FUNC s32 planesProxEventCb(s32 proxId, s32 arg1, s32 arg) {
     return 0;
 }
 
-STATIC_FUNC s32 planesProxAnimCb(s32 proxId, f32 timeout, s32 arg) {
+STATIC_FUNC s32 planesProxAnimCb(s32 proxId, UNUSED f32 timeout, UNUSED s32 clientData) {
     s32 idx;
     ProxAnim* prox;
     s32 ret;
@@ -150,7 +150,7 @@ STATIC_FUNC s32 planesProxAnimCb(s32 proxId, f32 timeout, s32 arg) {
     ret = 0;
     prox = proxAnimGetHandle(proxId);
     if (prox != NULL) {
-        idx = prox->arg;
+        idx = prox->clientData;
         if (prox->active != 0) {
             tmp = proxAnimGetRange(proxId);
             if (tmp > 4000.0f) {

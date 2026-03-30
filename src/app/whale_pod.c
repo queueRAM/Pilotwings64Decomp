@@ -88,7 +88,7 @@ STATIC_FUNC void whalePodUpdate(void) {
     }
 }
 
-STATIC_FUNC s32 whalePodProxEventCb(s32 proxId, s32 eventType, s32 arg) {
+STATIC_FUNC s32 whalePodProxEventCb(UNUSED s32 proxId, s32 eventType, UNUSED s32 clientData) {
     Whale* whale;
     s32 i;
 
@@ -124,7 +124,7 @@ STATIC_FUNC s32 whalePodProxEventCb(s32 proxId, s32 eventType, s32 arg) {
     return 0;
 }
 
-STATIC_FUNC s32 whalePodProxAnimCb(s32 proxId, f32 timeout, s32 arg) {
+STATIC_FUNC s32 whalePodProxAnimCb(s32 proxId, UNUSED f32 timeout, UNUSED s32 clientData) {
     f32 dist;
     s32 ret;
 

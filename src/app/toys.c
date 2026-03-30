@@ -165,13 +165,13 @@ STATIC_FUNC void toyAnimate(Toy* toy) {
     }
 }
 
-STATIC_FUNC s32 toyProxEventCb(s32 proxId, s32 eventType, s32 arg) {
+STATIC_FUNC s32 toyProxEventCb(s32 proxId, s32 eventType, s32 clientData) {
     ProxAnim* prox;
 
     switch (eventType) {
     case 0:
         prox = proxAnimGetHandle(proxId);
-        if (toy_80347C2C(prox->pos, (Toy*)arg) == -1) {
+        if (toy_80347C2C(prox->pos, (Toy*)clientData) == -1) {
             return -1;
         }
         break;
@@ -182,11 +182,11 @@ STATIC_FUNC s32 toyProxEventCb(s32 proxId, s32 eventType, s32 arg) {
     return 0;
 }
 
-STATIC_FUNC s32 toyProxAnimCb(s32 proxId, f32 timeout, s32 arg) {
+STATIC_FUNC s32 toyProxAnimCb(s32 proxId, UNUSED f32 timeout, s32 clientData) {
     Toy* toy;
     s32 res;
 
-    toy = (Toy*)arg;
+    toy = (Toy*)clientData;
     res = 0;
     if ((proxAnimGetRange(proxId) > 100.0f) && (toy->toyType != ToyMountRushmore)) {
         res = 2;
@@ -212,7 +212,7 @@ void toyLoad(LevelTOYS* lvlToy) {
     sToyCount++;
 }
 
-void toy_803483AC(void) {
+void toyDeinit(void) {
     s32 i;
 
     for (i = 0; i < sToyCount; i++) {

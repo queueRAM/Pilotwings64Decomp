@@ -105,7 +105,7 @@ STATIC_FUNC void whaleStateMachine(void) {
     }
 }
 
-STATIC_FUNC s32 whaleProxEventCb(s32 proxId, s32 eventType, s32 arg) {
+STATIC_FUNC s32 whaleProxEventCb(UNUSED s32 proxId, s32 eventType, UNUSED s32 clientData) {
     switch (eventType) {
     case 0:
         uvDobjState(sWhaleObjId0, 3);
@@ -140,7 +140,7 @@ STATIC_FUNC s32 whaleProxEventCb(s32 proxId, s32 eventType, s32 arg) {
     return 0;
 }
 
-STATIC_FUNC s32 whaleProxAnimCb(s32 proxId, f32 timeout, s32 arg) {
+STATIC_FUNC s32 whaleProxAnimCb(s32 proxId, UNUSED f32 timeout, UNUSED s32 clientData) {
     f32 dist;
     s32 ret;
 
