@@ -21,7 +21,7 @@ typedef struct {
     f32 unk254;
 } Toy; // size = 0x258
 
-typedef enum ToyType { ToyMerryGoRound = 0, ToyFerrisWheel = 1, ToyWaterWheel = 2, ToyPumpJack = 3, ToyMountRushmore = 4 } ToyType;
+enum ToyType { TOY_MERRY_GO_ROUND = 0, TOY_FERRIS_WHEEL = 1, TOY_WATER_WHEEL = 2, TOY_PUMP_JACK = 3, TOY_MOUNT_RUSHMORE = 4 };
 
 static u8 sToyCount;
 static Toy sToys[20];
@@ -52,20 +52,20 @@ STATIC_FUNC s32 toy_80347C2C(Vec3F pos, Toy* toy) {
     toyModel = uvSobj_8022D1E4(terraId);
     switch (toyModel) {
     case MODEL_THEMEPARK_FERRIS_WHEEL:
-        toyType = ToyFerrisWheel;
+        toyType = TOY_FERRIS_WHEEL;
         break;
     case MODEL_THEMEPARK_MERRY_GO_ROUND:
-        toyType = ToyMerryGoRound;
+        toyType = TOY_MERRY_GO_ROUND;
         break;
     case MODEL_VILLAGE_WATER_WHEEL:
-        toyType = ToyWaterWheel;
+        toyType = TOY_WATER_WHEEL;
         break;
     case MODEL_PUMP_JACK:
-        toyType = ToyPumpJack;
+        toyType = TOY_PUMP_JACK;
         break;
     case MODEL_STONE_WARIO_HEAD:
     case MODEL_STONE_MARIO_HEAD:
-        toyType = ToyMountRushmore;
+        toyType = TOY_MOUNT_RUSHMORE;
         break;
     default:
         _uvDebugPrintf("Found unknown toy model %d\n", toyModel);
@@ -75,15 +75,15 @@ STATIC_FUNC s32 toy_80347C2C(Vec3F pos, Toy* toy) {
     toy->terraId = terraId;
     toy->toyType = toyType;
     switch (toyType) {
-    case ToyMountRushmore:
+    case TOY_MOUNT_RUSHMORE:
         break;
-    case ToyWaterWheel:
+    case TOY_WATER_WHEEL:
         uvSobj_8022D168(terraId, 0, &toy->modelPose);
         break;
-    case ToyMerryGoRound:
+    case TOY_MERRY_GO_ROUND:
         uvSobj_8022D168(terraId, 1, &toy->modelPose);
         break;
-    case ToyFerrisWheel:
+    case TOY_FERRIS_WHEEL:
         uvSobj_8022D168(terraId, 1, &toy->modelPose);
         uvSobj_8022D168(terraId, 2, &toy->partPose[0]);
         uvSobj_8022D168(terraId, 3, &toy->partPose[1]);
@@ -94,7 +94,7 @@ STATIC_FUNC s32 toy_80347C2C(Vec3F pos, Toy* toy) {
         uvSobj_8022D168(terraId, 8, &toy->partPose[6]);
         uvSobj_8022D168(terraId, 9, &toy->partPose[7]);
         break;
-    case ToyPumpJack:
+    case TOY_PUMP_JACK:
         uvSobj_8022D168(terraId, 1, &toy->modelPose);
         uvSobj_8022D168(terraId, 2, &toy->partPose[0]);
         uvSobj_8022D168(terraId, 3, &toy->partPose[1]);
@@ -116,15 +116,15 @@ STATIC_FUNC void toyAnimate(Toy* toy) {
     Mtx4F* mtx0;
 
     switch (toy->toyType) {
-    case ToyWaterWheel:
+    case TOY_WATER_WHEEL:
         uvMat4RotateAxis(&toy->modelPose, 0.6981316f * D_8034F854, 'y');
         uvSobjPosm(toy->terraId, 0, &toy->modelPose);
         break;
-    case ToyMerryGoRound:
+    case TOY_MERRY_GO_ROUND:
         uvMat4RotateAxis(&toy->modelPose, 0.1745329f * D_8034F854, 'z');
         uvSobjPosm(toy->terraId, 1, &toy->modelPose);
         break;
-    case ToyFerrisWheel:
+    case TOY_FERRIS_WHEEL:
         rot = 0.29670593f * D_8034F854;
         uvMat4RotateAxis(&toy->modelPose, rot, 'y');
         uvSobjPosm(toy->terraId, 1, &toy->modelPose);
@@ -140,7 +140,7 @@ STATIC_FUNC void toyAnimate(Toy* toy) {
         uvSobjPosm(toy->terraId, 8, &toy->partPose[6]);
         uvSobjPosm(toy->terraId, 9, &toy->partPose[7]);
         break;
-    case ToyPumpJack:
+    case TOY_PUMP_JACK:
         toy->unk254 += 1.1344639f * D_8034F854;
         if (toy->unk254 > 6.2831855f) {
             toy->unk254 -= 6.2831855f;
@@ -160,7 +160,7 @@ STATIC_FUNC void toyAnimate(Toy* toy) {
     default:
         _uvDebugPrintf("Update got an unknown toy type\n");
         break;
-    case ToyMountRushmore:
+    case TOY_MOUNT_RUSHMORE:
         break;
     }
 }
@@ -188,7 +188,7 @@ STATIC_FUNC s32 toyProxAnimCb(s32 proxId, UNUSED f32 timeout, s32 clientData) {
 
     toy = (Toy*)clientData;
     res = 0;
-    if ((proxAnimGetRange(proxId) > 100.0f) && (toy->toyType != ToyMountRushmore)) {
+    if ((proxAnimGetRange(proxId) > 100.0f) && (toy->toyType != TOY_MOUNT_RUSHMORE)) {
         res = 2;
     } else {
         toyAnimate(toy);
@@ -236,7 +236,7 @@ void toy_80348418(s32 arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4) {
     }
 
     toy = &sToys[i];
-    if (toy->toyType == ToyMountRushmore) {
+    if (toy->toyType == TOY_MOUNT_RUSHMORE) {
         fxId = func_8021EFF0(8);
         if (fxId != 0xFF) {
             uvModelGet(fxId, 8);
