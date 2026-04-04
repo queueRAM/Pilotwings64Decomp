@@ -21,8 +21,6 @@
 #include "app/proxanim.h"
 #include "app/results.h"
 #include "app/shuttle.h"
-#include "app/shadow.h"
-#include "app/shuttle.h"
 #include "app/snap.h"
 #include "app/snd.h"
 #include "app/test_menu.h"
@@ -211,14 +209,14 @@ s32 gameUpdateStateOptions(Unk80362690* arg0) {
 
 void func_802EBD88(Unk80362690_Unk0* arg0, u8 arg1) {
     if (D_8034F164 != 0) {
-        demo_80322D60(arg0->pilot, arg0->veh);
+        demoLoad(arg0->pilot, arg0->veh);
     } else {
-        demo_80322D60(arg0->pilot, -1);
+        demoLoad(arg0->pilot, -1);
     }
     if (arg1 != 0) {
-        arg0->test = demoGet_80322B84();
-        arg0->cls = demoGet_80322B60();
-        arg0->veh = demoGet_80322B6C();
+        arg0->test = demoGetTestId();
+        arg0->cls = demoGetClassId();
+        arg0->veh = demoGetVehicleId();
         arg0->unk8 = demoGet_80322B78();
     }
     D_8036770C = 0;
@@ -396,27 +394,27 @@ s32 gameUpdateStatePilotSelect(Unk80362690* arg0) {
     uvEventPost(9, 0);
 
     D_80367868.unk4[i].pilot = PILOT_LARK;
-    D_80367868.unk4[i].modelId = MODEL_LARK_BODY;
+    D_80367868.unk4[i].modelId = MODEL_PILOT_LARK;
     D_80367868.unk4[i].textId = 0x35; // "LARK"
     i++;
     D_80367868.unk4[i].pilot = PILOT_KIWI;
-    D_80367868.unk4[i].modelId = MODEL_KIWI_BODY;
+    D_80367868.unk4[i].modelId = MODEL_PILOT_KIWI;
     D_80367868.unk4[i].textId = 0x14C; // "KIWI"
     i++;
     D_80367868.unk4[i].pilot = PILOT_GOOSE;
-    D_80367868.unk4[i].modelId = MODEL_GOOSE_BODY;
+    D_80367868.unk4[i].modelId = MODEL_PILOT_GOOSE;
     D_80367868.unk4[i].textId = 0x9C; // "GOOSE"
     i++;
     D_80367868.unk4[i].pilot = PILOT_IBIS;
-    D_80367868.unk4[i].modelId = MODEL_IBIS_BODY;
+    D_80367868.unk4[i].modelId = MODEL_PILOT_IBIS;
     D_80367868.unk4[i].textId = 0x1A7; // "IBIS"
     i++;
     D_80367868.unk4[i].pilot = PILOT_HAWK;
-    D_80367868.unk4[i].modelId = MODEL_HAWK_BODY;
+    D_80367868.unk4[i].modelId = MODEL_PILOT_HAWK;
     D_80367868.unk4[i].textId = 0x85; // "HAWK"
     i++;
     D_80367868.unk4[i].pilot = PILOT_ROBIN;
-    D_80367868.unk4[i].modelId = MODEL_ROBIN_BODY;
+    D_80367868.unk4[i].modelId = MODEL_PILOT_ROBIN;
     D_80367868.unk4[i].textId = 0x128; // "ROBIN"
     i++;
 
@@ -442,7 +440,7 @@ s32 gameUpdateStateTestSetup(Unk80362690* arg0) {
     uvGfxClearScreen(0, 0, 0, 0xFF);
     uvGfxBegin();
     uvGfxEnd();
-    temp_s0->unk88 = -1;
+    temp_s0->smokeId = -1;
     temp_s0->unk7B = 0;
     if (temp_s0->veh == VEHICLE_CANNONBALL) {
         D_803676FC = (CannonballData*)temp_s0->vehicleData;

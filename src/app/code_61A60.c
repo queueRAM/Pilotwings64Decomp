@@ -58,7 +58,6 @@ s32 func_802DAA34(void);
 void func_802DAB18(Camera*);
 s32 func_802DB38C(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 s32 func_802DB6D4(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
-s32 func_802DB9B8(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 s32 func_802DBCB0(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 void func_802DBE10(Unk802D3658_Unk1228*, s32, s32, f32, Vec3F*, Vec3F*);
 
@@ -111,17 +110,17 @@ s32 func_802DA628(u32 pilot) {
 s32 func_802DA684(u32 pilot) {
     switch (pilot) {
     case PILOT_LARK:
-        return MODEL_LARK_BODY;
+        return MODEL_PILOT_LARK;
     case PILOT_GOOSE:
-        return MODEL_GOOSE_BODY;
+        return MODEL_PILOT_GOOSE;
     case PILOT_HAWK:
-        return MODEL_HAWK_BODY;
+        return MODEL_PILOT_HAWK;
     case PILOT_KIWI:
-        return MODEL_KIWI_BODY;
+        return MODEL_PILOT_KIWI;
     case PILOT_IBIS:
-        return MODEL_IBIS_BODY;
+        return MODEL_PILOT_IBIS;
     case PILOT_ROBIN:
-        return MODEL_ROBIN_BODY;
+        return MODEL_PILOT_ROBIN;
     default:
         return 0;
     }

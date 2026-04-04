@@ -18,7 +18,7 @@
 #include "app/task.h"
 #include "app/camera.h"
 #include "app/code_61A60.h"
-#include "app/code_66160.h"
+#include "app/code_66F70.h"
 #include "app/jumble_hopper.h"
 #include "app/code_9A960.h"
 #include "app/code_D1ED0.h"
@@ -237,7 +237,7 @@ void func_802FBEFC(JumbleHopperData* arg0, f32 arg1) {
             D_80364210[D_80362690->unk9C].unk38 = -100;
         }
         arg0->unk534++;
-        splash_80341E30();
+        splashClear();
         uvMat4SetIdentity(&sp30);
         sp30.m[3][0] = arg0->unkF4.x;
         sp30.m[3][1] = arg0->unkF4.y;
