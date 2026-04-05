@@ -55,38 +55,38 @@ void func_80313640(f32 tx, f32 ty, f32 tz, f32 rz, f32 rx, f32 ry, Mtx4F* mat) {
     mat->m[3][2] = tz;
 }
 
-// create matris from quaternion and position
-void func_803136C4(Unk803136C4_Arg0* arg0, Mtx4F* arg1) {
-    f32 sp44;
-    f32 sp40;
-    f32 sp3C;
-    f32 temp_fv0;
-    f32 temp_fv1;
-    f32 temp_fa0;
-    f32 sp2C;
+// create matrix from quaternion and position
+void func_803136C4(Unk803136C4_Arg0* quat, Mtx4F* mtx) {
+    f32 tx;
+    f32 ty;
+    f32 tz;
+    f32 qx;
+    f32 qy;
+    f32 qz;
+    f32 qw;
 
-    sp44 = arg0->pos.x, sp40 = arg0->pos.y, sp3C = arg0->pos.z;
-    temp_fv0 = arg0->quat.x, temp_fv1 = arg0->quat.y, temp_fa0 = arg0->quat.z, sp2C = arg0->quat.w;
+    tx = quat->pos.x, ty = quat->pos.y, tz = quat->pos.z;
+    qx = quat->quat.x, qy = quat->quat.y, qz = quat->quat.z, qw = quat->quat.w;
 
-    arg1->m[0][0] = 1.0f - (2.0f * (SQ(temp_fv1) + SQ(temp_fa0)));
-    arg1->m[0][1] = 2.0f * ((temp_fv0 * temp_fv1) - (temp_fa0 * sp2C));
-    arg1->m[0][2] = 2.0f * ((temp_fa0 * temp_fv0) + (temp_fv1 * sp2C));
-    arg1->m[0][3] = 0.0f;
+    mtx->m[0][0] = 1.0f - (2.0f * (SQ(qy) + SQ(qz)));
+    mtx->m[0][1] = 2.0f * ((qx * qy) - (qz * qw));
+    mtx->m[0][2] = 2.0f * ((qz * qx) + (qy * qw));
+    mtx->m[0][3] = 0.0f;
 
-    arg1->m[1][0] = 2.0f * ((temp_fv0 * temp_fv1) + (temp_fa0 * sp2C));
-    arg1->m[1][1] = 1.0f - (2.0f * (SQ(temp_fa0) + SQ(temp_fv0)));
-    arg1->m[1][2] = 2.0f * ((temp_fv1 * temp_fa0) - (temp_fv0 * sp2C));
-    arg1->m[1][3] = 0.0f;
+    mtx->m[1][0] = 2.0f * ((qx * qy) + (qz * qw));
+    mtx->m[1][1] = 1.0f - (2.0f * (SQ(qz) + SQ(qx)));
+    mtx->m[1][2] = 2.0f * ((qy * qz) - (qx * qw));
+    mtx->m[1][3] = 0.0f;
 
-    arg1->m[2][0] = 2.0f * ((temp_fa0 * temp_fv0) - (temp_fv1 * sp2C));
-    arg1->m[2][1] = 2.0f * ((temp_fv1 * temp_fa0) + (temp_fv0 * sp2C));
-    arg1->m[2][2] = 1.0f - (2.0f * (SQ(temp_fv1) + SQ(temp_fv0)));
-    arg1->m[2][3] = 0.0f;
+    mtx->m[2][0] = 2.0f * ((qz * qx) - (qy * qw));
+    mtx->m[2][1] = 2.0f * ((qy * qz) + (qx * qw));
+    mtx->m[2][2] = 1.0f - (2.0f * (SQ(qy) + SQ(qx)));
+    mtx->m[2][3] = 0.0f;
 
-    arg1->m[3][0] = sp44;
-    arg1->m[3][1] = sp40;
-    arg1->m[3][2] = sp3C;
-    arg1->m[3][3] = 1.0f;
+    mtx->m[3][0] = tx;
+    mtx->m[3][1] = ty;
+    mtx->m[3][2] = tz;
+    mtx->m[3][3] = 1.0f;
 }
 
 f32 func_8031385C(Mtx4F* arg0, Mtx4F* arg1) {

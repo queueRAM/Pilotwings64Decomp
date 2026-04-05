@@ -22,7 +22,7 @@ void func_80313430(f32 x, f32 y, f32 z, f32* rho, f32* theta, f32* phi);
 void func_803134D0(f32 rho, f32 theta, f32 phi, f32* x, f32* y, f32* z);
 void func_80313570(Mtx4F* mat, f32* tx, f32* ty, f32* tz, f32* rz, f32* rx, f32* ry);
 void func_80313640(f32 tx, f32 ty, f32 tz, f32 rz, f32 rx, f32 ry, Mtx4F* mat);
-void func_803136C4(Unk803136C4_Arg0*, Mtx4F*);
+void func_803136C4(Unk803136C4_Arg0* quat, Mtx4F* mtx);
 void func_803138A0(Mtx4F*, Mtx4F*, Mtx4F*, f32);
 f32 func_80313AF4(f32, f32, f32);
 f32 func_80313BAC(f32, f32, f32);
