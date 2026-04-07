@@ -846,6 +846,17 @@ sFileMenuFadeRate         = 0x8034F118;
 gLevelCurObjects          = 0x8034F408;
 gLevelUserFileLookup      = 0x8034F410;
 
+sMapDobjId                = 0x8034F7F0;
+sMapObjectCount           = 0x8034F7F4;
+sMapMessageCount          = 0x8034F7F8;
+sMapHudFlagsSave          = 0x8034F83C;
+
+sMapEmitterDev0           = 0x8036A8E0;
+sMapEmitterDev1           = 0x8036A8E1;
+sMapObjects               = 0x8036A8E8; // size:0x78
+sMapMessages              = 0x8036A960; // size:0xF0
+sMapGlobalScale           = 0x8036AA50;
+
 sMissiObjId               = 0x8034F860;
 sMissiRadarIdLS           = 0x8034F864;
 sMissiProxIdLS            = 0x8034F868;

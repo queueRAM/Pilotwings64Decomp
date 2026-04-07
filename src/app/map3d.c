@@ -25,13 +25,12 @@
 #include "targets.h"
 #include "task.h"
 #include "thermals.h"
+#include "uv_dobj.h"
 #include "whale.h"
 
-u16 D_8034F7F0 = 0xFFFF;
-// 0x8034F7F2: pad
-u8 D_8034F7F4 = 0;
-u16 D_8034F7F8 = 0;
-// 0x80347FA: pad
+u16 sMapDobjId = 0xFFFF;
+u8 sMapObjectCount = 0;
+u16 sMapMessageCount = 0;
 f32 D_8034F7FC = 0.0f;
 f32 D_8034F800 = 0.0f;
 f32 D_8034F804 = 0.0f;
@@ -48,13 +47,13 @@ f32 D_8034F82C = 0.0f;
 f32 D_8034F830 = 0.0f;
 f32 D_8034F834 = 0.0f;
 f32 D_8034F838 = 0.0f;
-u8 D_8034F83C = 0;
+u8 sMapHudFlagsSave = 0;
 
-static u8 D_8036A8E0;
-static u8 D_8036A8E1;
-static u16 D_8036A8E8[60];
-static Vec3F D_8036A960[20];
-static f32 D_8036AA50;
+static u8 sMapEmitterDev0;
+static u8 sMapEmitterDev1;
+static u16 sMapObjects[60];
+static Vec3F sMapMessages[20];
+static f32 sMapGlobalScale;
 
 // forward declarations
 void map3d_803123C4(f32, f32);
@@ -132,40 +131,40 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
     s32 sp88;
     TaskFALC* falc;
 
-    D_8036AA50 = 0.1f;
+    sMapGlobalScale = 0.1f;
     sp140 = &arg0->unkC[arg0->unk9C];
     camera = sp140->unk70;
     hud = hudGetState();
-    D_8034F83C = hud->renderFlags;
+    sMapHudFlagsSave = hud->renderFlags;
     hud->renderFlags = 0;
     hudText_8031D8E0(-1, 0.0f, 0.0f);
     hudWarningText(-1, 0.0f, 0.0f);
-    D_8034F7F8 = 0;
+    sMapMessageCount = 0;
     func_80204BD4(camera->unk22C, 1, 1.0f);
     func_80204A8C(camera->unk22C, 3);
     func_80204C94(camera->unk22C, -0.7009346f, 0.7009346f, -0.5f, 0.5f, 1.0f, 2048.0f);
     uvChanEnv(camera->unk22C, 0x17);
-    D_8034F7F0 = uvDobjAllocIdx();
+    sMapDobjId = uvDobjAllocIdx();
     switch (arg0->map) {
     case MAP_CRESCENT_ISLAND:
-        uvDobjModel(D_8034F7F0, 0x28);
+        uvDobjModel(sMapDobjId, MODEL_CRESCENT_ISLAND_LOW_POLY);
         D_8034F824 = 600.0f;
         break;
     case MAP_LITTLE_STATES:
-        uvDobjModel(D_8034F7F0, 0x51);
+        uvDobjModel(sMapDobjId, MODEL_LITTLE_STATES_LOW_POLY);
         D_8034F824 = 700.0f;
         break;
     case MAP_HOLIDAY_ISLAND:
-        uvDobjModel(D_8034F7F0, 0);
+        uvDobjModel(sMapDobjId, MODEL_HOLIDAY_ISLAND_LOW_POLY);
         D_8034F824 = 200.0f;
         break;
     case MAP_EVER_FROST_ISLAND:
-        uvDobjModel(D_8034F7F0, 0xA5);
+        uvDobjModel(sMapDobjId, MODEL_EVER_FROST_ISLAND_LOW_POLY);
         D_8034F824 = 700.0f;
         break;
     }
     uvMat4SetIdentity(&sp148);
-    uvDobjPosm(D_8034F7F0, 0, &sp148);
+    uvDobjPosm(sMapDobjId, 0, &sp148);
     rngsCount = 0;
     if (sp140->veh != VEHICLE_CANNONBALL) {
         therCount = taskGetTHER(&therRef);
@@ -196,17 +195,17 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
     cntgCount = taskGetCNTG(&cntgRef);
     if (arg1) {
         sp140 = &arg0->unkC[arg0->unk9C];
-        objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
+        objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
         uvDobjModel(objId, 0xCE);
         uvMat4Copy(&sp148, &sp140->unk2C);
-        spD4 = sp148.m[3][0] *= D_8036AA50;
-        spD0 = sp148.m[3][1] *= D_8036AA50;
-        spCC = sp148.m[3][2] *= D_8036AA50;
-        temp_fa1 = 3.0f * D_8036AA50;
+        spD4 = sp148.m[3][0] *= sMapGlobalScale;
+        spD0 = sp148.m[3][1] *= sMapGlobalScale;
+        spCC = sp148.m[3][2] *= sMapGlobalScale;
+        temp_fa1 = 3.0f * sMapGlobalScale;
         spCC += temp_fa1;
         sp148.m[3][2] += temp_fa1;
         uvDobjPosm(objId, 0, &sp148);
-        D_8034F7F4++;
+        sMapObjectCount++;
         map3dAddItem(0x2E, spD4, spD0, spCC);
     }
 
@@ -217,7 +216,7 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
                     continue;
                 }
                 if ((sp140->unk8 == rngsRef[i].unk18) && (rngsRef[i].ringSubtype != 2)) {
-                    objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
+                    objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
                     if (arg1) {
                         if (gRings[i].isActive != 0) {
                             uvDobjModel(objId, 0xCA);
@@ -225,42 +224,42 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
                             uvDobjModel(objId, 0xCC);
                         }
                         if ((gRings[i].unk1B9 != 0) && (arg1)) {
-                            map3dAddItem(0x4C, gRings[i].curPose.m[3][0] * D_8036AA50, gRings[i].curPose.m[3][1] * D_8036AA50,
-                                         gRings[i].curPose.m[3][2] * D_8036AA50);
+                            map3dAddItem(0x4C, gRings[i].curPose.m[3][0] * sMapGlobalScale, gRings[i].curPose.m[3][1] * sMapGlobalScale,
+                                         gRings[i].curPose.m[3][2] * sMapGlobalScale);
                         } else if (gRings[i].scoreType == 3) {
-                            map3dAddItem(0x33, gRings[i].curPose.m[3][0] * D_8036AA50, gRings[i].curPose.m[3][1] * D_8036AA50,
-                                         gRings[i].curPose.m[3][2] * D_8036AA50);
+                            map3dAddItem(0x33, gRings[i].curPose.m[3][0] * sMapGlobalScale, gRings[i].curPose.m[3][1] * sMapGlobalScale,
+                                         gRings[i].curPose.m[3][2] * sMapGlobalScale);
                         }
                     } else {
                         uvDobjModel(objId, 0xCA);
                     }
                     uvMat4SetIdentity(&sp148);
                     if (arg1) {
-                        sp148.m[3][0] = gRings[i].curPose.m[3][0] * D_8036AA50;
-                        sp148.m[3][1] = gRings[i].curPose.m[3][1] * D_8036AA50;
-                        sp148.m[3][2] = gRings[i].curPose.m[3][2] * D_8036AA50;
+                        sp148.m[3][0] = gRings[i].curPose.m[3][0] * sMapGlobalScale;
+                        sp148.m[3][1] = gRings[i].curPose.m[3][1] * sMapGlobalScale;
+                        sp148.m[3][2] = gRings[i].curPose.m[3][2] * sMapGlobalScale;
                     } else {
-                        sp148.m[3][0] = rngsRef[i].pos.x * D_8036AA50;
-                        sp148.m[3][1] = rngsRef[i].pos.y * D_8036AA50;
-                        sp148.m[3][2] = rngsRef[i].pos.z * D_8036AA50;
+                        sp148.m[3][0] = rngsRef[i].pos.x * sMapGlobalScale;
+                        sp148.m[3][1] = rngsRef[i].pos.y * sMapGlobalScale;
+                        sp148.m[3][2] = rngsRef[i].pos.z * sMapGlobalScale;
                     }
                     uvDobjPosm(objId, 0, &sp148);
-                    D_8034F7F4++;
-                    if (D_8034F7F4 >= ARRAY_COUNT(D_8036A8E8)) {
-                        _uvDebugPrintf("map3d : too many map objects [%d]\n", D_8034F7F4);
+                    sMapObjectCount++;
+                    if (sMapObjectCount >= ARRAY_COUNT(sMapObjects)) {
+                        _uvDebugPrintf("map3d : too many map objects [%d]\n", sMapObjectCount);
                     }
                 }
             }
         }
 
         for (i = 0; i < lpadCount; i++) {
-            spA0 = lpadRef[i].pos.x * D_8036AA50;
-            sp9C = lpadRef[i].pos.y * D_8036AA50;
-            sp98 = lpadRef[i].pos.z * D_8036AA50;
+            spA0 = lpadRef[i].pos.x * sMapGlobalScale;
+            sp9C = lpadRef[i].pos.y * sMapGlobalScale;
+            sp98 = lpadRef[i].pos.z * sMapGlobalScale;
             if ((arg1) && (uvLength2D(spD4 - spA0, spD0 - sp9C) < 10.0f)) {
                 continue;
             }
-            objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
+            objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
             uvDobjModel(objId, 0xC9);
             uvMat4SetIdentity(&sp148);
             sp148.m[3][0] = spA0;
@@ -270,29 +269,29 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
                 uvMat4Scale(&sp148, 0.3f, 0.3f, 0.3f);
             }
             uvDobjPosm(objId, 0, &sp148);
-            D_8034F7F4++;
+            sMapObjectCount++;
             if (arg1) {
                 map3dAddItem(0x2F, spA0, sp9C, sp98);
             }
-            if (D_8034F7F4 >= ARRAY_COUNT(D_8036A8E8)) {
-                _uvDebugPrintf("map3d : too many map objects [%d]\n", D_8034F7F4);
+            if (sMapObjectCount >= ARRAY_COUNT(sMapObjects)) {
+                _uvDebugPrintf("map3d : too many map objects [%d]\n", sMapObjectCount);
             }
         }
 
         for (i = 0; i < lstpCount; i++) {
-            objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
+            objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
             uvDobjModel(objId, 0xC9);
             uvMat4SetIdentity(&sp148);
-            sp148.m[3][0] = (lstpRef[i].posUL.x + lstpRef[i].posLR.x) * 0.5f * D_8036AA50;
-            sp148.m[3][1] = (lstpRef[i].posUL.y + lstpRef[i].posLR.y) * 0.5f * D_8036AA50;
-            sp148.m[3][2] = (lstpRef[i].posUL.z + lstpRef[i].posLR.z) * 0.5f * D_8036AA50;
+            sp148.m[3][0] = (lstpRef[i].posUL.x + lstpRef[i].posLR.x) * 0.5f * sMapGlobalScale;
+            sp148.m[3][1] = (lstpRef[i].posUL.y + lstpRef[i].posLR.y) * 0.5f * sMapGlobalScale;
+            sp148.m[3][2] = (lstpRef[i].posUL.z + lstpRef[i].posLR.z) * 0.5f * sMapGlobalScale;
             if (arg1) {
                 uvMat4Scale(&sp148, 0.3f, 0.3f, 0.3f);
             }
             uvDobjPosm(objId, 0, &sp148);
-            D_8034F7F4++;
-            if (D_8034F7F4 >= ARRAY_COUNT(D_8036A8E8)) {
-                _uvDebugPrintf("map3d : too many map objects [%d]\n", D_8034F7F4);
+            sMapObjectCount++;
+            if (sMapObjectCount >= ARRAY_COUNT(sMapObjects)) {
+                _uvDebugPrintf("map3d : too many map objects [%d]\n", sMapObjectCount);
             }
             if (arg1) {
                 map3dAddItem(0x30, sp148.m[3][0], sp148.m[3][1], sp148.m[3][2]);
@@ -300,40 +299,40 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
         }
 
         for (i = 0; i < tpadCount; i++) {
-            sp94 = tpadRef[i].pos.x * D_8036AA50;
-            sp90 = tpadRef[i].pos.y * D_8036AA50;
-            sp8C = tpadRef[i].pos.z * D_8036AA50;
+            sp94 = tpadRef[i].pos.x * sMapGlobalScale;
+            sp90 = tpadRef[i].pos.y * sMapGlobalScale;
+            sp8C = tpadRef[i].pos.z * sMapGlobalScale;
             if ((arg1) && (uvLength2D(spD4 - sp94, spD0 - sp90) < 10.0f)) {
                 continue;
             }
-            objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
+            objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
             uvDobjModel(objId, 0xC8);
             func_80313640(sp94, sp90, sp8C, tpadRef[i].angle.x * 0.0174533f, tpadRef[i].angle.y * 0.0174533f, tpadRef[i].angle.z * 0.0174533f, &sp148);
             if (arg1) {
                 uvMat4Scale(&sp148, 0.3f, 0.3f, 0.3f);
             }
             uvDobjPosm(objId, 0, &sp148);
-            D_8034F7F4++;
-            if (D_8034F7F4 >= ARRAY_COUNT(D_8036A8E8)) {
-                _uvDebugPrintf("map3d : too many map objects [%d]\n", D_8034F7F4);
+            sMapObjectCount++;
+            if (sMapObjectCount >= ARRAY_COUNT(sMapObjects)) {
+                _uvDebugPrintf("map3d : too many map objects [%d]\n", sMapObjectCount);
             }
         }
 
         if (gThermReady) {
             for (i = 0; i < therCount; i++) {
-                objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
+                objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
                 uvDobjModel(objId, 0xC7);
                 uvMat4SetIdentity(&sp148);
-                sp148.m[3][0] = therRef[i].pos.x * D_8036AA50;
-                sp148.m[3][1] = therRef[i].pos.y * D_8036AA50;
-                sp148.m[3][2] = therRef[i].pos.z * D_8036AA50;
+                sp148.m[3][0] = therRef[i].pos.x * sMapGlobalScale;
+                sp148.m[3][1] = therRef[i].pos.y * sMapGlobalScale;
+                sp148.m[3][2] = therRef[i].pos.z * sMapGlobalScale;
                 sp148.m[0][0] = ((2.0f * therRef[i].scale) / 1000.0f) * 4.0f;
                 sp148.m[1][1] = ((2.0f * therRef[i].scale) / 1000.0f) * 4.0f;
                 sp148.m[2][2] = (therRef[i].height / 1000.0f) * 4.0f;
                 uvDobjPosm(objId, 0, &sp148);
-                D_8034F7F4++;
-                if (D_8034F7F4 >= ARRAY_COUNT(D_8036A8E8)) {
-                    _uvDebugPrintf("map3d : too many map objects [%d]\n", D_8034F7F4);
+                sMapObjectCount++;
+                if (sMapObjectCount >= ARRAY_COUNT(sMapObjects)) {
+                    _uvDebugPrintf("map3d : too many map objects [%d]\n", sMapObjectCount);
                 }
             }
         }
@@ -342,7 +341,7 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
             if (((arg1) && (gHoverPads[i].wasLandedOn)) || (sp140->unk8 != hpadRef[i].unk18)) {
                 continue;
             }
-            objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
+            objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
             if (arg1) {
                 if (gHoverPads[i].active != 0) {
                     uvDobjModel(objId, 0xCA);
@@ -350,20 +349,20 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
                     uvDobjModel(objId, 0xCC);
                 }
                 if ((gHoverPads[i].unk6C == 1) && (arg1)) {
-                    map3dAddItem(0x4C, gHoverPads[i].pose.m[3][0] * D_8036AA50, gHoverPads[i].pose.m[3][1] * D_8036AA50,
-                                 gHoverPads[i].pose.m[3][2] * D_8036AA50);
+                    map3dAddItem(0x4C, gHoverPads[i].pose.m[3][0] * sMapGlobalScale, gHoverPads[i].pose.m[3][1] * sMapGlobalScale,
+                                 gHoverPads[i].pose.m[3][2] * sMapGlobalScale);
                 }
             } else {
                 uvDobjModel(objId, 0xCA);
             }
             uvMat4SetIdentity(&sp148);
-            sp148.m[3][0] = hpadRef[i].pos.x * D_8036AA50;
-            sp148.m[3][1] = hpadRef[i].pos.y * D_8036AA50;
-            sp148.m[3][2] = hpadRef[i].pos.z * D_8036AA50;
+            sp148.m[3][0] = hpadRef[i].pos.x * sMapGlobalScale;
+            sp148.m[3][1] = hpadRef[i].pos.y * sMapGlobalScale;
+            sp148.m[3][2] = hpadRef[i].pos.z * sMapGlobalScale;
             uvDobjPosm(objId, 0, &sp148);
-            D_8034F7F4++;
-            if (D_8034F7F4 >= ARRAY_COUNT(D_8036A8E8)) {
-                _uvDebugPrintf("map3d : too many map objects [%d]\n", D_8034F7F4);
+            sMapObjectCount++;
+            if (sMapObjectCount >= ARRAY_COUNT(sMapObjects)) {
+                _uvDebugPrintf("map3d : too many map objects [%d]\n", sMapObjectCount);
             }
         }
 
@@ -372,16 +371,16 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
                 if ((arg1) && (sMissileTargets[i].unk46 != 0)) {
                     continue;
                 }
-                objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
+                objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
                 uvDobjModel(objId, 0xCA);
                 uvMat4SetIdentity(&sp148);
-                sp148.m[3][0] = targRef[i].pos.x * D_8036AA50;
-                sp148.m[3][1] = targRef[i].pos.y * D_8036AA50;
-                sp148.m[3][2] = targRef[i].pos.z * D_8036AA50;
+                sp148.m[3][0] = targRef[i].pos.x * sMapGlobalScale;
+                sp148.m[3][1] = targRef[i].pos.y * sMapGlobalScale;
+                sp148.m[3][2] = targRef[i].pos.z * sMapGlobalScale;
                 uvDobjPosm(objId, 0, &sp148);
-                D_8034F7F4++;
-                if (D_8034F7F4 >= ARRAY_COUNT(D_8036A8E8)) {
-                    _uvDebugPrintf("map3d : too many map objects [%d]\n", D_8034F7F4);
+                sMapObjectCount++;
+                if (sMapObjectCount >= ARRAY_COUNT(sMapObjects)) {
+                    _uvDebugPrintf("map3d : too many map objects [%d]\n", sMapObjectCount);
                 }
             }
         }
@@ -414,29 +413,30 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
                 break;
             }
             if (arg1) {
-                map3dAddItem(sp88, photoPos.x * D_8036AA50, photoPos.y * D_8036AA50, photoPos.z * D_8036AA50);
+                map3dAddItem(sp88, photoPos.x * sMapGlobalScale, photoPos.y * sMapGlobalScale, photoPos.z * sMapGlobalScale);
             }
         }
 
         for (i = 0; i < hopdCount; i++) {
-            objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
+            objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
             uvDobjModel(objId, 0xD1);
             uvMat4SetIdentity(&sp148);
             sp148.m[0][0] = hopdRef[i].scale;
             sp148.m[1][1] = hopdRef[i].scale;
             sp148.m[2][2] = hopdRef[i].height;
             uvDobjProps(objId, 3, MAX(hopdRef[i].scale, hopdRef[i].height), 0);
-            uvMat4Scale(&sp148, D_8036AA50, D_8036AA50, D_8036AA50);
-            sp148.m[3][0] = hopdRef[i].pos.x * D_8036AA50;
-            sp148.m[3][1] = hopdRef[i].pos.y * D_8036AA50;
-            sp148.m[3][2] = hopdRef[i].pos.z * D_8036AA50;
+            uvMat4Scale(&sp148, sMapGlobalScale, sMapGlobalScale, sMapGlobalScale);
+            sp148.m[3][0] = hopdRef[i].pos.x * sMapGlobalScale;
+            sp148.m[3][1] = hopdRef[i].pos.y * sMapGlobalScale;
+            sp148.m[3][2] = hopdRef[i].pos.z * sMapGlobalScale;
             uvDobjPosm(objId, 0, &sp148);
             if (arg1) {
-                map3dAddItem(0x33, hopdRef[i].pos.x * D_8036AA50, hopdRef[i].pos.y * D_8036AA50, (hopdRef[i].pos.z + hopdRef[i].height) * D_8036AA50);
+                map3dAddItem(0x33, hopdRef[i].pos.x * sMapGlobalScale, hopdRef[i].pos.y * sMapGlobalScale,
+                             (hopdRef[i].pos.z + hopdRef[i].height) * sMapGlobalScale);
             }
-            D_8034F7F4++;
-            if (D_8034F7F4 >= ARRAY_COUNT(D_8036A8E8)) {
-                _uvDebugPrintf("map3d : too many map objects [%d]\n", D_8034F7F4);
+            sMapObjectCount++;
+            if (sMapObjectCount >= ARRAY_COUNT(sMapObjects)) {
+                _uvDebugPrintf("map3d : too many map objects [%d]\n", sMapObjectCount);
             }
         }
 
@@ -448,43 +448,44 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
             }
             if (arg1) {
                 falco_802E64E0(falcoId++, &sp148);
-                sp148.m[3][0] *= D_8036AA50;
-                sp148.m[3][1] *= D_8036AA50;
-                sp148.m[3][2] *= D_8036AA50;
-                map3dAddItem(0x32, sp148.m[3][0], sp148.m[3][1], sp148.m[3][2] + (27.63f * D_8036AA50));
-                uvMat4Scale(&sp148, D_8036AA50, D_8036AA50, D_8036AA50);
+                sp148.m[3][0] *= sMapGlobalScale;
+                sp148.m[3][1] *= sMapGlobalScale;
+                sp148.m[3][2] *= sMapGlobalScale;
+                map3dAddItem(0x32, sp148.m[3][0], sp148.m[3][1], sp148.m[3][2] + (27.63f * sMapGlobalScale));
+                uvMat4Scale(&sp148, sMapGlobalScale, sMapGlobalScale, sMapGlobalScale);
             } else {
                 uvMat4SetIdentity(&sp148);
-                uvMat4Scale(&sp148, D_8036AA50, D_8036AA50, D_8036AA50);
-                sp148.m[3][0] = falc->unk0.x * D_8036AA50;
-                sp148.m[3][1] = falc->unk0.y * D_8036AA50;
-                sp148.m[3][2] = falc->unk0.z * D_8036AA50;
+                uvMat4Scale(&sp148, sMapGlobalScale, sMapGlobalScale, sMapGlobalScale);
+                sp148.m[3][0] = falc->unk0.x * sMapGlobalScale;
+                sp148.m[3][1] = falc->unk0.y * sMapGlobalScale;
+                sp148.m[3][2] = falc->unk0.z * sMapGlobalScale;
             }
-            objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
-            D_8034F7F4++;
+            objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
+            sMapObjectCount++;
             uvDobjModel(objId, 0xD3);
             uvDobjPosm(objId, 0, &sp148);
         }
 
         for (i = 0; i < btgtCount; i++) {
-            objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
+            objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
             uvDobjModel(objId, 0xD2);
             uvMat4SetIdentity(&sp148);
             sp148.m[0][0] = btgtRef[i].unk10;
             sp148.m[1][1] = btgtRef[i].unk10;
             sp148.m[2][2] = btgtRef[i].unk14;
             uvDobjProps(objId, 3, MAX(btgtRef[i].unk10, btgtRef[i].unk14), 0);
-            uvMat4Scale(&sp148, D_8036AA50, D_8036AA50, D_8036AA50);
-            sp148.m[3][0] = btgtRef[i].pos.x * D_8036AA50;
-            sp148.m[3][1] = btgtRef[i].pos.y * D_8036AA50;
-            sp148.m[3][2] = btgtRef[i].pos.z * D_8036AA50;
+            uvMat4Scale(&sp148, sMapGlobalScale, sMapGlobalScale, sMapGlobalScale);
+            sp148.m[3][0] = btgtRef[i].pos.x * sMapGlobalScale;
+            sp148.m[3][1] = btgtRef[i].pos.y * sMapGlobalScale;
+            sp148.m[3][2] = btgtRef[i].pos.z * sMapGlobalScale;
             uvDobjPosm(objId, 0, &sp148);
             if (arg1) {
-                map3dAddItem(0x33, btgtRef[i].pos.x * D_8036AA50, btgtRef[i].pos.y * D_8036AA50, (btgtRef[i].pos.z + btgtRef[i].unk14) * D_8036AA50);
+                map3dAddItem(0x33, btgtRef[i].pos.x * sMapGlobalScale, btgtRef[i].pos.y * sMapGlobalScale,
+                             (btgtRef[i].pos.z + btgtRef[i].unk14) * sMapGlobalScale);
             }
-            D_8034F7F4++;
-            if (D_8034F7F4 >= ARRAY_COUNT(D_8036A8E8)) {
-                _uvDebugPrintf("map3d : too many map objects [%d]\n", D_8034F7F4);
+            sMapObjectCount++;
+            if (sMapObjectCount >= ARRAY_COUNT(sMapObjects)) {
+                _uvDebugPrintf("map3d : too many map objects [%d]\n", sMapObjectCount);
             }
         }
 
@@ -492,34 +493,34 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
             if (gBalls[i].hasPopped) {
                 continue;
             }
-            objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
+            objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
             uvDobjModel(objId, 0xCA);
             uvMat4SetIdentity(&sp148);
-            sp148.m[3][0] = gBalls[i].pose.m[3][0] * D_8036AA50;
-            sp148.m[3][1] = gBalls[i].pose.m[3][1] * D_8036AA50;
-            sp148.m[3][2] = gBalls[i].pose.m[3][2] * D_8036AA50;
+            sp148.m[3][0] = gBalls[i].pose.m[3][0] * sMapGlobalScale;
+            sp148.m[3][1] = gBalls[i].pose.m[3][1] * sMapGlobalScale;
+            sp148.m[3][2] = gBalls[i].pose.m[3][2] * sMapGlobalScale;
             uvDobjPosm(objId, 0, &sp148);
-            D_8034F7F4++;
-            if (D_8034F7F4 >= ARRAY_COUNT(D_8036A8E8)) {
-                _uvDebugPrintf("map3d : too many map objects [%d]\n", D_8034F7F4);
+            sMapObjectCount++;
+            if (sMapObjectCount >= ARRAY_COUNT(sMapObjects)) {
+                _uvDebugPrintf("map3d : too many map objects [%d]\n", sMapObjectCount);
             }
         }
 
         for (i = 0; i < cntgCount; i++) {
-            objId = D_8036A8E8[D_8034F7F4] = uvDobjAllocIdx();
+            objId = sMapObjects[sMapObjectCount] = uvDobjAllocIdx();
             uvDobjModel(objId, 0xD0);
             func_80313640(cntgRef[i].pos.x, cntgRef[i].pos.y, cntgRef[i].pos.z, cntgRef[i].angle.x * 0.01745329f, cntgRef[i].angle.y * 0.01745329f,
                           cntgRef[i].angle.z * 0.01745329f, &sp148);
-            sp148.m[3][0] *= D_8036AA50;
-            sp148.m[3][1] *= D_8036AA50;
-            sp148.m[3][2] *= D_8036AA50;
+            sp148.m[3][0] *= sMapGlobalScale;
+            sp148.m[3][1] *= sMapGlobalScale;
+            sp148.m[3][2] *= sMapGlobalScale;
             uvDobjPosm(objId, 0, &sp148);
-            D_8034F7F4 += 1;
+            sMapObjectCount += 1;
             if (arg1) {
                 map3dAddItem(0x31, sp148.m[3][0], sp148.m[3][1], sp148.m[3][2]);
             }
-            if (D_8034F7F4 >= ARRAY_COUNT(D_8036A8E8)) {
-                _uvDebugPrintf("map3d : too many map objects [%d]\n", D_8034F7F4);
+            if (sMapObjectCount >= ARRAY_COUNT(sMapObjects)) {
+                _uvDebugPrintf("map3d : too many map objects [%d]\n", sMapObjectCount);
             }
         }
     }
@@ -558,8 +559,8 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
     }
     D_8034F82C = D_8034F828;
     D_8034F834 = D_8034F830;
-    D_8036A8E0 = sndMakeDev(0x4C);
-    D_8036A8E1 = sndMakeDev(0x03);
+    sMapEmitterDev0 = sndMakeDev(0x4C);
+    sMapEmitterDev1 = sndMakeDev(0x03);
 }
 
 s32 map3dHandler(u8 arg0, s32 arg1) {
@@ -574,9 +575,9 @@ s32 map3dHandler(u8 arg0, s32 arg1) {
 
     demo_80323020();
     func_80313D74();
-    sp38 = demoGetInputs(D_80362690->unk9C, 0);
-    sp34 = demoGetInputs(D_80362690->unk9C, 1);
-    if (demoButtonCheck(D_80362690->unk9C, 0x2000) != 0) {
+    sp38 = demoGetInputs(D_80362690->unk9C, INPUT_AXIS_X);
+    sp34 = demoGetInputs(D_80362690->unk9C, INPUT_AXIS_Y);
+    if (demoButtonCheck(D_80362690->unk9C, Z_TRIG) != 0) {
         var_v0 = TRUE;
     } else {
         var_v0 = FALSE;
@@ -620,19 +621,19 @@ s32 map3dHandler(u8 arg0, s32 arg1) {
             temp_fv0_2 = -temp_fv0_2;
         }
         map3d_803123C4(temp_fv0, temp_fv0_2);
-        func_8033F904(D_8036A8E1, 1.0f, 1.0f, 0.0f);
+        func_8033F904(sMapEmitterDev1, 1.0f, 1.0f, 0.0f);
     }
-    if (demoButtonCheck(D_80362690->unk9C, 0x8) != 0) {
-        func_8033F904(D_8036A8E1, 1.0f, 1.0f, 0.0f);
-        D_8034F808 -= 2000.0f * D_8036AA50 * D_8034F854;
-    } else if (demoButtonCheck(D_80362690->unk9C, 0x4) != 0) {
-        func_8033F904(D_8036A8E1, 1.0f, 1.0f, 0.0f);
-        D_8034F808 += 2000.0f * D_8036AA50 * D_8034F854;
+    if (demoButtonCheck(D_80362690->unk9C, U_CBUTTONS) != 0) {
+        func_8033F904(sMapEmitterDev1, 1.0f, 1.0f, 0.0f);
+        D_8034F808 -= 2000.0f * sMapGlobalScale * D_8034F854;
+    } else if (demoButtonCheck(D_80362690->unk9C, D_CBUTTONS) != 0) {
+        func_8033F904(sMapEmitterDev1, 1.0f, 1.0f, 0.0f);
+        D_8034F808 += 2000.0f * sMapGlobalScale * D_8034F854;
     } else {
-        if ((arg1) && (demoButtonCheck(D_80362690->unk9C, 0x8000) != 0)) {
+        if ((arg1) && (demoButtonCheck(D_80362690->unk9C, A_BUTTON) != 0)) {
             map3d_80312514();
         } else {
-            func_8033F904(D_8036A8E1, 1.0f, 0.0f, 0.0f);
+            func_8033F904(sMapEmitterDev1, 1.0f, 0.0f, 0.0f);
         }
     }
     if (D_8034F808 < 50.0f) {
@@ -642,24 +643,24 @@ s32 map3dHandler(u8 arg0, s32 arg1) {
     }
     sp3C = D_8034F808;
     if ((D_8034F7FC == 50.0f) || (D_8034F7FC == D_8034F824)) {
-        func_8033F904(D_8036A8E1, 1.0f, 0.0f, 0.0f);
+        func_8033F904(sMapEmitterDev1, 1.0f, 0.0f, 0.0f);
     }
     if ((D_8034F82C != D_8034F828) || (D_8034F830 != D_8034F834) || (sp2C != D_8034F810) || (sp30 != D_8034F818)) {
-        func_8033F904(D_8036A8E0, 1.0f, 0.35f, 0.0f);
+        func_8033F904(sMapEmitterDev0, 1.0f, 0.35f, 0.0f);
     } else {
-        func_8033F904(D_8036A8E0, 1.0f, 0.0f, 0.0f);
+        func_8033F904(sMapEmitterDev0, 1.0f, 0.0f, 0.0f);
     }
     D_8034F828 = D_8034F82C;
     D_8034F830 = D_8034F834;
     D_8034F7FC = sp3C;
-    if (demoButtonPress(arg0, 0x8000) != 0) {
-        func_8033F904(D_8036A8E1, 1.0f, 0.0f, 0.0f);
-        func_8033F904(D_8036A8E0, 1.0f, 0.0f, 0.0f);
+    if (demoButtonPress(arg0, A_BUTTON) != 0) {
+        func_8033F904(sMapEmitterDev1, 1.0f, 0.0f, 0.0f);
+        func_8033F904(sMapEmitterDev0, 1.0f, 0.0f, 0.0f);
         sndPlaySfx(0x6E);
     }
-    if ((demoButtonPress(arg0, 0x1000) != 0) || (demoButtonPress(arg0, 0x4000) != 0)) {
-        func_8033F904(D_8036A8E1, 1.0f, 0.0f, 0.0f);
-        func_8033F904(D_8036A8E0, 1.0f, 0.0f, 0.0f);
+    if ((demoButtonPress(arg0, START_BUTTON) != 0) || (demoButtonPress(arg0, B_BUTTON) != 0)) {
+        func_8033F904(sMapEmitterDev1, 1.0f, 0.0f, 0.0f);
+        func_8033F904(sMapEmitterDev0, 1.0f, 0.0f, 0.0f);
         sndPlaySfx(1);
         return FALSE;
     } else {
@@ -709,17 +710,17 @@ void map3dRender(Unk80362690* arg0, s32 arg1) {
         uvMat4Mul(&sp17C, &spFC, &sp1BC);
         func_80314154();
 
-        for (i = 0; i < D_8034F7F8; i++) {
-            x = (D_8036A960[i].x - sp1FC->unk108.m[3][0]);
-            y = (D_8036A960[i].y - sp1FC->unk108.m[3][1]);
-            z = (D_8036A960[i].z - sp1FC->unk108.m[3][2]);
+        for (i = 0; i < sMapMessageCount; i++) {
+            x = (sMapMessages[i].x - sp1FC->unk108.m[3][0]);
+            y = (sMapMessages[i].y - sp1FC->unk108.m[3][1]);
+            z = (sMapMessages[i].z - sp1FC->unk108.m[3][2]);
             if (((x * sp1FC->unk108.m[1][0]) + (y * sp1FC->unk108.m[1][1]) + (z * sp1FC->unk108.m[1][2])) < 0.0f) {
                 continue;
             }
             width = uvSprtGetWidth(20 - i);
-            spAC.x = D_8036A960[i].x;
-            spAC.y = D_8036A960[i].y;
-            spAC.z = D_8036A960[i].z;
+            spAC.x = sMapMessages[i].x;
+            spAC.y = sMapMessages[i].y;
+            spAC.z = sMapMessages[i].z;
             spAC.w = 1.0f;
             func_8034AC34(&sp17C, &spBC, &spAC);
             temp_fs0 = spBC.f[0] / spBC.f[3];
@@ -757,19 +758,19 @@ void map3dDeinit(Unk80362690* arg0, s32 arg1) {
     s32 i;
 
     sp2C = arg0->unkC[arg0->unk9C].unk70;
-    uvDobjModel(D_8034F7F0, 0xFFFF);
-    D_8034F7F0 = 0xFFFF;
-    for (i = 0; i < D_8034F7F4; i++) {
-        uvDobjModel(D_8036A8E8[i], 0xFFFF);
-        D_8036A8E8[i] = 0xFFFF;
+    uvDobjModel(sMapDobjId, 0xFFFF);
+    sMapDobjId = 0xFFFF;
+    for (i = 0; i < sMapObjectCount; i++) {
+        uvDobjModel(sMapObjects[i], 0xFFFF);
+        sMapObjects[i] = 0xFFFF;
     }
-    D_8034F7F4 = 0;
-    func_8033F8CC(D_8036A8E0);
-    func_8033F8CC(D_8036A8E1);
+    sMapObjectCount = 0;
+    func_8033F8CC(sMapEmitterDev0);
+    func_8033F8CC(sMapEmitterDev1);
     if (arg1 != 0) {
         func_80204A8C(sp2C->unk22C, 3);
     }
-    hudGetState()->renderFlags = D_8034F83C;
+    hudGetState()->renderFlags = sMapHudFlagsSave;
     func_802D45C4(sp2C, -1.0f);
 }
 
@@ -816,11 +817,11 @@ void map3d_80312514(void) {
 
     unkC = &D_80362690->unkC[D_80362690->unk9C];
     func_80313570(&unkC->unk2C, &sp38, &sp34, &sp30, &sp44, &sp40, &sp3C);
-    D_8034F82C = sp38 * D_8036AA50;
+    D_8034F82C = sp38 * sMapGlobalScale;
     D_8034F828 = D_8034F82C;
-    D_8034F834 = sp34 * D_8036AA50;
+    D_8034F834 = sp34 * sMapGlobalScale;
     D_8034F830 = D_8034F834;
-    D_8034F838 = sp30 * D_8036AA50;
+    D_8034F838 = sp30 * sMapGlobalScale;
     D_8034F7FC = 50.0f;
     D_8034F800 = D_8034F7FC;
     D_8034F804 = D_8034F800 * 0.85;
@@ -832,13 +833,13 @@ void map3d_80312514(void) {
 }
 
 void map3dAddItem(s32 arg0, f32 x, f32 y, f32 z) {
-    if (D_8034F7F8 >= ARRAY_COUNT(D_8036A960)) {
-        _uvDebugPrintf("Map3d: No more message slots (%d)\n", ARRAY_COUNT(D_8036A960));
+    if (sMapMessageCount >= ARRAY_COUNT(sMapMessages)) {
+        _uvDebugPrintf("Map3d: No more message slots (%d)\n", ARRAY_COUNT(sMapMessages));
         return;
     }
-    uvSprtProps(ARRAY_COUNT(D_8036A960) - D_8034F7F8, 3, 1, 9, arg0, 0);
-    D_8036A960[D_8034F7F8].x = x;
-    D_8036A960[D_8034F7F8].y = y;
-    D_8036A960[D_8034F7F8].z = z;
-    D_8034F7F8++;
+    uvSprtProps(ARRAY_COUNT(sMapMessages) - sMapMessageCount, 3, 1, 9, arg0, 0);
+    sMapMessages[sMapMessageCount].x = x;
+    sMapMessages[sMapMessageCount].y = y;
+    sMapMessages[sMapMessageCount].z = z;
+    sMapMessageCount++;
 }
