@@ -493,7 +493,7 @@ sndPlaySfxVolPitchPan = 0x8033F758; // type:func
 sndPlaySfx          = 0x8033F7F8; // type:func
 sndMakeDev          = 0x8033F860; // type:func
 sndEvent            = 0x8033FB44; // type:func
-sndGetPilot         = 0x8033FBCC; // type:func
+sndGetPilotScream   = 0x8033FBCC; // type:func
 
 snowCreate          = 0x8033FE40; // type:func
 snowDraw            = 0x8033FF30; // type:func

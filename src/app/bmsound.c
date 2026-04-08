@@ -125,8 +125,8 @@ void bmSoundCallback(s32 eventType, void* arg1, s32 eventData) {
 
 void bmSound_802D112C(BirdmanData* arg0) {
     Unk80362690_Unk0* sp34;
-    s32 sp30;
-    f32 sp2C;
+    s32 sfxId;
+    f32 pitch;
 
     sp34 = &D_80362690->unkC[D_80362690->unk9C];
     if (arg0->unk104 == 2) {
@@ -144,8 +144,8 @@ void bmSound_802D112C(BirdmanData* arg0) {
         if (arg0->unk104 == 1) {
             if (!(arg0->unk410 & 0x10)) {
                 arg0->unk410 |= 0x10;
-                sndGetPilot(&sp30, &sp2C);
-                sndPlaySfxVolPitchPan(sp30, 1.0f, sp2C, 0.0f);
+                sndGetPilotScream(&sfxId, &pitch);
+                sndPlaySfxVolPitchPan(sfxId, 1.0f, pitch, 0.0f);
                 func_8033F748(0x1B);
                 func_8033F964(0);
                 func_8033FCD0(sp34->veh);
@@ -194,7 +194,7 @@ void bmSound_802D1334(BirdmanData* arg0) {
                 if ((arg0->unk15C != 0) && (arg0->unk104 == 2)) {
                     if (!(arg0->unk410 & 0x04)) {
                         arg0->unk410 |= 0x04;
-                        sndPlaySfx(0x1A);
+                        sndPlaySfx(SFX_WATER_SPLASH);
                     }
                 }
                 break;

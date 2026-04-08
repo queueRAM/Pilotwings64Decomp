@@ -18,8 +18,8 @@ void func_802DA474(CannonballData*);
 
 void cbSoundInit(CannonballData* arg0) {
     s32 pad;
-    s32 sp48;
-    f32 sp44;
+    s32 sfxId;
+    f32 pitch;
 
     arg0->unk2A8 = 1.0f;
     arg0->unk2B8 = 0.0f;
@@ -36,10 +36,10 @@ void cbSoundInit(CannonballData* arg0) {
     arg0->unk2B0 = sndMakeDev(0x13);
     arg0->unk2B1 = sndMakeDev(0x13);
     arg0->unk2B4 = uvEmitterLookup();
-    sndGetPilot(&sp48, &sp44);
-    uvEmitterFromModel(arg0->unk2B4, sp48);
+    sndGetPilotScream(&sfxId, &pitch);
+    uvEmitterFromModel(arg0->unk2B4, sfxId);
     uvEmitterSetUnk70(arg0->unk2B4, 1.0f);
-    uvEmitterSetUnk74(arg0->unk2B4, sp44);
+    uvEmitterSetUnk74(arg0->unk2B4, pitch);
     uvEmitterProp(arg0->unk2B4, 1, 0.0f, 2, 5000.0f, 5, 0x10, 0);
     arg0->unk2B5 = sndMakeDev(0x4C);
     D_80359BE0.cb = func_802D9E68;
@@ -146,7 +146,7 @@ void func_802DA23C(CannonballData* arg0) {
         if (!(arg0->unk2AC & 2)) {
             sndPlaySfx(0x36);
             if ((arg0->unk11C != 0) && !(arg0->unk2AC & 2)) {
-                sndPlaySfx(0x1A);
+                sndPlaySfx(SFX_WATER_SPLASH);
             }
             arg0->unk2AC |= 2;
             func_8033F748(0x12);

@@ -148,8 +148,8 @@ STATIC_FUNC void hgSoundEvent19(HangGliderData* hg) {
 
 STATIC_FUNC void hgSoundEvent22(HangGliderData* hg) {
     Unk80362690_Unk0* sp34;
-    s32 sp30;
-    f32 sp2C;
+    s32 sfxId;
+    f32 pitch;
 
     sp34 = &D_80362690->unkC[D_80362690->unk9C];
     if (hg->unk8C == 3) {
@@ -167,8 +167,8 @@ STATIC_FUNC void hgSoundEvent22(HangGliderData* hg) {
         if (hg->unk8C == 2) {
             if (!(hg->unk318 & 0x10)) {
                 hg->unk318 |= 0x10;
-                sndGetPilot(&sp30, &sp2C);
-                sndPlaySfxVolPitchPan(sp30, 1.0f, sp2C, 0.0f);
+                sndGetPilotScream(&sfxId, &pitch);
+                sndPlaySfxVolPitchPan(sfxId, 1.0f, pitch, 0.0f);
                 func_8033F748(7);
                 func_8033F964(0);
                 func_8033FCD0(sp34->veh);

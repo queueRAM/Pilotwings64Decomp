@@ -176,8 +176,8 @@ STATIC_FUNC void rbSoundEventHandler(s32 event, void* userData, s32 eventData) {
 
 STATIC_FUNC void rbSoundEvent12_22(RocketBeltData* rbData) {
     Unk80362690_Unk0* sp34;
-    s32 sp30;
-    f32 sp2C;
+    s32 sfxId;
+    f32 pitch;
 
     sp34 = &D_80362690->unkC[D_80362690->unk9C];
     if (rbData->unk90 == 3) {
@@ -195,8 +195,8 @@ STATIC_FUNC void rbSoundEvent12_22(RocketBeltData* rbData) {
         if (rbData->unk90 == 2) {
             if ((rbData->unk384 & 0x10) == 0) {
                 rbData->unk384 |= 0x10;
-                sndGetPilot(&sp30, &sp2C);
-                sndPlaySfxVolPitchPan(sp30, 1.0f, sp2C, 0.0f);
+                sndGetPilotScream(&sfxId, &pitch);
+                sndPlaySfxVolPitchPan(sfxId, 1.0f, pitch, 0.0f);
                 func_8033F748(0xB);
                 func_8033F964(0);
                 func_8033FCD0(sp34->veh);

@@ -106,8 +106,8 @@ s32 func_802EB640(Unk80362690_Unk0* arg0, u16 arg1) {
     f64 temp_fv0_2;
     u8 temp_s0;
     u16 modelId;
-    s32 sp90;
-    f32 sp8C;
+    s32 sfxId;
+    f32 pitch;
 
     uvFxGetProps(arg1, 10, &spC8, &spC4, &spC0, 3, &spB0, &spAC, &spA8, 0);
     if (spAC < spB0) {
@@ -147,10 +147,10 @@ s32 func_802EB640(Unk80362690_Unk0* arg0, u16 arg1) {
         arg0->smokeId = smokeCreate();
         smokeProps(arg0->smokeId, 1, 0, 0, 0, 2, 3.0f, 3, 2.0f, 5, 0.0f, 0.0f, 0.5f, 4, 5.0f, 7, 1, 0);
         temp_s0 = uvEmitterLookup();
-        sndGetPilot(&sp90, &sp8C);
-        uvEmitterFromModel(temp_s0, sp90);
+        sndGetPilotScream(&sfxId, &pitch);
+        uvEmitterFromModel(temp_s0, sfxId);
         uvEmitterSetUnk70(temp_s0, 1.0f);
-        uvEmitterSetUnk74(temp_s0, sp8C);
+        uvEmitterSetUnk74(temp_s0, pitch);
         uvEmitterProp(temp_s0, 1, 0.0f, 2, 5000.0f, 5, 0x30, 0);
         uvEmitterTrigger(temp_s0);
         sndPlaySfx(0x5A);

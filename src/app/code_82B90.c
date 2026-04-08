@@ -243,7 +243,7 @@ void func_802FBEFC(JumbleHopperData* arg0, f32 arg1) {
         sp30.m[3][1] = arg0->unkF4.y;
         sp30.m[3][2] = arg1;
         splashAdd(&sp30, 0.75f);
-        sndPlaySfx(0x1A);
+        sndPlaySfx(SFX_WATER_SPLASH);
     }
 }
 

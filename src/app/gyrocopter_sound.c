@@ -206,8 +206,8 @@ void hsound_callback(s32 eventType, void* arg1, s32 eventData) {
 
 void func_8030ABF8(GyrocopterData* arg0) {
     Unk80362690_Unk0* sp34;
-    s32 sp30;
-    f32 sp2C;
+    s32 sfxId;
+    f32 pitch;
 
     sp34 = &D_80362690->unkC[D_80362690->unk9C];
     if (arg0->unkC0 == 3) {
@@ -225,8 +225,8 @@ void func_8030ABF8(GyrocopterData* arg0) {
         if (arg0->unkC0 == 2) {
             if (!(arg0->unk678 & 0x10)) {
                 arg0->unk678 |= 0x10;
-                sndGetPilot(&sp30, &sp2C);
-                sndPlaySfxVolPitchPan(sp30, 1.0f, sp2C, 0.0f);
+                sndGetPilotScream(&sfxId, &pitch);
+                sndPlaySfxVolPitchPan(sfxId, 1.0f, pitch, 0.0f);
                 func_8033F748(0xF);
                 func_8033F964(0);
                 func_8033FCD0(sp34->veh);
@@ -289,7 +289,7 @@ void func_8030AEB0(GyrocopterData* arg0) {
             if ((arg0->unkD0 != 0) && (arg0->unkC0 == 3)) {
                 if (!(arg0->unk678 & 4)) {
                     arg0->unk678 |= 4;
-                    sndPlaySfx(0x1A);
+                    sndPlaySfx(SFX_WATER_SPLASH);
                 }
             }
             break;

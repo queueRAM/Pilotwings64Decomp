@@ -253,7 +253,7 @@ void func_802EEF0C(HangGliderData* hangGlider) {
             hangGlider->unk50->unk6 = hangGlider->unk2 = 0;
             uvDobjState(hangGlider->objId, hangGlider->unk2);
             uvMat4Copy(&hangGlider->unk50->unk80, &hangGlider->unk10);
-            sndPlaySfx(0x1AU);
+            sndPlaySfx(SFX_WATER_SPLASH);
             if (!(hangGlider->unk318 & 0x10)) {
                 func_8033F748(7U);
                 func_8033F964(0);

@@ -18,7 +18,7 @@ void func_8033F964(u8);
 void func_8033FA88(f32);
 void func_8033FAD4(f32);
 void func_8033FB14(void);
-void sndGetPilot(s32*, f32*);
+void sndGetPilotScream(s32*, f32*);
 void func_8033FCD0(u16);
 void func_8033FA88(f32);
 void func_8033FD94(u16, f32, f32);
@@ -50,10 +50,10 @@ enum Sfx {
     /* 0x17 */ SFX_UNK_023,
     /* 0x18 */ SFX_UNK_024,
     /* 0x19 */ SFX_UNK_025,
-    /* 0x1A */ SFX_UNK_026,
+    /* 0x1A */ SFX_WATER_SPLASH,
     /* 0x1B */ SFX_UNK_027,
     /* 0x1C */ SFX_UNK_028,
-    /* 0x1D */ SFX_UNK_029,
+    /* 0x1D */ SFX_PILOT_GOOSE_SCREAM,
     /* 0x1E */ SFX_UNK_030,
     /* 0x1F */ SFX_UNK_031,
     /* 0x20 */ SFX_UNK_032,
@@ -78,7 +78,7 @@ enum Sfx {
     /* 0x33 */ SFX_UNK_051,
     /* 0x34 */ SFX_UNK_052,
     /* 0x35 */ SFX_UNK_053,
-    /* 0x36 */ SFX_UNK_054,
+    /* 0x36 */ SFX_CRASH_LANDING_REVEAL,
     /* 0x37 */ SFX_UNK_055,
     /* 0x38 */ SFX_UNK_056,
     /* 0x39 */ SFX_UNK_057,
@@ -107,12 +107,12 @@ enum Sfx {
     /* 0x50 */ SFX_UNK_080,
     /* 0x51 */ SFX_UNK_081,
     /* 0x52 */ SFX_UNK_082,
-    /* 0x53 */ SFX_UNK_083,
+    /* 0x53 */ SFX_PILOT_IBIS_SCREAM,
     /* 0x54 */ SFX_UNK_084,
-    /* 0x55 */ SFX_UNK_085,
-    /* 0x56 */ SFX_UNK_086,
-    /* 0x57 */ SFX_UNK_087,
-    /* 0x58 */ SFX_UNK_088,
+    /* 0x55 */ SFX_PILOT_LARK_SCREAM,
+    /* 0x56 */ SFX_PILOT_HAWK_SCREAM,
+    /* 0x57 */ SFX_PILOT_KIWI_SCREAM,
+    /* 0x58 */ SFX_PILOT_ROBIN_SCREAM,
     /* 0x59 */ SFX_UNK_089,
     /* 0x5A */ SFX_UNK_090,
     /* 0x5B */ SFX_UNK_091,
@@ -128,7 +128,7 @@ enum Sfx {
     /* 0x65 */ SFX_PILOT_HAWK_SELECT,
     /* 0x66 */ SFX_PILOT_ROBIN_SELECT,
     /* 0x67 */ SFX_UNK_103,
-    /* 0x68 */ SFX_UNK_104,
+    /* 0x68 */ SFX_MISSI_ROAR,
     /* 0x69 */ SFX_UNK_105,
     /* 0x6A */ SFX_UNK_106,
     /* 0x6B */ SFX_UNK_107,
@@ -138,12 +138,13 @@ enum Sfx {
     /* 0x6F */ SFX_UNK_111,
     /* 0x70 */ SFX_UNK_112,
     /* 0x71 */ SFX_UI_VIEW_MAP,
-    /* 0x72 */ SFX_UNK_114,
+    /* 0x72 */ SFX_UI_HINT,
     /* 0x73 */ SFX_UI_SCORING,
     /* 0x74 */ SFX_UI_SELECT_MOVE, // 808 cowbell
-    /* 0x75 */ SFX_UNK_117,
-    /* 0x76 */ SFX_UNK_118,
+    /* 0x75 */ SFX_UI_CONTROL,
+    /* 0x76 */ SFX_UNK_118,        // duplicate of SFX_UI_HINT
     /* 0x77 */ SFX_UNK_119,
+    // all IDs below are possibly unused
     /* 0x78 */ SFX_UNK_120,
     /* 0x79 */ SFX_UNK_121,
     /* 0x7A */ SFX_UNK_122,

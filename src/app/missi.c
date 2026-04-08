@@ -155,7 +155,7 @@ STATIC_FUNC s32 missiAnimCbLStates(s32 proxId, UNUSED f32 timeout, UNUSED s32 cl
         }
     } else {
         if ((sMissiState == 0.0f) && (range < 250.0) && !sMissiSoundPlayed && sMissiStateLoaded) {
-            sndPlaySfx(0x68);
+            sndPlaySfx(SFX_MISSI_ROAR);
             sMissiSoundPlayed = TRUE;
         }
         if ((sMissiState == 2.0f) || !sMissiActive) {

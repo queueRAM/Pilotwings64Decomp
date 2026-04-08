@@ -184,32 +184,32 @@ void sndEvent(s32 event, void* data, s32 eventData) {
     func_8033FB14();
 }
 
-void sndGetPilot(s32* soundId, f32* pitch) {
+void sndGetPilotScream(s32* soundId, f32* pitch) {
     Unk80362690_Unk0* temp = &D_80362690->unkC[D_80362690->unk9C];
 
     switch (temp->pilot) {
     case PILOT_LARK:
-        *soundId = 0x55;
+        *soundId = SFX_PILOT_LARK_SCREAM;
         *pitch = 1.1f;
         return;
     case PILOT_GOOSE:
-        *soundId = 0x1D;
+        *soundId = SFX_PILOT_GOOSE_SCREAM;
         *pitch = 1.0f;
         return;
     case PILOT_HAWK:
-        *soundId = 0x56;
+        *soundId = SFX_PILOT_HAWK_SCREAM;
         *pitch = 0.6f;
         return;
     case PILOT_KIWI:
-        *soundId = 0x57;
+        *soundId = SFX_PILOT_KIWI_SCREAM;
         *pitch = 0.96f;
         return;
     case PILOT_IBIS:
-        *soundId = 0x53;
+        *soundId = SFX_PILOT_IBIS_SCREAM;
         *pitch = 1.0f;
         return;
     case PILOT_ROBIN:
-        *soundId = 0x58;
+        *soundId = SFX_PILOT_ROBIN_SCREAM;
         *pitch = 0.75f;
         return;
     default:
