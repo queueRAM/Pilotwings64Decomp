@@ -246,8 +246,7 @@ void func_802F2804(HangGliderData* arg0) {
     f32 var_fa1;
     f32 var_fv0;
     f32 sp18;
-    f32 a, b;
-    f32 tmp;
+    f32 temp_fv0;
 
     if ((arg0->unkE9 == 0) && (arg0->unk1B0 < 4.0f)) {
         arg0->unkE9 = 1;
@@ -257,8 +256,8 @@ void func_802F2804(HangGliderData* arg0) {
     if (arg0->unk1B0 < 8.0f) {
         if (arg0->unk1B0 > 4.0f) {
             var_fv0 = ABS_NOEQ(arg0->unk1B0);
-            temp_fv1 = 1.0f - ((var_fv0 - 4.0f) / 4 /*.0f*/);
-            arg0->unkF0 = temp_fv1 * temp_fv1;
+            temp_fv1 = 1.0f - ((var_fv0 - 4.0f) / 4/*.0f*/);
+            arg0->unkF0 = SQ(temp_fv1);
         } else {
             arg0->unkF0 = 1.0f;
         }
@@ -274,13 +273,13 @@ void func_802F2804(HangGliderData* arg0) {
         sndPlaySfx(0x5);
     }
 
-    b = arg0->unk10.m[1][1];
-    a = arg0->unk10.m[1][0];
-    tmp = uvSqrtF(SQ(b) + SQ(a)) * 0.8f;
+    temp_fv0 = arg0->unk10.m[1][1];
+    temp_fv1 = arg0->unk10.m[1][0];
+    temp_fv1 = uvSqrtF(SQ(temp_fv0) + SQ(temp_fv1)) * 0.8f;
     if (arg0->unk200.y > 0.0f) {
-        var_fa1 = (arg0->unkF0 + (0.2f * arg0->unk200.y)) * tmp;
+        var_fa1 = (arg0->unkF0 + (0.2f * arg0->unk200.y)) * temp_fv1;
     } else {
-        var_fa1 = (((1.0f - arg0->unkF0) * arg0->unk64) + arg0->unkF0) * tmp;
+        var_fa1 = (((1.0f - arg0->unkF0) * arg0->unk64) + arg0->unkF0) * temp_fv1;
     }
     if ((hgClassId == CLASS_A) && (hgTestId == 1)) {
         if ((arg0->unk1B0 > 51.0f) && (arg0->unkF4 < 60.0f) && (arg0->unk64 < -0.8)) {
@@ -294,10 +293,10 @@ void func_802F2804(HangGliderData* arg0) {
         }
     }
 
-    a = arg0->unk10.m[0][0];
-    b = arg0->unk10.m[0][1];
+    temp_fv0 = arg0->unk10.m[0][1];
+    temp_fv1 = arg0->unk10.m[0][0];
     arg0->unk1DC.x += -arg0->unk2FC * 4 /*.0f*/ * (var_fa1 + D_80368304);
-    var_fa0 = uvSqrtF(SQ(b) + SQ(a)) * 0.5f;
+    var_fa0 = uvSqrtF(SQ(temp_fv0) + SQ(temp_fv1)) * 0.5f;
     if (arg0->unk80 != 0) {
         var_fa0 *= 0.3f;
     }
@@ -327,9 +326,9 @@ void func_802F2804(HangGliderData* arg0) {
     arg0->unk1D4 = func_80313AF4(0.0f, arg0->unk1D4, 3.0f);
     arg0->unk1D8 = func_80313AF4(0.0f, arg0->unk1D8, 3.0f);
 
-    a = arg0->unk1F4.y;
+    temp_fv1 = arg0->unk1F4.y;
     temp_fa1 = arg0->unk1F4.z + (arg0->unk2F0 * 9.8f);
-    var_fa0 = uvSqrtF(SQ(a) + SQ(temp_fa1));
+    var_fa0 = uvSqrtF(SQ(temp_fv1) + SQ(temp_fa1));
     if (arg0->unk1F4.y < 0.0f) {
         // fakeish: sp24 = -var_fa0 * 0.34f;
         var_fa0 = -var_fa0;
@@ -341,8 +340,9 @@ void func_802F2804(HangGliderData* arg0) {
         sp24 = 0.0f;
     }
 
+    temp_fv0 = arg0->unk1F4.x;
     temp_fa1 = arg0->unk1F4.z + (arg0->unk2F0 * 9.8f);
-    var_fa0 = uvSqrtF(SQ(arg0->unk1F4.x) + SQ(temp_fa1)) * 0.29f;
+    var_fa0 = uvSqrtF(SQ(temp_fv0) + SQ(temp_fa1)) * 0.29f;
     if ((arg0->unk1B0 > 22.0f) && (D_80368304 != 0.0f)) {
         var_fv0 = arg0->unk1B0 / 22.0f;
         if (var_fv0 > 2.0f) {
