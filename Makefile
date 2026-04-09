@@ -171,6 +171,7 @@ $(BUILD_DIR)/src/libultra/audio/auxbus.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/audio/bnkf.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/audio/event.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/audio/load.o: OPT_FLAGS := -O3
+$(BUILD_DIR)/src/libultra/audio/resample.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/audio/save.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/audio/sl.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/audio/seqpsetbank.o: OPT_FLAGS := -O3
