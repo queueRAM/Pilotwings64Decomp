@@ -277,6 +277,16 @@ typedef short ENVMIX_STATE[40];
 	_a->words.w1 = (unsigned int)(s);				\
 }
 
+#if BUILD_VERSION <= VERSION_D
+#define	aPoleFilter(pkt, f, g, s)					\
+{									\
+	Acmd *_a = (Acmd *)pkt;						\
+									\
+	_a->words.w0 = (_SHIFTL(A_POLEF, 24, 8) | _SHIFTL(f, 16, 8) |	\
+			_SHIFTL(g, 0, 8)); 				\
+	_a->words.w1 = (unsigned int)(s);				\
+}
+#else
 #define	aPoleFilter(pkt, f, g, s)					\
 {									\
 	Acmd *_a = (Acmd *)pkt;						\
@@ -285,6 +295,7 @@ typedef short ENVMIX_STATE[40];
 			_SHIFTL(g, 0, 16)); 				\
 	_a->words.w1 = (unsigned int)(s);				\
 }
+#endif
 
 #define	aClearBuffer(pkt, d, c)						\
 {									\
