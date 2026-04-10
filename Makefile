@@ -180,6 +180,7 @@ $(BUILD_DIR)/src/libultra/audio/resample.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/audio/reverb.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/audio/save.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/audio/seq.o: OPT_FLAGS := -O3
+$(BUILD_DIR)/src/libultra/audio/seqplayer.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/audio/seqpsetbank.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/audio/seqpsetseq.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/audio/seqpsettempo.o: OPT_FLAGS := -O3
