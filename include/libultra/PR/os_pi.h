@@ -125,7 +125,9 @@ typedef struct {
     OSMesgQueue *acsQueue;  /* Access queue */
                 /* Raw DMA routine */
     s32         (*dma)(s32, u32, void *, u32);
+#if BUILD_VERSION > VERSION_D
     s32         (*edma)(OSPiHandle *, s32, u32, void *, u32);
+#endif
 } OSDevMgr;
 
 
