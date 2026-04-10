@@ -2,7 +2,10 @@
 #include "code_B2900.h"
 #include "code_D2B10.h"
 #include "credits.h"
+#include "fire_effects.h"
 #include "game.h"
+#include "snd.h"
+#include <uv_event.h>
 #include <uv_vector.h>
 
 typedef struct {
@@ -104,7 +107,26 @@ f32 D_8034F78C = -1.0f;
 f32 D_8034F790 = 0.0f;
 s32 D_8036A8B0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/credits/credits_8030CB60.s")
+s32 credits_8030CB60(s32 arg0) {
+    s32 var_a2;
+    s32 var_a1;
+    s32 temp_v0;
+
+    var_a2 = credits_8030CC48();
+    if (arg0 != 0) {
+        var_a1 = D_80362690->unkC[D_80362690->unk9C].unk8A;
+        D_80362690->unkC[D_80362690->unk9C].unk8A = var_a1 == 0;
+        saveFileLoad(D_80362690->unkC[D_80362690->unk9C].unk8A);
+        temp_v0 = credits_8030CC48();
+        if (var_a2 < temp_v0) {
+            var_a2 = temp_v0;
+        }
+        var_a1 = D_80362690->unkC[D_80362690->unk9C].unk8A;
+        D_80362690->unkC[D_80362690->unk9C].unk8A = var_a1 == 0;
+        saveFileLoad(D_80362690->unkC[D_80362690->unk9C].unk8A);
+    }
+    return var_a2;
+}
 
 s32 credits_8030CC48(void) {
     if (func_8032C27C() != 0) {
@@ -137,7 +159,11 @@ s32 creditsMainRender(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/credits/credits_8030CDA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/credits/credits_8030D1D4.s")
+void credits_8030D1D4(void) {
+    uvEventPost(0xD, 0);
+    func_8033F964(1U);
+    fireFxDeinit();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/credits/credits_8030D208.s")
 
