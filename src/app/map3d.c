@@ -19,6 +19,7 @@
 #include "hud.h"
 #include "map3d.h"
 #include "missi.h"
+#include "oil_plant.h"
 #include "rings.h"
 #include "shuttle.h"
 #include "snd.h"
@@ -401,11 +402,11 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
                 break;
             case 6:
                 sp88 = 0x38;
-                missiGetInitPos(&photoPos);
+                oilPlantGetPos(&photoPos);
                 break;
             case 3:
                 sp88 = 0x39;
-                missiGetCurPos(&photoPos);
+                missiGetPos(&photoPos);
                 break;
             case 5:
                 sp88 = 0x37;

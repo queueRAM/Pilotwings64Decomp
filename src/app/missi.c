@@ -21,9 +21,6 @@ static s32 sMissiStateLoaded = TRUE;
 static s32 sMissiSoundPlayed = FALSE;
 static Vec3F sMissiInitPosLS = { 1725.0f, -659.0f, 28.0f };
 static s32 padD_8034F88C = 0;
-static s32 sMissiRadarIdEF = 0xFF;
-static s32 sMissiProximity = 0;
-static Vec3F sMissiInitPosEF = { -368.0f, 648.0f, 106.0f };
 
 static Mtx4F sMissiAdjustment;
 static Mtx4F sMissiTranslate;
@@ -32,9 +29,6 @@ static f32 sMissiState; //! @bug this state should be s32
 static f32 sMissiDepthCopy;
 static f32 sMissiIntervalCopy;
 static s32 sMissiStateCopy;
-static s32 sMissiProxIdEF;
-static s32 sMissiSeqId;
-static s32 sMissiFxId;
 
 s32 missiIsActive(void) {
     return sMissiActive;
@@ -211,7 +205,7 @@ f32 missiGetInterval(void) {
     return sMissiInterval / 360.0f;
 }
 
-void missiGetCurPos(Vec3F* pos) {
+void missiGetPos(Vec3F* pos) {
     if (sMissiObjId == 0xFFFF) {
         pos->x = 1745.0f;
         pos->y = -659.0f;
@@ -254,100 +248,4 @@ void missiStateRestore(void) {
     sMissiInterval = sMissiIntervalCopy;
     sMissiState = (f32)sMissiStateCopy;
     sMissiStateLoaded = TRUE;
-}
-
-void missiInitState(void) {
-    sMissiProximity = FALSE;
-}
-
-s32 missiInProximity(void) {
-    return sMissiProximity;
-}
-
-STATIC_FUNC s32 missiEventCbEFrost(UNUSED s32 proxId, s32 eventType, UNUSED s32 clientData) {
-    switch (eventType) {
-    case 0:
-        break;
-    case 2:
-        if (sMissiRadarIdEF != 0xFF) {
-            hud_8031A874(sMissiRadarIdEF);
-        }
-        uvFxProps(sMissiFxId, FX_PROP_3(0.0f, 0.0f, 0.0f), FX_PROP_END);
-        break;
-    case 3:
-        if (sMissiRadarIdEF != 0xFF) {
-            hud_8031A874(sMissiRadarIdEF);
-        }
-        uvFxProps(sMissiFxId, FX_PROP_3(25.0f, 1.0f, 35.0f), FX_PROP_END);
-        break;
-    }
-    return 0;
-}
-
-STATIC_FUNC s32 missiAnimCbEFrost(s32 proxId, UNUSED f32 timeout, UNUSED s32 clientData) {
-    f32 range;
-    s32 ret;
-
-    ret = 0;
-    range = proxAnimGetRange(proxId);
-    if (range > 500.0f) {
-        sMissiProximity = FALSE;
-        ret = 2;
-        uvFxProps(sMissiFxId, FX_PROP_3(0.0f, 0.0f, 0.0f), FX_PROP_END);
-    } else {
-        sMissiProximity = TRUE;
-        uvFxProps(sMissiFxId, FX_PROP_3(25.0f, 1.0f, 35.0f), FX_PROP_END);
-    }
-    return ret;
-}
-
-void missiLoadEFrost(void) {
-    u16 cls;
-    u16 veh;
-    u16 test;
-    s32 showHudWaypoint;
-    Vec3F pos;
-
-    pos = sMissiInitPosEF;
-    sMissiSeqId = func_80218F88();
-    uvSeqModel(sMissiSeqId, 0);
-    uvSeqProps(sMissiSeqId, SEQ_PROP_4(20.0f), SEQ_PROP_END);
-    sMissiFxId = func_8021EFF0(6);
-    uvModelGet(sMissiFxId, 6);
-    // clang-format off
-    uvFxProps(sMissiFxId,
-        FX_PROP_10(-368.0f, 648.0f, 106.0f),
-        FX_PROP_13(sMissiSeqId),
-        FX_PROP_1(1e20),
-        FX_PROP_16(1),
-        FX_PROP_3(0.0f, 0.0f, 0.0f),
-        FX_PROP_END
-    );
-    // clang-format on
-    sMissiProxIdEF = proxAnimAddCallback(missiAnimCbEFrost, missiEventCbEFrost, pos, 500.0f, 0.0f, 6);
-    taskGetClsVehTest(&cls, &veh, &test);
-    showHudWaypoint = (test == 0 && cls == CLASS_A && veh == VEHICLE_HANG_GLIDER) || (test == 1 && cls == CLASS_B && veh == VEHICLE_HANG_GLIDER) ||
-                      (test == 2 && cls == CLASS_PILOT && veh == VEHICLE_HANG_GLIDER);
-    if (showHudWaypoint) {
-        sMissiRadarIdEF = hudAddWaypoint(-368.0f, 648.0f, 106.0f);
-        return;
-    }
-    sMissiRadarIdEF = 0xFF;
-}
-
-void missiDeinitEFrost(void) {
-    if (sMissiRadarIdEF != 0xFF) {
-        hud_8031A8E0(sMissiRadarIdEF);
-    }
-    sMissiRadarIdEF = 0xFF;
-    uvSeqProps(sMissiSeqId, SEQ_PROP_1(0), SEQ_PROP_END);
-    uvModelGet(sMissiFxId, 0xFF);
-    uvFxProps(sMissiFxId, FX_PROP_11(0), FX_PROP_END);
-    proxAnimDeleteCallback(sMissiProxIdEF);
-}
-
-void missiGetInitPos(Vec3F* pos) {
-    pos->x = -368.0f;
-    pos->y = 648.0f;
-    pos->z = 118.0f;
 }

@@ -14,8 +14,8 @@
 #include "level.h"
 #include "missi.h"
 #include "oil.h"
+#include "oil_plant.h"
 #include "planes.h"
-#include "shadow.h"
 #include "shuttle.h"
 #include "ski_lift.h"
 #include "task.h"
@@ -108,7 +108,7 @@ void level_8030B868(void) {
             break;
         case MAP_EVER_FROST_ISLAND:
             oilInit();
-            missiLoadEFrost();
+            oilPlantLoad();
             skiLiftLoad();
             gliderToyLoadEFrost();
             whalePodLoad();
@@ -142,7 +142,7 @@ void level_8030B964(void) {
             break;
         case MAP_EVER_FROST_ISLAND:
             oilDeinit();
-            missiDeinitEFrost();
+            oilPlantDeinit();
             skiLiftDeinit();
             gliderToyDeinit();
             whalePodDeinit();
