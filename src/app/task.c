@@ -24,10 +24,10 @@
 #include "level.h"
 #include "mem.h"
 #include "missi.h"
+#include "oil_plant.h"
 #include "pads.h"
 #include "planes.h"
 #include "rings.h"
-#include "shadow.h"
 #include "shuttle.h"
 #include "skydiving.h"
 #include "snap.h"
@@ -101,7 +101,7 @@ void taskInit(void) {
     fountainInit();
     missiInit();
     whaleInit();
-    missiInitState();
+    oilPlantInit();
     gliderToyInit();
     boatsInit();
     planesInit();
@@ -268,7 +268,7 @@ s32 taskInitTest(s32 classIdx, s32 vehicle, s32 testIdx, u16* map, u16* terraId,
     fountainInit();
     shuttleInit();
     missiInit();
-    missiInitState();
+    oilPlantInit();
     whaleInit();
     gliderToyInit();
     boatsInit();

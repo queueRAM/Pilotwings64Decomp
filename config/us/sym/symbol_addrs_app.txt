@@ -286,18 +286,19 @@ missiAnimCbLStates  = 0x80315028; // type:func
 missiLoadLStates    = 0x803151AC; // type:func
 missiDeinitEFrost   = 0x8031531C; // type:func
 missiGetInterval    = 0x80315394; // type:func
-missiGetCurPos      = 0x803153AC; // type:func
+missiGetPos         = 0x803153AC; // type:func
 missiSetInterval    = 0x80315418; // type:func
 missiInit           = 0x80315474; // type:func
 missiStateSave      = 0x803154C0; // type:func
 missiStateRestore   = 0x80315508; // type:func
-missiInitState      = 0x80315550; // type:func
-missiInProximity    = 0x8031555C; // type:func
-missiEventCbEFrost  = 0x80315568; // type:func
-missiAnimCbEFrost   = 0x8031565C; // type:func
-missiLoadEFrost     = 0x80315734; // type:func
-missiDeinit         = 0x8031596C; // type:func
-missiGetInitPos     = 0x803159F4; // type:func
+
+oilPlantInit        = 0x80315550; // type:func
+oilPlantInProximity = 0x8031555C; // type:func
+oilPlantEventCb     = 0x80315568; // type:func
+oilPlantAnimCb      = 0x8031565C; // type:func
+oilPlantLoad        = 0x80315734; // type:func
+oilPlantDeinit      = 0x8031596C; // type:func
+oilPlantGetPos      = 0x803159F4; // type:func
 
 oilUpdatePos        = 0x80315A20; // type:func
 oilUpdate           = 0x80315AB0; // type:func
@@ -899,9 +900,6 @@ sMissiActive              = 0x8034F874;
 sMissiStateLoaded         = 0x8034F878;
 sMissiSoundPlayed         = 0x8034F87C;
 sMissiInitPosLS           = 0x8034F880; // size:0xC
-sMissiRadarIdEF           = 0x8034F890;
-sMissiProximity           = 0x8034F894;
-sMissiInitPosEF           = 0x8034F898; // size:0xC
 sMissiAdjustment          = 0x8036BFF0; // size:0x40
 sMissiTranslate           = 0x8036C030; // size:0x40
 sMissiPose                = 0x8036C070; // size:0x40
@@ -909,9 +907,13 @@ sMissiState               = 0x8036C0B0;
 sMissiDepthCopy           = 0x8036C0B4;
 sMissiIntervalCopy        = 0x8036C0B8;
 sMissiStateCopy           = 0x8036C0BC;
-sMissiProxIdEF            = 0x8036C0C0;
-sMissiSeqId               = 0x8036C0C4;
-sMissiFxId                = 0x8036C0C8;
+
+sOilPlantRadarId          = 0x8034F890;
+sOilPlantProximity        = 0x8034F894;
+sOilPlantPos              = 0x8034F898; // size:0xC
+sOilPlantProxId           = 0x8036C0C0;
+sOilPlantSeqId            = 0x8036C0C4;
+sOilPlantFxId             = 0x8036C0C8;
 
 gDemoMode                 = 0x8034FAD0;
 

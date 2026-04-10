@@ -21,6 +21,7 @@
 #include "glider_toys.h"
 #include "hud.h"
 #include "missi.h"
+#include "oil_plant.h"
 #include "planes.h"
 #include "proxanim.h"
 #include "shuttle.h"
@@ -175,7 +176,7 @@ void snapInit(void) {
     D_80373B70[0].unk42 = 1;
     D_80373B70[0].unk43[0] = 6;
     D_80373B70[0].unk4C[0] = 0;
-    missiGetInitPos(&D_80373B70[0].unk0);
+    oilPlantGetPos(&D_80373B70[0].unk0);
     D_80373B70[0].unkC.x = 0.0f;
     D_80373B70[0].unkC.y = 0.0f;
     D_80373B70[0].unkC.z = 0.0f;
@@ -217,7 +218,7 @@ void snapInit(void) {
     D_803738D0[0].unk42 = 1;
     D_803738D0[0].unk43[0] = 3;
     D_803738D0[0].unk4C[0] = 0.0f;
-    missiGetCurPos(&D_803738D0[0].unk0);
+    missiGetPos(&D_803738D0[0].unk0);
     D_803738D0[0].unk0.x -= uvCosF(0.26179948f) * 70.0f;
     D_803738D0[0].unk0.z += uvSinF(0.26179948f) * 70.0f;
     D_803738D0[0].unkC.x = -90.0f;
@@ -452,7 +453,7 @@ void func_80338A14(void) {
             break;
         case 3:
             if (missiIsActive() != 0) {
-                missiGetCurPos(&spFC);
+                missiGetPos(&spFC);
                 if (func_80338964(temp_s1->unk0, spFC, &temp_s4->unk70->unk108) != 0) {
                     func_8034B354(0, spFC, &spA8);
                     if ((spA8.x < -50.0f) || (spA8.x > 370.0f) || (spA8.y < -50.0f) || (spA8.y > 290.0f)) {
@@ -511,8 +512,8 @@ void func_80338A14(void) {
             }
             break;
         case 6:
-            if (missiInProximity()) {
-                missiGetInitPos(&spFC);
+            if (oilPlantInProximity()) {
+                oilPlantGetPos(&spFC);
                 if (func_80338964(temp_s1->unk0, spFC, &temp_s4->unk70->unk108) != 0) {
                     func_8034B354(0, spFC, &spA8);
                     if ((spA8.x < -50.0f) || (spA8.x > 370.0f) || (spA8.y < -50.0f) || (spA8.y > 290.0f)) {
