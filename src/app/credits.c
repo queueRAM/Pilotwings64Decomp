@@ -1,5 +1,8 @@
 #include "common.h"
+#include "code_B2900.h"
+#include "code_D2B10.h"
 #include "credits.h"
+#include "game.h"
 #include <uv_vector.h>
 
 typedef struct {
@@ -100,16 +103,41 @@ f32 D_8034F788 = 0.0f;
 f32 D_8034F78C = -1.0f;
 f32 D_8034F790 = 0.0f;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/credits/func_8030CB60.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/credits/credits_8030CB60.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/credits/func_8030CC48.s")
+s32 credits_8030CC48(void) {
+    if (func_8032C27C() != 0) {
+        return 3;
+    }
+    if (func_8032C3C4(D_80362690->unkC[D_80362690->unk9C].unk74, 3) >= 3) {
+        return 2;
+    }
+    if (func_8032C3C4(D_80362690->unkC[D_80362690->unk9C].unk74, 1) > 0) {
+        return 1;
+    }
+    return 0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/credits/func_8030CCFC.s")
+s32 creditsMainRender(void) {
+    D_8036A8B0 = credits_8030CC48();
+    credits_8030CDA0(D_8036A8B0);
+    while (credits_8030D208() == 0) {
+        uvGfxBegin();
+        creditsScene();
+        func_8034B688();
+        uvGfxEnd();
+    }
+    credits_8030D1D4();
+    if (D_80362690->unkA8 < D_8036A8B0) {
+        D_80362690->unkA8 = D_8036A8B0;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/credits/credits_8030CDA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/credits/func_8030D1D4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/credits/credits_8030D1D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/app/credits/func_8030D208.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/app/credits/credits_8030D208.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/credits/creditsScene.s")
