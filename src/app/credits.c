@@ -102,6 +102,7 @@ u8 D_8034F784 = 1;
 f32 D_8034F788 = 0.0f;
 f32 D_8034F78C = -1.0f;
 f32 D_8034F790 = 0.0f;
+s32 D_8036A8B0;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/app/credits/credits_8030CB60.s")
 
