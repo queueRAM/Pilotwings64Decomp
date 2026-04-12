@@ -10,7 +10,7 @@ void sndInit(void);
 void func_8033F6F8(Mtx4F*, Mtx4F*);
 void func_8033F748(u16);
 void sndPlaySfxVolPitchPan(u8, f32, f32, f32);
-void sndPlaySfx(u8);
+u8 sndPlaySfx(u8);
 u8 sndMakeDev(s32);
 u8 func_8033F8CC(u8);
 void func_8033F904(u8, f32, f32, f32);

@@ -72,17 +72,18 @@ void sndPlaySfxVolPitchPan(u8 sfxId, f32 vol, f32 pitch, f32 pan) {
     uvEmitterTrigger(temp_v0);
 }
 
-void sndPlaySfx(u8 sfxId) {
+u8 sndPlaySfx(u8 sfxId) {
     u8 temp_v0;
 
     temp_v0 = uvEmitterLookup();
     if (temp_v0 == 0xFF) {
         _uvDebugPrintf("snd : out of local fx emitter devices\n");
-        return;
+        return temp_v0;
     }
     uvEmitterFromModel(temp_v0, sfxId);
     uvEmitterProp(temp_v0, 5, 0x30, 0);
     uvEmitterTrigger(temp_v0);
+    return temp_v0;
 }
 
 u8 sndMakeDev(s32 arg0) {

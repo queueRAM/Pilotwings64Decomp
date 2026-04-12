@@ -22,7 +22,7 @@ static s32 sStereoMono = 0;
 static s32 sSoundTrack = SFX_UI_CONFIRM;
 static s32 sVolumeMusic = 4;
 static s32 sVolumeSfx = 4;
-static s32 D_8034F8F4 = 0; // unused, only ever set to 0
+static s32 D_8034F8F4 = 0xFF; // unused, only ever set to 0
 
 static s16 sOptionsPanel;
 static s32 sStickHeld;
@@ -128,7 +128,7 @@ void optionsInitAlbum(void) {
     menuCreateItems(80, 100, 6, 1.0f, 1.0f, sOptionMenuItems, 3);
     menuUtilSetColors(MENU_COLOR_ITEM, 0xFF, 0xFF, 0xFF);
     menuUtilSetColors(MENU_COLOR_SELECTED, 0xFF, 0xFF, 0x00);
-    D_8034F8F4 = 0;
+    D_8034F8F4 = 0xFF;
 }
 
 void optionsInitSound(void) {
@@ -272,7 +272,7 @@ s32 optionsHandlerSound(void) {
             optionsInit();
             return -1;
         } else {
-            D_8034F8F4 = 0;
+            D_8034F8F4 = 0xFF;
             func_8033F964(1);
         }
     }
@@ -308,7 +308,8 @@ s32 optionsHandlerSound(void) {
     case 1:
         sSoundTrack += optInc;
         if (optInc != 0) {
-            sndPlaySfx(sSoundTrack);
+            func_8033F8CC(D_8034F8F4);
+            D_8034F8F4 = sndPlaySfx(sSoundTrack);
         }
         optionsSetTrack(1, sSoundTrack);
         return -1;
