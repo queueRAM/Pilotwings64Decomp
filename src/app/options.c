@@ -19,7 +19,7 @@
 
 static f32 sVolume[] = { 0.0f, 0.2f, 0.4f, 0.6f, 1.0f };
 static s32 sStereoMono = 0;
-static s32 sSoundTrack = 0;
+static s32 sSoundTrack = SFX_UI_CONFIRM;
 static s32 sVolumeMusic = 4;
 static s32 sVolumeSfx = 4;
 static s32 D_8034F8F4 = 0; // unused, only ever set to 0
@@ -307,14 +307,8 @@ s32 optionsHandlerSound(void) {
         return -1;
     case 1:
         sSoundTrack += optInc;
-        sSoundTrack = optionsItemWrap(sSoundTrack, 0, 30);
-        if (sp24 == menuItem) {
-            func_8033F748(sSoundTrack);
-            func_8033F964(0);
-            func_8033FCD0(0xFF);
-        }
         if (optInc != 0) {
-            sndPlaySfx(0x54);
+            sndPlaySfx(sSoundTrack);
         }
         optionsSetTrack(1, sSoundTrack);
         return -1;
