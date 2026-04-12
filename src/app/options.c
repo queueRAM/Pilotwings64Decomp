@@ -19,7 +19,7 @@
 
 static f32 sVolume[] = { 0.0f, 0.2f, 0.4f, 0.6f, 1.0f };
 static s32 sStereoMono = 0;
-static s32 sSoundTrack = SFX_UI_CONFIRM;
+static s32 sSoundTrack = SFX_UI_MOVE_CHIME;
 static s32 sVolumeMusic = 4;
 static s32 sVolumeSfx = 4;
 static s32 D_8034F8F4 = 0xFF; // unused, only ever set to 0
@@ -465,7 +465,7 @@ void optionsSetTrack(s32 menuItem, s32 trackIdx) {
 
     if (menuItem == 1) {
         trackStr = textGetDataByIdx(TEXT_STRACK);
-        textFmtIntAt(trackStr, trackIdx + 1, 2, 13);
+        textFmtIntAt(trackStr, trackIdx, 3, 13);
         menuSetItem(1, trackStr);
     }
 }
