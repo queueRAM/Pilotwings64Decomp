@@ -307,6 +307,7 @@ s32 optionsHandlerSound(void) {
         return -1;
     case 1:
         sSoundTrack += optInc;
+        sSoundTrack = optionsItemWrap(sSoundTrack, 0, SFX_UNK_119);
         if (optInc != 0) {
             func_8033F8CC(D_8034F8F4);
             D_8034F8F4 = sndPlaySfx(sSoundTrack);
