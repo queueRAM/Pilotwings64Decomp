@@ -1,0 +1,243 @@
+name: Pilot Wings64 (Japanese)
+sha1: 892a5472d9a6811b881d093020de81f72baeeec9
+options:
+  basename: pilotwings64
+  target_path: baserom.jp.z64
+  elf_path: build/pilotwings64.jp.elf
+  base_path: ../..
+  platform: n64
+  compiler: IDO
+
+  asm_path: asm
+  src_path: src
+  asset_path: bin
+  build_path: build
+  create_asm_dependencies: True
+
+  ld_script_path: build/pilotwings64.jp.ld
+  ld_dependencies: True
+  ld_sections_allowlist:
+    - .shstrtab
+    - .mdebug
+    - .mdebug.abi32
+
+  find_file_boundaries: True
+  header_encoding: ASCII
+
+  o_as_suffix: True
+  use_legacy_include_asm: False
+  mips_abi_float_regs: o32
+
+  # section_order: [".text", ".data", ".rodata", ".bss"]
+  # auto_link_sections: [".data", ".rodata", ".bss"]
+
+  symbol_addrs_path:
+    - config/jp/symbol_addrs.txt
+  reloc_addrs_path:
+    - config/jp/reloc_addrs.txt
+
+  undefined_funcs_auto_path: build/splat_out/jp/undefined_funcs_auto.txt
+  undefined_syms_auto_path: build/splat_out/jp/undefined_syms_auto.txt
+
+  extensions_path: tools/splat_ext
+
+  # string_encoding: ASCII
+  # data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  libultra_symbols: True
+  # hardware_regs: True
+  gfx_ucode: f3d
+  migrate_rodata_to_functions: True
+
+segments:
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: ipl3
+    type: bin
+    start: 0x40
+
+  - name: entry
+    type: code
+    start: 0x1000
+    vram: 0x80200050
+    subsegments:
+      - [0x1000, hasm, entrypoint]
+
+  - name: kernel
+    type: code
+    start: 0x1050
+    vram: 0x802000A0
+    follows_vram: entry
+    bss_size: 0x6BF60
+    subsegments:
+      - [0x01050, asm, kernel/code_1050]
+      - [0x01300, asm, kernel/code_1300]
+      - [0x02130, asm, kernel/code_2130]
+      - [0x03D50, asm, kernel/code_3D50]
+      - [0x04850, asm, kernel/code_4850]
+      - [0x05690, asm, kernel/code_5690]
+      - [0x058E0, asm, kernel/code_58E0]
+      - [0x06F80, asm, kernel/code_6F80]
+      - [0x07150, asm, kernel/code_7150]
+      - [0x08170, asm, kernel/code_8170]
+      - [0x177A0, asm, kernel/code_177A0]
+      - [0x19170, asm, kernel/code_19170]
+      - [0x19B50, asm, kernel/code_19B50]
+      - [0x1A220, asm, kernel/code_1A220]
+      - [0x1AF00, asm, kernel/code_1AF00]
+      - [0x20030, asm, kernel/code_20030]
+      - [0x21890, asm, kernel/code_21890]
+      - [0x24D60, asm, kernel/code_24D60]
+      - [0x25180, asm, kernel/code_25180]
+      - [0x25580, asm, kernel/code_25580]
+      - [0x28E10, asm, kernel/code_28E10]
+      - [0x2AD80, asm, kernel/code_2AD80]
+      - [0x2B2A0, asm, kernel/code_2B2A0]
+      - [0x2BF80, asm, kernel/code_2BF80]
+      - [0x2EDD0, asm, kernel/code_2EDD0]
+      - [0x2FD10, asm, kernel/code_2FD10]
+      - [0x30CC0, asm, kernel/code_30CC0]
+      - [0x30D70, asm, kernel/code_30D70]
+      - [0x32350, asm, kernel/code_32350]
+      - [0x32460, asm, kernel/code_32460]
+      - [0x32890, asm, kernel/code_32890]
+      - [0x32940, asm, kernel/code_32940]
+      - [0x35320, asm, kernel/code_35320]
+      - [0x35340, asm, kernel/code_35340]
+      - [0x353B0, asm, kernel/code_353B0]
+      - [0x354A0, asm, kernel/code_354A0]
+      - [0x35510, asm, kernel/code_35510]
+      - [0x35570, asm, kernel/code_35570]
+      - [0x355D0, asm, kernel/code_355D0]
+      - [0x35630, asm, kernel/code_35630]
+      - [0x35690, asm, kernel/code_35690]
+      - [0x356D0, asm, kernel/code_356D0]
+      - [0x35DE0, asm, kernel/code_35DE0]
+      - [0x37010, asm, kernel/code_37010]
+      - [0x37160, asm, kernel/code_37160]
+      - [0x371C0, asm, kernel/code_371C0]
+      - [0x37410, asm, kernel/code_37410]
+      - [0x37660, asm, kernel/code_37660]
+      - [0x377B0, asm, kernel/code_377B0]
+      - [0x37A40, asm, kernel/code_37A40]
+      - [0x37AC0, asm, kernel/code_37AC0]
+      - [0x37B70, asm, kernel/code_37B70]
+      - [0x37B80, asm, kernel/code_37B80]
+      - [0x38360, asm, kernel/code_38360]
+      - [0x383A0, asm, kernel/code_383A0]
+      - [0x383B0, asm, kernel/code_383B0]
+      - [0x38E70, asm, kernel/code_38E70]
+      - [0x38EB0, asm, kernel/code_38EB0]
+      - [0x38F50, asm, kernel/code_38F50]
+      - [0x38F90, asm, kernel/code_38F90]
+      - [0x38FD0, asm, kernel/code_38FD0]
+      - [0x3B600, asm, kernel/code_3B600]
+      - [0x3B630, asm, kernel/code_3B630]
+      - [0x3B6A0, asm, kernel/code_3B6A0]
+      - [0x3B6B0, asm, kernel/code_3B6B0]
+      - [0x3B7A0, asm, kernel/code_3B7A0]
+      - [0x3B960, asm, kernel/code_3B960]
+      - [0x3BCA0, asm, kernel/code_3BCA0]
+      - [0x3BD20, asm, kernel/code_3BD20]
+      - [0x3BFE0, asm, kernel/code_3BFE0]
+      - [0x3C3C0, asm, kernel/code_3C3C0]
+      - [0x3C430, asm, kernel/code_3C430]
+      - [0x3C4A0, asm, kernel/code_3C4A0]
+      - [0x3C510, asm, kernel/code_3C510]
+      - [0x3C6F0, asm, kernel/code_3C6F0]
+      - [0x3C830, asm, kernel/code_3C830]
+      - [0x3C8A0, asm, kernel/code_3C8A0]
+      - [0x3CB30, asm, kernel/code_3CB30]
+      - [0x3CB40, asm, kernel/code_3CB40]
+      - [0x3CCC0, asm, kernel/code_3CCC0]
+      - [0x3CE80, asm, kernel/code_3CE80]
+      - [0x3D4A0, asm, kernel/code_3D4A0]
+      - [0x3D550, asm, kernel/code_3D550]
+      - [0x3D6E0, asm, kernel/code_3D6E0]
+      - [0x3DCA0, asm, kernel/code_3DCA0]
+      - [0x3DD30, asm, kernel/code_3DD30]
+      - [0x3DDC0, asm, kernel/code_3DDC0]
+      - [0x3DE60, asm, kernel/code_3DE60]
+      - [0x3DEF0, asm, kernel/code_3DEF0]
+      - [0x3DF90, asm, kernel/code_3DF90]
+      - [0x3E010, asm, kernel/code_3E010]
+      - [0x3FA60, asm, kernel/code_3FA60]
+      - [0x3FBA0, asm, kernel/code_3FBA0]
+      - [0x3FBE0, asm, kernel/code_3FBE0]
+      - [0x405B0, asm, kernel/code_405B0]
+      - [0x40670, asm, kernel/code_40670]
+      - [0x40E20, asm, kernel/code_40E20]
+      - [0x40EC0, asm, kernel/code_40EC0]
+      - [0x41B60, asm, kernel/code_41B60]
+      - [0x41E60, asm, kernel/code_41E60]
+      - [0x42AC0, asm, kernel/code_42AC0]
+      - [0x42BD0, asm, kernel/code_42BD0]
+      - [0x42E10, asm, kernel/code_42E10]
+      - [0x42E30, asm, kernel/code_42E30]
+      - [0x43210, asm, kernel/code_43210]
+      - [0x43220, asm, kernel/code_43220]
+      - [0x43260, asm, kernel/code_43260]
+      - [0x432F0, asm, kernel/code_432F0]
+      - [0x43320, asm, kernel/code_43320]
+      - [0x43740, asm, kernel/code_43740]
+      - [0x43750, asm, kernel/code_43750]
+      - [0x43AB0, asm, kernel/code_43AB0]
+      - [0x43AC0, asm, kernel/code_43AC0]
+      - [0x442A0, asm, kernel/code_442A0]
+      - [0x44380, asm, kernel/code_44380]
+      - [0x44430, asm, kernel/code_44430]
+      - [0x444B0, asm, kernel/code_444B0]
+      - [0x44510, asm, kernel/code_44510]
+      - [0x445B0, asm, kernel/code_445B0]
+      - [0x44810, asm, kernel/code_44810]
+      - [0x448A0, asm, kernel/code_448A0]
+      - [0x44950, asm, kernel/code_44950]
+      - [0x449D0, asm, kernel/code_449D0]
+      - [0x45480, asm, kernel/code_45480]
+      - [0x455B0, asm, kernel/code_455B0]
+      - [0x456B0, asm, kernel/code_456B0]
+      - [0x456D0, asm, kernel/code_456D0]
+      - [0x462E0, asm, kernel/code_462E0]
+      - [0x462F0, asm, kernel/code_462F0]
+      - [0x46320, asm, kernel/code_46320]
+      - [0x46330, asm, kernel/code_46330]
+      - [0x46390, asm, kernel/code_46390]
+      - [0x465C0, data]
+      - [0x4D3C0, rodata, kernel/code_1050]
+      - [0x4D3F0, rodata, kernel/code_1300]
+      - [0x4DAA0, rodata, kernel/code_3D50]
+      - [0x4DBC0, rodata, kernel/code_58E0]
+      - [0x4DC70, rodata, kernel/code_6F80]
+      - [0x4DCC0, rodata, kernel/code_8170]
+      - [0x4E220, rodata, kernel/code_177A0]
+      - [0x4E4D0, rodata, kernel/code_19170]
+      - [0x4E630, rodata, kernel/code_19B50]
+      - [0x4E6E0, rodata, kernel/code_1A220]
+      - [0x4E9E0, rodata, kernel/code_20030]
+      - [0x4EDA0, rodata, kernel/code_24D60]
+      - [0x4F130, rodata, kernel/code_28E10]
+      - [0x4F260, rodata, kernel/code_2B2A0]
+      - [0x4F980, rodata, kernel/code_2BF80]
+      - [0x4FB00, rodata, kernel/code_2EDD0]
+      - [0x4FF50, rodata, kernel/code_30D70]
+      - [0x50140, rodata, kernel/code_32350]
+      - [0x50160, rodata, kernel/code_32460]
+      - [0x50580, rodata, kernel/code_37B80]
+      - [0x505B0, rodata, kernel/code_3E010]
+      - [0x50870, rodata, kernel/code_3FA60]
+      - [0x50880, rodata, kernel/code_3FBE0]
+      - [0x50940, rodata, kernel/code_41E60]
+      - [0x509A0, rodata, kernel/code_449D0]
+      - [0x509E0, rodata]
+      - [0x511E0, rodata]
+      - [0x519E0, rodata]
+      - { type: bss, vram: 0x80250CF0 }
+
+  - type: bin
+    start: 0x51CA0
+    follows_vram: kernel
+
+  - [0x800000]
