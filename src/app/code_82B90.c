@@ -8,17 +8,18 @@
 #include <uv_sobj.h>
 #include "kernel/code_8170.h"
 #include "app/balls.h"
+#include "app/camera.h"
 #include "app/demo.h"
 #include "app/environment.h"
 #include "app/hud.h"
+#include "app/jumble_hopper.h"
 #include "app/shadow.h"
 #include "app/snd.h"
 #include "app/splash.h"
 #include "app/task.h"
-#include "app/camera.h"
+#include "app/text_data.h"
 #include "app/code_61A60.h"
 #include "app/code_66F70.h"
-#include "app/jumble_hopper.h"
 #include "app/code_9A960.h"
 #include "app/code_D1ED0.h"
 
@@ -227,8 +228,8 @@ void func_802FBEFC(JumbleHopperData* arg0, f32 arg1) {
 
     if (arg0->unk4F == 0) {
         sp2C = &taskGet_80345C80()->unk0;
-        hudWarningText(0x4F, 1.5f, 8.0f);
-        sndPlaySfx(0x69);
+        hudWarningText(TEXT_OFF_2, 1.5f, 8.0f);
+        sndPlaySfx(SFX_UNK_105);
         arg0->unk4F = 1;
 
         // TODO: fix array and/or struct

@@ -322,7 +322,7 @@ void func_8032FEAC(SkyDivingData* arg0, s32 arg1, u8 arg2) {
     hudSetCameraState(var_a0);
     if ((arg0->unk264 != 1.0f) && (arg0->unk27A == 0) && (arg0->unk10.m[3][2] < 900.0f) && (arg0->unk25C == 0)) {
         sndPlaySfx(5);
-        hudWarningText(0x132, 3.0f, 8.0f);
+        hudWarningText(TEXT_S_OPEN, 3.0f, 8.0f);
         arg0->unk25C = 1;
     }
     if (arg0->unk70 == 0) {
@@ -852,11 +852,11 @@ void skydivingLand(SkyDivingData* arg0) {
     }
 
     if ((arg0->unk70 != 5) && (arg0->unk70 != 3)) {
-        if (D_80371964 >= 0x1A) {
-            hudText_8031D8E0(0xB2, 1.5f, 8.0f);
+        if (D_80371964 > 25) {
+            hudText_8031D8E0(TEXT_LAND_OUT, 1.5f, 8.0f);
             arg0->unk25E = 0;
         } else {
-            hudText_8031D8E0(0xCB, 1.5f, 8.0f);
+            hudText_8031D8E0(TEXT_LAND_OK, 1.5f, 8.0f);
             arg0->unk25E = 1;
         }
     }
@@ -1030,10 +1030,10 @@ void func_80331EB8(SkyDivingData* arg0) {
 
 void func_80331FE4(SkyDivingData* arg0) {
     static s32 D_80371B40;
-    s16 sp2E;
+    s16 textId;
     s16* sp28;
 
-    sp2E = -1;
+    textId = -1;
     if (arg0->unk258 != NULL) {
         arg0->unk288 += D_8034F854;
         arg0->unkB9 = func_80331D58(arg0);
@@ -1054,22 +1054,22 @@ void func_80331FE4(SkyDivingData* arg0) {
                     D_80371B40--;
                     sndPlaySfxVolPitchPan(0x59, 0.8f, 1.0f, 0.0f);
                 }
-                sp2E = 9;
+                textId = TEXT_COUNT_3;
             } else if ((D_8034F850 - arg0->unk260) < (0.6667f * arg0->unk258->unk40)) {
                 if (D_80371B40 == 2) {
                     D_80371B40--;
                     sndPlaySfxVolPitchPan(0x59, 0.8f, 1.0f, 0.0f);
                 }
-                sp2E = 0x76;
+                textId = TEXT_COUNT_2;
             } else if ((D_8034F850 - arg0->unk260) < arg0->unk258->unk40) {
                 if (D_80371B40 == 1) {
                     D_80371B40--;
                     sndPlaySfxVolPitchPan(0x59, 0.8f, 1.0f, 0.0f);
                 }
-                sp2E = 0x10A;
+                textId = TEXT_COUNT_1;
             }
-            if (sp2E != -1) {
-                sp28 = textGetDataByIdx(sp2E);
+            if (textId != -1) {
+                sp28 = textGetDataByIdx(textId);
                 uvFontPrintStr16(160 - ((uvFontStr16Width(sp28) - 16) / 2), 125, sp28, 0x14, 0xFFE);
             }
 
@@ -1077,7 +1077,7 @@ void func_80331FE4(SkyDivingData* arg0) {
                 D_80371960 += arg0->unk258->unk44;
                 arg0->unk2B4 = 12.566371f;
                 arg0->unk260 = -1.0f;
-                hudWarningText(6, 1.5f, 8.0f);
+                hudWarningText(TEXT_OK, 1.5f, 8.0f);
                 sndPlaySfx(SFX_UI_TEST_START);
             }
         } else {

@@ -7,6 +7,7 @@
 #include "app/hud.h"
 #include "app/shadow.h"
 #include "app/snd.h"
+#include "app/text_data.h"
 #include "app/code_66F70.h"
 #include "app/code_9A960.h"
 #include "app/code_B2900.h"
@@ -372,25 +373,25 @@ void rocketBeltMovementFrame(RocketBeltData* arg0, u8 gameState) {
                     sndPlaySfx(0x69);
                 }
                 if ((arg0->unk91 != 0) && (hud->unkB40[0] == -1)) {
-                    hudWarningText(0x4F, 1.5f, 8.0f);
+                    hudWarningText(TEXT_OFF_2, 1.5f, 8.0f);
                 } else {
                     if ((arg0->unkF8 <= 0.0f) && (arg0->unkEC == 0)) {
-                        hudWarningText(0x4A, 1.5f, 8.0f);
+                        hudWarningText(TEXT_FUEL_OUT, 1.5f, 8.0f);
                         arg0->unkEC = 1;
                     } else if ((arg0->unkF8 < 0.15f) && (arg0->unkEB == 0)) {
-                        hudWarningText(0x17B, 1.5f, 8.0f);
+                        hudWarningText(TEXT_FUEL_WAR, 1.5f, 8.0f);
                         arg0->unkEB = 1;
                     } else if ((func_8032C080(NULL) != 0) && (arg0->unkED == 0) && ((arg0->unk90 != 2)) && (arg0->unk90 != 3)) {
-                        hudText_8031D8E0(0xD4, 1.5f, 8.0f);
+                        hudText_8031D8E0(TEXT_LAND_MOW, 1.5f, 8.0f);
                         arg0->unkED = 1;
                     } else if ((taskGet_80346468() != 0) && (arg0->unkEE == 0)) {
-                        hudText_8031D8E0(0x15D, 1.5f, 8.0f);
+                        hudText_8031D8E0(TEXT_GOAL, 1.5f, 8.0f);
                         arg0->unkEE = 1;
                     } else if (arg0->unk90 == 4) {
                         if (arg0->unk64 != 0) {
-                            hudText_8031D8E0(0xCB, 1.5f, 8.0f);
+                            hudText_8031D8E0(TEXT_LAND_OK, 1.5f, 8.0f);
                         } else {
-                            hudText_8031D8E0(0xB2, 1.5f, 8.0f);
+                            hudText_8031D8E0(TEXT_LAND_OUT, 1.5f, 8.0f);
                         }
                     }
                 }
