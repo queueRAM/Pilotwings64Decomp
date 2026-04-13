@@ -415,7 +415,7 @@ s32 gameUpdateStatePilotSelect(Unk80362690* arg0) {
     i++;
     D_80367868.unk4[i].pilot = PILOT_ROBIN;
     D_80367868.unk4[i].modelId = MODEL_PILOT_ROBIN;
-    D_80367868.unk4[i].textId = TEXT_ROBIN;
+    D_80367868.unk4[i].textId = TEXT_HOOTER;
     i++;
 
     ptr->unk0 = i;
