@@ -56,13 +56,13 @@ void func_8033F748(u16 arg0) {
     D_803505B0 = arg0;
 }
 
-void sndPlaySfxVolPitchPan(u8 sfxId, f32 vol, f32 pitch, f32 pan) {
+u8 sndPlaySfxVolPitchPan(u8 sfxId, f32 vol, f32 pitch, f32 pan) {
     u8 temp_v0;
 
     temp_v0 = uvEmitterLookup();
     if (temp_v0 == 0xFF) {
         _uvDebugPrintf("snd : out of local fx emitter devices\n");
-        return;
+        return temp_v0;
     }
     uvEmitterFromModel(temp_v0, sfxId);
     uvEmitterProp(temp_v0, 5, 0x30, 0);
@@ -70,6 +70,7 @@ void sndPlaySfxVolPitchPan(u8 sfxId, f32 vol, f32 pitch, f32 pan) {
     uvEmitterSetUnk74(temp_v0, pitch);
     uvEmitterSetUnk78(temp_v0, pan);
     uvEmitterTrigger(temp_v0);
+    return temp_v0;
 }
 
 u8 sndPlaySfx(u8 sfxId) {

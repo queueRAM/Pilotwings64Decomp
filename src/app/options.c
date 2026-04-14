@@ -311,6 +311,7 @@ s32 optionsHandlerSound(void) {
         if (optInc != 0) {
             func_8033F8CC(D_8034F8F4);
             D_8034F8F4 = sndPlaySfx(sSoundTrack);
+            // D_8034F8F4 = sndPlaySfxVolPitchPan(sSoundTrack, sVolume[sVolumeSfx], 0.5f, 64);
         }
         optionsSetTrack(1, sSoundTrack);
         return -1;
