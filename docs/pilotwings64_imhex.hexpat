@@ -352,25 +352,6 @@ struct PDAT_PPOS {
     Vec3F rot;
 } [[static]]; // size = 0x18
 
-struct PDAT_RHDR {
-    s32 test;
-    s32 unk4;
-    s32 cls;
-    s32 veh;
-    s32 unk10;
-} [[static,format("format_RHDR")]]; // size = 0x14
-
-fn format_RHDR(PDAT_RHDR v) {
-    return std::format("[ {} {} {} {} {} ]", v.test, v.unk4, v.cls, v.veh, v.unk10);
-};
-
-struct PDAT_RPKT {
-    f32 time;
-    f32 stickX;
-    f32 stickY;
-    u32 buttons;
-} [[static]]; // size = 0x10
-
 struct PDAT {
     char tag[4];
     u32 length;
@@ -379,11 +360,8 @@ struct PDAT {
         ("PAD "): u8 pad[length] [[hidden]];
         ("PHDR"): PDAT_PHDR phdr;
         ("PPOS"): PDAT_PPOS pos[while($ - Start < length)];
-        ("RHDR"): PDAT_RHDR rhdr;
-        ("RPKT"): PDAT_RPKT rpkt[while($ - Start < length)];
         (_): u8 data[length];
     }
-    padding[while (($ - Start) < length)]; // length is always to 8-bytes, not offsets
 };
 
 
@@ -916,6 +894,7 @@ struct FORM {
 N64Header N64Header @ 0x00;
 
 // --------- Filesystem
+FORM uvrm @ 0xDE720;
 FORM uvsy @ 0xDF5B0;
 FORM uven @ 0xDF5F8;
 // ignore UVLT @ 0xDFD70 because it is empty
@@ -929,7 +908,7 @@ FORM uvtx[463] @ 0x240100;
 FORM uvan[115] @ 0x3085DC;
 FORM uvft[9] @ 0x32C3F8;
 FORM upwl[4] @ 0x33020C;
-FORM spth0 @ 0x342B7C;
+FORM spth0[1] @ 0x342B7C;
 FORM upwt[61] @ 0x342E2C;
 FORM adat0 @ 0x35C08C;
 FORM spth1[5] @ 0x36E214;

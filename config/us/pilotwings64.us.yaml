@@ -750,13 +750,9 @@ segments:
       - { type: .bss, vram: 0x8037F510, name: app/wind }
       - { type: .bss, vram: 0x8037F910, name: app/wind_objects }
 
-  - name: form_DE720
-    type: pw_form
+  - name: filesys
+    type: pw_filesys
     start: 0xDE720
-
-  - name: form_DF5B0
-    type: pw_form
-    start: 0xDF5B0
 
   - name: audio_seq
     type: bin
