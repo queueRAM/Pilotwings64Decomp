@@ -15,25 +15,25 @@ class N64SegPw_filesys(Segment):
         self.fs_path = "filesys"
 
     def scan(self, rom_bytes):
-        fs_files = []
+        fsFiles = []
         idx = self.rom_start
+        # iterate over filesystem 'FORM' entries and store their tags and offsets
         while idx + 0xC < self.rom_end:
             ftag, length, tag = struct.unpack(">4s L 4s", rom_bytes[idx:idx+0xC])
-            print(f"{ftag}, {tag}, {idx:06X}+{length:06X}")
             ftag = ftag.decode("utf-8")
             tag = tag.decode("utf-8")
-            assert ftag == 'FORM'
+            assert ftag == "FORM", f"Expected 'FORM', got ${ftag}"
             form = {'tag': tag, 'length': length, 'offset': idx}
-            fs_files.append(form)
+            fsFiles.append(form)
             idx += 8 + length
-        self.fs_files = fs_files
+        self.fs_files = fsFiles
 
     def split(self, rom_bytes):
         path = options.opts.asset_path / self.dir / self.fs_path
         path.mkdir(parents=True, exist_ok=True)
-
+        # split out raw binary blobs of each FORM
         for form in self.fs_files:
-            fname = f"{form['tag']}_{form['offset']:06X}.raw"
+            fname = f"FORM_{form['tag']}_{form['offset']:06X}.raw"
             fpath = options.opts.asset_path / self.dir / self.fs_path / fname
             with open(fpath, 'wb') as fout:
                 start = form['offset']

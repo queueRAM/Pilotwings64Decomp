@@ -6,8 +6,51 @@ def read_table(tablePath):
     import yaml
     return yaml.safe_load(open(tablePath, 'r'))
 
-def generate_bins(table: dict, fileDir: str, tableFile: str, filesysFile: str):
+# wrapper for matching compression
+def mio0_compress(data: bytes, mio0Info: dict) -> bytes:
+    def PUT_BIT(buf, bit, val):
+        mask = 1 << (7 - (bit % 8))
+        offset = bit // 8
+        while len(buf) < offset + 1:
+            buf.append(0)
+        buf[offset] = (buf[offset] & ~(mask)) | (mask if val else 0)
+
     import crunch64
+    if not mio0Info:
+        cData = crunch64.mio0.compress(data)
+    else:
+        uBuf = b''
+        cBuf = b''
+        flags = []
+        offset = 0x0
+        bitIdx = 0
+        for m in mio0Info:
+            uLen = m['file_offset'] - offset
+            uBuf += data[offset:offset + uLen]
+            offset += uLen
+            for i in range(uLen):
+                PUT_BIT(flags, bitIdx, 1)
+                bitIdx += 1
+            windowInfo = ((m['length'] - 3) << 12) | (m['offset'] - 1)
+            cBuf += struct.pack(">H", windowInfo)
+            PUT_BIT(flags, bitIdx, 0)
+            bitIdx += 1
+            offset += m['length']
+        uLen = len(data) - offset
+        uBuf += data[offset:offset + uLen]
+        offset += uLen
+        for i in range(uLen):
+            PUT_BIT(flags, bitIdx, 1)
+            bitIdx += 1
+
+        bitLength = (bitIdx + 7) // 8
+        compOffset = (((0x10 + bitLength) + 3) // 4) * 4
+        uncompOffset = compOffset + len(cBuf)
+        cData = b'MIO0' + struct.pack(">L", len(data)) + struct.pack(">L", compOffset) + struct.pack(">L", uncompOffset)
+        cData += bytes(flags) + cBuf + uBuf
+    return cData
+
+def generate_bins(table: dict, fileDir: str, tableFile: str, filesysFile: str):
     # 1. output filesystem binary and accumulate sizes
     with open(filesysFile, 'wb') as fsBin:
         offset = 0
@@ -31,15 +74,16 @@ def generate_bins(table: dict, fileDir: str, tableFile: str, filesysFile: str):
     for form in table['contents']:
         tableData += struct.pack(">4s L", form['tag'].encode("utf-8"), form['length'])
     tableLen = len(tableData)
-    cTableData = crunch64.mio0.compress(tableData)
-    cTableLen = len(cTableData)
+    # cTableData = crunch64.mio0.compress(tableData)
+    cTableData = mio0_compress(tableData, table['mio0_workaround'])
+    cTableLen = (((len(cTableData) + 8) + 3) // 4) * 4 # round up to 4-byte boundary
     uvRm = struct.pack(">4s", "UVRM".encode("utf-8"))
-    for i in range(2):
+    for i in range(table['pad_count']):
         uvRm += struct.pack(">4s L L", "PAD ".encode("utf-8"), 4, 0)
     uvRm += struct.pack(">4s L", "GZIP".encode("utf-8"), cTableLen)
     uvRm += struct.pack(">4s L", "TABL".encode("utf-8"), tableLen)
     uvRm += cTableData
-    uvRmLen = len(uvRm)
+    uvRmLen = ((len(uvRm) + 3) // 4) * 4 # round up to 4 byte boundary
     with open(tableFile, 'wb') as tableBin:
         tableBin.write(struct.pack(">4s L", "FORM".encode("utf-8"), uvRmLen))
         tableBin.write(uvRm)

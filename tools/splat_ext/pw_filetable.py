@@ -12,42 +12,72 @@ class N64SegPw_filetable(Segment):
         )
         self.fs_path = "filesys"
 
+    # MIO0 compression doesn't yet match Paradigm's algo
+    # collect compressed window information to be used during rebuild
+    def mio0_workaround(self, mio0Data: bytes) -> list:
+        mio0Info = []
+        magic = mio0Data[:4]
+        assert magic == b'MIO0', f"Expected 'MIO0', got {magic}"
+        dLen, cOff, uOff = struct.unpack('>LLL', mio0Data[0x4:0x10])
+        flags = mio0Data[0x10:cOff]
+        flagIdx = 0
+        outSize = 0
+        while outSize < dLen:
+            flagOff = flagIdx // 8
+            flagBit = 1 << (7 - (flagIdx % 8))
+            flagIdx += 1
+            if flags[flagOff] & flagBit != 0:
+                outSize += 1
+            else: # compressed
+                windowInfo, = struct.unpack('>H', mio0Data[cOff:cOff+2])
+                cOff += 2
+                winOff = (windowInfo & 0x0FFF) + 1
+                winLen = (windowInfo >> 12) + 3
+                mio0Info.append({'file_offset': outSize, 'offset': winOff, 'length': winLen})
+                outSize += winLen
+        return mio0Info
+
     def parse_table(self, rom_bytes: bytes, idx: int) -> dict:
-        form_tag, form_length = struct.unpack(">4s L", rom_bytes[idx:idx+8])
-        print(f"form 0x{idx:x} 0x{form_length:x}")
-        assert form_tag == b'FORM'
+        formTag, formLen = struct.unpack(">4s L", rom_bytes[idx:idx+8])
+        print(f"form 0x{idx:x} 0x{formLen:x}")
+        assert formTag == b"FORM", f"Expected 'FORM', got {formTag}"
         idx += 8
-        fs_data_start = (((idx + form_length) + 15) // 16) * 16
+        fsDataStart = (((idx + formLen) + 15) // 16) * 16
         rtag, = struct.unpack(">4s", rom_bytes[idx:idx+4])
-        assert rtag == b'UVRM'
+        assert rtag == b"UVRM", f"Expected 'UVRM', got {rtag}"
         idx += 4
         table = {
-            'tag': form_tag.decode("utf-8"),
-            'length': form_length,
+            'tag': formTag.decode("utf-8"),
+            'length': formLen,
             'type': rtag.decode("utf-8"),
+            'pad_count': 0,
             'contents': []
         }
         cur = 0
-        fs_data_offset = fs_data_start
-        while cur < form_length:
+        fsDataOffset = fsDataStart
+        while cur < formLen:
             tag, length = struct.unpack(">4s L", rom_bytes[cur+idx:cur+idx+8])
             cur += 8
             data = rom_bytes[cur+idx:cur+idx+length]
-            if tag == b'GZIP':
+            # compressed data, unwrap MIO0 compression first
+            if tag == b"GZIP":
                 tag, dlength = struct.unpack(">4s L", rom_bytes[cur+idx:cur+idx+8])
                 cur += 8
-                data = crunch64.mio0.decompress(rom_bytes[cur+idx:cur+idx+length])
+                cdata = rom_bytes[cur+idx:cur+idx+length-8]
+                data = crunch64.mio0.decompress(cdata)
                 assert len(data) == dlength, f"Expected {len(data)} == {dlength}"
-            if tag == b'PAD ':
-                pass
-            elif tag == b'TABL':
-                for entry_tag, entry_length in struct.iter_unpack(">4s L", data):
+                table['mio0_workaround'] = self.mio0_workaround(cdata)
+
+            if tag == b"PAD ":
+                table['pad_count'] += 1
+            elif tag == b"TABL":
+                for entryTag, entryLen in struct.iter_unpack(">4s L", data):
                     table['contents'].append({
-                        'tag': entry_tag.decode("utf-8"),
-                        'offset': fs_data_offset,
-                        'length': entry_length
+                        'tag': entryTag.decode("utf-8"),
+                        'offset': fsDataOffset,
+                        'length': entryLen
                     })
-                    fs_data_offset += entry_length
+                    fsDataOffset += entryLen
             cur += length
         return table
 
@@ -56,18 +86,14 @@ class N64SegPw_filetable(Segment):
 
     def split(self, rom_bytes):
         path = options.opts.asset_path / self.dir / self.fs_path
-        print("Make dirs", path)
         path.mkdir(parents=True, exist_ok=True)
-
-        # path and naming must align with output from pw_filesys
+        # assign file path and name which align with pw_filesys
         for form in self.fs_table['contents']:
-            form['file'] = f"{form['tag']}_{form['offset']:06X}.raw"
-
-        if self.fs_table and path:
-            with open(path / f"{self.name}.yaml", "w", newline="\n") as f:
-                f.write(yaml.dump(self.fs_table, sort_keys=False, default_flow_style=None))
-        else:
-            print("ERROR:", self.fs_table, path)
+            form['file'] = f"FORM_{form['tag']}_{form['offset']:06X}.raw"
+        # emit top-level filetable yaml
+        assert self.fs_table and path, f"Unexpected {self.fs_table} {path}"
+        with open(path / f"{self.name}.yaml", "w", newline="\n") as f:
+            f.write(yaml.dump(self.fs_table, sort_keys=False, default_flow_style=None))
 
     def get_linker_entries(self):
         return [
