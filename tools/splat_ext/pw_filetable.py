@@ -1,4 +1,5 @@
 import crunch64
+import hashlib
 import struct
 import yaml
 from splat.util import options
@@ -15,7 +16,7 @@ class N64SegPw_filetable(Segment):
 
     # MIO0 compression doesn't yet match Paradigm's algo
     # collect compressed window information to be used during rebuild
-    def mio0_workaround(self, mio0Data: bytes) -> list:
+    def mio0_matching_info(self, mio0Data: bytes) -> list:
         mio0Info = []
         magic = mio0Data[:4]
         assert magic == b'MIO0', f"Expected 'MIO0', got {magic}"
@@ -67,8 +68,10 @@ class N64SegPw_filetable(Segment):
                 cdata = rom_bytes[cur+idx:cur+idx+length-8]
                 data = crunch64.mio0.decompress(cdata)
                 assert len(data) == dlength, f"Expected {len(data)} == {dlength}"
-                table['mio0_workaround'] = self.mio0_workaround(cdata)
-
+                table['mio0_matching_info'] = {
+                    'sha1sum': hashlib.sha1(data).hexdigest(),
+                    'comp_blocks': self.mio0_matching_info(cdata)
+                }
             if tag == b"PAD ":
                 table['pad_count'] += 1
             elif tag == b"TABL":
