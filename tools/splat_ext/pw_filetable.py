@@ -89,15 +89,20 @@ class N64SegPw_filetable(Segment):
         self.fs_table = self.parse_table(rom_bytes, self.rom_start)
 
     def split(self, rom_bytes):
+        # TODO: dual maintenance of this list and parsers in filesys
+        exts = {
+            'ADAT': 'yaml'
+        }
         path = options.opts.asset_path / self.dir / self.fs_path
         path.mkdir(parents=True, exist_ok=True)
         # assign file path and name which align with pw_filesys
         for form in self.fs_table['contents']:
-            form['file'] = f"FORM_{form['tag']}_{form['offset']:06X}.raw"
+            ext = exts[form['tag']] if form['tag'] in exts else 'raw'
+            form['file'] = f"FORM_{form['tag']}_{form['offset']:06X}.{ext}"
         # emit top-level filetable yaml
         assert self.fs_table and path, f"Unexpected {self.fs_table} {path}"
-        with open(path / f"{self.name}.yaml", "w", newline="\n") as f:
-            f.write(yaml.dump(self.fs_table, sort_keys=False, default_flow_style=None))
+        with open(path / f"{self.name}.yaml", "w", newline="\n") as fout:
+            yaml.dump(self.fs_table, fout, encoding='utf-8', sort_keys=False, default_flow_style=None)
 
     def get_linker_entries(self):
         return [
