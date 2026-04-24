@@ -12,6 +12,7 @@ class N64SegPw_filesys(Segment):
         super().__init__(
             rom_start, rom_end, type, name, vram_start, args=args, yaml=yaml
         )
+        self.align = 0x10
         self.fs_path = "filesys"
 
     def scan(self, rom_bytes):
@@ -37,7 +38,7 @@ class N64SegPw_filesys(Segment):
             fpath = options.opts.asset_path / self.dir / self.fs_path / fname
             with open(fpath, 'wb') as fout:
                 start = form['offset']
-                end = start + form['length']
+                end = start + form['length'] + 8
                 fout.write(rom_bytes[start:end])
 
     def get_linker_entries(self):

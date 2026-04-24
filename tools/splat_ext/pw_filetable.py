@@ -10,6 +10,7 @@ class N64SegPw_filetable(Segment):
         super().__init__(
             rom_start, rom_end, type, name, vram_start, args=args, yaml=yaml
         )
+        self.align = 0x10
         self.fs_path = "filesys"
 
     # MIO0 compression doesn't yet match Paradigm's algo

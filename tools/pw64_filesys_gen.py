@@ -58,7 +58,7 @@ def generate_bins(table: dict, fileDir: str, tableFile: str, filesysFile: str):
             if form['file'].endswith(".raw"):
                 filePath = fileDir + "/" + form['file']
                 formData = open(filePath, 'rb').read()
-                formLen = len(formData) + 8
+                formLen = len(formData)
                 if formLen != form['length']:
                     print(f"Warning: length mismatch {form['file']} {form['length']} != {formLen}")
                 form['length'] = formLen
