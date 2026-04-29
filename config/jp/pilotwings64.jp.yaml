@@ -204,8 +204,11 @@ segments:
       - [0x462F0, asm, kernel/code_462F0]
       - [0x46320, asm, kernel/code_46320]
       - [0x46330, asm, kernel/code_46330]
-      - [0x46390, asm, kernel/code_46390]
-      - [0x465C0, data]
+      - { start: 0x46390, type: textbin, use_src_path: True, name: rsp/rspboot }
+      - { start: 0x46460, type: textbin, use_src_path: True, name: rsp/f3dex }
+      - { start: 0x47890, type: textbin, use_src_path: True, name: rsp/fast3d }
+      - { start: 0x48CC0, type: textbin, use_src_path: True, name: rsp/aspMain }
+      - [0x49AE0, data]
       - [0x4D3C0, rodata, kernel/code_1050]
       - [0x4D3F0, rodata, kernel/code_1300]
       - [0x4DAA0, rodata, kernel/code_3D50]
@@ -231,9 +234,9 @@ segments:
       - [0x50880, rodata, kernel/code_3FBE0]
       - [0x50940, rodata, kernel/code_41E60]
       - [0x509A0, rodata, kernel/code_449D0]
-      - [0x509E0, rodata]
-      - [0x511E0, rodata]
-      - [0x519E0, rodata]
+      - { start: 0x509E0, type: databin, use_src_path: True, name: rsp/f3dex }
+      - { start: 0x511E0, type: databin, use_src_path: True, name: rsp/fast3d }
+      - { start: 0x519E0, type: databin, use_src_path: True, name: rsp/aspMain }
       - { type: bss, vram: 0x80250CF0 }
 
   - type: bin
