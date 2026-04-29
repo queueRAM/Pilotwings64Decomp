@@ -73,7 +73,7 @@ segments:
     follows_vram: entry
     bss_size: 0x6BF60
     subsegments:
-      - [0x01050, asm, kernel/code_1050]
+      - [0x01050, c, kernel/code_1050]
       - [0x01300, asm, kernel/code_1300]
       - [0x02130, asm, kernel/code_2130]
       - [0x03D50, asm, kernel/code_3D50]
@@ -209,7 +209,7 @@ segments:
       - { start: 0x47890, type: textbin, use_src_path: True, name: rsp/fast3d }
       - { start: 0x48CC0, type: textbin, use_src_path: True, name: rsp/aspMain }
       - [0x49AE0, data]
-      - [0x4D3C0, rodata, kernel/code_1050]
+      - [0x4D3B0, .rodata, kernel/code_1050]
       - [0x4D3F0, rodata, kernel/code_1300]
       - [0x4DAA0, rodata, kernel/code_3D50]
       - [0x4DBC0, rodata, kernel/code_58E0]
@@ -237,7 +237,8 @@ segments:
       - { start: 0x509E0, type: databin, use_src_path: True, name: rsp/f3dex }
       - { start: 0x511E0, type: databin, use_src_path: True, name: rsp/fast3d }
       - { start: 0x519E0, type: databin, use_src_path: True, name: rsp/aspMain }
-      - { type: bss, vram: 0x80250CF0 }
+      - { type: .bss, vram: 0x80250CF0, name: kernel/code_1050 }
+      - { type: bss, vram: 0x80250D40 }
 
   - type: bin
     start: 0x51CA0

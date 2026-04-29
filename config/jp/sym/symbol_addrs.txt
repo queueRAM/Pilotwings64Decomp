@@ -245,6 +245,7 @@ Thread_App = 0x8022E7F0;
 Thread_Kernel = 0x8022E850;
 uvContMesgInit = 0x8022E950;
 uvReadController = 0x8022EA08;
+_uvDebugPrintf = 0x8022EBE4;
 _uvDMA = 0x8022EC00;
 _uvAssertMsg = 0x8022ED2C;
 _uvTerraDraw = 0x8022EF34;
