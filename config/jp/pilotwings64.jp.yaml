@@ -32,9 +32,9 @@ options:
   # auto_link_sections: [".data", ".rodata", ".bss"]
 
   symbol_addrs_path:
-    - config/jp/symbol_addrs.txt
+    - config/jp/sym/symbol_addrs.txt
   reloc_addrs_path:
-    - config/jp/reloc_addrs.txt
+    - config/jp/sym/reloc_addrs.txt
 
   undefined_funcs_auto_path: build/splat_out/jp/undefined_funcs_auto.txt
   undefined_syms_auto_path: build/splat_out/jp/undefined_syms_auto.txt
