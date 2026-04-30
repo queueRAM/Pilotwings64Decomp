@@ -218,6 +218,9 @@ s32 uvFontHeight(void) {
     return font->bitmap[1].actualHeight * sFontScaleY;
 }
 
+#if defined(VERSION_JP_TODO)
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/font/uvFontPrintStr16.s")
+#else
 // adds str16 to messages using current font settings
 s32 uvFontPrintStr16(s32 x, s32 y, s16* str16, s32 strLen, s32 end) {
     s32 i16;
@@ -296,7 +299,11 @@ s32 uvFontPrintStr16(s32 x, s32 y, s16* str16, s32 strLen, s32 end) {
     }
     return ret;
 }
+#endif
 
+#if defined(VERSION_JP_TODO)
+#pragma GLOBAL_ASM("asm/nonmatchings/kernel/font/uvFontPrintStr.s")
+#else
 void uvFontPrintStr(s32 x, s32 y, const char* str) {
     char* chrPos;
     s32 strLen;
@@ -334,6 +341,7 @@ void uvFontPrintStr(s32 x, s32 y, const char* str) {
     sFontMessages[sFontMsgCount].font = gGfxUnkPtrs->fonts[sFontCurId];
     sFontMsgCount++;
 }
+#endif
 
 STATIC_FUNC s32 uvFontSpriteWidth(Sprite* sprite, s16* str16, ParsedUVFT* font) {
     s32 width;
