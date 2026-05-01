@@ -351,31 +351,31 @@ segments:
       - { type: bss, vram: 0x80269D80, name: kernel/env }
       - { type: bss, vram: 0x80269DC0, name: kernel/code_19B50 }
       - { type: bss, vram: 0x80269EB0, name: kernel/font }
-      - { type: bss, vram: 0x80289F10, name: kernel/fx }
-      - { type: bss, vram: 0x802904F0, name: kernel/geometry }
-      - { type: bss, vram: 0x80296910, name: kernel/graphics }
-      - { type: bss, vram: 0x802B5170, name: kernel/filesystem }
-      - { type: bss, vram: 0x802B5180, name: kernel/controller }
-      - { type: bss, vram: 0x802B5230, name: kernel/texture }
-      - { type: bss, vram: 0x802B7C50, name: kernel/matrix }
-      - { type: bss, vram: 0x802B8690, name: kernel/memory }
-      - { type: bss, vram: 0x802B87B0, name: kernel/sched }
-      - { type: bss, vram: 0x802B9B00, name: kernel/main }
-      - { type: bss, vram: 0x802C5A30, name: kernel/code_2FE40 }
-      - { type: bss, vram: 0x802C5E40, name: kernel/sprite }
-      - { type: bss, vram: 0x802C7E90, name: kernel/debug }
-      - { type: bss, vram: 0x802C7EB0, name: sp/sprite }
-      - { type: bss, vram: 0x802C7EC0, name: io/sptask }
-      - { type: bss, vram: 0x802C7F00, name: io/vimgr }
-      - { type: bss, vram: 0x802C9110, name: os/seteventmesg }
-      - { type: bss, vram: 0x802C9190, name: os/initialize }
-      - { type: bss, vram: 0x802C91A0, name: io/pimgr }
-      - { type: bss, vram: 0x802CA370, name: io/controller }
-      - { type: bss, vram: 0x802CA400, name: io/piacs }
-      - { type: bss, vram: 0x802CA420, name: os/timerintr }
-      - { type: bss, vram: 0x802CA460, name: io/conteepread }
-      - { type: bss, vram: 0x802CA4A0, name: io/siacs }
-      - { type: bss, vram: 0x802CA4C0, name: debug/kdebugserver }
+      - { type: bss, vram: 0x8027C3F0, name: kernel/fx }
+      - { type: bss, vram: 0x802829D0, name: kernel/geometry }
+      - { type: bss, vram: 0x80288DF0, name: kernel/graphics }
+      - { type: bss, vram: 0x802A7650, name: kernel/filesystem }
+      - { type: bss, vram: 0x802A7660, name: kernel/controller }
+      - { type: bss, vram: 0x802A7710, name: kernel/texture }
+      - { type: bss, vram: 0x802AA130, name: kernel/matrix }
+      - { type: bss, vram: 0x802AAB70, name: kernel/memory }
+      - { type: bss, vram: 0x802AAC90, name: kernel/sched }
+      - { type: bss, vram: 0x802ABFE0, name: kernel/main }
+      - { type: bss, vram: 0x802B7F10, name: kernel/code_2FE40 }
+      - { type: bss, vram: 0x802B8320, name: kernel/sprite }
+      - { type: bss, vram: 0x802BA370, name: kernel/debug }
+      - { type: bss, vram: 0x802BA390, name: sp/sprite }
+      - { type: bss, vram: 0x802BA3A0, name: io/sptask }
+      - { type: bss, vram: 0x802BA3E0, name: io/vimgr }
+      - { type: bss, vram: 0x802BB5F0, name: os/seteventmesg }
+      - { type: bss, vram: 0x802BB670, name: os/initialize }
+      - { type: bss, vram: 0x802BB680, name: io/pimgr }
+      - { type: bss, vram: 0x802BC850, name: io/controller }
+      - { type: bss, vram: 0x802BC8E0, name: io/piacs }
+      - { type: bss, vram: 0x802BC900, name: os/timerintr }
+      - { type: bss, vram: 0x802BC940, name: io/conteepread }
+      - { type: bss, vram: 0x802BC980, name: io/siacs }
+      - { type: bss, vram: 0x802BC9A0, name: debug/kdebugserver }
 
   # app begins around 0x51CA0
   - type: bin

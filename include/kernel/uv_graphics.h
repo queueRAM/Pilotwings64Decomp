@@ -277,7 +277,7 @@ typedef struct ParsedUVSQ {
     u8 mode;
     u8 reverse;
     f32 framerate;
-} ParsedUVSQ;
+} ParsedUVSQ; // size = 0x10
 
 typedef struct {
     Vec4F unk0;

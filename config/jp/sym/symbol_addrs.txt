@@ -638,7 +638,7 @@ gSndPlayer = 0x80248B44;
 gGfxUnkPtrs = 0x80248C80;
 D_80248DD8 = 0x80248C88;
 
-sFontSprite = 0x80248CD0;
+sFontSprite = 0x80248CD0; // size:0x44
 sFontColorR = 0x80248D14;
 sFontColorG = 0x80248D18;
 sFontColorB = 0x80248D1C;
@@ -696,4 +696,12 @@ __osRdbWriteOK = 0x8024C344;
 osViModeNtscLan1 = 0x8024C350;
 osViModePalLan1 = 0x8024C3A0;
 
-gUVBlockOffsets           = 0x802B53F0; // size:0x1a40
+// .bss
+
+D_80269F50 = 0x80269DC0; // size:0xF0
+
+sFontBitmaps = 0x80269EB0; // size:0x190
+sFontDList = 0x8026A040; // size:0x11AC0
+sFontMessages = 0x8027BB00; // size:0x8F0
+
+gUVBlockOffsets           = 0x802B53F0; // size:0x1A40

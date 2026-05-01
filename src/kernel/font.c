@@ -5,7 +5,17 @@
 #include <uv_font.h>
 #include <uv_string.h>
 
-#define FONT_MAX_MSG_LEN 44
+#if defined(VERSION_US)
+  #define FONT_MAX_MSG_LEN   44
+  #define FONT_DL_COUNT    7944
+  #define FONT_MSG_COUNT     30
+#elif defined(VERSION_JP)
+  #define FONT_MAX_MSG_LEN   25
+  #define FONT_DL_COUNT    4524
+  #define FONT_MSG_COUNT     20
+#else
+  #error Unknown VERSION
+#endif
 
 // struct containing a printed string's font data
 // contains position, scale, color, string, pointer to font
@@ -23,8 +33,8 @@ typedef struct Unk80289380 {
 } FontMessage; // size = 0x70
 
 STATIC_DATA Bitmap sFontBitmaps[FONT_MAX_MSG_LEN];
-STATIC_DATA Gfx sFontDList[7944 * 2];
-STATIC_DATA FontMessage sFontMessages[30];
+STATIC_DATA Gfx sFontDList[FONT_DL_COUNT * 2];
+STATIC_DATA FontMessage sFontMessages[FONT_MSG_COUNT];
 
 STATIC_DATA Sprite sFontSprite = {
     0,            // x
@@ -46,8 +56,8 @@ STATIC_DATA Sprite sFontSprite = {
     NULL,         // LUT
     0,            // istart
     1,            // istep
-    660,          // nbitmaps
-    7944,         // ndisplist
+    15 * FONT_MAX_MSG_LEN,          // nbitmaps
+    FONT_DL_COUNT,// ndisplist
     15,           // bmheight
     128,          // bmHreal
     G_IM_FMT_IA,  // bmfmt
@@ -397,7 +407,7 @@ void uvFontGenDlist(void) {
         D_80248E94 = gGfxFbIndex;
     }
     spInit(&gGfxDisplayListHead);
-    sFontSprite.rsp_dl_next = &sFontSprite.rsp_dl[(gGfxFbIndex * 7944) + D_80248E90];
+    sFontSprite.rsp_dl_next = &sFontSprite.rsp_dl[(gGfxFbIndex * FONT_DL_COUNT) + D_80248E90];
 
     for (i = 0; i < sFontMsgCount; i++) {
         uvFontMsgGenDlist(&sFontMessages[i]);
