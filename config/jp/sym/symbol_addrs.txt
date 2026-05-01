@@ -526,7 +526,7 @@ __osEnqueueAndYield = 0x8023F2B0;
 __osEnqueueThread = 0x8023F340;
 __osPopThread = 0x8023F388;
 __osDispatchThread = 0x8023F398;
-__osCleanupThread = 0x8023FF4D8;
+__osCleanupThread = 0x8023F4D8;  // use_non_matching_label:False
 __osViInit = 0x8023F4E0;
 alSynDelete = 0x8023F5F0;
 __osProbeTLB = 0x8023F600;
@@ -666,6 +666,8 @@ gMatrixStackIdx = 0x8024B100;
 gRandLcgState = 0x8024B170;
 gRanluxState1 = 0x8024B174;
 gRanluxState2 = 0x8024B178;
+
+D_8024B260 = 0x8024B110;
 
 alGlobals = 0x8024B630;
 
