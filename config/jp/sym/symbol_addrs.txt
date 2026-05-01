@@ -629,4 +629,71 @@ __osAtomicDec = 0x80245380;
 
 // data
 
+nextDMA = 0x80248B30;
+curAcmdList = 0x80248B34;
+gAudioHeapStart = 0x80248B3C;
+gSeqPlayer = 0x80248B40;
+gSndPlayer = 0x80248B44;
+
+gGfxUnkPtrs = 0x80248C80;
+D_80248DD8 = 0x80248C88;
+
+sFontSprite = 0x80248CD0;
+sFontColorR = 0x80248D14;
+sFontColorG = 0x80248D18;
+sFontColorB = 0x80248D1C;
+sFontColorA = 0x80248D20;
+// TODO map out more
+// sFontScaleX = ;
+// sFontScaleY = ;
+// sFontCurId = ;
+// sFontCurWidth = ;
+// sFontMsgCount = ;
+
+gGfxDList1 = 0x80248FF0;
+gGfxDList2 = 0x80249060;
+gGfxSyncNeeded = 0x802490B0;
+gGfxBeginFlag = 0x802490B4;
+gGfxFogFactor = 0x802490B8;
+gGfxFbIndex = 0x802490BC;
+gGfxElementCount = 0x802490C0;
+gGfxFrameCount = 0x802490C4;
+gGfxMstackIdx = 0x802490C8;
+gGfxUnkStateF = 0x802490CC;
+
+gMatrixStackIdx = 0x8024B100;
+
+gRandLcgState = 0x8024B170;
+gRanluxState1 = 0x8024B174;
+gRanluxState2 = 0x8024B178;
+
+alGlobals = 0x8024B630;
+
+__osViDevMgr = 0x8024B660; // size:0x18
+
+osViModeTable = 0x8024B680; // size:0x8c0
+
+osClockRate = 0x8024BF40; // size:0x8
+__osShutdown = 0x8024BF48;
+
+__osPiDevMgr = 0x8024BF50; // size:0x18
+
+__osContinitialized = 0x8024BF70;
+
+__osThreadTail = 0x8024BF80;
+__osRunQueue = 0x8024BF88;
+__osActiveQueue = 0x8024BF8C;
+__osRunningThread = 0x8024BF90;
+__osFaultedThread = 0x8024BF94;
+
+__osPiAccessQueueEnabled = 0x8024C300;
+
+__osTimerList = 0x8024C310;
+
+__osRdbSendMessage = 0x8024C340;
+__osRdbWriteOK = 0x8024C344;
+
+osViModeNtscLan1 = 0x8024C350;
+osViModePalLan1 = 0x8024C3A0;
+
 gUVBlockOffsets           = 0x802B53F0; // size:0x1a40
