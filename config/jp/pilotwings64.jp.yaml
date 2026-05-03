@@ -379,10 +379,15 @@ segments:
       - { type: .bss, vram: 0x802BC980, name: libultra/io/siacs }
       - { type: .bss, vram: 0x802BC9A0, name: libultra/debug/kdebugserver }
 
-  # app begins around 0x51CA0
-  - type: bin
+  - name: app
+    type: code
     start: 0x51CA0
-    follows_vram: kernel
+    vram: 0x802BCC50
+    bss_size: 0x293E0
+    subsegments:
+      - { start: 0x51CA0, type: textbin, use_src_path: True, name: app_text }
+      - { start: 0xD6030, type: databin, use_src_path: True, name: app_data }
+      - { type: bss, vram: 0x80349BE0 }
 
   - name: filetable
     type: bin
