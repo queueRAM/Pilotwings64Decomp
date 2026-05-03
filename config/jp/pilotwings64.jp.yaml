@@ -265,7 +265,8 @@ segments:
       - [0x49FA0, .data, kernel/graphics]
       - [0x4A0B0, .data, kernel/code_2FE40]
       - [0x4C0B0, .data, kernel/matrix]
-      - [0x4C0C0, data] # unused?
+      - [0x4C0C0, .data, kernel/sched]
+      - [0x4C0D0, .data, kernel/sprite]
       - [0x4C120, .data, kernel/rand]
       - [0x4C130, .data, kernel/debug]
       - [0x4C5E0, .data, libultra/audio/sl]
@@ -286,8 +287,9 @@ segments:
       - [0x4D2D0, .data, libultra/io/siacs]
       - [0x4D2E0, .data, libultra/debug/kdebugserver]
       - [0x4D2F0, .data, libultra/os/syncputchars]
-      - [0x4D300, data, libultra/vimodes/vimodentsclan1]
-      - [0x4D350, data, libultra/vimodes/vimodepallan1]
+      - [0x4D300, .data, libultra/vimodes/vimodentsclan1]
+      - [0x4D350, .data, libultra/vimodes/vimodepallan1]
+      - [0x4D3A0, data] # TODO: what are these 0x10 bytes?
 
       - [0x4D3B0, .rodata, kernel/code_1050]
       - [0x4D3F0, .rodata, kernel/janim]
