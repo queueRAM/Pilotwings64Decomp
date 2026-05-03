@@ -90,7 +90,7 @@ segments:
       - [0x08170, c, kernel/code_8170]
       - [0x177A0, c, kernel/dobj]
       - [0x19170, c, kernel/env]
-      - [0x19B50, c, kernel/code_19B50]
+      - [0x19B50, c, kernel/fx_seq]
       - [0x1A220, c, kernel/font]
       - [0x1AF80, c, kernel/fx]
       - [0x200B0, c, kernel/geometry]
@@ -308,7 +308,7 @@ segments:
       - [0x4DE10, .rodata, kernel/code_8170]
       - [0x4E370, .rodata, kernel/dobj]
       - [0x4E620, .rodata, kernel/env]
-      - [0x4E780, .rodata, kernel/code_19B50]
+      - [0x4E780, .rodata, kernel/fx_seq]
       - [0x4E830, .rodata, kernel/font]
       - [0x4E870, .rodata, kernel/fx]
       - [0x4EB30, .rodata, kernel/geometry]
@@ -356,7 +356,7 @@ segments:
       - { type: .bss, vram: 0x802634C0, name: kernel/code_8170 }
       - { type: .bss, vram: 0x80263780, name: kernel/dobj }
       - { type: .bss, vram: 0x80269F10, name: kernel/env }
-      - { type: .bss, vram: 0x80269F50, name: kernel/code_19B50 }
+      - { type: .bss, vram: 0x80269F50, name: kernel/fx_seq }
       - { type: .bss, vram: 0x8026A040, name: kernel/font }
       - { type: .bss, vram: 0x8028A0A0, name: kernel/fx }
       - { type: .bss, vram: 0x80290680, name: kernel/geometry }
