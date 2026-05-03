@@ -170,7 +170,7 @@ s32 creditsMainRender(void) {
 
 void credits_8030CDA0(s32 timeOfDay) {
     Unk80362690_Unk0* sp2C;
-    Camera* sp28;
+    Camera* camera;
     CreditLines* credLine;
     s32 prevType;
     s32 var_v0;
@@ -228,7 +228,7 @@ void credits_8030CDA0(s32 timeOfDay) {
     ft0 = var_v0;
     D_8034F788 = -ft0 / 210.0f;
 
-    sp28 = D_80362690->unkC[D_80362690->unk9C].unk70;
+    camera = D_80362690->unkC[D_80362690->unk9C].unk70;
     sp2C = &D_80362690->unkC[D_80362690->unk9C];
     uvLevelInit();
     D_80362690->map = MAP_LITTLE_STATES;
@@ -253,15 +253,15 @@ void credits_8030CDA0(s32 timeOfDay) {
         envLoadTerrainPal(D_80362690->envId);
     }
     uvLevelAppend(5);
-    func_8034B5E0(sp28->unk22C, sp28);
+    func_8034B5E0(camera->unk22C, camera);
     envId = D_80362690->envId;
     env_802E1444((envId != 0) ? envId : 0x10);
-    func_80204BD4(sp28->unk22C, 1, 1.0f);
+    func_80204BD4(camera->unk22C, 1, 1.0f);
     uvChanTerra(sp2C->unk70->unk22C, D_80362690->terraId);
-    func_80204A8C(sp28->unk22C, 3);
+    func_80204A8C(camera->unk22C, 3);
     uvEnvFunc(D_80362690->envId, 0, env_802E0CF0);
-    func_80204AB0(sp28->unk22C, 1, func_8034B6F8);
-    func_80313640(-1419.9f, 871.2f, 639.72f, 1.1452856f, -0.2094396f, 0.0f, &sp28->unk108);
+    func_80204AB0(camera->unk22C, 1, func_8034B6F8);
+    func_80313640(-1419.9f, 871.2f, 639.72f, 1.1452856f, -0.2094396f, 0.0f, &camera->unk108);
     fireFxInit();
     fireFxCreateAll();
     uvFontSet(0);
@@ -301,7 +301,7 @@ s32 credits_8030D208(void) {
 void creditsScene(void) {
     static f32 D_8034F78C = -1.0f;
     static f32 D_8034F790 = 0.0f;
-    Camera* var_v1;
+    Camera* camera;
     s32 i;
     s32 sp74;
     s32 y;
@@ -314,9 +314,9 @@ void creditsScene(void) {
     f32 g;
     f32 b;
 
-    var_v1 = D_80362690->unkC[D_80362690->unk9C].unk70;
+    camera = D_80362690->unkC[D_80362690->unk9C].unk70;
 
-    func_80204FC4(var_v1->unk22C);
+    func_80204FC4(camera->unk22C);
     sp74 = (s32)(D_8034F780 + 0.5f);
     for (i = 0; D_8034F4E0[i].str != NULL; i++) {
         y = D_8034F4E0[i].yOffset + sp74;

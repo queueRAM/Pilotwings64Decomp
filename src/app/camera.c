@@ -35,7 +35,7 @@ STATIC_FUNC void func_802D3790(Camera* camera);
 STATIC_FUNC void func_802D3BE8(Camera* camera);
 STATIC_FUNC void func_802D3FA4(Camera* camera);
 STATIC_FUNC void func_802D41D8(Camera* camera);
-STATIC_FUNC void func_802D46A4(Camera* camera, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
+STATIC_FUNC void func_802D46A4(Camera* camera, s16 x0, s16 x1, s16 y0, s16 y1);
 STATIC_FUNC void func_802D532C(Camera* camera);
 STATIC_FUNC void func_802D559C(Camera* camera);
 STATIC_FUNC s32 func_802D4CA4(Camera* camera, Mtx4F*);
@@ -49,16 +49,16 @@ void func_802D3170(u8 unkIndex, Camera* camera) {
     func_802EAAE0(&camera->unk230);
     camera->unk2 = camera->unk1;
     camera->unk0 = 0;
-    camera->unk24 = SUBSCREEN_X0;
-    camera->unk26 = SUBSCREEN_X1;
-    camera->unk28 = SUBSCREEN_Y0;
-    camera->unk2A = SUBSCREEN_Y1;
-    camera->unk3C = 1.0f;
-    camera->unk40 = 2000.0f;
-    camera->unk2C = one * -0.4906542f;
-    camera->unk30 = one * 0.4906542f;
-    camera->unk34 = one * -0.35f;
-    camera->unk38 = one * 0.35f;
+    camera->viewX0 = SUBSCREEN_X0;
+    camera->viewX1 = SUBSCREEN_X1;
+    camera->viewY0 = SUBSCREEN_Y0;
+    camera->viewY1 = SUBSCREEN_Y1;
+    camera->clipNear = 1.0f;
+    camera->clipFar = 2000.0f;
+    camera->clipX0 = one * -0.4906542f;
+    camera->clipX1 = one * 0.4906542f;
+    camera->clipY0 = one * -0.35f;
+    camera->clipY1 = one * 0.35f;
     camera->unk48 = 0.7f;
     camera->unk4C = 0.6f;
     camera->unk5C = 0.0f;
@@ -110,7 +110,7 @@ void func_802D3170(u8 unkIndex, Camera* camera) {
     camera->unk1374 = 6.0f;
     camera->unk1378 = 30.0f;
     uvMat4SetIdentity(&camera->unk80);
-    func_802D46A4(camera, camera->unk24, camera->unk26, camera->unk28, camera->unk2A);
+    func_802D46A4(camera, camera->viewX0, camera->viewX1, camera->viewY0, camera->viewY1);
     func_802D45C4(camera, 1);
     D_803599D0.count = 6;
     D_803599D0.unk4[0].x = 0.0f;
@@ -516,24 +516,24 @@ void func_802D4514(Camera* camera) {
     f32 temp2;
     Camera* ptr;
 
-    var_fv0 = (camera->unk3C * 1.5f) / camera->unk20;
-    temp = (var_fv0 * 1.1f) * camera->unk2C;
-    temp2 = (var_fv0 * 1.1f) * camera->unk30;
-    temp3 = (var_fv0 * 1.1f) * camera->unk34;
-    temp4 = (var_fv0 * 1.1f) * camera->unk38;
+    var_fv0 = (camera->clipNear * 1.5f) / camera->unk20;
+    temp = (var_fv0 * 1.1f) * camera->clipX0;
+    temp2 = (var_fv0 * 1.1f) * camera->clipX1;
+    temp3 = (var_fv0 * 1.1f) * camera->clipY0;
+    temp4 = (var_fv0 * 1.1f) * camera->clipY1;
 
     ptr = camera;
     ptr->unk111C.unk0 = 2;
     camera->unk111C.unk4[0].unk28.f[2] = 0.0f;
-    camera->unk111C.unk4[0].unk28.f[1] = ptr->unk3C * 1.5f;
+    camera->unk111C.unk4[0].unk28.f[1] = ptr->clipNear * 1.5f;
     camera->unk111C.unk4[0].unk28.f[0] = temp;
-    camera->unk111C.unk4[0].unk1C.f[1] = ptr->unk3C * 1.5f;
+    camera->unk111C.unk4[0].unk1C.f[1] = ptr->clipNear * 1.5f;
     camera->unk111C.unk4[0].unk1C.f[0] = temp2;
     camera->unk111C.unk4[0].unk1C.f[2] = 0.0f;
     camera->unk111C.unk4[0].unk0 = 1;
     camera->unk111C.unk4[1].unk28.f[2] = temp3;
-    camera->unk111C.unk4[1].unk28.f[1] = camera->unk3C * 1.5f;
-    camera->unk111C.unk4[1].unk1C.f[1] = camera->unk3C * 1.5f;
+    camera->unk111C.unk4[1].unk28.f[1] = camera->clipNear * 1.5f;
+    camera->unk111C.unk4[1].unk1C.f[1] = camera->clipNear * 1.5f;
     camera->unk111C.unk4[1].unk28.f[0] = 0.0f;
     camera->unk111C.unk4[1].unk1C.f[0] = 0.0f;
     camera->unk111C.unk4[1].unk1C.f[2] = temp4;
@@ -542,49 +542,35 @@ void func_802D4514(Camera* camera) {
 
 void func_802D45C4(Camera* camera, f32 arg1) {
     f32 temp_fv0_2;
-    f32 a;
-    f32 b;
-    f32 d;
-    f32 sp34;
-    f32 e;
-    f32 c;
+    f32 x0, x1, y1, near, far, y0;
 
     if (arg1 != camera->unk20) {
         if (arg1 == -1.0f) {
             arg1 = camera->unk20;
         }
-        temp_fv0_2 = camera->unk3C / arg1;
+        temp_fv0_2 = camera->clipNear / arg1;
         camera->unk20 = arg1;
         camera->unk1C = arg1;
 
-        a = camera->unk2C * temp_fv0_2;
-        b = camera->unk30 * temp_fv0_2;
-        c = camera->unk34 * temp_fv0_2;
-        d = camera->unk38 * temp_fv0_2;
-        sp34 = camera->unk3C;
-        e = camera->unk40;
-        func_80204C94(camera->unk22C, a, b, c, d, sp34, e);
+        x0 = camera->clipX0 * temp_fv0_2;
+        x1 = camera->clipX1 * temp_fv0_2;
+        y0 = camera->clipY0 * temp_fv0_2;
+        y1 = camera->clipY1 * temp_fv0_2;
+        near = camera->clipNear;
+        far = camera->clipFar;
+        func_80204C94(camera->unk22C, x0, x1, y0, y1, near, far);
         func_802D4514(camera);
-        D_8034E9E0 = sp34;
+        D_8034E9E0 = near;
     }
 }
 
-STATIC_FUNC void func_802D46A4(Camera* camera, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
-    s16 temp_a1;
-    s16 temp_a2;
-    s16 temp_a3;
-    s16 temp_v0;
-
-    camera->unk24 = arg1;
-    temp_a1 = camera->unk24;
-    camera->unk26 = arg2;
-    temp_a2 = camera->unk26;
-    camera->unk28 = arg3;
-    temp_a3 = camera->unk28;
-    camera->unk2A = arg4;
-    temp_v0 = camera->unk2A;
-    camera->unk44 = ((temp_a2 - temp_a1) / (f32)(temp_v0 - temp_a3));
-    func_80204D94(camera->unk22C, temp_a1, temp_a2, temp_a3, (s32)temp_v0);
+STATIC_FUNC void func_802D46A4(Camera* camera, s16 x0, s16 x1, s16 y0, s16 y1) {
+    camera->viewX0 = x0;
+    camera->viewX1 = x1;
+    camera->viewY0 = y0;
+    camera->viewY1 = y1;
+    camera->aspect = ((camera->viewX1 - camera->viewX0) / (f32)(camera->viewY1 - camera->viewY0));
+    func_80204D94(camera->unk22C, camera->viewX0, camera->viewX1, camera->viewY0, camera->viewY1);
 }
 
 s32 func_802D472C(Camera* camera, Mtx4F* arg1) {
@@ -693,14 +679,14 @@ s32 func_802D4A30(Camera* camera, Mtx4F* arg1) {
         temp_s2 = &camera->unk111C.unk4[var_s3->unk0];
         func_802DBE64(&camera->unk111C, &camera->unk1224, i, &spB0);
         func_802DCA5C(&temp_s2->unk28, &temp_s2->unk1C, &var_s3->unk28, &var_s3->unk34, &sp148);
-        sp13C.x = arg1->m[3][0] + (arg1->m[1][0] * 1.5f * camera->unk3C);
-        sp13C.y = arg1->m[3][1] + (arg1->m[1][1] * 1.5f * camera->unk3C);
-        sp13C.z = arg1->m[3][2] + (arg1->m[1][2] * 1.5f * camera->unk3C);
+        sp13C.x = arg1->m[3][0] + (arg1->m[1][0] * 1.5f * camera->clipNear);
+        sp13C.y = arg1->m[3][1] + (arg1->m[1][1] * 1.5f * camera->clipNear);
+        sp13C.z = arg1->m[3][2] + (arg1->m[1][2] * 1.5f * camera->clipNear);
         uvMat4Copy(&sp70, arg1);
         uvMat4LocalTranslate(&sp70, sp148.x, sp148.y, sp148.z);
-        sp130.x = sp70.m[3][0] + (arg1->m[1][0] * 1.5f * camera->unk3C);
-        sp130.y = sp70.m[3][1] + (arg1->m[1][1] * 1.5f * camera->unk3C);
-        sp130.z = sp70.m[3][2] + (arg1->m[1][2] * 1.5f * camera->unk3C);
+        sp130.x = sp70.m[3][0] + (arg1->m[1][0] * 1.5f * camera->clipNear);
+        sp130.y = sp70.m[3][1] + (arg1->m[1][1] * 1.5f * camera->clipNear);
+        sp130.z = sp70.m[3][2] + (arg1->m[1][2] * 1.5f * camera->clipNear);
         (void)func_802DB224(&sp154, 9, camera->unk4, camera->unk6, &sp13C, &sp130);
         if (sp154.unk0 > 0) {
             return -1;
@@ -787,25 +773,25 @@ void func_802D4ECC(Camera* camera, Mtx4F* arg1) {
 }
 
 void func_802D50D0(Camera* camera) {
-    f32 var_fv1;
+    f32 near;
     f32 var_ft4;
     f32 temp_fa1;
     f32 temp_fv0;
     f32 temp_fv0_2;
     f32 temp_fv0_4;
-    f32 a, b, c, d, e;
+    f32 x0, x1, y0, y1, far;
     f32 temp_fv1;
 
     var_ft4 = 3.0f;
     if ((camera->unk1 == 5) || (D_80362690->state != GAME_STATE_TEST_UPDATE)) {
         if (D_8034E9E4 != 0) {
             temp_fv0 = 1.0f / camera->unk20;
-            a = camera->unk2C * temp_fv0;
-            b = camera->unk30 * temp_fv0;
-            c = camera->unk34 * temp_fv0;
-            d = camera->unk38 * temp_fv0;
-            e = camera->unk40;
-            func_80204C94(camera->unk22C, a, b, c, d, 1.0f, e);
+            x0 = camera->clipX0 * temp_fv0;
+            x1 = camera->clipX1 * temp_fv0;
+            y0 = camera->clipY0 * temp_fv0;
+            y1 = camera->clipY1 * temp_fv0;
+            far = camera->clipFar;
+            func_80204C94(camera->unk22C, x0, x1, y0, y1, 1.0f, far);
             D_8034E9E0 = 1.0f;
             D_8034E9E4 = 0;
         }
@@ -814,33 +800,33 @@ void func_802D50D0(Camera* camera) {
             var_ft4 = 1.0f;
         }
         if (camera->unk1 == 1) {
-            var_fv1 = 3.0f;
+            near = 3.0f;
         } else if (camera->unk1 == 3) {
-            var_fv1 = 0.5f;
+            near = 0.5f;
         } else {
             temp_fv0_2 = camera->unk108.m[3][0] - camera->unk80.m[3][0];
             temp_fv1 = camera->unk108.m[3][1] - camera->unk80.m[3][1];
             temp_fa1 = camera->unk108.m[3][2] - camera->unk80.m[3][2];
-            var_fv1 = uvSqrtF(SQ(temp_fv0_2) + SQ(temp_fv1) + SQ(temp_fa1)) - camera->unk8;
+            near = uvSqrtF(SQ(temp_fv0_2) + SQ(temp_fv1) + SQ(temp_fa1)) - camera->unk8;
         }
-        if (camera->unk228 < var_fv1) {
-            var_fv1 = camera->unk228;
+        if (camera->unk228 < near) {
+            near = camera->unk228;
         }
-        if (var_ft4 < var_fv1) {
-            var_fv1 = var_ft4;
+        if (var_ft4 < near) {
+            near = var_ft4;
         }
-        if (var_fv1 < 0.5f) {
-            var_fv1 = 0.5f;
+        if (near < 0.5f) {
+            near = 0.5f;
         }
-        if (!(var_fv1 < (D_8034E9E0 + 0.1f)) || !((D_8034E9E0 - 0.1f) < var_fv1)) {
-            temp_fv0_4 = var_fv1 / camera->unk20;
-            a = camera->unk2C * temp_fv0_4;
-            b = camera->unk30 * temp_fv0_4;
-            c = camera->unk34 * temp_fv0_4;
-            d = camera->unk38 * temp_fv0_4;
-            e = camera->unk40;
-            func_80204C94(camera->unk22C, a, b, c, d, var_fv1, e);
-            D_8034E9E0 = var_fv1;
+        if (!(near < (D_8034E9E0 + 0.1f)) || !((D_8034E9E0 - 0.1f) < near)) {
+            temp_fv0_4 = near / camera->unk20;
+            x0 = camera->clipX0 * temp_fv0_4;
+            x1 = camera->clipX1 * temp_fv0_4;
+            y0 = camera->clipY0 * temp_fv0_4;
+            y1 = camera->clipY1 * temp_fv0_4;
+            far = camera->clipFar;
+            func_80204C94(camera->unk22C, x0, x1, y0, y1, near, far);
+            D_8034E9E0 = near;
             D_8034E9E4 = 1;
         }
     }

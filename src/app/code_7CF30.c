@@ -49,7 +49,7 @@ void gyrocopterInit(void) {
     D_80368880.unk4[7].x = 1.0f, D_80368880.unk4[7].y = 1.0f;
 }
 
-void gyrocopterLoadLevel(u8 contIdx, u8 pilot, GyrocopterData* gcData, Camera* arg3) {
+void gyrocopterLoadLevel(u8 contIdx, u8 pilot, GyrocopterData* gcData, Camera* camera) {
     uvMemSet(gcData, 0, sizeof(GyrocopterData));
     gyrocopterLoadPilot(pilot, gcData);
     gcData->objId = uvDobjAllocIdx();
@@ -67,7 +67,7 @@ void gyrocopterLoadLevel(u8 contIdx, u8 pilot, GyrocopterData* gcData, Camera* a
     func_8030A140(gcData);
     func_80303230(gcData);
     gcData->contIdx = contIdx;
-    gcData->camera = arg3;
+    gcData->camera = camera;
     gcData->unk5E = 0;
     gcData->unk5F = 1;
     gcData->usingFuel = FALSE;
@@ -530,8 +530,8 @@ void func_802F6DC8(GyrocopterData* gcData, u8 unkFlag) {
             D_8034F384 = 1;
         }
         gcData->reticleX = 0.0f;
-        temp_fv1 = gcData->camera->unk3C * -0.105104235;
-        temp_fa0 = (-gcData->camera->unk3C * gcData->camera->unk34) / gcData->camera->unk20;
+        temp_fv1 = gcData->camera->clipNear * -0.105104235;
+        temp_fa0 = (-gcData->camera->clipNear * gcData->camera->clipY0) / gcData->camera->unk20;
         gcData->reticleY = (107.0f * temp_fv1) / temp_fa0;
     }
 }

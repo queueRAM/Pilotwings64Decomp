@@ -62,17 +62,17 @@ STATIC_DATA s32 D_803509B8 = 0; // unused, only ever set to 0
 void testMenuInitText(s32 testIdx);
 void testMenuInit(Unk80367710*, s32);
 u8 testMenuHandler(Unk80367710*);
-void testMenuDraw(Camera*, u8 classIdx, u8 vehIdx);
+void testMenuDraw(Camera* camera, u8 classIdx, u8 vehIdx);
 void testMenu_8034A428(void);
 
 s32 testMenuMainRender(Unk80362690_Unk0* arg0, Unk80367710* arg1) {
-    Camera* temp_s3;
+    Camera* camera;
     u8 classIdx;
     u8 temp_s0_3;
     u8 vehIdx;
     u8 temp_v0;
 
-    temp_s3 = arg0->unk70;
+    camera = arg0->unk70;
     vehIdx = arg0->veh;
     testMenuInit(arg1, D_8037DC84);
     if (D_8037DC84 != 0) {
@@ -80,12 +80,12 @@ s32 testMenuMainRender(Unk80362690_Unk0* arg0, Unk80367710* arg1) {
     }
     classIdx = arg0->cls;
     uvGfxBegin();
-    testMenuDraw(temp_s3, classIdx, vehIdx);
+    testMenuDraw(camera, classIdx, vehIdx);
     uvGfxEnd();
     do {
         classIdx = arg0->cls;
         uvGfxBegin();
-        testMenuDraw(temp_s3, classIdx, vehIdx);
+        testMenuDraw(camera, classIdx, vehIdx);
         uvGfxEnd();
         temp_v0 = testMenuHandler(arg1);
     } while (temp_v0 == 6);
@@ -538,7 +538,7 @@ u8 testMenuHandler(Unk80367710* arg0) {
     return 6;
 }
 
-void testMenuDraw(Camera* arg0, u8 classIdx, u8 vehIdx) {
+void testMenuDraw(Camera* camera, u8 classIdx, u8 vehIdx) {
     s32 pad1;
     s32 pad21;
     s32 var_s0;
@@ -570,7 +570,7 @@ void testMenuDraw(Camera* arg0, u8 classIdx, u8 vehIdx) {
     strIdAppend[0] = '_';
     strIdAppend[1] = 'M';
     strIdAppend[2] = '\0';
-    func_8033F6F8(&arg0->unk108, &arg0->unk108);
+    func_8033F6F8(&camera->unk108, &camera->unk108);
     map3dRender(D_80362690, 0);
     if (sTestMenuState != 1) {
         if (sTestMenuState != 2) {

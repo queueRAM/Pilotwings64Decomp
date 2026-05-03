@@ -86,7 +86,7 @@ s32 env_802E0CF0(void) {
     f32 pad_sp58;
     f32 sp54;
     f32 sp50;
-    Camera* sp4C;
+    Camera* camera;
     u8 fogR;
     u8 fogG;
     u8 fogB;
@@ -96,8 +96,8 @@ s32 env_802E0CF0(void) {
 
     uvEnvProps(D_80362690->envId, ENV_PROP_FOG_FACTOR(0.0f), ENV_PROP_END);
     uvMat4SetIdentity(&spA8);
-    sp4C = D_80362690->unkC[D_80362690->unk9C].unk70;
-    uvMat4Copy(&sp68, &sp4C->unk108);
+    camera = D_80362690->unkC[D_80362690->unk9C].unk70;
+    uvMat4Copy(&sp68, &camera->unk108);
     sp154.x = sp68.m[1][0];
     sp154.y = sp68.m[1][1];
     sp154.z = sp68.m[1][2];
@@ -106,16 +106,16 @@ s32 env_802E0CF0(void) {
     sp130.z = 0.0f;
     uvVec3Cross(&sp13C, &sp130, &sp154);
     uvVec3Normal(&sp13C, &sp13C);
-    spF4 = sp68.m[3][0] + ((0.875f * sp4C->unk40) * sp154.x);
-    spF8 = sp68.m[3][1] + ((0.875f * sp4C->unk40) * sp154.y);
-    spFC = sp68.m[3][2] + ((0.875f * sp4C->unk40) * sp154.z);
-    spE8 = ((0.875f * sp4C->unk40) * sp13C.x) + spF4;
-    spEC = ((0.875f * sp4C->unk40) * sp13C.y) + spF8;
-    var_fa1 = ((0.875f * sp4C->unk40) * sp13C.z) + spFC;
+    spF4 = sp68.m[3][0] + ((0.875f * camera->clipFar) * sp154.x);
+    spF8 = sp68.m[3][1] + ((0.875f * camera->clipFar) * sp154.y);
+    spFC = sp68.m[3][2] + ((0.875f * camera->clipFar) * sp154.z);
+    spE8 = ((0.875f * camera->clipFar) * sp13C.x) + spF4;
+    spEC = ((0.875f * camera->clipFar) * sp13C.y) + spF8;
+    var_fa1 = ((0.875f * camera->clipFar) * sp13C.z) + spFC;
     sp60 = spE8 - spF4;
     sp5C = spEC - spF8;
     var_fv0 = var_fa1 - spFC;
-    if (var_fv0 < (sp4C->unk40 * 0.1)) {
+    if (var_fv0 < (camera->clipFar * 0.1)) {
         uvEnvProps(D_80362690->envId, ENV_PROP_FOG_FACTOR(0.996f), ENV_PROP_END);
         return 0;
     }
@@ -127,20 +127,20 @@ s32 env_802E0CF0(void) {
     }
     sp16C = (sp54 * sp60) + spF4;
     sp170 = (sp54 * sp5C) + spF8;
-    spF4 = sp68.m[3][0] + (sp4C->unk40 * sp154.x);
-    spF8 = sp68.m[3][1] + (sp4C->unk40 * sp154.y);
-    spFC = sp68.m[3][2] + (sp4C->unk40 * sp154.z);
-    spE8 = (sp4C->unk40 * sp13C.x) + spF4;
-    spEC = (sp4C->unk40 * sp13C.y) + spF8;
-    var_fa1 = (sp4C->unk40 * sp13C.z) + spFC;
+    spF4 = sp68.m[3][0] + (camera->clipFar * sp154.x);
+    spF8 = sp68.m[3][1] + (camera->clipFar * sp154.y);
+    spFC = sp68.m[3][2] + (camera->clipFar * sp154.z);
+    spE8 = (camera->clipFar * sp13C.x) + spF4;
+    spEC = (camera->clipFar * sp13C.y) + spF8;
+    var_fa1 = (camera->clipFar * sp13C.z) + spFC;
     if (var_fa1 == spFC) {
         sp54 = 0.0f;
     } else {
         sp54 = -spFC / (var_fa1 - spFC);
     }
-    var_fa1 = 1.0f / sp4C->unk20;
-    var_ft4 = (sp4C->unk30 * (var_fa1));
-    sp38 = 2.0f * (sp4C->unk40 * var_ft4);
+    var_fa1 = 1.0f / camera->unk20;
+    var_ft4 = (camera->clipX1 * (var_fa1));
+    sp38 = 2.0f * (camera->clipFar * var_ft4);
     sp148 = sp154.y * sp38;
     sp14C = -sp154.x * sp38;
     sp38 = sp68.m[3][2] / 15.0f;

@@ -344,7 +344,7 @@ void func_8032CC44(Unk80362690* arg0) {
 
 s32 func_8032CF28(Unk80362690* arg0) {
     Unk80362690_Unk0* sp6C;
-    Camera* sp68;
+    Camera* camera;
     HUDState* hud;
     s32 var_s0;
     s32 var_s1;
@@ -353,7 +353,7 @@ s32 func_8032CF28(Unk80362690* arg0) {
     s32 sp40;
 
     sp6C = &arg0->unkC[arg0->unk9C];
-    sp68 = sp6C->unk70;
+    camera = sp6C->unk70;
     sndPlaySfx(SFX_UI_PAUSE);
     var_s0 = 0x4C;
     hud = hudGetState();
@@ -378,7 +378,7 @@ s32 func_8032CF28(Unk80362690* arg0) {
             demo_80323020();
         }
         uvGfxBegin();
-        func_80204FC4(sp68->unk22C);
+        func_80204FC4(camera->unk22C);
         func_80314154();
         uvVtxBeginPoly();
         uvVtx(90, 82, 0, 0, 0, 0, 0, 0, 0x7F);

@@ -138,7 +138,7 @@ STATIC_FUNC void func_802DD44C(void) {
         uvSprtDraw(i);
     }
     uvGfxSetViewport(0, 0, SCREEN_WIDTH, 0, SCREEN_HEIGHT);
-    uvMat4SetOrtho(&sp88, 0.0f, 319.0f, 0.0f, 239.0f);
+    uvMat4SetOrtho(&sp88, 0.0f, SCREEN_WIDTH - 1.0f, 0.0f, SCREEN_HEIGHT - 1.0f);
     uvGfxMtxProjPushF(&sp88);
     uvMat4SetIdentity(&sp48);
     uvGfxMtxViewLoad(&sp48, 1);

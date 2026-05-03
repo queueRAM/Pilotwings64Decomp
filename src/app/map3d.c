@@ -670,7 +670,7 @@ s32 map3dHandler(u8 arg0, s32 arg1) {
 }
 
 void map3dRender(Unk80362690* arg0, s32 arg1) {
-    Camera* sp1FC;
+    Camera* camera;
     Mtx4F sp1BC;
     Mtx4F sp17C;
     Mtx4F sp13C;
@@ -687,7 +687,7 @@ void map3dRender(Unk80362690* arg0, s32 arg1) {
     Vec4F spBC;
     Vec4F spAC;
 
-    sp1FC = arg0->unkC[arg0->unk9C].unk70;
+    camera = arg0->unkC[arg0->unk9C].unk70;
     uvMat4SetIdentity(&sp1BC);
     uvMat4LocalTranslate(&sp1BC, D_8034F828, D_8034F830, D_8034F838);
     uvMat4SetIdentity(&sp17C);
@@ -695,16 +695,16 @@ void map3dRender(Unk80362690* arg0, s32 arg1) {
     sp17C.m[3][0] += D_8034F828;
     sp17C.m[3][1] += D_8034F830;
     sp17C.m[3][2] += D_8034F838;
-    uvMat4UnkOp6(&sp1FC->unk108, &sp1BC, &sp17C);
-    func_80204C94(sp1FC->unk22C, -0.7009346f, 0.7009346f, -1.0f / 2.0f /*-0.5f*/, 1.0f / 2.0f /*0.5f*/, 1.0f, (D_8034F7FC * 1.2f) + 2048.0f);
-    func_80204B34(sp1FC->unk22C, &sp1FC->unk108);
-    func_80204FC4(sp1FC->unk22C);
+    uvMat4UnkOp6(&camera->unk108, &sp1BC, &sp17C);
+    func_80204C94(camera->unk22C, -0.7009346f, 0.7009346f, -1.0f / 2.0f /*-0.5f*/, 1.0f / 2.0f /*0.5f*/, 1.0f, (D_8034F7FC * 1.2f) + 2048.0f);
+    func_80204B34(camera->unk22C, &camera->unk108);
+    func_80204FC4(camera->unk22C);
     uvFontSet(3);
     uvFontColor(0x64, 0xC8, 0x96, 0xFF);
     uvFontScale(1.0, 1.0);
     if (arg1) {
-        func_80205724(sp1FC->unk22C, 2, &sp13C);
-        func_80205724(sp1FC->unk22C, 3, &spFC);
+        func_80205724(camera->unk22C, 2, &sp13C);
+        func_80205724(camera->unk22C, 3, &spFC);
         uvMat4SetIdentity(&sp17C);
         uvMat4RotateAxis(&sp17C, -1.5707961f, 0x78);
         uvMat4Mul(&sp1BC, &sp17C, &sp13C);
@@ -712,10 +712,10 @@ void map3dRender(Unk80362690* arg0, s32 arg1) {
         func_80314154();
 
         for (i = 0; i < sMapMessageCount; i++) {
-            x = (sMapMessages[i].x - sp1FC->unk108.m[3][0]);
-            y = (sMapMessages[i].y - sp1FC->unk108.m[3][1]);
-            z = (sMapMessages[i].z - sp1FC->unk108.m[3][2]);
-            if (((x * sp1FC->unk108.m[1][0]) + (y * sp1FC->unk108.m[1][1]) + (z * sp1FC->unk108.m[1][2])) < 0.0f) {
+            x = (sMapMessages[i].x - camera->unk108.m[3][0]);
+            y = (sMapMessages[i].y - camera->unk108.m[3][1]);
+            z = (sMapMessages[i].z - camera->unk108.m[3][2]);
+            if (((x * camera->unk108.m[1][0]) + (y * camera->unk108.m[1][1]) + (z * camera->unk108.m[1][2])) < 0.0f) {
                 continue;
             }
             width = uvSprtGetWidth(20 - i);
@@ -731,7 +731,7 @@ void map3dRender(Unk80362690* arg0, s32 arg1) {
             temp_fs1 = ((temp_fs1 + 1.0f) * 240.0f * 0.5f) + 0.5f;
             offset = 15;
             temp_ft2 = (s32)(temp_fs0 - (width / 2));
-            if ((temp_ft2 > -width) && (temp_ft2 < (sp1FC->unk26 + width)) && (temp_fs1 > 0.0f) && (temp_fs1 < 240.0f) && (tempZ > 0.0f)) {
+            if ((temp_ft2 > -width) && (temp_ft2 < (camera->viewX1 + width)) && (temp_fs1 > 0.0f) && (temp_fs1 < 240.0f) && (tempZ > 0.0f)) {
                 uvVtxBeginPoly();
                 temp_ft4 = (s32)(temp_fs1 + offset);
                 uvVtx(temp_ft2 - 5, temp_ft4 + offset + 3, 0, 0, 0, 0x00, 0x00, 0x00, 0x80);
@@ -755,10 +755,10 @@ void map3dRender(Unk80362690* arg0, s32 arg1) {
 }
 
 void map3dDeinit(Unk80362690* arg0, s32 arg1) {
-    Camera* sp2C;
+    Camera* camera;
     s32 i;
 
-    sp2C = arg0->unkC[arg0->unk9C].unk70;
+    camera = arg0->unkC[arg0->unk9C].unk70;
     uvDobjModel(sMapDobjId, 0xFFFF);
     sMapDobjId = 0xFFFF;
     for (i = 0; i < sMapObjectCount; i++) {
@@ -769,14 +769,14 @@ void map3dDeinit(Unk80362690* arg0, s32 arg1) {
     func_8033F8CC(sMapEmitterDev0);
     func_8033F8CC(sMapEmitterDev1);
     if (arg1) {
-        func_80204A8C(sp2C->unk22C, 3);
+        func_80204A8C(camera->unk22C, 3);
     }
     hudGetState()->renderFlags = sMapHudFlagsSave;
-    func_802D45C4(sp2C, -1.0f);
+    func_802D45C4(camera, -1.0f);
 }
 
 void map3d_803123C4(f32 arg0, f32 arg1) {
-    Camera* cam;
+    Camera* camera;
     f32 sp58;
     f32 sp54;
     f32 sp50;
@@ -788,8 +788,8 @@ void map3d_803123C4(f32 arg0, f32 arg1) {
     f32 ft5;
     f32 mag;
 
-    cam = D_80362690->unkC[D_80362690->unk9C].unk70;
-    func_80313570(&cam->unk108, &sp58, &sp58, &sp58, &sp54, &sp50, &sp4C);
+    camera = D_80362690->unkC[D_80362690->unk9C].unk70;
+    func_80313570(&camera->unk108, &sp58, &sp58, &sp58, &sp54, &sp50, &sp4C);
     cosX = uvCosF(sp54);
     sinX = uvSinF(sp54);
     ft5 = ((cosX * arg0) - (sinX * arg1)) * D_8034F854;

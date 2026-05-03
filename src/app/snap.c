@@ -373,7 +373,7 @@ void func_80338A14(void) {
     Vec3F spF0;
     Vec3F spE4;
     Unk803599D0* temp_s5;
-    Camera* spDC;
+    Camera* camera;
     s32 pad[4];
     s32 var_a0;
     s32 var_s2;
@@ -394,7 +394,7 @@ void func_80338A14(void) {
 
     var_s2 = 0;
     temp_s4 = &D_80362690->unkC[D_80362690->unk9C];
-    spDC = temp_s4->unk70;
+    camera = temp_s4->unk70;
     temp_s5 = &taskGet_80345C80()->unk0;
     spB8 = 0;
     if (D_8035052C >= PHOTO_COUNT_MAX) {
@@ -411,16 +411,16 @@ void func_80338A14(void) {
 
     sp78 = ((temp_s1->test == 0 && temp_s1->cls == CLASS_A)) || (temp_s1->test == 1 && temp_s1->cls == CLASS_B) ||
            (temp_s1->test == 2 && temp_s1->cls == CLASS_PILOT);
-    temp_s1->unk28 = spDC->unk3C;
-    temp_s1->unk2C = spDC->unk40;
-    temp_s1->unk18 = (spDC->unk2C * spDC->unk3C) * 0.45;
-    temp_s1->unk1C = (spDC->unk30 * spDC->unk3C) * 0.45;
-    temp_s1->unk20 = (spDC->unk38 * spDC->unk3C) * 0.45;
-    temp_s1->unk24 = (spDC->unk34 * spDC->unk3C) * 0.45;
-    temp_s1->unk18 = spDC->unk2C * 0.45;
-    temp_s1->unk1C = spDC->unk30 * 0.45;
-    temp_s1->unk20 = spDC->unk38 * 0.45;
-    temp_s1->unk24 = spDC->unk34 * 0.45;
+    temp_s1->unk28 = camera->clipNear;
+    temp_s1->unk2C = camera->clipFar;
+    temp_s1->unk18 = (camera->clipX0 * camera->clipNear) * 0.45;
+    temp_s1->unk1C = (camera->clipX1 * camera->clipNear) * 0.45;
+    temp_s1->unk20 = (camera->clipY1 * camera->clipNear) * 0.45;
+    temp_s1->unk24 = (camera->clipY0 * camera->clipNear) * 0.45;
+    temp_s1->unk18 = camera->clipX0 * 0.45;
+    temp_s1->unk1C = camera->clipX1 * 0.45;
+    temp_s1->unk20 = camera->clipY1 * 0.45;
+    temp_s1->unk24 = camera->clipY0 * 0.45;
     temp_s1->unk42 = 0;
     temp_s1->unk43[0] = 11;
     temp_s1->unk6C = 0;
@@ -927,20 +927,20 @@ void func_8033A244(s32 arg0, Unk80373060* arg1) {
     }
 }
 
-void func_8033A610(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    arg0 += 5;
-    arg1 -= 5;
-    arg2 += 5;
-    arg3 -= 5;
-    func_80204D94(0, arg0, arg1, arg2, arg3);
+void func_8033A610(s32 x0, s32 x1, s32 y0, s32 y1) {
+    x0 += 5;
+    x1 -= 5;
+    y0 += 5;
+    y1 -= 5;
+    func_80204D94(0, x0, x1, y0, y1);
 }
 
-void func_8033A664(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    arg0 += 5;
-    arg1 -= 5;
-    arg2 += 5;
-    arg3 -= 5;
-    uvGfxSetViewport(0, arg0, arg1, arg2, arg3);
+void func_8033A664(s32 x0, s32 x1, s32 y0, s32 y1) {
+    x0 += 5;
+    x1 -= 5;
+    y0 += 5;
+    y1 -= 5;
+    uvGfxSetViewport(0, x0, x1, y0, y1);
 }
 
 void func_8033A6B8(void) {
@@ -1760,14 +1760,14 @@ s32 func_8033E3A8(s32 arg0) {
     f32 spA4;
     f32 spA0;
     Mtx4F sp60;
-    Camera* temp_s4;
+    Camera* camera;
     s32 renderFlags;
     u8* ptr;
     u16 classIdx;
     u16 vehIdx;
     u16 testIdx;
 
-    temp_s4 = D_80362690->unkC[D_80362690->unk9C].unk70;
+    camera = D_80362690->unkC[D_80362690->unk9C].unk70;
     ptr = taskGet_80345CB0();
     D_80350550 = 0;
     if ((D_80362690->state != GAME_STATE_OPTIONS) && (ptr[1] == 1)) {
@@ -1785,13 +1785,13 @@ s32 func_8033E3A8(s32 arg0) {
     } else {
         spC4 = func_80339F9C();
         uvDobjState(spC4, 0);
-        spB4 = temp_s4->unk2C;
-        spB0 = temp_s4->unk30;
-        spAC = temp_s4->unk34;
-        spA8 = temp_s4->unk38;
-        spA4 = temp_s4->unk3C;
-        spA0 = temp_s4->unk40;
-        uvMat4Copy(&sp60, &temp_s4->unk108);
+        spB4 = camera->clipX0;
+        spB0 = camera->clipX1;
+        spAC = camera->clipY0;
+        spA8 = camera->clipY1;
+        spA4 = camera->clipNear;
+        spA0 = camera->clipFar;
+        uvMat4Copy(&sp60, &camera->unk108);
     }
     spBC = 0;
     spB8 = 0;
@@ -1833,18 +1833,18 @@ s32 func_8033E3A8(s32 arg0) {
     }
     if ((arg0 != 0) && (D_80350594 == 0)) {
         uvDobjState(spC4, 2);
-        temp_s4->unk2C = spB4;
-        temp_s4->unk30 = spB0;
-        temp_s4->unk34 = spAC;
-        temp_s4->unk38 = spA8;
-        temp_s4->unk3C = spA4;
-        temp_s4->unk40 = spA0;
-        uvMat4Copy(&temp_s4->unk108, &sp60);
-        func_80204C94(0, temp_s4->unk2C, temp_s4->unk30, temp_s4->unk34, temp_s4->unk38, temp_s4->unk3C, temp_s4->unk40);
+        camera->clipX0 = spB4;
+        camera->clipX1 = spB0;
+        camera->clipY0 = spAC;
+        camera->clipY1 = spA8;
+        camera->clipNear = spA4;
+        camera->clipFar = spA0;
+        uvMat4Copy(&camera->unk108, &sp60);
+        func_80204C94(0, camera->clipX0, camera->clipX1, camera->clipY0, camera->clipY1, camera->clipNear, camera->clipFar);
         func_80204B34(0, &sp60);
     }
     uvGfxSetFrameTime(-1.0f);
-    func_80204D94(0, temp_s4->unk24, temp_s4->unk26, temp_s4->unk28, temp_s4->unk2A);
+    func_80204D94(0, camera->viewX0, camera->viewX1, camera->viewY0, camera->viewY1);
     func_80204A8C(0, 3);
     uvGfxSetViewport(0, 0, SCREEN_WIDTH, 0, SCREEN_HEIGHT);
     func_8033A078(arg0);
@@ -1960,7 +1960,7 @@ void func_8033E860(Unk8033F050** arg0) {
 void func_8033F050(void* arg0) {
     Unk8033F050* var_s1;
     Unk8033F050 sp84;
-    Camera* temp_s4;
+    Camera* camera;
     Unk80362690_Unk0* var_v1;
     s32 i;
     s32 j;
@@ -1968,7 +1968,7 @@ void func_8033F050(void* arg0) {
     s32 pad;
 
     var_v1 = &D_80362690->unkC[D_80362690->unk9C];
-    temp_s4 = var_v1->unk70;
+    camera = var_v1->unk70;
     D_80350528 = 0;
     var_s3 = 0;
 
@@ -1985,16 +1985,16 @@ void func_8033F050(void* arg0) {
             D_80373060[D_80350528].unkC.x = var_s1->unk6 * 1.40625;
             D_80373060[D_80350528].unkC.y = var_s1->unk7 * 1.40625;
             D_80373060[D_80350528].unkC.z = var_s1->unk8 * 1.40625;
-            D_80373060[D_80350528].unk28 = temp_s4->unk3C;
-            D_80373060[D_80350528].unk2C = temp_s4->unk40;
-            D_80373060[D_80350528].unk18 = (temp_s4->unk2C * temp_s4->unk3C) * 0.45;
-            D_80373060[D_80350528].unk1C = (temp_s4->unk30 * temp_s4->unk3C) * 0.45;
-            D_80373060[D_80350528].unk20 = (temp_s4->unk38 * temp_s4->unk3C) * 0.45;
-            D_80373060[D_80350528].unk24 = (temp_s4->unk34 * temp_s4->unk3C) * 0.45;
-            D_80373060[D_80350528].unk18 = temp_s4->unk2C * 0.45;
-            D_80373060[D_80350528].unk1C = temp_s4->unk30 * 0.45;
-            D_80373060[D_80350528].unk20 = temp_s4->unk38 * 0.45;
-            D_80373060[D_80350528].unk24 = temp_s4->unk34 * 0.45;
+            D_80373060[D_80350528].unk28 = camera->clipNear;
+            D_80373060[D_80350528].unk2C = camera->clipFar;
+            D_80373060[D_80350528].unk18 = (camera->clipX0 * camera->clipNear) * 0.45;
+            D_80373060[D_80350528].unk1C = (camera->clipX1 * camera->clipNear) * 0.45;
+            D_80373060[D_80350528].unk20 = (camera->clipY1 * camera->clipNear) * 0.45;
+            D_80373060[D_80350528].unk24 = (camera->clipY0 * camera->clipNear) * 0.45;
+            D_80373060[D_80350528].unk18 = camera->clipX0 * 0.45;
+            D_80373060[D_80350528].unk1C = camera->clipX1 * 0.45;
+            D_80373060[D_80350528].unk20 = camera->clipY1 * 0.45;
+            D_80373060[D_80350528].unk24 = camera->clipY0 * 0.45;
             D_80373060[D_80350528].cls = var_s1->unk9_2;
             D_80373060[D_80350528].veh = var_s1->unk12_4;
             D_80373060[D_80350528].test = var_s1->unk9_0;

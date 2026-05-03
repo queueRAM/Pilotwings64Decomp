@@ -79,7 +79,7 @@ void cannonLoadLevel(u8 contIdx, u8 pilot, CannonballData* cbData, Camera* camer
     uvDobjPosm(cbData->unk54, 0, &cbData->unk58);
     uvDobjState(cbData->unk54, cbData->unk56);
     cbData->camera = camera;
-    camera->unk40 += 100.0f;
+    camera->clipFar += 100.0f;
     cbData->unk10 = contIdx;
     cbData->unkA4 = 0.0f;
     cbData->unk293 = 0;
@@ -152,7 +152,7 @@ void cannonEndTarget(CannonballData* cbData) {
     cbData->unk10 = 0xFFFF;
     cbData->objId = 0xFFFF;
     cbData->unk54 = 0xFFFF;
-    cbData->camera->unk40 -= 100.0f;
+    cbData->camera->clipFar -= 100.0f;
 }
 
 // cannonMovementFrame called every frame while aiming cannon and while in flight

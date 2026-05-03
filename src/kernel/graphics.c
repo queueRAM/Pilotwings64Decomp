@@ -783,84 +783,84 @@ void uvGfxEnableLighting(s32 enable) {
     }
 }
 
-void uvGfxClipRect(uvGfxViewport_t* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void uvGfxClipRect(uvGfxViewport_t* vp, s32 x0, s32 x1, s32 y0, s32 y1) {
     s32 var_a2;
     s32 var_a3;
 
-    arg0->x0 = arg1;
-    arg0->x1 = arg2;
-    arg0->y0 = arg3;
-    arg0->y1 = arg4;
-    if (arg0->x0 < 0) {
-        arg0->x0 = 0;
-    } else if (arg0->x0 > SCREEN_WIDTH) {
-        arg0->x0 = SCREEN_WIDTH;
+    vp->x0 = x0;
+    vp->x1 = x1;
+    vp->y0 = y0;
+    vp->y1 = y1;
+    if (vp->x0 < 0) {
+        vp->x0 = 0;
+    } else if (vp->x0 > SCREEN_WIDTH) {
+        vp->x0 = SCREEN_WIDTH;
     }
 
-    if (arg0->x1 < 0) {
-        arg0->x1 = 0;
-    } else if (arg0->x1 > SCREEN_WIDTH) {
-        arg0->x1 = SCREEN_WIDTH;
+    if (vp->x1 < 0) {
+        vp->x1 = 0;
+    } else if (vp->x1 > SCREEN_WIDTH) {
+        vp->x1 = SCREEN_WIDTH;
     }
 
-    if (arg0->y1 < 0) {
-        arg0->y1 = 0;
-    } else if (arg0->y1 > SCREEN_HEIGHT) {
-        arg0->y1 = SCREEN_HEIGHT;
+    if (vp->y1 < 0) {
+        vp->y1 = 0;
+    } else if (vp->y1 > SCREEN_HEIGHT) {
+        vp->y1 = SCREEN_HEIGHT;
     }
 
-    if (arg0->y0 < 0) {
-        arg0->y0 = 0;
-    } else if (arg0->y0 > SCREEN_HEIGHT) {
-        arg0->y0 = SCREEN_HEIGHT;
+    if (vp->y0 < 0) {
+        vp->y0 = 0;
+    } else if (vp->y0 > SCREEN_HEIGHT) {
+        vp->y0 = SCREEN_HEIGHT;
     }
 
-    arg0->unk0 = arg0->x0 - 5;
-    if (arg0->unk0 < 0) {
-        arg0->unk0 = 0;
+    vp->unk0 = vp->x0 - 5;
+    if (vp->unk0 < 0) {
+        vp->unk0 = 0;
     }
-    arg0->unk2 = arg0->x1 + 5;
-    if (arg0->unk2 > SCREEN_WIDTH - 1) {
-        arg0->unk2 = SCREEN_WIDTH - 1;
+    vp->unk2 = vp->x1 + 5;
+    if (vp->unk2 > SCREEN_WIDTH - 1) {
+        vp->unk2 = SCREEN_WIDTH - 1;
     }
-    arg0->unk4 = arg0->y0 - 5;
-    if (arg0->unk4 < 0) {
-        arg0->unk4 = 0;
+    vp->unk4 = vp->y0 - 5;
+    if (vp->unk4 < 0) {
+        vp->unk4 = 0;
     }
-    arg0->unk6 = arg0->y1 + 5;
-    if (arg0->unk6 > SCREEN_HEIGHT - 1) {
-        arg0->unk6 = SCREEN_HEIGHT - 1;
+    vp->unk6 = vp->y1 + 5;
+    if (vp->unk6 > SCREEN_HEIGHT - 1) {
+        vp->unk6 = SCREEN_HEIGHT - 1;
     }
 
-    var_a2 = arg0->unk2 - arg0->unk0;
-    var_a3 = arg0->unk6 - arg0->unk4;
+    var_a2 = vp->unk2 - vp->unk0;
+    var_a3 = vp->unk6 - vp->unk4;
 
-    arg0->vp.vp.vscale[0] = (var_a2 << 1);
-    arg0->vp.vp.vscale[1] = (var_a3 << 1);
-    arg0->vp.vp.vscale[2] = 0x1FF;
-    arg0->vp.vp.vscale[3] = 0;
-    arg0->vp.vp.vtrans[0] = (u16)((arg0->unk0 + (var_a2 >> 1)) & 0xFFFF) << 2;
-    arg0->vp.vp.vtrans[1] = (u16)(((SCREEN_HEIGHT - arg0->unk4) - (var_a3 >> 1)) & 0xFFFF) << 2;
-    arg0->vp.vp.vtrans[2] = 0x1FF;
-    arg0->vp.vp.vtrans[3] = 0;
-    gGfxViewX0 = arg0->x0;
-    gGfxViewX1 = arg0->x1;
-    gGfxViewY0 = arg0->y0;
-    gGfxViewY1 = arg0->y1;
+    vp->vp.vp.vscale[0] = (var_a2 << 1);
+    vp->vp.vp.vscale[1] = (var_a3 << 1);
+    vp->vp.vp.vscale[2] = 0x1FF;
+    vp->vp.vp.vscale[3] = 0;
+    vp->vp.vp.vtrans[0] = (u16)((vp->unk0 + (var_a2 >> 1)) & 0xFFFF) << 2;
+    vp->vp.vp.vtrans[1] = (u16)(((SCREEN_HEIGHT - vp->unk4) - (var_a3 >> 1)) & 0xFFFF) << 2;
+    vp->vp.vp.vtrans[2] = 0x1FF;
+    vp->vp.vp.vtrans[3] = 0;
+    gGfxViewX0 = vp->x0;
+    gGfxViewX1 = vp->x1;
+    gGfxViewY0 = vp->y0;
+    gGfxViewY1 = vp->y1;
 }
 
-void uvGfxClipViewport(s32 vp_id, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    uvGfxClipRect(&gGfxViewports[vp_id], arg1, arg2, arg3, arg4);
+void uvGfxClipViewport(s32 vpId, s32 x0, s32 x1, s32 y0, s32 y1) {
+    uvGfxClipRect(&gGfxViewports[vpId], x0, x1, y0, y1);
 }
 
-void uvGfxSetViewport(s32 vp_id, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    uvGfxClipRect(&gGfxViewports[vp_id + 2], arg1, arg2, arg3, arg4);
-    uvGfxViewport(vp_id + 2);
+void uvGfxSetViewport(s32 vpId, s32 x0, s32 x1, s32 y0, s32 y1) {
+    uvGfxClipRect(&gGfxViewports[vpId + 2], x0, x1, y0, y1);
+    uvGfxViewport(vpId + 2);
 }
 
-void uvGfxViewport(s32 vp_id) {
+void uvGfxViewport(s32 vpId) {
     uvGfxViewport_t* vp;
-    vp = &gGfxViewports[vp_id];
+    vp = &gGfxViewports[vpId];
 
     gSPViewport(gGfxDisplayListHead++, OS_PHYSICAL_TO_K0(&vp->vp));
     gDPSetScissor(gGfxDisplayListHead++, G_SC_NON_INTERLACE, vp->x0, SCREEN_HEIGHT - vp->y1, vp->x1, SCREEN_HEIGHT - vp->y0);

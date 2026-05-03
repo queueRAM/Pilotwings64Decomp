@@ -55,7 +55,7 @@ f32 D_80359C88;
 void func_802DA6E0(Unk80362690*, s32);
 void func_802DA9E0(void);
 s32 func_802DAA34(void);
-void func_802DAB18(Camera*);
+void func_802DAB18(Camera* camera);
 s32 func_802DB38C(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 s32 func_802DB6D4(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
 s32 func_802DBCB0(Unk802D3658_Unk1228*, Vec3F*, Vec3F*);
@@ -127,9 +127,7 @@ s32 func_802DA684(u32 pilot) {
 }
 
 void func_802DA6E0(Unk80362690* arg0, s32 pilot) {
-    Camera* temp_s0;
-
-    temp_s0 = arg0->unkC[arg0->unk9C].unk70;
+    Camera* camera = arg0->unkC[arg0->unk9C].unk70;
     D_8034EA48 = 0;
     D_80359C88 = 0.0f;
     envSoundInit();
@@ -138,21 +136,21 @@ void func_802DA6E0(Unk80362690* arg0, s32 pilot) {
     arg0->envId = (u16)D_8034EA94[D_8034EA40];
     levelLoad(1, pilot, 0, 1);
     uvLevelAppend(func_802DA628(pilot));
-    func_80204BD4(temp_s0->unk22C, 1, 1.0f);
-    func_80204A8C(temp_s0->unk22C, 3);
-    uvChanTerra(temp_s0->unk22C, arg0->terraId);
+    func_80204BD4(camera->unk22C, 1, 1.0f);
+    func_80204A8C(camera->unk22C, 3);
+    uvChanTerra(camera->unk22C, arg0->terraId);
     uvLevelAppend(func_802DA628(pilot));
-    uvChanEnv(temp_s0->unk22C, arg0->envId);
-    func_8034B5E0(temp_s0->unk22C, temp_s0);
-    func_80204A8C(temp_s0->unk22C, 3);
-    uvMat4SetIdentity(&temp_s0->unk108);
-    uvMat4RotateAxis(&temp_s0->unk108, D_8034EA4C.unkC, 'z');
-    uvMat4RotateAxis(&temp_s0->unk108, D_8034EA4C.unk10, 'x');
-    uvMat4RotateAxis(&temp_s0->unk108, D_8034EA4C.unk14, 'y');
-    temp_s0->unk108.m[3][0] = D_8034EA4C.unk0.x;
-    temp_s0->unk108.m[3][1] = D_8034EA4C.unk0.y;
-    temp_s0->unk108.m[3][2] = D_8034EA4C.unk0.z;
-    func_80204B34(temp_s0->unk22C, &temp_s0->unk108);
+    uvChanEnv(camera->unk22C, arg0->envId);
+    func_8034B5E0(camera->unk22C, camera);
+    func_80204A8C(camera->unk22C, 3);
+    uvMat4SetIdentity(&camera->unk108);
+    uvMat4RotateAxis(&camera->unk108, D_8034EA4C.unkC, 'z');
+    uvMat4RotateAxis(&camera->unk108, D_8034EA4C.unk10, 'x');
+    uvMat4RotateAxis(&camera->unk108, D_8034EA4C.unk14, 'y');
+    camera->unk108.m[3][0] = D_8034EA4C.unk0.x;
+    camera->unk108.m[3][1] = D_8034EA4C.unk0.y;
+    camera->unk108.m[3][2] = D_8034EA4C.unk0.z;
+    func_80204B34(camera->unk22C, &camera->unk108);
     D_8034EA44 = uvDobjAllocIdx();
     uvDobjModel(D_8034EA44, func_802DA684((u32)pilot));
     uvMat4SetIdentity(&D_80359C48);
@@ -164,7 +162,7 @@ void func_802DA6E0(Unk80362690* arg0, s32 pilot) {
     D_80359C48.m[3][0] = 0.0f;
     D_80359C48.m[3][1] = 5.0f;
     D_80359C48.m[3][2] = -1.2f;
-    uvMat4MulBA(&D_80359C48, &temp_s0->unk108, &D_80359C48);
+    uvMat4MulBA(&D_80359C48, &camera->unk108, &D_80359C48);
     uvDobjPosm(D_8034EA44, 0, &D_80359C48);
     hudGetState()->renderFlags = 0;
     switch (pilot) {
@@ -225,7 +223,7 @@ s32 func_802DAA34(void) {
     return GAME_STATE_DEMO_PILOT;
 }
 
-void func_802DAB18(Camera* arg0) {
+void func_802DAB18(Camera* camera) {
     f32 var_fs0;
     Mtx4F spC4;
     Mtx4F sp84;
@@ -287,9 +285,9 @@ void func_802DAB18(Camera* arg0) {
         uvDobjPosm(D_8034EA44, 0, &spC4);
     }
     func_80200B00(D_8034EA44, D_80359C44, var_fs0);
-    func_80204B34(arg0->unk22C, &arg0->unk108);
-    uvGfxSetViewport(0, 0, 0x140, 0, 0xF0);
-    uvMat4SetOrtho(&sp84, 0.0f, 319.0f, 0.0f, 239.0f);
+    func_80204B34(camera->unk22C, &camera->unk108);
+    uvGfxSetViewport(0, 0, SCREEN_WIDTH, 0, SCREEN_HEIGHT);
+    uvMat4SetOrtho(&sp84, 0.0f, SCREEN_WIDTH - 1.0f, 0.0f, SCREEN_HEIGHT - 1.0f);
     uvGfxMtxProjPushF(&sp84);
     uvMat4SetIdentity(&sp44);
     uvGfxMtxViewLoad(&sp44, 1);
@@ -297,7 +295,7 @@ void func_802DAB18(Camera* arg0) {
     uvFontScale(1, 1);
     uvFontColor(0xFF, 0xFF, 0xFF, 0xFF);
     uvFontPrintStr16(140, 25, textGetDataByIdx(D_8034EA7C[D_8034EA40]), 100, 0xFFE);
-    func_80204FC4(arg0->unk22C);
+    func_80204FC4(camera->unk22C);
     func_80313D74();
     D_80359C88 = var_fs0;
 }

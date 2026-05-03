@@ -84,8 +84,8 @@ void func_80321760(void) {
     D_8036D8E0 = 0.0f;
     D_8036DA24 = 1;
     camera = D_80362690->unkC[D_80362690->unk9C].unk70;
-    camera->unk3C = 1.0f;
-    func_80204C94(camera->unk22C, camera->unk2C, camera->unk30, camera->unk34, camera->unk38, 1.0f, camera->unk40);
+    camera->clipNear = 1.0f;
+    func_80204C94(camera->unk22C, camera->clipX0, camera->clipX1, camera->clipY0, camera->clipY1, 1.0f, camera->clipFar);
     func_802D4514(camera);
     uvMat4SetIdentity(&sp31C);
     sp3D4 = &D_80362690->unkC[D_80362690->unk9C];
@@ -374,11 +374,11 @@ s32 func_8032232C(void) {
 }
 
 s32 func_80322464(void) {
-    Camera* temp_s4;
+    Camera* camera;
     Mtx4F sp64;
     s32 i;
 
-    temp_s4 = D_80362690->unkC[D_80362690->unk9C].unk70;
+    camera = D_80362690->unkC[D_80362690->unk9C].unk70;
     demo_80323020();
     func_80313D74();
     D_8036D8E0 += D_8034F854;
@@ -403,7 +403,7 @@ s32 func_80322464(void) {
         sp64.m[3][1] += D_8036D960.m[3][1];
         sp64.m[3][2] += D_8036D960.m[3][2];
         uvDobjPosm(D_8036D908[i]->unk352, 0, &sp64);
-        func_8031FA0C(D_8036DA20, i, D_8036D8F8[i], (D_8036D908[i])->unk352, &sp64, &temp_s4->unk108);
+        func_8031FA0C(D_8036DA20, i, D_8036D8F8[i], (D_8036D908[i])->unk352, &sp64, &camera->unk108);
     }
 
     if (D_8036D8E0 > 12.25f || D_8036DA24 == 0) {
@@ -417,11 +417,9 @@ s32 func_80322464(void) {
 }
 
 void func_803226DC(void) {
-    Camera* sp2C;
-
-    sp2C = D_80362690->unkC[D_80362690->unk9C].unk70;
-    func_80204B34(sp2C->unk22C, &sp2C->unk108);
-    func_80204FC4(sp2C->unk22C);
+    Camera* camera = D_80362690->unkC[D_80362690->unk9C].unk70;
+    func_80204B34(camera->unk22C, &camera->unk108);
+    func_80204FC4(camera->unk22C);
     if (D_8036D8E0 > 12.0f || D_8036DA24 == 0) {
         screenDrawBoxSetup();
         uvGfxSetFlags(GFX_STATE_AA);

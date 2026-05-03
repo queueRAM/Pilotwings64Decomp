@@ -58,12 +58,12 @@ void func_80204930(void) {
         var_s0->unk39C = NULL;
         var_s0->unk200 = 1.0f;
         var_s0->unk204 = 1.0f;
-        var_s0->unk38C = 0;
-        var_s0->unk38E = SCREEN_WIDTH;
-        var_s0->unk390 = 0;
-        var_s0->unk392 = SCREEN_HEIGHT;
+        var_s0->viewX0 = 0;
+        var_s0->viewX1 = SCREEN_WIDTH;
+        var_s0->viewY0 = 0;
+        var_s0->viewY1 = SCREEN_HEIGHT;
         var_s0->unk394 = 0;
-        func_80204D94(i, var_s0->unk38C, var_s0->unk38E, var_s0->unk390, var_s0->unk392);
+        func_80204D94(i, var_s0->viewX0, var_s0->viewX1, var_s0->viewY0, var_s0->viewY1);
     }
 }
 
@@ -115,30 +115,30 @@ void func_80204C54(s32 arg0, Mtx4F* arg1) {
     uvMat4Copy(&D_80261730[arg0].unk10, arg1);
 }
 
-void func_80204C94(s32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6) {
+void func_80204C94(s32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 near, f32 far) {
     UnkStruct_80204D94* temp_s0;
     temp_s0 = &D_80261730[arg0];
     temp_s0->unk1E8 = arg1;
     temp_s0->unk1EC = arg2;
     temp_s0->unk1F0 = arg3;
     temp_s0->unk1F4 = arg4;
-    temp_s0->unk1F8 = arg5;
-    temp_s0->unk1FC = arg6;
-    uvMat4SetFrustrum(&temp_s0->unk10, arg1, arg2, arg3, arg4, arg5, arg6);
+    temp_s0->unk1F8 = near;
+    temp_s0->unk1FC = far;
+    uvMat4SetFrustrum(&temp_s0->unk10, arg1, arg2, arg3, arg4, near, far);
     uvMat4CopyF2L(&temp_s0->unk50, &temp_s0->unk10);
-    uvMat4SetFrustrum(&temp_s0->unk90, arg1, arg2, arg3, arg4, arg5, 27000.0f);
+    uvMat4SetFrustrum(&temp_s0->unk90, arg1, arg2, arg3, arg4, near, 27000.0f);
     uvMat4CopyF2L(&temp_s0->unkD0, &temp_s0->unk90);
     func_802061A0(temp_s0);
 }
 
-void func_80204D94(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void func_80204D94(s32 vpId, s32 x0, s32 x1, s32 y0, s32 y1) {
     UnkStruct_80204D94* temp_v0;
-    temp_v0 = &D_80261730[arg0];
-    temp_v0->unk38C = arg1;
-    temp_v0->unk38E = arg2;
-    temp_v0->unk390 = arg3;
-    temp_v0->unk392 = arg4;
-    uvGfxClipViewport(arg0, arg1, arg2, arg3, arg4);
+    temp_v0 = &D_80261730[vpId];
+    temp_v0->viewX0 = x0;
+    temp_v0->viewX1 = x1;
+    temp_v0->viewY0 = y0;
+    temp_v0->viewY1 = y1;
+    uvGfxClipViewport(vpId, x0, x1, y0, y1);
 }
 
 void uvChanEnv(s32 arg0, s32 arg1) {
