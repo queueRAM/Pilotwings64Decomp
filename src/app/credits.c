@@ -158,7 +158,7 @@ s32 creditsMainRender(void) {
     while (credits_8030D208() == 0) {
         uvGfxBegin();
         creditsScene();
-        func_8034B688();
+        drawScreenBorder();
         uvGfxEnd();
     }
     credits_8030D1D4();

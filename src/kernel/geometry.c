@@ -287,31 +287,31 @@ void uvEndGrid(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
-void uvVtxRect(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    if (arg0 < 0) {
-        arg0 = 0;
-    } else if (arg0 > SCREEN_WIDTH) {
-        arg0 = SCREEN_WIDTH;
+void uvVtxRect(s32 x0, s32 y0, s32 x1, s32 y1) {
+    if (x0 < 0) {
+        x0 = 0;
+    } else if (x0 > SCREEN_WIDTH) {
+        x0 = SCREEN_WIDTH;
     }
-    if (arg2 < 0) {
-        arg2 = 0;
-    } else if (arg2 > SCREEN_WIDTH) {
-        arg2 = SCREEN_WIDTH;
+    if (x1 < 0) {
+        x1 = 0;
+    } else if (x1 > SCREEN_WIDTH) {
+        x1 = SCREEN_WIDTH;
     }
-    if (arg1 < 0) {
-        arg1 = 0;
-    } else if (arg1 > SCREEN_HEIGHT) {
-        arg1 = SCREEN_HEIGHT;
+    if (y0 < 0) {
+        y0 = 0;
+    } else if (y0 > SCREEN_HEIGHT) {
+        y0 = SCREEN_HEIGHT;
     }
-    if (arg3 < 0) {
-        arg3 = 0;
-    } else if (arg3 > SCREEN_HEIGHT) {
-        arg3 = SCREEN_HEIGHT;
+    if (y1 < 0) {
+        y1 = 0;
+    } else if (y1 > SCREEN_HEIGHT) {
+        y1 = SCREEN_HEIGHT;
     }
     gDPPipeSync(gGfxDisplayListHead++);
     gDPSetRenderMode(gGfxDisplayListHead++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
     gDPPipeSync(gGfxDisplayListHead++);
-    gSPTextureRectangle(gGfxDisplayListHead++, arg0 << 2, (SCREEN_HEIGHT - arg1) << 2, arg2 << 2, (SCREEN_HEIGHT - arg3) << 2, 1, 0, 0, 0x20, 0x20);
+    gSPTextureRectangle(gGfxDisplayListHead++, x0 << 2, (SCREEN_HEIGHT - y0) << 2, x1 << 2, (SCREEN_HEIGHT - y1) << 2, 1, 0, 0, 0x20, 0x20);
     gDPPipeSync(gGfxDisplayListHead++);
 }
 

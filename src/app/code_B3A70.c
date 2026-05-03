@@ -494,10 +494,10 @@ void func_8032D51C(s32 fadeoutType) {
         func_80314154();
         uvGfxSetFlags(GFX_STATE_AA);
         uvVtxBeginPoly();
-        uvVtx(9, 17, 0, 0, 0, sp87, sp86, sp85, sp84);
-        uvVtx(311, 17, 0, 0, 0, sp87, sp86, sp85, sp84);
-        uvVtx(311, 233, 0, 0, 0, sp87, sp86, sp85, sp84);
-        uvVtx(9, 233, 0, 0, 0, sp87, sp86, sp85, sp84);
+        uvVtx(SUBSCREEN_X0 - 1, SUBSCREEN_Y0 - 1, 0, 0, 0, sp87, sp86, sp85, sp84);
+        uvVtx(SUBSCREEN_X1 + 1, SUBSCREEN_Y0 - 1, 0, 0, 0, sp87, sp86, sp85, sp84);
+        uvVtx(SUBSCREEN_X1 + 1, SUBSCREEN_Y1 + 1, 0, 0, 0, sp87, sp86, sp85, sp84);
+        uvVtx(SUBSCREEN_X0 - 1, SUBSCREEN_Y1 + 1, 0, 0, 0, sp87, sp86, sp85, sp84);
         uvVtxEndPoly();
         func_803141E4();
         uvGfxEnd();
@@ -507,10 +507,10 @@ void func_8032D51C(s32 fadeoutType) {
     for (i = 0; i < 2; i++) {
         uvGfxBegin();
         uvVtxBeginPoly();
-        uvVtx(9, 17, 0, 0, 0, sp87, sp86, sp85, sp84);
-        uvVtx(311, 17, 0, 0, 0, sp87, sp86, sp85, sp84);
-        uvVtx(311, 233, 0, 0, 0, sp87, sp86, sp85, sp84);
-        uvVtx(9, 233, 0, 0, 0, sp87, sp86, sp85, sp84);
+        uvVtx(SUBSCREEN_X0 - 1, SUBSCREEN_Y0 - 1, 0, 0, 0, sp87, sp86, sp85, sp84);
+        uvVtx(SUBSCREEN_X1 + 1, SUBSCREEN_Y0 - 1, 0, 0, 0, sp87, sp86, sp85, sp84);
+        uvVtx(SUBSCREEN_X1 + 1, SUBSCREEN_Y1 + 1, 0, 0, 0, sp87, sp86, sp85, sp84);
+        uvVtx(SUBSCREEN_X0 - 1, SUBSCREEN_Y1 + 1, 0, 0, 0, sp87, sp86, sp85, sp84);
         uvVtxEndPoly();
         uvGfxEnd();
     }

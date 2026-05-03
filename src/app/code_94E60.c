@@ -708,10 +708,10 @@ void func_8030F448(void) {
         func_802DEE44(D_8036A8C0 + 0.5, D_8036A8C4 + 0.5, 0x29, 0x20, 3, 0xFA, 0xFA, 0, 0xFA, 0xFA, 0);
     }
     uvGfxBindTexture(GFX_STATE_TEXTURE_NONE);
-    uvVtxRect(0, 18, 319, 0);
-    uvVtxRect(0, 239, 319, 232);
-    uvVtxRect(0, 232, 10, 18);
-    uvVtxRect(310, 232, 319, 18);
+    uvVtxRect(0, SUBSCREEN_Y0, SCREEN_WIDTH - 1, 0);
+    uvVtxRect(0, SCREEN_HEIGHT - 1, SCREEN_WIDTH - 1, SUBSCREEN_Y1);
+    uvVtxRect(0, SUBSCREEN_Y1, SUBSCREEN_X0, SUBSCREEN_Y0);
+    uvVtxRect(SUBSCREEN_X1, SUBSCREEN_Y1, SCREEN_WIDTH - 1, SUBSCREEN_Y0);
     func_803141E4();
 }
 

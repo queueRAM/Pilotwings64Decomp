@@ -49,10 +49,10 @@ void func_802D3170(u8 unkIndex, Camera* camera) {
     func_802EAAE0(&camera->unk230);
     camera->unk2 = camera->unk1;
     camera->unk0 = 0;
-    camera->unk24 = 10;
-    camera->unk26 = 310;
-    camera->unk28 = 18;
-    camera->unk2A = 232;
+    camera->unk24 = SUBSCREEN_X0;
+    camera->unk26 = SUBSCREEN_X1;
+    camera->unk28 = SUBSCREEN_Y0;
+    camera->unk2A = SUBSCREEN_Y1;
     camera->unk3C = 1.0f;
     camera->unk40 = 2000.0f;
     camera->unk2C = one * -0.4906542f;

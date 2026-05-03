@@ -647,10 +647,10 @@ void hudDrawSkyDiving(HUDState* hud) {
         uvGfxStatePush();
         uvGfxSetFlags(GFX_STATE_XLU | GFX_STATE_TEXTURE_NONE);
         uvVtxBeginPoly();
-        uvVtx(10, 18, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->cloudFade);
-        uvVtx(310, 18, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->cloudFade);
-        uvVtx(310, 232, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->cloudFade);
-        uvVtx(10, 232, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->cloudFade);
+        uvVtx(SUBSCREEN_X0, SUBSCREEN_Y0, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->cloudFade);
+        uvVtx(SUBSCREEN_X1, SUBSCREEN_Y0, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->cloudFade);
+        uvVtx(SUBSCREEN_X1, SUBSCREEN_Y1, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->cloudFade);
+        uvVtx(SUBSCREEN_X0, SUBSCREEN_Y1, 0, 0, 0, 0xFF, 0xFF, 0xFF, hud->cloudFade);
         uvVtxEndPoly();
         uvGfxStatePop();
     } else {
@@ -1681,10 +1681,10 @@ void hudDrawBox(HUDState* hud) {
     uvGfxClearFlags(GFX_STATE_ZBUFFER);
     uvGfxBindTexture(GFX_STATE_TEXTURE_NONE);
     uvVtxBeginPoly();
-    uvVtx(10, 18, 0, 0, 0, r, g, b, a);
-    uvVtx(310, 18, 0, 0, 0, r, g, b, a);
-    uvVtx(310, 232, 0, 0, 0, r, g, b, a);
-    uvVtx(10, 232, 0, 0, 0, r, g, b, a);
+    uvVtx(SUBSCREEN_X0, SUBSCREEN_Y0, 0, 0, 0, r, g, b, a);
+    uvVtx(SUBSCREEN_X1, SUBSCREEN_Y0, 0, 0, 0, r, g, b, a);
+    uvVtx(SUBSCREEN_X1, SUBSCREEN_Y1, 0, 0, 0, r, g, b, a);
+    uvVtx(SUBSCREEN_X0, SUBSCREEN_Y1, 0, 0, 0, r, g, b, a);
     uvVtxEndPoly();
     uvGfxStatePop();
 }

@@ -20,17 +20,17 @@ void func_8034B624(Camera* camera) {
     func_80204FC4(camera->unk22C);
 }
 
-void func_8034B688(void) {
+void drawScreenBorder(void) {
     uvGfxBindTexture(GFX_STATE_TEXTURE_NONE);
-    uvVtxRect(0, 18, 319, 0);
-    uvVtxRect(0, 239, 319, 232);
-    uvVtxRect(0, 232, 10, 18);
-    uvVtxRect(310, 232, 319, 18);
+    uvVtxRect(0, SUBSCREEN_Y0, SCREEN_WIDTH - 1, 0);
+    uvVtxRect(0, SCREEN_HEIGHT - 1, SCREEN_WIDTH - 1, SUBSCREEN_Y1);
+    uvVtxRect(0, SUBSCREEN_Y1, SUBSCREEN_X0, SUBSCREEN_Y0);
+    uvVtxRect(SUBSCREEN_X1, SUBSCREEN_Y1, SCREEN_WIDTH - 1, SUBSCREEN_Y0);
 }
 
 void func_8034B6F8(void) {
     splashDraw();
-    func_8034B688();
+    drawScreenBorder();
     if (D_80362690->debugFlag < 5) {
         hudMainRender();
     }
