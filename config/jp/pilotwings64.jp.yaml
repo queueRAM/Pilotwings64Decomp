@@ -75,7 +75,7 @@ segments:
     bss_size: 0x79A80 # TODO: resize
     subsegments:
       - [0x01050, c, kernel/code_1050]
-      - [0x01300, c, kernel/janim]
+      - [0x01300, c, kernel/anim]
       - [0x02130, c, kernel/audio_emitter]
       - [0x03D50, c, kernel/audio_event]
       - [0x04850, c, kernel/audio_manager]
@@ -86,7 +86,7 @@ segments:
       - [0x08170, c, kernel/code_8170]
       - [0x177A0, c, kernel/dobj]
       - [0x19170, c, kernel/env]
-      - [0x19B50, c, kernel/code_19B50]
+      - [0x19B50, c, kernel/fx_seq]
       - [0x1A220, c, kernel/font]
       - [0x1AF00, c, kernel/fx]
       - [0x20030, c, kernel/geometry]
@@ -292,7 +292,7 @@ segments:
       - [0x4D3A0, data] # TODO: what are these 0x10 bytes?
 
       - [0x4D3B0, .rodata, kernel/code_1050]
-      - [0x4D3F0, .rodata, kernel/janim]
+      - [0x4D3F0, .rodata, kernel/anim]
       - [0x4D490, .rodata, kernel/audio_emitter]
       - [0x4DAA0, .rodata, kernel/audio_event]
       - [0x4DB40, .rodata, kernel/audio_manager]
@@ -303,7 +303,7 @@ segments:
       - [0x4DCC0, .rodata, kernel/code_8170]
       - [0x4E220, .rodata, kernel/dobj]
       - [0x4E4D0, .rodata, kernel/env]
-      - [0x4E630, .rodata, kernel/code_19B50]
+      - [0x4E630, .rodata, kernel/fx_seq]
       - [0x4E6E0, .rodata, kernel/font]
       - [0x4E720, .rodata, kernel/fx]
       - [0x4E9E0, .rodata, kernel/geometry]
@@ -351,7 +351,7 @@ segments:
       - { type: .bss, vram: 0x80263330, name: kernel/code_8170 }
       - { type: .bss, vram: 0x802635F0, name: kernel/dobj }
       - { type: .bss, vram: 0x80269D80, name: kernel/env }
-      - { type: .bss, vram: 0x80269DC0, name: kernel/code_19B50 }
+      - { type: .bss, vram: 0x80269DC0, name: kernel/fx_seq }
       - { type: .bss, vram: 0x80269EB0, name: kernel/font }
       - { type: .bss, vram: 0x8027C3F0, name: kernel/fx }
       - { type: .bss, vram: 0x802829D0, name: kernel/geometry }
