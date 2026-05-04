@@ -669,6 +669,8 @@ gRanluxState2 = 0x8024B178;
 
 D_8024B260 = 0x8024B110;
 
+D_803805E0 = 0x80372FC0;
+
 alGlobals = 0x8024B630;
 
 __osViDevMgr = 0x8024B660; // size:0x18
@@ -714,3 +716,9 @@ __osEventStateTab = 0x802BB5F0;
 // app functions
 
 app_entrypoint = 0x80302690; // type:func
+
+// font .data
+sFontScaleX = 0x80248D2C;
+sFontScaleY = 0x80248D30;
+sFontCurId = 0x80248D34;
+sFontMsgCount = 0x80248D3C;

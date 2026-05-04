@@ -76,11 +76,11 @@ STATIC_DATA u8 sFontColorA = 0xFF;
 STATIC_DATA UNUSED s32 D_80248E74 = 0;
 STATIC_DATA UNUSED s32 D_80248E78 = 0;
 
-STATIC_DATA f32 sFontScaleX = 1.0f;
-STATIC_DATA f32 sFontScaleY = 1.0f;
-STATIC_DATA u32 sFontCurId = 0;
+f32 sFontScaleX = 1.0f;
+f32 sFontScaleY = 1.0f;
+u32 sFontCurId = 0;
 STATIC_DATA u32 sFontCurWidth = 8;
-STATIC_DATA s32 sFontMsgCount = 0;
+s32 sFontMsgCount = 0;
 
 ParsedUVFT* uvParseTopUVFT(s32 arg0) {
     ParsedUVFT* ret;
@@ -228,7 +228,7 @@ s32 uvFontHeight(void) {
     return font->bitmap[1].actualHeight * sFontScaleY;
 }
 
-#if defined(VERSION_JP_TODO)
+#if defined(VERSION_JP)
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/font/uvFontPrintStr16.s")
 #else
 // adds str16 to messages using current font settings
@@ -311,7 +311,7 @@ s32 uvFontPrintStr16(s32 x, s32 y, s16* str16, s32 strLen, s32 end) {
 }
 #endif
 
-#if defined(VERSION_JP_TODO)
+#if defined(VERSION_JP)
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/font/uvFontPrintStr.s")
 #else
 void uvFontPrintStr(s32 x, s32 y, const char* str) {
