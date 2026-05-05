@@ -71,7 +71,7 @@ segments:
     start: 0x1050
     vram: 0x802000A0
     follows_vram: entry
-    bss_size: 0x79A80 # TODO: resize
+    bss_size: 0x6BF60
     subsegments:
       - [0x01050, c, kernel/code_1050]
       - [0x01300, c, kernel/anim]
