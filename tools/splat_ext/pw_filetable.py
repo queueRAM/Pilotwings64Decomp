@@ -91,7 +91,8 @@ class N64SegPw_filetable(Segment):
     def split(self, rom_bytes):
         # TODO: dual maintenance of this list and parsers in filesys
         exts = {
-            'ADAT': 'yaml'
+            'ADAT': 'yaml',
+            'SPTH': 'yaml',
         }
         path = options.opts.asset_path / self.dir / self.fs_path
         path.mkdir(parents=True, exist_ok=True)

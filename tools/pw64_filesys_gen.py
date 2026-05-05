@@ -118,9 +118,24 @@ def generate_ADAT(asciiData: dict) -> bytes:
     adat = struct.pack(">4s L", b'FORM', len(records)) + records
     return adat
 
+def generate_SPTH(sPath: dict) -> bytes:
+    records = struct.pack(">4s", b'SPTH')
+    records += generate_PAD(sPath['pad_count'])
+    # order of tags is important
+    spathTags = ('SCPP', 'SCPH', 'SCPX', 'SCPY', 'SCPR', 'SCPZ', 'SCP#')
+    for sTag in spathTags:
+        spthCount = len(sPath['entries'][sTag])
+        records += struct.pack(">4s L L", sTag.encode("utf-8"), 8 + 8 * spthCount, spthCount)
+        for entry in sPath['entries'][sTag]:
+            records += struct.pack(">ff", entry['time'], entry['val'])
+        records += b'\0' * ((8 - (len(records) % 8)) % 8)
+    spth = struct.pack(">4s L", b'FORM', len(records)) + records
+    return spth
+
 def generate_bins(table: dict, fileDir: str, tableFile: str, filesysFile: str):
     generators = {
-        'ADAT': generate_ADAT
+        'ADAT': generate_ADAT,
+        'SPTH': generate_SPTH,
     }
     # 1. output filesystem binary and accumulate sizes
     with open(filesysFile, 'wb') as fsBin:

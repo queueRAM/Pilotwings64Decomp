@@ -59,10 +59,8 @@ class N64SegPw_filesys(Segment):
             return res
         adat = {'pad_count': 0, 'entries': []}
         ftag, flen, tag = struct.unpack(">4s L 4s", formBytes[:0xC])
-        ftag = ftag.decode("utf-8")
-        tag = tag.decode("utf-8")
-        assert ftag == "FORM", f"Expected 'FORM', got ${ftag}"
-        assert tag == "ADAT", f"Expected 'ADAT', got ${tag}"
+        assert ftag == b"FORM", f"Expected 'FORM', got ${ftag}"
+        assert tag == b"ADAT", f"Expected 'ADAT', got ${tag}"
         aBytes = formBytes[0x8:]
         idx = 4
         aSize = 0
@@ -84,6 +82,31 @@ class N64SegPw_filesys(Segment):
         assert len(adat['entries']) == aSize, f"Mismatch length: {len(adat['entries'])} != {aSize}"
         return adat
 
+    def parse_SPTH(self, formBytes: bytes) -> dict:
+        spth = {'pad_count': 0, 'entries': {}}
+        ftag, flen, tag = struct.unpack(">4s L 4s", formBytes[:0xC])
+        assert ftag == b"FORM", f"Expected 'FORM', got ${ftag}"
+        assert tag == b"SPTH", f"Expected 'SPTH', got ${tag}"
+        sBytes = formBytes[0x8:]
+        idx = 4
+        spathTags = ('SCPX', 'SCPY', 'SCPZ', 'SCPH', 'SCPP', 'SCPR', 'SCP#')
+        while idx < flen:
+            tag, length = struct.unpack(">4sI", sBytes[idx:idx+8])
+            idx += 8
+            tag = tag.decode("utf-8")
+            assert tag == 'PAD ' or tag in spathTags
+            if tag == 'PAD ':
+                spth['pad_count'] += 1
+            elif tag in spathTags:
+                spIdx = idx
+                count, = struct.unpack(">I", sBytes[spIdx:spIdx+4])
+                spIdx += 4
+                sp = [{'time': entry[0], 'val': entry[1]} for entry in struct.iter_unpack(">ff", sBytes[spIdx:spIdx+8*count])]
+                spIdx += 8*count
+                spth['entries'][tag] = sp
+            idx += length
+        return spth
+
     def scan(self, rom_bytes):
         fsFiles = []
         idx = self.rom_start
@@ -100,7 +123,8 @@ class N64SegPw_filesys(Segment):
 
     def split(self, rom_bytes):
         extractors = {
-            'ADAT': self.parse_ADAT
+            'ADAT': self.parse_ADAT,
+            'SPTH': self.parse_SPTH,
         }
         path = options.opts.asset_path / self.dir / self.fs_path
         path.mkdir(parents=True, exist_ok=True)

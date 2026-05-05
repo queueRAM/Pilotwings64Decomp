@@ -412,7 +412,7 @@ struct SPTH {
         ("PAD "): u8 pad[length] [[hidden]];
         ("SCPH"): SPTH_SCP scph;
         ("SCPP"): SPTH_SCP scpp;
-        ("SCPR"): SPTH_SCP scpp;
+        ("SCPR"): SPTH_SCP scpr;
         ("SCPX"): SPTH_SCP scpx;
         ("SCPY"): SPTH_SCP scpy;
         ("SCPZ"): SPTH_SCP scpz;
