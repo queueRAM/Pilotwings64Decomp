@@ -13,7 +13,6 @@ options:
   asset_path: bin
   build_path: build
   create_asm_dependencies: True
-  asm_nonmatching_label_macro: ""
 
   ld_script_path: build/pilotwings64.jp.ld
   ld_dependencies: True
@@ -155,6 +154,7 @@ segments:
       - [0x3B7A0, c, libultra/io/visetspecial]
       - [0x3B960, c, libultra/libc/ll]
       - [0x3BC20, c, libultra/io/piread]
+      - [0x3BC60, pad]
       - [0x3BCA0, c, libultra/io/viswapbuf]
       - [0x3BCF0, hasm, libultra/os/writebackdcacheall]
       - [0x3BD20, c, libultra/io/sptask]

@@ -228,7 +228,7 @@ void uvGfxStateDrawDL(uvGfxState_t* arg0) {
     gGfxNumTriangles[gGfxFbIndex] += arg0->triCount * 2;
 }
 
-#if defined(VERSION_JP_TODO)
+#if defined(VERSION_JP)
 #pragma GLOBAL_ASM("asm/nonmatchings/kernel/graphics/uvGfxStateDraw.s")
 #else
 void uvGfxStateDraw(uvGfxState_t* arg0) {
