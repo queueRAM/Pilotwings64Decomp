@@ -310,9 +310,6 @@ s32 uvFontPrintStr16(s32 x, s32 y, s16* str16, s32 strLen, s32 end) {
 }
 #endif
 
-#if defined(VERSION_JP)
-#pragma GLOBAL_ASM("asm/nonmatchings/kernel/font/uvFontPrintStr.s")
-#else
 void uvFontPrintStr(s32 x, s32 y, const char* str) {
     char* chrPos;
     s32 strLen;
@@ -350,7 +347,6 @@ void uvFontPrintStr(s32 x, s32 y, const char* str) {
     sFontMessages[sFontMsgCount].font = gGfxUnkPtrs->fonts[sFontCurId];
     sFontMsgCount++;
 }
-#endif
 
 STATIC_FUNC s32 uvFontSpriteWidth(Sprite* sprite, s16* str16, ParsedUVFT* font) {
     s32 width;
