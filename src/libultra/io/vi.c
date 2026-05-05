@@ -28,7 +28,7 @@ void __osViInit(void) {
         osViClock = VI_NTSC_CLOCK;
     } else {
         __osViNext->modep = &osViModePalLan1;
-        osViClock = VI_MPAL_CLOCK;
+        osViClock = VI_PAL_CLOCK;
     }
 #else
     if (sTvType == OS_TV_TYPE_NTSC) {

@@ -717,6 +717,8 @@ sFontBitmaps = 0x80269EB0; // size:0x190
 sFontDList = 0x8026A040; // size:0x11AC0
 sFontMessages = 0x8027BB00; // size:0x8F0
 
+D_8028A0A0 = 0x8027C3F0;
+
 gGfxTaskOutputBuffer = 0x80288DF0; // size:0x2008
 gGfxTaskOutputBufferStart = 0x8028ADF8;
 gGfxTaskOutputBufferEnd = 0x8028ADFC;

@@ -8,14 +8,13 @@
 #if defined(VERSION_US)
   #define FONT_MAX_MSG_LEN   44
   #define FONT_DL_COUNT    7944
-  #define FONT_MSG_COUNT     30
 #elif defined(VERSION_JP)
   #define FONT_MAX_MSG_LEN   25
   #define FONT_DL_COUNT    4524
-  #define FONT_MSG_COUNT     20
 #else
   #error Unknown VERSION
 #endif
+#define FONT_MSG_COUNT     30
 
 // struct containing a printed string's font data
 // contains position, scale, color, string, pointer to font
@@ -30,7 +29,7 @@ typedef struct Unk80289380 {
     u8 a;
     s16 str16[FONT_MAX_MSG_LEN];
     ParsedUVFT* font;
-} FontMessage; // size = 0x70
+} FontMessage; // size = JP:0x4C US:0x70
 
 STATIC_DATA Bitmap sFontBitmaps[FONT_MAX_MSG_LEN];
 STATIC_DATA Gfx sFontDList[FONT_DL_COUNT * 2];
@@ -56,7 +55,7 @@ STATIC_DATA Sprite sFontSprite = {
     NULL,         // LUT
     0,            // istart
     1,            // istep
-    15 * FONT_MAX_MSG_LEN,          // nbitmaps
+    15 * FONT_MAX_MSG_LEN, // nbitmaps
     FONT_DL_COUNT,// ndisplist
     15,           // bmheight
     128,          // bmHreal
