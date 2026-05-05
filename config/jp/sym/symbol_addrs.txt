@@ -638,17 +638,15 @@ gSndPlayer = 0x80248B44;
 gGfxUnkPtrs = 0x80248C80;
 D_80248DD8 = 0x80248C88;
 
-sFontSprite = 0x80248CD0; // size:0x44
-sFontColorR = 0x80248D14;
-sFontColorG = 0x80248D18;
-sFontColorB = 0x80248D1C;
-sFontColorA = 0x80248D20;
-// TODO map out more
-// sFontScaleX = ;
-// sFontScaleY = ;
-// sFontCurId = ;
-// sFontCurWidth = ;
-// sFontMsgCount = ;
+sFontScaleX   = 0x80248D2C;
+sFontScaleY   = 0x80248D30;
+sFontCurId    = 0x80248D34;
+sFontMsgCount = 0x80248D3C;
+sFontSprite   = 0x80248CD0; // size:0x44
+sFontColorR   = 0x80248D14;
+sFontColorG   = 0x80248D18;
+sFontColorB   = 0x80248D1C;
+sFontColorA   = 0x80248D20;
 
 gGfxDList1 = 0x80248FF0;
 gGfxDList2 = 0x80249060;
@@ -747,7 +745,6 @@ gSchedInst   = 0x802B5BF8;
 D_802C3B50   = 0x802B5EA0;
 D_802C3B68   = 0x802B5EB8;
 D_802C3B90   = 0x802B5EE0;
-// gSchedStack + sizeof(gSchedStack) =  0x802B7EF8;
 gSchedClient = 0x802B7EF8;
 
 __osThreadSave = 0x802BCAA0;
@@ -756,9 +753,3 @@ __osEventStateTab = 0x802BB5F0;
 // app functions
 
 app_entrypoint = 0x80302690; // type:func
-
-// font .data
-sFontScaleX = 0x80248D2C;
-sFontScaleY = 0x80248D30;
-sFontCurId = 0x80248D34;
-sFontMsgCount = 0x80248D3C;
