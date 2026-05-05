@@ -4,17 +4,17 @@
 #include <PR/ultratypes.h>
 #include <uv_matrix.h>
 
-extern u16 D_803505B0;
+extern u16 gCurrentMusicId;
 
 void sndInit(void);
 void func_8033F6F8(Mtx4F*, Mtx4F*);
-void func_8033F748(u16);
+void sndSetMusic(u16);
 void sndPlaySfxVolPitchPan(u8, f32, f32, f32);
 void sndPlaySfx(u8);
 u8 sndMakeDev(s32);
 u8 func_8033F8CC(u8);
 void func_8033F904(u8, f32, f32, f32);
-void func_8033F964(u8);
+void sndSetMusicState(u8);
 void func_8033FA88(f32);
 void func_8033FAD4(f32);
 void func_8033FB14(void);
@@ -144,6 +144,47 @@ enum Sfx {
     /* 0x75 */ SFX_UI_CONTROL,
     /* 0x76 */ SFX_UNK_118,        // duplicate of SFX_UI_HINT
     /* 0x77 */ SFX_UNK_119
+};
+
+enum Music {
+    /* 0x00 */ BGM_OPENING_THEME,
+    /* 0x01 */ BGM_THEME_LOOP,   // "Title Demo"
+    /* 0x02 */ BGM_SELECT_MENU,  // "Game Menu"
+    /* 0x03 */ BGM_TEST_MENU,    // "Mission Menu"
+    /* 0x04 */ BGM_HANG_GLIDER,
+    /* 0x05 */ BGM_HANG_GLIDER_LAND_OK,
+    /* 0x06 */ BGM_HANG_GLIDER_LAND_MISS,
+    /* 0x07 */ BGM_HANG_GLIDER_CRASH,
+    /* 0x08 */ BGM_ROCKET_BELT,
+    /* 0x09 */ BGM_ROCKET_BELT_LAND_OK,
+    /* 0x0A */ BGM_ROCKET_BELT_LAND_MISS,
+    /* 0x0B */ BGM_ROCKET_BELT_CRASH,
+    /* 0x0C */ BGM_GYROCOPTER,
+    /* 0x0D */ BGM_GYROCOPTER_LAND_OK,
+    /* 0x0E */ BGM_GYROCOPTER_LAND_MISS,
+    /* 0x0F */ BGM_GYROCOPTER_CRASH,
+    /* 0x10 */ BGM_CANNONBALL,
+    /* 0x11 */ BGM_CANNONBALL_HIT,
+    /* 0x12 */ BGM_CANNONBALL_MISS,
+    /* 0x13 */ BGM_SKYDIVING,
+    /* 0x14 */ BGM_SKYDIVING_LAND_OK,
+    /* 0x15 */ BGM_SKYDIVING_LAND_MISS,
+    /* 0x16 */ BGM_SKYDIVING_CRASH, // Same as 0x0B
+    /* 0x17 */ BGM_JUMBLE_HOPPER,
+    /* 0x18 */ BGM_JUMBLE_HOPPER_GOAL,
+    /* 0x19 */ BGM_BIRDMAN,
+    /* 0x1A */ BGM_BIRDMAN_LAND_OK,
+    /* 0x1B */ BGM_BIRDMAN_CRASH,
+    /* 0x1C */ BGM_RESULTS, // "Replay"
+    /* 0x1D */ BGM_CONGRATS,
+    /* 0x1E */ BGM_CREDITS  // "Bravissimo!"
+};
+
+enum MusicState {
+    MUS_STATE_PLAY_SEQ = 0,
+    MUS_STATE_STOP_SEQ = 1,
+    MUS_STATE_PAUSE_MENU = 2,
+    MUS_STATE_PAUSE_EXIT = 3
 };
 
 #endif // APP_SND_H

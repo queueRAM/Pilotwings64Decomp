@@ -12,11 +12,11 @@ Mtx4F D_80373EA0;
 f32 D_80373EE0;
 EventCallbackInfo D_80373EE8;
 
-u16 D_803505B0 = 0xFF;
+u16 gCurrentMusicId = 0xFF;
 f32 D_803505B4 = 0.0f;
 f32 D_803505B8 = 1.0f;
 f32 D_803505BC = 0.0f;
-u8 D_803505C0 = 0;
+u8 gMusicPlayingFlag = 0;
 f32 D_803505C4[VEHICLE_COUNT][2] = {
     {  0.9f, 1.0f },
     {  0.8f, 1.0f },
@@ -50,8 +50,8 @@ void func_8033F6F8(Mtx4F* arg0, Mtx4F* arg1) {
     func_80200144(0, &D_80373E20);
 }
 
-void func_8033F748(u16 arg0) {
-    D_803505B0 = arg0;
+void sndSetMusic(u16 musicId) {
+    gCurrentMusicId = musicId;
 }
 
 void sndPlaySfxVolPitchPan(u8 sfxId, f32 vol, f32 pitch, f32 pan) {
@@ -108,44 +108,44 @@ void func_8033F904(u8 emitterId, f32 pitch, f32 vol, f32 pan) {
     }
 }
 
-void func_8033F964(u8 arg0) {
-    switch (arg0) {
-    case 0:
-        if (D_803505C0 != 0) {
+void sndSetMusicState(u8 state) {
+    switch (state) {
+    case MUS_STATE_PLAY_SEQ:
+        if (gMusicPlayingFlag != 0) {
             uvaSeqStop();
         }
         D_803505BC = 0.0f;
-        D_803505C0 = 1;
-        uvaSeqNew(D_803505B0);
+        gMusicPlayingFlag = 1;
+        uvaSeqNew(gCurrentMusicId);
         uvaSeqPlay();
         return;
-    case 1:
-        if (D_803505C0 != 0) {
+    case MUS_STATE_STOP_SEQ:
+        if (gMusicPlayingFlag != 0) {
             uvaSeqStop();
             D_803505BC = 0.0f;
             D_803505B4 = 0.0f;
-            D_803505C0 = 0;
+            gMusicPlayingFlag = 0;
             return;
         }
         return;
-    case 3:
+    case MUS_STATE_PAUSE_EXIT:
         D_803505BC = 0.5f;
-        if (D_803505C0 == 0) {
+        if (gMusicPlayingFlag == 0) {
             D_803505B4 = 0 /*0.0f*/;
-            uvaSeqNew(D_803505B0);
+            uvaSeqNew(gCurrentMusicId);
             uvaSeqPlay();
-            D_803505C0 = 1;
+            gMusicPlayingFlag = 1;
             return;
         }
         break;
-    case 2:
+    case MUS_STATE_PAUSE_MENU:
         D_803505BC = -0.5f;
         break;
     }
 }
 
 void func_8033FA88(f32 arg0) {
-    if (D_803505C0 != 0) {
+    if (gMusicPlayingFlag != 0) {
         func_80200180(0, 2, uvSqrtF(arg0), 0);
     }
 }

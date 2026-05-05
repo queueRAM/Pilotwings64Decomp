@@ -171,18 +171,18 @@ void func_802EEB00(HangGliderData* hgData, u8 arg1) {
     if (hgData->unk251 == 0) {
         if (arg1 != 0) {
             hgData->unk251 = 2;
-            func_8033F748(5);
-            func_8033F964(0);
+            sndSetMusic(BGM_HANG_GLIDER_LAND_OK);
+            sndSetMusicState(MUS_STATE_PLAY_SEQ);
             func_8033FCD0(sp30->veh);
             uvEventPost(0x12, 0);
         } else {
             hgData->unk251 = 1;
             if (hgData->unk5C != 0) {
-                func_8033F748(5);
+                sndSetMusic(BGM_HANG_GLIDER_LAND_OK);
             } else {
-                func_8033F748(6);
+                sndSetMusic(BGM_HANG_GLIDER_LAND_MISS);
             }
-            func_8033F964(0);
+            sndSetMusicState(MUS_STATE_PLAY_SEQ);
             func_8033FCD0(sp30->veh);
             uvEventPost(0x12, 0);
         }
@@ -255,8 +255,8 @@ void func_802EEF0C(HangGliderData* hgData) {
             uvMat4Copy(&hgData->camera->unk80, &hgData->unk10);
             sndPlaySfx(SFX_WATER_SPLASH);
             if (!(hgData->unk318 & 0x10)) {
-                func_8033F748(7U);
-                func_8033F964(0);
+                sndSetMusic(BGM_HANG_GLIDER_CRASH);
+                sndSetMusicState(MUS_STATE_PLAY_SEQ);
                 func_8033FCD0(sp30->veh);
             }
             uvEventPost(0x12, 0);

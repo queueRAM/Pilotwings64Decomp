@@ -184,8 +184,8 @@ STATIC_FUNC void rbSoundEvent12_22(RocketBeltData* rbData) {
             rbData->unk384 |= 0x2;
             sndPlaySfx(0x36);
             if ((rbData->unk384 & 0x10) == 0) {
-                func_8033F748(0xB);
-                func_8033F964(0);
+                sndSetMusic(BGM_ROCKET_BELT_CRASH);
+                sndSetMusicState(MUS_STATE_PLAY_SEQ);
                 func_8033FCD0(sp34->veh);
             }
             rbSoundEvent12_18(rbData);
@@ -196,8 +196,8 @@ STATIC_FUNC void rbSoundEvent12_22(RocketBeltData* rbData) {
                 rbData->unk384 |= 0x10;
                 sndGetPilotScream(&sfxId, &pitch);
                 sndPlaySfxVolPitchPan(sfxId, 1.0f, pitch, 0.0f);
-                func_8033F748(0xB);
-                func_8033F964(0);
+                sndSetMusic(BGM_ROCKET_BELT_CRASH);
+                sndSetMusicState(MUS_STATE_PLAY_SEQ);
                 func_8033FCD0(sp34->veh);
                 rbSoundEvent12_18(rbData);
             }
@@ -205,11 +205,11 @@ STATIC_FUNC void rbSoundEvent12_22(RocketBeltData* rbData) {
         if ((rbData->unk90 == 4) && (D_80362690->state != 6)) {
             if ((rbData->unk384 & 0x2) == 0 && (rbData->unk384 & 0x10) == 0) {
                 if (rbData->unk64 != 0) {
-                    func_8033F748(9);
+                    sndSetMusic(BGM_ROCKET_BELT_LAND_OK);
                 } else {
-                    func_8033F748(0xA);
+                    sndSetMusic(BGM_ROCKET_BELT_LAND_MISS);
                 }
-                func_8033F964(0);
+                sndSetMusicState(MUS_STATE_PLAY_SEQ);
                 func_8033FCD0(sp34->veh);
                 rbSoundEvent12_18(rbData);
             }

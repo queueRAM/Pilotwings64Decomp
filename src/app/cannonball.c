@@ -720,7 +720,7 @@ s32 cannonLoad802D77D8(Unk80362690* arg0, CannonballData* cbData) {
         }
     }
     envSoundInit();
-    func_8033F964(1);
+    sndSetMusicState(MUS_STATE_STOP_SEQ);
     hud_8031DAA8(0, 0.0f);
     temp_s1->test = 0;
     proxAnimDispatchInit();
@@ -752,8 +752,8 @@ s32 cannonLoad802D77D8(Unk80362690* arg0, CannonballData* cbData) {
     func_80313E0C(0.0f);
     fdrSetBlen(1.0f);
     fdr_802E68B0(1);
-    func_8033F748(0x10);
-    func_8033F964(0);
+    sndSetMusic(BGM_CANNONBALL);
+    sndSetMusicState(MUS_STATE_PLAY_SEQ);
     func_8033FCD0(temp_s1->veh);
     uvEventPost(0xB, 0);
     D_80359A84 = 0;
@@ -865,12 +865,12 @@ s32 cannonLandedFrame(CannonballData* cbData) {
             hudText_8031D8E0(TEXT_C_POINTS, 2.0f, 8.0f);
             if (points == 25) {
                 hudWarningText(TEXT_C_PERFECT, 2.0f, 8.0f);
-                func_8033F964(1);
+                sndSetMusicState(MUS_STATE_STOP_SEQ);
                 sndPlaySfx(SFX_GOAL_GONG);
             } else {
                 sndPlaySfx(0x36);
-                func_8033F748(0x11);
-                func_8033F964(0);
+                sndSetMusic(BGM_CANNONBALL_HIT);
+                sndSetMusicState(MUS_STATE_PLAY_SEQ);
                 func_8033FCD0(temp_s0->veh);
             }
         }
@@ -887,8 +887,8 @@ s32 cannonLandedFrame(CannonballData* cbData) {
     }
     D_8034EA00 = 0.0f;
     if (cbData->unkE == 2 && cbData->unkC < 3) {
-        func_8033F748(0x1C);
-        func_8033F964(0);
+        sndSetMusic(BGM_RESULTS);
+        sndSetMusicState(MUS_STATE_PLAY_SEQ);
         func_8033FCD0(temp_s0->veh);
         resultHandler(1);
     }
@@ -927,8 +927,8 @@ s32 cannonEndShot(CannonballData* cbData) {
         }
     }
 
-    func_8033F748(0x10);
-    func_8033F964(0);
+    sndSetMusic(BGM_CANNONBALL);
+    sndSetMusicState(MUS_STATE_PLAY_SEQ);
     func_8033FCD0(temp_s1->veh);
     if (cbData->unkC != sp2E) {
         uvEventPost(0x19, 0);
@@ -980,8 +980,8 @@ s32 cannonEndAllTgts(CannonballData* cbData) {
 
     temp_s0 = &D_80362690->unkC[D_80362690->unk9C];
     uvEventPost(0xD, 0);
-    func_8033F748(0x1C);
-    func_8033F964(0);
+    sndSetMusic(BGM_RESULTS);
+    sndSetMusicState(MUS_STATE_PLAY_SEQ);
     func_8033FCD0(temp_s0->veh);
     temp_s0->test = 0;
     temp_s0->unk8B = 1;

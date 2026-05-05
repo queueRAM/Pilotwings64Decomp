@@ -115,7 +115,7 @@ s32 func_80342630(void) {
 STATIC_FUNC void func_803427FC(void) {
     Mtx4F sp58;
     Camera* camera;
-    s32 var_v0;
+    s32 musicId;
 
     D_80378CE0 = (Unk80378CE0*)_uvMemAllocAlign8(sizeof(Unk80378CE0));
     uvMemSet(D_80378CE0, 0, sizeof(Unk80378CE0));
@@ -187,7 +187,7 @@ STATIC_FUNC void func_803427FC(void) {
     uvaSeqSetTempo(110.0f);
     if (D_80350690 != 0) {
         D_80378CE0->unk23C = -0.5236f;
-        var_v0 = 0;
+        musicId = 0;
         D_80378CE0->unk22C = 0.0f;
         D_80378CE0->unk28 = 1;
     } else {
@@ -195,11 +195,11 @@ STATIC_FUNC void func_803427FC(void) {
         D_80378CE0->unk22C = 16.65f;
         D_80378CE0->unk28 = 7;
         func_80344258(1);
-        var_v0 = 1;
+        musicId = 1;
     }
-    if (var_v0 != D_803505B0) {
-        func_8033F748(var_v0);
-        func_8033F964(0);
+    if (musicId != gCurrentMusicId) {
+        sndSetMusic(musicId);
+        sndSetMusicState(MUS_STATE_PLAY_SEQ);
         func_8033FA88(0.75f);
         func_8033FCD0(0xFFU);
     }
@@ -328,10 +328,11 @@ STATIC_FUNC s32 func_80343550(void) {
                 D_80378CE0->unk22C = 16.65f;
                 D_80378CE0->unk28 = 7;
                 func_803433A4();
-                if (D_803505B0 != 1) {
-                    func_8033F964(1);
-                    func_8033F748(1);
-                    func_8033F964(0);
+                if (gCurrentMusicId != 1) {
+                    // stop current demo music and play title music loop
+                    sndSetMusicState(MUS_STATE_STOP_SEQ);
+                    sndSetMusic(BGM_THEME_LOOP);
+                    sndSetMusicState(MUS_STATE_PLAY_SEQ);
                 }
                 D_80378CE0->unk265 = 0;
                 D_80378CE0->unk266 = 0;
