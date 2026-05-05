@@ -5,14 +5,14 @@
 #include <uv_font.h>
 #include <uv_string.h>
 
-#if defined(VERSION_US)
-  #define FONT_MAX_MSG_LEN   44
-  #define FONT_DL_COUNT    7944
-#elif defined(VERSION_JP)
+#if defined(VERSION_JP)
   #define FONT_MAX_MSG_LEN   25
   #define FONT_DL_COUNT    4524
+#elif defined(VERSION_US)
+  #define FONT_MAX_MSG_LEN   44
+  #define FONT_DL_COUNT    7944
 #else
-  #error Unknown VERSION
+  #error Unknown build VERSION
 #endif
 #define FONT_MSG_COUNT     30
 
