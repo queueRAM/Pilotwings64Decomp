@@ -164,6 +164,7 @@ class ADAT:
             records += struct.pack(">4s L", b'DATA', len(encData)) + encData
         return struct.pack(">4s L", b'FORM', len(records)) + records
 
+
 class SPTH:
     """
     SPath class which stores x,y,z and heading,pitch,roll data for paths
@@ -240,8 +241,9 @@ class SPTH:
         spth = b'FORM' + struct.pack(">L", len(records)) + records
         return spth
 
-class UVEN:
-    """Environment"""
+
+class UV_COMM:
+    """Boilerplate class for UV** that have one type of COMM entry"""
 
     def __init__(self, tag=None, pad_count=0, comm=None):
         self.tag = tag if tag is not None else self.__class__.__name__
@@ -252,6 +254,18 @@ class UVEN:
     def from_dict(cls, d: dict):
         """Construct from dictionary"""
         return cls(d["tag"], d["pad_count"], d["comm"])
+
+    def as_dict(self) -> dict:
+        """Generate dictionary suitable for creating YAML representation"""
+        return {
+            "tag": self.tag,
+            "pad_count": self.pad_count,
+            "comm": self.comm
+        }
+
+
+class UVEN(UV_COMM):
+    """Environment"""
 
     @classmethod
     def from_bytes(cls, form: bytes):
@@ -285,14 +299,6 @@ class UVEN:
             idx += length
         return cls(utag, pad_count, comm)
 
-    def as_dict(self) -> dict:
-        """Generate dictionary suitable for creating YAML representation"""
-        return {
-            "tag": self.tag,
-            "pad_count": self.pad_count,
-            "comm": self.comm
-        }
-
     def __bytes__(self) -> bytes:
         """Generate raw bytes suitable for regenerating filesystem data"""
         records = struct.pack(">4s", self.tag.encode())
@@ -305,21 +311,12 @@ class UVEN:
             records += b'COMM' + struct.pack(">L", len(comm)) + comm
         return b'FORM' + struct.pack(">L", len(records)) + records
 
-class UVLT:
+
+class UVLT(UV_COMM):
     """
     UVLT exists in the filesystem, but only contains 'PAD ' fields.
     The code will read 4 bytes from COMM if it existed, but it does not.
     """
-
-    def __init__(self, tag=None, pad_count=0, comm=None):
-        self.tag = tag if tag is not None else self.__class__.__name__
-        self.pad_count = pad_count
-        self.comm = [] if comm is None else comm
-
-    @classmethod
-    def from_dict(cls, d: dict):
-        """Construct from dictionary"""
-        return cls(d["tag"], d["pad_count"], d["comm"])
 
     @classmethod
     def from_bytes(cls, form: bytes):
@@ -347,14 +344,6 @@ class UVLT:
             idx += length
         return cls(utag, pad_count, comm)
 
-    def as_dict(self) -> dict:
-        """Generate dictionary suitable for creating YAML representation"""
-        return {
-            "tag": self.tag,
-            "pad_count": self.pad_count,
-            "comm": self.comm
-        }
-
     def __bytes__(self) -> bytes:
         """Generate raw bytes suitable for regenerating filesystem data"""
         records = struct.pack(">4s", self.tag.encode())
@@ -365,22 +354,13 @@ class UVLT:
             records += b'COMM' + struct.pack(">L", len(comm)) + comm
         return b'FORM' + struct.pack(">L", len(records)) + records
 
-class UVLV:
+
+class UVLV(UV_COMM):
     """
     `UVLV` contains the counts and IDs used for the terrain, models, texture, animation for map data.
     """
 
     _levelFields = ("terra", "light", "environment", "model", "contour", "texture", "sequence", "animation", "font", "blit")
-
-    def __init__(self, tag=None, pad_count=0, comm=None):
-        self.tag = tag if tag is not None else self.__class__.__name__
-        self.pad_count = pad_count
-        self.comm = [] if comm is None else comm
-
-    @classmethod
-    def from_dict(cls, d: dict):
-        """Construct from dictionary"""
-        return cls(d["tag"], d["pad_count"], d["comm"])
 
     @classmethod
     def from_bytes(cls, form: bytes):
@@ -411,14 +391,6 @@ class UVLV:
                 comm.append(lv)
             idx += length
         return cls(utag, pad_count, comm)
-
-    def as_dict(self) -> dict:
-        """Generate dictionary suitable for creating YAML representation"""
-        return {
-            "tag": self.tag,
-            "pad_count": self.pad_count,
-            "comm": self.comm
-        }
 
     def __bytes__(self) -> bytes:
         """Generate raw bytes suitable for regenerating filesystem data"""
