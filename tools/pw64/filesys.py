@@ -6,8 +6,8 @@ class ADAT:
     """
     ADAT stores string identifiers and data strings encoded in custom u16 chars.
     """
-    def __init__(self, tag="ADAT", pad_count=0, entries=None):
-        self.tag = tag
+    def __init__(self, tag=None, pad_count=0, entries=None):
+        self.tag = tag if tag is not None else self.__class__.__name__
         self.pad_count = pad_count
         self.entries = entries if entries is not None else {}
 
@@ -176,8 +176,8 @@ class SPTH:
     # order of tags is important
     _spathTags = ("SCPP", "SCPH", "SCPX", "SCPY", "SCPR", "SCPZ", "SCP#")
 
-    def __init__(self, tag="SPTH", pad_count=0, entries=None):
-        self.tag = tag
+    def __init__(self, tag=None, pad_count=0, entries=None):
+        self.tag = tag if tag is not None else self.__class__.__name__
         self.pad_count = pad_count
         self.entries = entries if entries is not None else {}
 
@@ -243,8 +243,8 @@ class SPTH:
 class UVEN:
     """Environment"""
 
-    def __init__(self, tag="UVEN", pad_count=0, comm=None):
-        self.tag = tag
+    def __init__(self, tag=None, pad_count=0, comm=None):
+        self.tag = tag if tag is not None else self.__class__.__name__
         self.pad_count = pad_count
         self.comm = [] if comm is None else comm
 
@@ -258,7 +258,8 @@ class UVEN:
         """Construct from raw filesystem bytes"""
         ftag, flen, utag = struct.unpack(">4s L 4s", form[:0xC])
         assert ftag == b'FORM', f"Expected 'FORM', got ${ftag}"
-        assert utag == b'UVEN', f"Expected 'UVEN', got ${utag}"
+        utag = utag.decode()
+        assert utag == cls.__name__, f"Expected '{cls.__name__}', got ${utag}"
         payload = form[8:]
         idx = 4
         pad_count = 0
@@ -282,7 +283,7 @@ class UVEN:
                 commIdx += 0x3C
                 comm.append({"models": models, "data": data})
             idx += length
-        return cls(utag.decode(), pad_count, comm)
+        return cls(utag, pad_count, comm)
 
     def as_dict(self) -> dict:
         """Generate dictionary suitable for creating YAML representation"""
@@ -303,15 +304,15 @@ class UVEN:
             comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
             records += b'COMM' + struct.pack(">L", len(comm)) + comm
         return b'FORM' + struct.pack(">L", len(records)) + records
-        
+
 class UVLT:
     """
     UVLT exists in the filesystem, but only contains 'PAD ' fields.
     The code will read 4 bytes from COMM if it existed, but it does not.
     """
 
-    def __init__(self, tag="UVEN", pad_count=0, comm=None):
-        self.tag = tag
+    def __init__(self, tag=None, pad_count=0, comm=None):
+        self.tag = tag if tag is not None else self.__class__.__name__
         self.pad_count = pad_count
         self.comm = [] if comm is None else comm
 
@@ -325,7 +326,8 @@ class UVLT:
         """Construct from raw filesystem bytes"""
         ftag, flen, utag = struct.unpack(">4s L 4s", form[:0xC])
         assert ftag == b'FORM', f"Expected 'FORM', got ${ftag}"
-        assert utag == b'UVLT', f"Expected 'UVLT', got ${utag}"
+        utag = utag.decode()
+        assert utag == cls.__name__, f"Expected '{cls.__name__}', got ${utag}"
         payload = form[8:]
         idx = 4
         pad_count = 0
@@ -343,7 +345,7 @@ class UVLT:
                 ltIdx += 4
                 comm.append(lt)
             idx += length
-        return cls(utag.decode(), pad_count, comm)
+        return cls(utag, pad_count, comm)
 
     def as_dict(self) -> dict:
         """Generate dictionary suitable for creating YAML representation"""
@@ -359,6 +361,75 @@ class UVLT:
         records += struct.pack(">4s L L", b'PAD ', 4, 0) * self.pad_count
         for c in self.comm:
             comm = struct.pack(">4B", *c)
+            comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
+            records += b'COMM' + struct.pack(">L", len(comm)) + comm
+        return b'FORM' + struct.pack(">L", len(records)) + records
+
+class UVLV:
+    """
+    `UVLV` contains the counts and IDs used for the terrain, models, texture, animation for map data.
+    """
+
+    _levelFields = ("terra", "light", "environment", "model", "contour", "texture", "sequence", "animation", "font", "blit")
+
+    def __init__(self, tag=None, pad_count=0, comm=None):
+        self.tag = tag if tag is not None else self.__class__.__name__
+        self.pad_count = pad_count
+        self.comm = [] if comm is None else comm
+
+    @classmethod
+    def from_dict(cls, d: dict):
+        """Construct from dictionary"""
+        return cls(d["tag"], d["pad_count"], d["comm"])
+
+    @classmethod
+    def from_bytes(cls, form: bytes):
+        """Construct from raw filesystem bytes"""
+        ftag, flen, utag = struct.unpack(">4s L 4s", form[:0xC])
+        assert ftag == b'FORM', f"Expected 'FORM', got ${ftag}"
+        utag = utag.decode()
+        assert utag == cls.__name__, f"Expected '{cls.__name__}', got ${utag}"
+        payload = form[8:]
+        idx = 4
+        pad_count = 0
+        comm = []
+        while idx < flen:
+            tag, length = struct.unpack(">4s L", payload[idx:idx+8])
+            idx += 8
+            tag = tag.decode()
+            assert tag in ("PAD ", "COMM"), f"Unexpected tag '${tag}'"
+            if tag == "PAD ":
+                pad_count += 1
+            else:
+                lv = {}
+                lvIdx = idx
+                for field in cls._levelFields:
+                    count, = struct.unpack(">H", payload[lvIdx:lvIdx+2])
+                    lvIdx += 2
+                    lv[field] = [i for i, in struct.iter_unpack(">H", payload[lvIdx:lvIdx+2*count])]
+                    lvIdx += 2*count
+                comm.append(lv)
+            idx += length
+        return cls(utag, pad_count, comm)
+
+    def as_dict(self) -> dict:
+        """Generate dictionary suitable for creating YAML representation"""
+        return {
+            "tag": self.tag,
+            "pad_count": self.pad_count,
+            "comm": self.comm
+        }
+
+    def __bytes__(self) -> bytes:
+        """Generate raw bytes suitable for regenerating filesystem data"""
+        records = struct.pack(">4s", self.tag.encode())
+        records += struct.pack(">4s L L", b'PAD ', 4, 0) * self.pad_count
+        for c in self.comm:
+            comm = b''
+            for field in self._levelFields:
+                ids = c[field]
+                comm += struct.pack(">H", len(ids))
+                comm += b''.join([struct.pack(">H", i) for i in ids])
             comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
             records += b'COMM' + struct.pack(">L", len(comm)) + comm
         return b'FORM' + struct.pack(">L", len(records)) + records
