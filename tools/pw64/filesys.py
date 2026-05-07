@@ -303,3 +303,62 @@ class UVEN:
             comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
             records += b'COMM' + struct.pack(">L", len(comm)) + comm
         return b'FORM' + struct.pack(">L", len(records)) + records
+        
+class UVLT:
+    """
+    UVLT exists in the filesystem, but only contains 'PAD ' fields.
+    The code will read 4 bytes from COMM if it existed, but it does not.
+    """
+
+    def __init__(self, tag="UVEN", pad_count=0, comm=None):
+        self.tag = tag
+        self.pad_count = pad_count
+        self.comm = [] if comm is None else comm
+
+    @classmethod
+    def from_dict(cls, d: dict):
+        """Construct from dictionary"""
+        return cls(d["tag"], d["pad_count"], d["comm"])
+
+    @classmethod
+    def from_bytes(cls, form: bytes):
+        """Construct from raw filesystem bytes"""
+        ftag, flen, utag = struct.unpack(">4s L 4s", form[:0xC])
+        assert ftag == b'FORM', f"Expected 'FORM', got ${ftag}"
+        assert utag == b'UVLT', f"Expected 'UVLT', got ${utag}"
+        payload = form[8:]
+        idx = 4
+        pad_count = 0
+        comm = []
+        while idx < flen:
+            tag, length = struct.unpack(">4s L", payload[idx:idx+8])
+            idx += 8
+            tag = tag.decode()
+            assert tag in ("PAD ", "COMM"), f"Unexpected tag '${tag}'"
+            if tag == "PAD ":
+                pad_count += 1
+            else:
+                ltIdx = idx
+                lt = list(struct.unpack(">4B", payload[ltIdx:ltIdx+4]))
+                ltIdx += 4
+                comm.append(lt)
+            idx += length
+        return cls(utag.decode(), pad_count, comm)
+
+    def as_dict(self) -> dict:
+        """Generate dictionary suitable for creating YAML representation"""
+        return {
+            "tag": self.tag,
+            "pad_count": self.pad_count,
+            "comm": self.comm
+        }
+
+    def __bytes__(self) -> bytes:
+        """Generate raw bytes suitable for regenerating filesystem data"""
+        records = struct.pack(">4s", self.tag.encode())
+        records += struct.pack(">4s L L", b'PAD ', 4, 0) * self.pad_count
+        for c in self.comm:
+            comm = struct.pack(">4B", *c)
+            comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
+            records += b'COMM' + struct.pack(">L", len(comm)) + comm
+        return b'FORM' + struct.pack(">L", len(records)) + records
