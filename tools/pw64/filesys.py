@@ -239,3 +239,67 @@ class SPTH:
             records += b'\0' * ((8 - (len(records) % 8)) % 8)
         spth = b'FORM' + struct.pack(">L", len(records)) + records
         return spth
+
+class UVEN:
+    """Environment"""
+
+    def __init__(self, tag="UVEN", pad_count=0, comm=None):
+        self.tag = tag
+        self.pad_count = pad_count
+        self.comm = [] if comm is None else comm
+
+    @classmethod
+    def from_dict(cls, d: dict):
+        """Construct from dictionary"""
+        return cls(d["tag"], d["pad_count"], d["comm"])
+
+    @classmethod
+    def from_bytes(cls, form: bytes):
+        """Construct from raw filesystem bytes"""
+        ftag, flen, utag = struct.unpack(">4s L 4s", form[:0xC])
+        assert ftag == b'FORM', f"Expected 'FORM', got ${ftag}"
+        assert utag == b'UVEN', f"Expected 'UVEN', got ${utag}"
+        payload = form[8:]
+        idx = 4
+        pad_count = 0
+        comm = []
+        while idx < flen:
+            tag, length = struct.unpack(">4s L", payload[idx:idx+8])
+            idx += 8
+            tag = tag.decode()
+            assert tag in ("PAD ", "COMM"), f"Unexpected tag '${tag}'"
+            if tag == "PAD ":
+                pad_count += 1
+            else:
+                models = []
+                commIdx = idx
+                count, = struct.unpack(">B", payload[commIdx:commIdx+1])
+                commIdx += 1
+                if count > 0:
+                    models = [list(m) for m in struct.iter_unpack(">HB", payload[commIdx:commIdx+3*count])]
+                commIdx += 3*count
+                data = list(struct.unpack(">4B 4B 4B 8x 2f B 17x 2B L B 3xL", payload[commIdx:commIdx+0x3C]))
+                commIdx += 0x3C
+                comm.append({"models": models, "data": data})
+            idx += length
+        return cls(utag.decode(), pad_count, comm)
+
+    def as_dict(self) -> dict:
+        """Generate dictionary suitable for creating YAML representation"""
+        return {
+            "tag": self.tag,
+            "pad_count": self.pad_count,
+            "comm": self.comm
+        }
+
+    def __bytes__(self) -> bytes:
+        """Generate raw bytes suitable for regenerating filesystem data"""
+        records = struct.pack(">4s", self.tag.encode())
+        records += struct.pack(">4s L L", b'PAD ', 4, 0) * self.pad_count
+        for c in self.comm:
+            comm = struct.pack(">B", len(c["models"]))
+            comm += b''.join([struct.pack(">HB", m[0], m[1]) for m in c["models"]])
+            comm += struct.pack(">4B 4B 4B 8x 2f B 17x 2B L B 3xL", *c["data"])
+            comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
+            records += b'COMM' + struct.pack(">L", len(comm)) + comm
+        return b'FORM' + struct.pack(">L", len(records)) + records
