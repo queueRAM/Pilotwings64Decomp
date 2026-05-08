@@ -192,7 +192,8 @@ class SPTH:
         """Construct SPTH from raw filesystem bytes"""
         ftag, flen, stag = struct.unpack(">4s L 4s", form[:0xC])
         assert ftag == b'FORM', f"Expected 'FORM', got ${ftag}"
-        assert stag == b'SPTH', f"Expected 'SPTH', got ${stag}"
+        stag = stag.decode()
+        assert stag == cls.__name__, f"Expected '{cls.__name__}', got ${stag}"
         sBytes = form[8:]
         idx = 4
         pad_count = 0
@@ -212,7 +213,7 @@ class SPTH:
                 spIdx += 8*count
                 entries[tag] = sp
             idx += length
-        return cls(stag.decode(), pad_count, entries)
+        return cls(stag, pad_count, entries)
 
     # - tag: SPTH
     # - pad_count: 1
@@ -244,8 +245,16 @@ class SPTH:
 class UPWL:
     """PW64 Level (map) data"""
 
-    # order of tags is important
-    _upwlTags = ("ESND", "WOBJ", "LPAD", "TOYS", "TPTS", "APTS", "BNUS")
+    # order of tags must match order of LEVL counts
+    _upwlTags = {
+        "ESND": struct.Struct(">16f 3f 3f B 3x 2f L 2f b 3x L"),
+        "WOBJ": struct.Struct(">3f B 3x"),
+        "LPAD": struct.Struct(">3f f L B 3x"),
+        "TOYS": struct.Struct(">3f 4B"),
+        "TPTS": struct.Struct(">B 3x 3f 2f L f L f 3f"),
+        "APTS": struct.Struct(">3f 5f"),
+        "BNUS": struct.Struct(">3f 3f L")
+    }
 
     def __init__(self, tag=None, pad_count=0, entries=None):
         self.tag = tag if tag is not None else self.__class__.__name__
@@ -278,20 +287,10 @@ class UPWL:
                 pad_count += 1
             elif tag == "LEVL":
                 counts = struct.unpack(">7Bx", payload[idx:idx+8])
-            elif tag == "ESND":
-                entries[tag] = [list(v) for v in struct.iter_unpack(">16f 3f 3f B 3x 2f L 2f b 3x L", payload[idx:idx+0x78*counts[0]])]
-            elif tag == "WOBJ":
-                entries[tag] = [list(v) for v in struct.iter_unpack(">3f B 3x", payload[idx:idx+0x10*counts[1]])]
-            elif tag == "LPAD":
-                entries[tag] = [list(v) for v in struct.iter_unpack(">3f f L B 3x", payload[idx:idx+0x18*counts[2]])]
-            elif tag == "TOYS":
-                entries[tag] = [list(v) for v in struct.iter_unpack(">3f 4B", payload[idx:idx+0x10*counts[3]])]
-            elif tag == "TPTS":
-                entries[tag] = [list(v) for v in struct.iter_unpack(">B 3x 3f 2f L f L f 3f", payload[idx:idx+0x34*counts[4]])]
-            elif tag == "APTS":
-                entries[tag] = [list(v) for v in struct.iter_unpack(">3f 5f", payload[idx:idx+0x20*counts[5]])]
-            elif tag == "BNUS":
-                entries[tag] = [list(v) for v in struct.iter_unpack(">3f 3f L", payload[idx:idx+0x1C*counts[6]])]
+            elif tag in cls._upwlTags:
+                expectedCount = counts[list(cls._upwlTags.keys()).index(tag)]
+                entryStruct = cls._upwlTags[tag]
+                entries[tag] = [list(v) for v in entryStruct.iter_unpack(payload[idx:idx+expectedCount*entryStruct.size])]
             idx += length
         return cls(utag, pad_count, entries)
 
@@ -311,20 +310,8 @@ class UPWL:
         records += b'LEVL' + struct.pack(">L 7B x", 8, *counts)
         for tag, vals in self.entries.items():
             entry = b''
-            if tag == "ESND":
-                entry = b''.join([struct.pack(">16f 3f 3f B 3x 2f L 2f b 3x L", *e) for e in vals])
-            elif tag == "WOBJ":
-                entry = b''.join([struct.pack(">3f B 3x", *e) for e in vals])
-            elif tag == "LPAD":
-                entry = b''.join([struct.pack(">3f f L B 3x", *e) for e in vals])
-            elif tag == "TOYS":
-                entry = b''.join([struct.pack(">3f 4B", *e) for e in vals])
-            elif tag == "TPTS":
-                entry = b''.join([struct.pack(">B 3x 3f 2f L f L f 3f", *e) for e in vals])
-            elif tag == "APTS":
-                entry = b''.join([struct.pack(">3f 5f", *e) for e in vals])
-            elif tag == "BNUS":
-                entry = b''.join([struct.pack(">3f 3f L", *e) for e in vals])
+            if tag in self._upwlTags:
+                entry = b''.join([self._upwlTags[tag].pack(*e) for e in vals])
             entry += b'\0' * ((8 - (len(entry) % 8)) % 8)
             records += struct.pack(">4s L", tag.encode(), len(entry)) + entry
         spth = b'FORM' + struct.pack(">L", len(records)) + records
