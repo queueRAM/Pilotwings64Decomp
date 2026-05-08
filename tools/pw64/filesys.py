@@ -405,3 +405,56 @@ class UVLV(UV_COMM):
             comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
             records += b'COMM' + struct.pack(">L", len(comm)) + comm
         return b'FORM' + struct.pack(">L", len(records)) + records
+
+
+class UVSQ(UV_COMM):
+    """
+    `UVSQ` contains animation sequences for dynamic textures.
+    """
+    @classmethod
+    def from_bytes(cls, form: bytes):
+        """Construct from raw filesystem bytes"""
+        ftag, flen, utag = struct.unpack(">4s L 4s", form[:0xC])
+        assert ftag == b'FORM', f"Expected 'FORM', got ${ftag}"
+        utag = utag.decode()
+        assert utag == cls.__name__, f"Expected '{cls.__name__}', got ${utag}"
+        payload = form[8:]
+        idx = 4
+        pad_count = 0
+        comm = []
+        while idx < flen:
+            tag, length = struct.unpack(">4s L", payload[idx:idx+8])
+            idx += 8
+            tag = tag.decode()
+            assert tag in ("PAD ", "COMM"), f"Unexpected tag '${tag}'"
+            if tag == "PAD ":
+                pad_count += 1
+            else:
+                sqIdx = idx
+                frameCount, = struct.unpack(">B", payload[sqIdx:sqIdx+1])
+                sqIdx += 1
+                frameLen = 6 * frameCount
+                frames = [{"textureId": tid, "frameTime": ft} for tid, ft in struct.iter_unpack(">Hf", payload[sqIdx:sqIdx+frameLen])]
+                sqIdx += frameLen
+                mode, reverse, framerate = struct.unpack(">B B f", payload[sqIdx:sqIdx+6])
+                sq = {
+                    "frames": frames,
+                    "mode": mode,
+                    "reverse": reverse,
+                    "framerate": framerate
+                }
+                comm.append(sq)
+            idx += length
+        return cls(utag, pad_count, comm)
+
+    def __bytes__(self) -> bytes:
+        """Generate raw bytes suitable for regenerating filesystem data"""
+        records = struct.pack(">4s", self.tag.encode())
+        records += struct.pack(">4s L L", b'PAD ', 4, 0) * self.pad_count
+        for c in self.comm:
+            comm = struct.pack(">B", len(c["frames"]))
+            comm += b''.join([struct.pack(">Hf", f["textureId"], f["frameTime"]) for f in c["frames"]])
+            comm += struct.pack(">B B f", c["mode"], c["reverse"], c["framerate"])
+            comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
+            records += b'COMM' + struct.pack(">L", len(comm)) + comm
+        return b'FORM' + struct.pack(">L", len(records)) + records
