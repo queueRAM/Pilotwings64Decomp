@@ -967,8 +967,8 @@ structure.
 
 | Offset | Type   | Description
 |--------|--------|-----------------
-|  0x00  | u8     | count of entries
-|  0x01  | UVTP[] | sequence entries
+|  0x00  | u16    | count of entries
+|  0x02  | UVTP[] | sequence entries
 
 | Entry  | Type  | Description
 |--------|-------|------------
