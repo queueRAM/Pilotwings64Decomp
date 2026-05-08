@@ -311,7 +311,7 @@ Each map only defines one bonus star, but the game can support up to two.
 |--------|---------|------------
 |  0x00  | char[4] | `ESND`
 |  0x04  | u32     | length (bytes)
-|  0x08  | BNUS[]  | array of entries
+|  0x08  | ESND[]  | array of entries
 
 | Entry  | Type    | Description
 |--------|---------|-----------------

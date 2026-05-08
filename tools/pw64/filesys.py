@@ -241,6 +241,25 @@ class SPTH:
         spth = b'FORM' + struct.pack(">L", len(records)) + records
         return spth
 
+class UPWL:
+    """PW64 Level (map) data"""
+
+    def __init__(self, tag=None, pad_count=0, esnd=None, wobj=None, lpad=None, toys=None, tpts=None, apts=None, bnus=None):
+        self.tag = tag if tag is not None else self.__class__.__name__
+        self.pad_count = pad_count
+        self.esnd = [] if esnd is None else esnd
+        self.wobj = [] if wobj is None else wobj
+        self.lpad = [] if lpad is None else lpad
+        self.toys = [] if toys is None else toys
+        self.tpts = [] if tpts is None else tpts
+        self.apts = [] if apts is None else apts
+        self.bnus = [] if bnus is None else bnus
+
+    @classmethod
+    def from_dict(cls, d: dict):
+        """Construct UPWL from dictionary"""
+        return cls(d["tag"], d["pad_count"], d["esnd"], d["wobj"], d["lpad"], d["toys"], d["tpts"], d["apts"], d["bnus"])
+
 
 class UV_COMM:
     """Boilerplate class for UV** that have one type of COMM entry"""
@@ -459,6 +478,51 @@ class UVSQ(UV_COMM):
             records += b'COMM' + struct.pack(">L", len(comm)) + comm
         return b'FORM' + struct.pack(">L", len(records)) + records
 
+
+class UVTP(UV_COMM):
+    """
+    `UVTP` contains texture palette information
+    """
+    @classmethod
+    def from_bytes(cls, form: bytes):
+        """Construct from raw filesystem bytes"""
+        ftag, flen, utag = struct.unpack(">4s L 4s", form[:0xC])
+        assert ftag == b'FORM', f"Expected 'FORM', got ${ftag}"
+        utag = utag.decode()
+        assert utag == cls.__name__, f"Expected '{cls.__name__}', got ${utag}"
+        payload = form[8:]
+        idx = 4
+        pad_count = 0
+        comm = []
+        while idx < flen:
+            tag, length = struct.unpack(">4s L", payload[idx:idx+8])
+            idx += 8
+            tag = tag.decode()
+            assert tag in ("PAD ", "COMM"), f"Unexpected tag '${tag}'"
+            if tag == "PAD ":
+                pad_count += 1
+            else:
+                tpIdx = idx
+                count, = struct.unpack(">H", payload[tpIdx:tpIdx+2])
+                tpIdx += 2
+                tp = [list(e) for e in struct.iter_unpack(">HH", payload[tpIdx:tpIdx+4*count])]
+                tpIdx += 4*count
+                comm.append(tp)
+            idx += length
+        return cls(utag, pad_count, comm)
+
+    def __bytes__(self) -> bytes:
+        """Generate raw bytes suitable for regenerating filesystem data"""
+        records = struct.pack(">4s", self.tag.encode())
+        records += struct.pack(">4s L L", b'PAD ', 4, 0) * self.pad_count
+        for c in self.comm:
+            comm = struct.pack(">H", len(c))
+            comm += b''.join([struct.pack(">HH", *i) for i in c])
+            comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
+            records += b'COMM' + struct.pack(">L", len(comm)) + comm
+        return b'FORM' + struct.pack(">L", len(records)) + records
+
+
 class UVTR(UV_COMM):
     """
     `UVTR` contains terrain data.
@@ -513,49 +577,6 @@ class UVTR(UV_COMM):
                 comm += struct.pack(">B", t[0])
                 if t[0] != 0:
                     comm += struct.pack(">16f B H", *t[1:])
-            comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
-            records += b'COMM' + struct.pack(">L", len(comm)) + comm
-        return b'FORM' + struct.pack(">L", len(records)) + records
-        
-class UVTP(UV_COMM):
-    """
-    `UVTP` contains texture palette information
-    """
-    @classmethod
-    def from_bytes(cls, form: bytes):
-        """Construct from raw filesystem bytes"""
-        ftag, flen, utag = struct.unpack(">4s L 4s", form[:0xC])
-        assert ftag == b'FORM', f"Expected 'FORM', got ${ftag}"
-        utag = utag.decode()
-        assert utag == cls.__name__, f"Expected '{cls.__name__}', got ${utag}"
-        payload = form[8:]
-        idx = 4
-        pad_count = 0
-        comm = []
-        while idx < flen:
-            tag, length = struct.unpack(">4s L", payload[idx:idx+8])
-            idx += 8
-            tag = tag.decode()
-            assert tag in ("PAD ", "COMM"), f"Unexpected tag '${tag}'"
-            if tag == "PAD ":
-                pad_count += 1
-            else:
-                tpIdx = idx
-                count, = struct.unpack(">H", payload[tpIdx:tpIdx+2])
-                tpIdx += 2
-                tp = [list(e) for e in struct.iter_unpack(">HH", payload[tpIdx:tpIdx+4*count])]
-                tpIdx += 4*count
-                comm.append(tp)
-            idx += length
-        return cls(utag, pad_count, comm)
-
-    def __bytes__(self) -> bytes:
-        """Generate raw bytes suitable for regenerating filesystem data"""
-        records = struct.pack(">4s", self.tag.encode())
-        records += struct.pack(">4s L L", b'PAD ', 4, 0) * self.pad_count
-        for c in self.comm:
-            comm = struct.pack(">H", len(c))
-            comm += b''.join([struct.pack(">HH", *i) for i in c])
             comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
             records += b'COMM' + struct.pack(">L", len(comm)) + comm
         return b'FORM' + struct.pack(">L", len(records)) + records
