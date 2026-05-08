@@ -458,3 +458,61 @@ class UVSQ(UV_COMM):
             comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
             records += b'COMM' + struct.pack(">L", len(comm)) + comm
         return b'FORM' + struct.pack(">L", len(records)) + records
+
+class UVTR(UV_COMM):
+    """
+    `UVTR` contains terrain data.
+    """
+    @classmethod
+    def from_bytes(cls, form: bytes):
+        """Construct from raw filesystem bytes"""
+        ftag, flen, utag = struct.unpack(">4s L 4s", form[:0xC])
+        assert ftag == b'FORM', f"Expected 'FORM', got ${ftag}"
+        utag = utag.decode()
+        assert utag == cls.__name__, f"Expected '{cls.__name__}', got ${utag}"
+        payload = form[8:]
+        idx = 4
+        pad_count = 0
+        comm = []
+        while idx < flen:
+            tag, length = struct.unpack(">4s L", payload[idx:idx+8])
+            idx += 8
+            tag = tag.decode()
+            assert tag in ("PAD ", "COMM"), f"Unexpected tag '${tag}'"
+            if tag == "PAD ":
+                pad_count += 1
+            else:
+                trIdx = idx
+                header = list(struct.unpack(">6f 2B 3f", payload[trIdx:trIdx+0x26]))
+                trIdx += 0x26
+                count = header[6] * header[7]
+                tiles = []
+                for _ in range(count):
+                    tileType, = struct.unpack(">B", payload[trIdx:trIdx+1])
+                    trIdx += 1
+                    tile = [tileType]
+                    if tileType != 0:
+                        tile += list(struct.unpack(">16f B H", payload[trIdx:trIdx+0x43]))
+                        trIdx += 0x43
+                    tiles.append(tile)
+                tr = {
+                    "header": header,
+                    "tiles": tiles,
+                }
+                comm.append(tr)
+            idx += length
+        return cls(utag, pad_count, comm)
+
+    def __bytes__(self) -> bytes:
+        """Generate raw bytes suitable for regenerating filesystem data"""
+        records = struct.pack(">4s", self.tag.encode())
+        records += struct.pack(">4s L L", b'PAD ', 4, 0) * self.pad_count
+        for c in self.comm:
+            comm = struct.pack(">6f 2B 3f", *c["header"])
+            for t in c["tiles"]:
+                comm += struct.pack(">B", t[0])
+                if t[0] != 0:
+                    comm += struct.pack(">16f B H", *t[1:])
+            comm += b'\0' * ((8 - (len(comm) % 8)) % 8)
+            records += b'COMM' + struct.pack(">L", len(comm)) + comm
+        return b'FORM' + struct.pack(">L", len(records)) + records
