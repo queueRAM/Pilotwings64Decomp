@@ -744,7 +744,7 @@ There is one entry for each photo required for the test.
 |  0x00  | Vec3F  | position
 |  0x0C  | Vec3F  | angle (degrees)
 |  0x18  | s32    | TBD
-|  0x1C  | pad[1] |
+|  0x1C  | u8     | unknown, copied but unused [0-1]
 |  0x1D  | u8     | child ring count
 |  0x1E  | pad[2] |
 |  0x20  | s32[5] | array of child ring indexes
@@ -759,7 +759,7 @@ There is one entry for each photo required for the test.
 |  0x55  | u8     | is active
 |  0x56  | pad[2] |
 |  0x58  | f32    | rotation rate 0
-|  0x5C  | f32    | x,y,z traslation
+|  0x5C  | f32    | x,y,z translation
 |  0x60  | char   | rotation axis 0 ('x', 'y', 'z', or 'n')
 |  0x61  | pad[3] |
 |  0x64  | f32    | rotation rate 1 (after timeout)
@@ -774,7 +774,7 @@ There is one entry for each photo required for the test.
 
 #### UPWT::SDFM
 
-`SDFM` is not present in the filesystem, but is copied in code so only size is known.
+`SDFM` is not present in the filesystem and is only copied in code so only size is known.
 
 | Offset | Type   | Description
 |--------|--------|------------
