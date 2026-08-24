@@ -32,6 +32,7 @@ options:
   # auto_link_sections: [".data", ".rodata", ".bss"]
 
   symbol_addrs_path:
+    - config/jp/sym/symbol_addrs_app.txt
     - config/jp/sym/symbol_addrs_kernel.txt
     - config/jp/sym/symbol_addrs_libultra.txt
   reloc_addrs_path:
@@ -467,7 +468,6 @@ segments:
       - [0xD84B0, rodata, app/code_520A0]
       - [0xD8890, rodata, app/code_55530]
       - [0xD8900, rodata, app/code_55F40]
-      - [0xD89F0, rodata, app/code_55F40]
       - [0xD8AE0, rodata, app/code_58840]
       - [0xD8B20, rodata]
       - [0xD8B60, rodata]
