@@ -8,6 +8,10 @@ app_firstfunc       = 0x802BCC50; // type:func
 
 app_entrypoint      = 0x80302690; // type:func
 
+func_802CAAC8       = 0x802BCE18; // type:func
+func_802CAA00       = 0x802BCD50; // type:func
+func_802CAA90       = 0x802BCDE0; // type:func
+
 // -----------------------------------------------------------------------------
 // Data Symbols
 // -----------------------------------------------------------------------------

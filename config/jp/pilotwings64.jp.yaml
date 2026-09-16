@@ -387,7 +387,7 @@ segments:
     vram: 0x802BCC50
     bss_size: 0x293E0
     subsegments:
-      - [0x51CA0, asm, app/code_51CA0]
+      - [0x51CA0, c, app/code_51E30]
       - [0x520A0, asm, app/code_520A0]
       - [0x55530, asm, app/code_55530]
       - [0x55F40, asm, app/code_55F40]
@@ -404,7 +404,7 @@ segments:
       - [0x6E110, asm, app/code_6E110]
       - [0x724D0, asm, app/code_724D0]
       - [0x72790, asm, app/code_72790]
-      - [0x72D80, asm, app/code_72D80]
+      - [0x72D80, asm, app/code_72D80] # code_75A60
       - [0x76AE0, asm, app/code_76AE0]
       - [0x78A90, asm, app/code_78A90]
       - [0x79B30, asm, app/code_79B30]
@@ -463,8 +463,9 @@ segments:
       - [0xD2F00, asm, app/code_D2F00]
       - [0xD3C00, asm, app/code_D3C00]
       - [0xD4680, asm, app/code_D4680]
-      - [0xD6030, data]
-      - [0xD8490, rodata, app/code_51CA0]
+      - [0xD6030, .data, app/code_51E30]
+      - [0xD6130, data]
+      - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, rodata, app/code_520A0]
       - [0xD8890, rodata, app/code_55530]
       - [0xD8900, rodata, app/code_55F40]
@@ -542,7 +543,8 @@ segments:
       - [0xDEB10, rodata]
       - [0xDEB50, rodata]
       - [0xDEBC0, rodata]
-      - { type: bss, vram: 0x80349BE0 }
+      - { type: .bss, vram: 0x80349BE0, name: app/code_51E30 }
+      - { type: bss, vram: 0x80349C00 }
 
   - name: filetable
     type: bin
