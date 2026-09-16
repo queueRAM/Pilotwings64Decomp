@@ -388,7 +388,7 @@ segments:
     bss_size: 0x293E0
     subsegments:
       - [0x51CA0, c, app/code_51E30]
-      - [0x520A0, asm, app/code_520A0]
+      - [0x520A0, asm, app/balls]
       - [0x55530, asm, app/code_55530]
       - [0x55F40, asm, app/code_55F40]
       - [0x58840, asm, app/code_58840]
@@ -466,7 +466,7 @@ segments:
       - [0xD6030, .data, app/code_51E30]
       - [0xD6130, data]
       - [0xD8490, .rodata, app/code_51E30]
-      - [0xD84B0, rodata, app/code_520A0]
+      - [0xD84B0, rodata, app/balls]
       - [0xD8890, rodata, app/code_55530]
       - [0xD8900, rodata, app/code_55F40]
       - [0xD8AE0, rodata, app/code_58840]
