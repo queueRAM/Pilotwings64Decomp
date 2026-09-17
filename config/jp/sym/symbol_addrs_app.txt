@@ -4,8 +4,6 @@
 // Function Symbols
 // -----------------------------------------------------------------------------
 
-app_entrypoint      = 0x80302690; // type:func
-
 app_firstfunc       = 0x802BCC50; // type:func
 func_802CAA00       = 0x802BCD50; // type:func
 func_802CAA90       = 0x802BCDE0; // type:func
@@ -526,26 +524,36 @@ func_8030AEB0 = 0x802FD7E0; // type:func
 func_8030B168 = 0x802FDA98; // type:func
 func_8030B240 = 0x802FDB70; // type:func
 
+menuCreate = 0x802FDC10; // type:func
 menuCreateVarHeight = 0x802FDCBC; // type:func
 menuCreateItems = 0x802FDDBC; // type:func
+menuCheckInputs = 0x802FDE3C; // type:func
+menuRender = 0x802FDE5C; // type:func
 menuDeinit = 0x802FDE7C; // type:func
+menuDrawItem = 0x802FDEF4; // type:func
+menu_8030B668 = 0x802FDF98; // type:func
 menuSetItem = 0x802FDFB8; // type:func
+menu_8030B69C = 0x802FDFCC; // type:func
+
 levelLoad = 0x802FDFF0; // type:func
 level_8030B868 = 0x802FE198; // type:func
 level_8030B964 = 0x802FE294; // type:func
 level_8030BA60 = 0x802FE390; // type:func
 levelComputeAppend = 0x802FE3C8; // type:func
-// levelGetWOBJ = 0x802FE658; // type:func
-// levelGetTPTS = 0x802FE658; // type:func
-// levelGetAPTS = 0x802FE658; // type:func
-// levelGetLPAD = 0x802FE658; // type:func
-// levelGetBNUS = 0x802FE658; // type:func
+level_8030BD20 = 0x802FE650; // type:func
+levelGetWOBJ = 0x802FE658; // type:func
+levelGetTPTS = 0x802FE678; // type:func
+levelGetAPTS = 0x802FE698; // type:func
+levelGetLPAD = 0x802FE6B8; // type:func
+levelGetBNUS = 0x802FE6D8; // type:func
 levelLoadMapObjects = 0x802FE6F8; // type:func
+
 func_8030C1C0 = 0x802FEAF0; // type:func
 func_8030C22C = 0x802FEB5C; // type:func
 func_8030C54C = 0x802FEE7C; // type:func
 func_8030C61C = 0x802FEF4C; // type:func
 func_8030CB10 = 0x802FF430; // type:func
+
 credits_8030CB60 = 0x802FF480; // type:func
 credits_8030CC48 = 0x802FF568; // type:func
 creditsMainRender = 0x802FF61C; // type:func
@@ -553,6 +561,7 @@ credits_8030CDA0 = 0x802FF6C0; // type:func
 credits_8030D1D4 = 0x802FFAF4; // type:func
 credits_8030D208 = 0x802FFB28; // type:func
 creditsScene = 0x802FFC10; // type:func
+
 func_8030D930 = 0x80300250; // type:func
 func_8030D9C8 = 0x803002E8; // type:func
 func_8030E3EC = 0x80300C80; // type:func
@@ -561,6 +570,8 @@ func_8030E860 = 0x803010F4; // type:func
 func_8030E9AC = 0x80301240; // type:func
 func_8030EA54 = 0x803012E8; // type:func
 func_8030F818 = 0x80302084; // type:func
+
+app_entrypoint      = 0x80302690; // type:func
 map3dMain = 0x803026F0; // type:func
 map3dLoad = 0x80302770; // type:func
 map3dHandler = 0x80303EAC; // type:func
@@ -569,13 +580,16 @@ map3dDeinit = 0x80304B00; // type:func
 map3d_803123C4 = 0x80304C10; // type:func
 map3d_80312514 = 0x80304D60; // type:func
 map3dAddItem = 0x80304ED0; // type:func
+
 mem_get = 0x80304F90; // type:func
 mem_init = 0x8030500C; // type:func
 mem_remaining = 0x80305040; // type:func
+
 menuUtilCreate = 0x80305060; // type:func
 menuUtilSetCurItem = 0x8030572C; // type:func
 menuUtilSetColors = 0x80305744; // type:func
 menuUtil_80313010 = 0x803057F8; // type:func
+
 func_80313430 = 0x80305C20; // type:func
 func_803134D0 = 0x80305CC0; // type:func
 func_80313570 = 0x80305D60; // type:func
@@ -592,12 +606,19 @@ func_80313F08 = 0x803066F8; // type:func
 func_80313FD0 = 0x803067C0; // type:func
 func_80314114 = 0x80306904; // type:func
 func_80314154 = 0x80306944; // type:func
-// func_803141E4 = 0x802D2578; // type:func
+func_803141E4 = 0x803069D4; // type:func
 func_8031420C = 0x80207410; // type:func
+
 mistInit = 0x80306C20; // type:func
 mist_803144D0 = 0x80306CC0; // type:func
 mistUpdate = 0x80306FA8; // type:func
 mistDeinit = 0x803072D0; // type:func
+
+missiIsActive = 0x80307340; // type:func
+missiUpdatePos = 0x8030734C; // type:func
+missiUpdate = 0x803074D8; // type:func
+missiEventCbLStates = 0x803076D8; // type:func
+missiAnimCbLStates = 0x80307818; // type:func
 missiLoadLStates = 0x8030799C; // type:func
 // missiDeinitLStates = 0x802DA778; // type:func
 // missiGetInterval = 0x802DA7F0; // type:func
@@ -606,11 +627,22 @@ missiSetInterval = 0x80307C08; // type:func
 missiInit = 0x80307C64; // type:func
 missiStateSave = 0x80307CB0; // type:func
 missiStateRestore = 0x80307CF8; // type:func
+
+oilPlantInit = 0x80307D40; // type:func
+oilPlantInProximity = 0x80307D4C; // type:func
+oilPlantEventCb = 0x80307D58; // type:func
+oilPlantAnimCb = 0x80307E4C; // type:func
 oilPlantLoad = 0x80307F24; // type:func
 oilPlantDeinit = 0x8030815C; // type:func
 oilPlantGetPos = 0x803081E4; // type:func
+
+oilUpdatePosa = 0x80308210; // type:func
+oilUpdate = 0x803082A0; // type:func
+oilProxEventCb = 0x803083A8; // type:func
+oilProxAnimCb = 0x80308474; // type:func
 oilInit = 0x80308558; // type:func
 oilDeinit = 0x8030862C; // type:func
+
 optionsTopRender = 0x80308680; // type:func
 optionsInit = 0x803086FC; // type:func
 optionsInitMain = 0x803088A0; // type:func
@@ -621,22 +653,25 @@ optionsHandlerMain = 0x80308BA8; // type:func
 optionsHandlerAlbum = 0x80308D18; // type:func
 optionsHandlerSound = 0x80308E24; // type:func
 optionsDrawPanel = 0x80309218; // type:func
-// optionsPanel0 = 0x802D2578; // type:func
-// optionsPanel1 = 0x802D2578; // type:func
-// optionsPanel2 = 0x802D2578; // type:func
+optionsPanel0 = 0x80309280; // type:func
+optionsPanel1 = 0x803092A8; // type:func
+optionsPanel2 = 0x803092D0; // type:func
 optionsDrawBorder = 0x803092F8; // type:func
 options_80316B80 = 0x80309370; // type:func
 optionsSetSetting = 0x803093DC; // type:func
 optionsSetTrack = 0x80309524; // type:func
 optionsItemWrap = 0x80309578; // type:func
+
 padsInit = 0x803095B0; // type:func
 padsLoad = 0x80309630; // type:func
 padsFrameUpdate = 0x80309E24; // type:func
+padsUnused = 0x80309F54; // type:func
 padsDeinit = 0x80309F5C; // type:func
 padsInitLandingPads = 0x8030A044; // type:func
 padsLandedPadStrip = 0x8030A168; // type:func
 padsCannonTgtDist = 0x8030A340; // type:func
 padsStripAlignment = 0x8030A41C; // type:func
+
 hudInit = 0x8030A590; // type:func
 hudMainRender = 0x8030AA90; // type:func
 hudDrawHangGlider = 0x8030AEF0; // type:func
@@ -668,7 +703,9 @@ hudDrawTimer = 0x8030FA50; // type:func
 hudDrawAimReticle = 0x8030FC80; // type:func
 hudDrawBox = 0x8030FD3C; // type:func
 hudText_8031D8E0 = 0x803100CC; // type:func
-// hudWarningText = 0x803100CC; // type:func
+hudWarningText = 0x803101A4; // type:func
+hudGet_8031DA90 = 0x8031027C; // type:func
+hudGet_8031DA9C = 0x80310288; // type:func
 hud_8031DAA8 = 0x80310294; // type:func
 hudDrawLowFuel = 0x803102E0; // type:func
 hudDrawStartText = 0x803103EC; // type:func
@@ -677,19 +714,28 @@ hudRadarWaypoint = 0x80310760; // type:func
 hud_8031E628 = 0x80310E14; // type:func
 hudDrawRect = 0x80310E88; // type:func
 hudDrawPhotoCount = 0x803111E4; // type:func
+hudDemoControllerEn = 0x803112A8; // type:func
+
 uvPathPoseLine = 0x803112C0; // type:func
 func_8031EE48 = 0x80311638; // type:func
+func_8031EF60 = 0x80311750; // type:func
 func_8031EF68 = 0x80311758; // type:func
+
 func_8031EF90 = 0x80311780; // type:func
 func_8031FA0C = 0x803121FC; // type:func
 func_8031FD70 = 0x80312560; // type:func
 func_8031FE18 = 0x80312608; // type:func
+
+planesUpdate = 0x80312720; // type:func
 planesGetPos = 0x80312BC0; // type:func
+planesProxEventCb = 0x80312BFC; // type:func
+planesProxAnimCb = 0x80312CA0; // type:func
 planesLoad = 0x80312D24; // type:func
 planesDeinit = 0x80312F8C; // type:func
 planesInit = 0x80313000; // type:func
 planesGetObjData = 0x80313038; // type:func
 planesUpdateInterval = 0x803130F0; // type:func
+
 demoAttInit = 0x803131E0; // type:func
 demoAttLoadPos = 0x80313204; // type:func
 demoAttGetMtxRT = 0x803133E4; // type:func
@@ -699,6 +745,7 @@ demoAngleLerp = 0x80313488; // type:func
 demoAttUpdate = 0x80313500; // type:func
 demoAtt_80320FBC = 0x803137AC; // type:func
 demoAttPrintRT = 0x80313844; // type:func
+
 proxAnimInit = 0x803138F0; // type:func
 proxAnimAddCallback = 0x80313A00; // type:func
 proxAnimDeleteCallback = 0x80313ACC; // type:func
@@ -706,19 +753,27 @@ proxAnimGetRange = 0x80313C10; // type:func
 proxAnimDispatchInit = 0x80313CD4; // type:func
 proxAnimUpdate = 0x80313CFC; // type:func
 proxAnimGetHandle = 0x80313E94; // type:func
-// func_80321700 = 0x802CED60; // type:func
+
+func_80321700 = 0x80313EF0; // type:func
 func_80321760 = 0x80313F50; // type:func
 func_8032232C = 0x80314B1C; // type:func
 func_80322464 = 0x80314C54; // type:func
 func_803226DC = 0x80314ECC; // type:func
+
 demoRecGetStickX = 0x80314FC0; // type:func
-// demoRecGetStickY = 0x80314FC0; // type:func
+demoRecGetStickY = 0x80315018; // type:func
+demoRecGetButtons = 0x80315070; // type:func
 demoPackInputs = 0x80315080; // type:func
 demoGetUserFileIdx = 0x803151DC; // type:func
+demoGetClassId = 0x80315350; // type:func
+demoGetVehicleId = 0x8031535C; // type:func
+demoGet_80322B78 = 0x80315368; // type:func
+demoGetTestId = 0x80315374; // type:func
 demoAllocate = 0x80315380; // type:func
 demoInit = 0x803153D0; // type:func
 demoLoad = 0x80315550; // type:func
 demoSetRecMode = 0x80315598; // type:func
+demoGetRecMode = 0x803156A0; // type:func
 demoLogInput = 0x803156AC; // type:func
 demoGetEntryIndex = 0x8031576C; // type:func
 demo_80323020 = 0x80315810; // type:func
@@ -726,10 +781,11 @@ demoGetInputs = 0x803158A0; // type:func
 demoGetButtons = 0x80315954; // type:func
 demoButtonCheck = 0x80315990; // type:func
 demoButtonPress = 0x803159D0; // type:func
-// demoButtonRelease = 0x803159D0; // type:func
+demoButtonRelease = 0x80315A30; // type:func
 demoRandF = 0x80315A90; // type:func
+
 ringsInit = 0x80315AE0; // type:func
-// rings_80323364 = 0x802FC1A8; // type:func
+rings_80323364 = 0x80315B54; // type:func
 rings_803234A4 = 0x80315C94; // type:func
 rings_80323720 = 0x80315F10; // type:func
 rings_80323864 = 0x80316054; // type:func
@@ -741,6 +797,7 @@ rings_803243D8 = 0x80316BC8; // type:func
 ringsDeinit = 0x80317224; // type:func
 ringsGetCleared = 0x803172E4; // type:func
 ringsGetPoints = 0x80317350; // type:func
+
 rocketBeltInit = 0x80317460; // type:func
 rocketBeltLoadLevel = 0x803175A4; // type:func
 rocketBeltEnterLeave = 0x803176B4; // type:func
@@ -749,14 +806,16 @@ rocketBeltMovementFrame = 0x80317950; // type:func
 func_80325E1C = 0x8031860C; // type:func
 rocketBeltLoadPilot = 0x8031876C; // type:func
 func_80326E40 = 0x80319630; // type:func
-// func_80326F30 = 0x80319720; // type:func
-func_80327040 = 0x80319830; // type:func
-func_80327380 = 0x80319B70; // type:func
-func_803273C8 = 0x80319BB8; // type:func
-func_80327614 = 0x80319E04; // type:func
-// func_803277E0 = 0x802CB440; // type:func
-func_803279F0 = 0x8031A1E0; // type:func
-func_80327F30 = 0x8031A720; // type:func
+
+rocketBelt_80326F30 = 0x80319720; // type:func
+rocketBelt_80327040 = 0x80319830; // type:func
+rocketBelt_80327380 = 0x80319B70; // type:func
+rocketBelt_803273C8 = 0x80319BB8; // type:func
+rocketBelt_80327614 = 0x80319E04; // type:func
+rocketBelt_803277E0 = 0x80319FD0; // type:func
+rocketBelt_803279F0 = 0x8031A1E0; // type:func
+rocketBelt_80327F30 = 0x8031A720; // type:func
+
 func_80328420 = 0x8031AC10; // type:func
 func_80328538 = 0x8031AD28; // type:func
 func_8032867C = 0x8031AE6C; // type:func
@@ -767,7 +826,15 @@ func_803291A8 = 0x8031B990; // type:func
 func_8032923C = 0x8031BA24; // type:func
 func_80329628 = 0x8031BE10; // type:func
 func_8032A4A8 = 0x8031CC94; // type:func
+
 rbSoundInit = 0x8031CDF0; // type:func
+rbSoundEventHandler = 0x8031CF50; // type:func
+rbSoundEvent12_22 = 0x8031D65C; // type:func
+rbSoundEvent12_18 = 0x8031D810; // type:func
+rbSoundEvent19 = 0x8031D8AC; // type:func
+rbSoundSubEvent = 0x8031D8C0; // type:func
+rbSoundEvent13 = 0x8031DAC8; // type:func
+
 func_8032B3D0 = 0x8031DBA0; // type:func
 func_8032B508 = 0x8031DCD8; // type:func
 func_8032B560 = 0x8031DD30; // type:func
@@ -778,10 +845,12 @@ func_8032C080 = 0x8031E850; // type:func
 levelSetPointsToNextMedal = 0x8031E944; // type:func
 func_8032C27C = 0x8031EA4C; // type:func
 func_8032C3C4 = 0x8031EB94; // type:func
+
 func_8032C540 = 0x8031ED10; // type:func
 func_8032CF28 = 0x8031F6E8; // type:func
 func_8032D51C = 0x8031FCDC; // type:func
 func_8032D90C = 0x803200CC; // type:func
+
 resultHandler = 0x80320520; // type:func
 resultListPhoto = 0x803205E4; // type:func
 resultListReplay = 0x80320644; // type:func
@@ -789,8 +858,12 @@ resultGenMenu = 0x803206D8; // type:func
 resultMenuItemLookup = 0x803207D0; // type:func
 resultMenuChoose = 0x80320E64; // type:func
 resultGenTipText = 0x8032167C; // type:func
+
+func_8032F050 = 0x803217C0; // type:func
+func_8032F188 = 0x803218F8; // type:func
 func_8032F3DC = 0x80321B4C; // type:func
 func_8032F47C = 0x80321BEC; // type:func
+
 skydivingInit = 0x80322220; // type:func
 skydivingLoadLevel = 0x8032223C; // type:func
 skydivingEnterLeave = 0x80322378; // type:func
@@ -811,30 +884,55 @@ func_80331FE4 = 0x80324754; // type:func
 func_803322CC = 0x80324A3C; // type:func
 func_80332950 = 0x803250C0; // type:func
 func_803329C0 = 0x80325130; // type:func
+
 func_80332C60 = 0x803253D0; // type:func
 func_80332D94 = 0x80325504; // type:func
 func_80332E90 = 0x80325600; // type:func
 func_80332FCC = 0x8032573C; // type:func
 func_80333384 = 0x80325AF4; // type:func
-// sdSoundInit = 0x802C2E10; // type:func
+func_803335D0 = 0x80325D40; // type:func
+
+sdSoundInit = 0x80326010; // type:func
+sdSoundCallback = 0x80326124; // type:func
+sdsound_80333D80 = 0x803264E0; // type:func
+sdsound_80333DDC = 0x8032653C; // type:func
+sdsound_80333DF0 = 0x80326550; // type:func
+sdsound_80333F68 = 0x803266C8; // type:func
+sdsound_80334258 = 0x803269B8; // type:func
+
+shadow_803342F0 = 0x80326A50; // type:func
+shadow_803342FC = 0x80326A5C; // type:func
 shadowModels = 0x80326A68; // type:func
 shadow_803343D8 = 0x80326B38; // type:func
 shadow_80334454 = 0x80326BB4; // type:func
 shadow_803344BC = 0x80326C1C; // type:func
 shadow_80334578 = 0x80326CD8; // type:func
 shadow_80334C70 = 0x803273D0; // type:func
+
+shuttle_80334CC0 = 0x80327420; // type:func
+shuttle_80334CCC = 0x8032742C; // type:func
+shuttle_80335130 = 0x80327890; // type:func
+shuttle_80335700 = 0x80327E60; // type:func
+shuttle_803358D4 = 0x80328034; // type:func
+shuttleProxEventCb = 0x80328240; // type:func
+shuttleProxAnimCb = 0x80328254; // type:func
 shuttleInit = 0x803282F4; // type:func
 shuttleLoad = 0x80328344; // type:func
 shuttleDeinit = 0x803285A4; // type:func
 shuttle_80335EE4 = 0x80328644; // type:func
-// shuttle_80335F24 = 0x802DA808; // type:func
+shuttle_80335F24 = 0x80328684; // type:func
 shuttleGetState = 0x803286E4; // type:func
 shuttle_80335FD8 = 0x80328738; // type:func
 shuttle_80336064 = 0x803287C4; // type:func
 shuttleStateSave = 0x803287F4; // type:func
-// shuttleStateRestore = 0x803287F4; // type:func
+shuttleStateRestore = 0x80328848; // type:func
+
+skiLiftUpdate = 0x803288A0; // type:func
+skiLiftProxEventCb = 0x803289A8; // type:func
+skiLiftProxAnimCb = 0x80328A4C; // type:func
 skiLiftLoad = 0x80328B40; // type:func
 skiLiftDeinit = 0x80328C7C; // type:func
+
 smokeInit = 0x80328D00; // type:func
 func_80336600 = 0x80328D60; // type:func
 smokeCreate = 0x80329094; // type:func
@@ -844,6 +942,7 @@ smokeDeleteAll = 0x80329874; // type:func
 smokeDelete = 0x803298B4; // type:func
 smokePuffAdd = 0x8032996C; // type:func
 smokeCreateTerra = 0x80329C88; // type:func
+
 func_80337D50 = 0x8032A4B0; // type:func
 snapInit = 0x8032A518; // type:func
 func_80338404 = 0x8032AB64; // type:func
@@ -872,6 +971,8 @@ func_8033E810 = 0x8033124C; // type:func
 func_8033E860 = 0x8033129C; // type:func
 func_8033F050 = 0x80331A8C; // type:func
 snapGetPhotoCount = 0x80332054; // type:func
+func_8033F62C = 0x80332068; // type:func
+
 sndInit = 0x80332080; // type:func
 func_8033F6F8 = 0x80332138; // type:func
 sndPlaySfxVolPitchPan = 0x80332198; // type:func
@@ -887,9 +988,13 @@ sndEvent = 0x80332584; // type:func
 sndGetPilotScream = 0x8033260C; // type:func
 func_8033FCD0 = 0x80332710; // type:func
 func_8033FD94 = 0x803327D4; // type:func
+
+snowCreate = 0x80332880; // type:func
+snowDraw = 0x80332970; // type:func
 snowUpdate = 0x803329F4; // type:func
 snowEnable = 0x80333000; // type:func
-snowDisable = 0x802CFF8C; // type:func
+snowDisable = 0x80333024; // type:func
+
 spathCreate = 0x80333050; // type:func
 spathLoadFile = 0x803330A8; // type:func
 spathFree = 0x80333240; // type:func
@@ -898,16 +1003,23 @@ spathUpdate = 0x803335B4; // type:func
 spath_80340CB8 = 0x803336F8; // type:func
 spath_80340E7C = 0x803338BC; // type:func
 spathInterpolate = 0x80333A2C; // type:func
+
+splashDrawRipple = 0x80333EA0; // type:func
 splashDraw = 0x80334008; // type:func
 splashAddRipple = 0x8033414C; // type:func
 splashAdd = 0x8033420C; // type:func
 splashUpdate = 0x803343B4; // type:func
 splashInit = 0x803346F0; // type:func
 splashClear = 0x80334870; // type:func
+
+textLoadBlock = 0x80334950; // type:func
 textGetDataByName = 0x80334B2C; // type:func
 textGetDataByIdx = 0x80334BD0; // type:func
+
+// title_screen
 func_80342630 = 0x80335040; // type:func
 func_80344258 = 0x80336BE4; // type:func
+
 targetsInit = 0x80336C10; // type:func
 targetsLoad = 0x80336C78; // type:func
 targetsFrameUpdate = 0x80336E8C; // type:func
@@ -915,6 +1027,7 @@ targetsDeinit = 0x80336FFC; // type:func
 targets_8034473C = 0x803370BC; // type:func
 targets_803448F4 = 0x80337274; // type:func
 targets_80344948 = 0x803372C8; // type:func
+
 taskInit = 0x80337330; // type:func
 taskIsValidIndex = 0x80337650; // type:func
 strToUpper = 0x803376C0; // type:func
@@ -927,41 +1040,58 @@ taskDeinit = 0x80337D2C; // type:func
 taskFrameUpdate = 0x80337DE4; // type:func
 task_803456D8 = 0x80338058; // type:func
 taskUpdateState = 0x803383A4; // type:func
-// taskGetTHER = 0x802FE658; // type:func
-// taskGetLWIN = 0x802FE658; // type:func
-// taskGetTPAD = 0x802FE658; // type:func
-// taskGetCNTG = 0x802FE658; // type:func
-// taskGetOBSV = 0x802FE658; // type:func
-// taskGetLPAD = 0x802FE658; // type:func
-// taskGetLSTP = 0x802FE658; // type:func
-// taskGetRNGS = 0x802FE658; // type:func
-// taskGetBALS = 0x802FE658; // type:func
-// taskGetTARG = 0x802FE658; // type:func
-// taskGetHPAD = 0x802FE658; // type:func
-// taskGetBTGT = 0x802FE658; // type:func
-// taskGetPHTS = 0x802FE658; // type:func
+taskGetTHER = 0x8033842C; // type:func
+taskGetLWIN = 0x8033844C; // type:func
+taskGet_80345AEC = 0x8033846C; // type:func
+taskGetTPAD = 0x8033847C; // type:func
+taskGetCNTG = 0x8033849C; // type:func
+taskGetOBSV = 0x803384BC; // type:func
+taskGetLPAD = 0x803384DC; // type:func
+taskGetLSTP = 0x803384FC; // type:func
+taskGetRNGS = 0x8033851C; // type:func
+taskGetBALS = 0x8033853C; // type:func
+taskGetTARG = 0x8033855C; // type:func
+taskGetHPAD = 0x8033857C; // type:func
+taskGetBTGT = 0x8033859C; // type:func
+taskGetPHTS = 0x803385BC; // type:func
 taskGetFALC = 0x803385DC; // type:func
+taskGet_80345C80 = 0x80338600; // type:func
+taskGet_80345C90 = 0x80338610; // type:func
+taskGet_80345CA0 = 0x80338620; // type:func
+taskGet_80345CB0 = 0x80338630; // type:func
 taskGet_80345CC0 = 0x80338640; // type:func
 taskLoadCommObj = 0x80338664; // type:func
 taskBirdmanPad = 0x80338C54; // type:func
 taskGetClsVehTest = 0x80338CBC; // type:func
 task_80346370 = 0x80338CF0; // type:func
-// taskGetHOPD = 0x802FE658; // type:func
+taskGet_80346468 = 0x80338DE8; // type:func
+taskGetHOPD = 0x80338DF4; // type:func
+
 func_803464A0 = 0x80338E20; // type:func
+
 thermInit = 0x80338F70; // type:func
 thermLoad = 0x80338FAC; // type:func
 therm_8034695C = 0x803392DC; // type:func
-// thermDeinit = 0x802C49EC; // type:func
+thermDeinit = 0x80339504; // type:func
 therm_80346C08 = 0x80339588; // type:func
+therm_80346E04 = 0x80339784; // type:func
+
 totResult_80346FC0 = 0x80339940; // type:func
 totResultHandler = 0x80339A6C; // type:func
 totResult_80347150 = 0x80339AD0; // type:func
 totResultCreateMenu = 0x80339E6C; // type:func
 totResultMenuChoose = 0x80339FBC; // type:func
+totResultDrawTally = 0x8033A0A0; // type:func
+
 toyInit = 0x8033A490; // type:func
+toy_80347C2C = 0x8033A4EC; // type:func
+toyAnimate = 0x8033A75C; // type:func
+toyProxEventCb = 0x8033AA5C; // type:func
+toyProxAnimCb = 0x8033AAD4; // type:func
 toyLoad = 0x8033AB40; // type:func
 toyDeinit = 0x8033AC6C; // type:func
 toy_80348418 = 0x8033ACD8; // type:func
+
 testMenuMainRender = 0x8033AEB0; // type:func
 testMenuShutterBug = 0x8033AFD0; // type:func
 testMenuInitText = 0x8033B064; // type:func
@@ -969,11 +1099,13 @@ testMenuInit = 0x8033B444; // type:func
 testMenuHandler = 0x8033BB30; // type:func
 testMenuDraw = 0x8033C4FC; // type:func
 testMenu_8034A428 = 0x8033CCEC; // type:func
+
 userPathInit = 0x8033CD20; // type:func
 userPath_8034A4F8 = 0x8033CDC8; // type:func
 userPathFree = 0x8033D110; // type:func
 userPath_8034A8B0 = 0x8033D180; // type:func
 userPath_8034A950 = 0x8033D220; // type:func
+
 func_8034A9A0 = 0x8033D270; // type:func
 func_8034A9E8 = 0x8033D2B8; // type:func
 func_8034AA80 = 0x8033D350; // type:func
@@ -990,30 +1122,45 @@ func_8034B2B0 = 0x8033DB80; // type:func
 func_8034B354 = 0x8033DC24; // type:func
 func_8034B464 = 0x8033DD34; // type:func
 func_8034B4DC = 0x8033DDAC; // type:func
+
 func_8034B5E0 = 0x8033DEB0; // type:func
 func_8034B624 = 0x8033DEF4; // type:func
 drawScreenBorder = 0x8033DF58; // type:func
 func_8034B6F8 = 0x8033DFC8; // type:func
+
+whaleIsActive = 0x8033E0F0; // type:func
+whaleUpdate = 0x8033E0FC; // type:func
+whaleStateMachine = 0x8033E338; // type:func
+whaleProxEventCb = 0x8033E538; // type:func
+whaleProxAnimCb = 0x8033E69C; // type:func
 whaleLoad = 0x8033E7AC; // type:func
 whaleDeinit = 0x8033E98C; // type:func
-// whaleGetInterval = 0x802DA7F0; // type:func
+whaleGetInterval = 0x8033EA24; // type:func
 whaleGetPos = 0x8033EA3C; // type:func
 whaleSetInterval = 0x8033EA9C; // type:func
 whaleInit = 0x8033EAF4; // type:func
 whaleStateSave = 0x8033EB2C; // type:func
 whaleStateRestore = 0x8033EB68; // type:func
+
+whalePodUpdateWhale = 0x8033EBB0; // type:func
+whalePodUpdate = 0x8033EDF0; // type:func
+whalePodProxEventCb = 0x8033EF9C; // type:func
+whalePodProxAnimCb = 0x8033F0C0; // type:func
 whalePodInit = 0x8033F118; // type:func
 whalePodLoad = 0x8033F234; // type:func
 whalePodDeinit = 0x8033F450; // type:func
-// whalePodGetObjState = 0x802C4344; // type:func
+whalePodGetObjState = 0x8033F4E0; // type:func
 whalePodSetInterval = 0x8033F594; // type:func
+
+windInit = 0x8033F630; // type:func
 windLoad = 0x8033F638; // type:func
 windDeinit = 0x8033FD7C; // type:func
 wind_8034D550 = 0x8033FE20; // type:func
+
 windObjInit = 0x80340950; // type:func
 windObjLoad = 0x80340984; // type:func
 windObjFrameUpdate = 0x80340B44; // type:func
-// windObjDeinit = 0x802C49EC; // type:func
+windObjDeinit = 0x80340EF8; // type:func
 windObjIsLoadedId = 0x80340F7C; // type:func
 
 // -----------------------------------------------------------------------------
