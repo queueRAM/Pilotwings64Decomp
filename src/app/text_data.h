@@ -7,7 +7,17 @@ enum TextId {
 // TODO: new values for JP
 #if defined(VERSION_JP)
     TEXT_B_CLR_N          = 0x004, // Balloon cleared
+    TEXT_C_TERGET_2       = 0x008, // Target 2
+    TEXT_CANON_2          = 0x024, // Second Shot
+    TEXT_C_TERGET_3       = 0x063, // Target 3
+    TEXT_C_MISS           = 0x0A2, // Missed
     TEXT_B_SPLIT          = 0x0AF, // Balloon has split
+    TEXT_C_PERFECT        = 0x0B0, // Bull's eye !
+    TEXT_C_TERGET_4       = 0x0CC, // Target 4
+    TEXT_CANON_3          = 0x0CE, // Third Shot
+    TEXT_CANON_1          = 0x148, // First Shot
+    TEXT_C_TERGET_1       = 0x15A, // Target 1
+    TEXT_C_POINTS         = 0x1B0, //    pts.
 
     TEXT_RP_1_A           = 0x000, // < Hovering >  ...
     TEXT_P_BD_4_M         = 0x001, // Little States | - Starry Night -
@@ -24,7 +34,6 @@ enum TextId {
     TEXT_VIEW_PHOTO2      = 0x00D, // Best shot
     TEXT_PHOTO_SGI        = 0x00E, // Check photo
     TEXT_THERM_OFF        = 0x00F,
-    TEXT_C_TERGET_2       = 0x010, // Target 2
     TEXT_HG_A1_S2         = 0x011, // Photo Pts. 0/60 pts. ...
     TEXT_GC_B2_S1         = 0x012, // Target 030 pts. ...
     TEXT_CONGURA          = 0x013, // Congratulations!
@@ -90,7 +99,6 @@ enum TextId {
     TEXT_OFF_2            = 0x04F, // 2 pts. deducted
     TEXT_E_BD_3_M         = 0x050, // Holiday Island | - Evening -
     TEXT_FILE_2           = 0x051, // File 2
-    TEXT_CANON_2          = 0x052, // Second Shot
     TEXT_GC_E_S2          = 0x053, // Ring 0/20 pts. ...
     TEXT_FILE_ERASE       = 0x054, // Erase file
     TEXT_RP_B2_S2         = 0x055, // Ring 0/60 pts. ...
@@ -221,13 +229,11 @@ enum TextId {
     TEXT_SFX_V5           = 0x0D2, // Sound Effects Vol. >>>>5
     TEXT_P_GC_1_H         = 0x0D3, // When you clear the blue ring, ...
     TEXT_LAND_MOW         = 0x0D4, // Please land
-    TEXT_C_TERGET_3       = 0x0D5, // Target 3
     TEXT_BGM_V2           = 0x0D6, // Sound Track Vol. >2
     TEXT_P_RP_2_H         = 0x0D7, // The first push will be important. ...
     TEXT_GC_3_A           = 0x0D8, // < Landing > ...
     TEXT_RP_A2_S2         = 0x0D9, // Floating Pads 0/30 pts. ...
     TEXT_HG_3_A           = 0x0DA, // < Landing Speed >  ...
-    TEXT_CANON_1          = 0x0DB, // First Shot
     TEXT_CONTINUE_SGI     = 0x0DC, // Continue
     TEXT_GC_E_S1          = 0x0DD, // Ring  020 pts. ...
     TEXT_P_RP_1_M         = 0x0DE, // Fly through the cavern as  ...
@@ -281,7 +287,6 @@ enum TextId {
     TEXT_LEVEL1           = 0x10E, // Level 1
     TEXT_P_BD_4_N         = 0x10F, // Skywalk 16
     TEXT_A_S3_GOLD        = 0x110, // < 180 pts. for Gold Badge > ...
-    TEXT_C_TERGET_1       = 0x111, // Target 1
     TEXT_GC_1_A           = 0x112, // < Landing (Speed) > ...
     TEXT_HG_1_A           = 0x113, // < Control Stick >  ...
     TEXT_GYRO             = 0x114, // Gyrocopter
@@ -341,7 +346,6 @@ enum TextId {
     TEXT_A_BD_3_H         = 0x14A, // There's a lot of snow falling. ...
     TEXT_HG_B3_S2         = 0x14B, // Time Pts. 0/70 pts. ...
     TEXT_KIWI             = 0x14C, // KIWI
-    TEXT_C_MISS           = 0x14D, // Missed
     TEXT_CHECKMAP_SGI     = 0x14E, // Check map
     TEXT_A_BD_2_M         = 0x14F, // Ever-Frost Island | - Starry Night -
     TEXT_P_EX_2_N         = 0x150, // Moonlight Hop
@@ -374,7 +378,6 @@ enum TextId {
     TEXT_RP_4_A           = 0x16B, // < Approach > ...
     TEXT_RP_P3_S1         = 0x16D, // Floating Pad 030 pts. ...
     TEXT_BONUS_S3_SILVER  = 0x16E, // < 80 pts. for Silver Badge > ...
-    TEXT_C_PERFECT        = 0x16F, // Bull's eye !
     TEXT_PILOT_SEL        = 0x170, // SELECT PILOT
     TEXT_E_BD_4_N         = 0x171, // Skywalk 4
     TEXT_GREAT_QFY        = 0x172, // Perfect score!  Way to go!
@@ -425,17 +428,14 @@ enum TextId {
     TEXT_B_RP_2_M         = 0x19F, // Fly through every ring, then land ...
     TEXT_B_GC_3_H         = 0x1A0, // Meca Hawk will throw rocks ...
     TEXT_P_HG_3_N         = 0x1A1, // Shutter Bug 3
-    TEXT_C_TERGET_4       = 0x1A2, // Target 4
     TEXT_P_BD_2_M         = 0x1A3, // Little States | - Cloudy -
     TEXT_A_EX_2_M         = 0x1A4, // Select a pilot and aim for the ...
     TEXT_B_GC_2_M         = 0x1A5, // Destroy all 10 missile targets, ...
     TEXT_B_BD_1_N         = 0x1A6, // Skywalk 9
     TEXT_IBIS             = 0x1A7, // IBIS
-    TEXT_CANON_3          = 0x1A8, // Third Shot
     TEXT_GC_A1_S2         = 0x1A9, // Ring 0/60 pts. ...
     TEXT_LAND_NOW2        = 0x1AA, // Please land
     TEXT_P_CLR            = 0x1AB, // Landing OK
-    TEXT_C_POINTS         = 0x1AC, //    pts.
     TEXT_B_HIT_B          = 0x1AD, // Balloon cleared
     TEXT_P_BD_4_H         = 0x1AE, // Vehicles which require fuel will  ...
     TEXT_B_RP_3_M         = 0x1AF, // Crash into the bouncing green  ...

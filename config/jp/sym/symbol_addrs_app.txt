@@ -128,7 +128,7 @@ cbSoundInit = 0x802CBED0; // type:func
 func_802D9E68 = 0x802CC088; // type:func
 func_802DA1A8 = 0x802CC3C8; // type:func
 func_802DA228 = 0x802CC448; // type:func
-// func_802DA23C = 0x802CC45C; // type:func // multiple definition?
+func_802DA23C = 0x802CC45C; // type:func
 func_802DA354 = 0x802CC574; // type:func
 func_802DA474 = 0x802CC694; // type:func
 
@@ -252,6 +252,11 @@ fdr_802E6870 = 0x802D93C0; // type:func
 fdr_802E68B0 = 0x802D9400; // type:func
 fdr_802E6B5C = 0x802D96AC; // type:func
 fdr_802E7278 = 0x802D9DC8; // type:func
+fdr_802E73BC = 0x802D9F0C; // type:func
+fdr_802E7424 = 0x802D9F74; // type:func
+fdr_802E7550 = 0x802DA0A0; // type:func
+fdr_802E75C0 = 0x802DA110; // type:func
+fdrInterp = 0x802DA23C; // type:func
 
 ferryIsActive = 0x802DA2F0; // type:func
 ferryUpdatePos = 0x802DA2FC; // type:func
@@ -604,6 +609,7 @@ func_80313AF4 = 0x803062E4; // type:func
 func_80313BAC = 0x8030639C; // type:func
 func_80313C94 = 0x80306484; // type:func
 func_80313D74 = 0x80306564; // type:func
+func_80313E0C = 0x803065FC; // type:func
 func_80313E18 = 0x80306608; // type:func
 func_80313F08 = 0x803066F8; // type:func
 func_80313FD0 = 0x803067C0; // type:func
@@ -838,12 +844,12 @@ rbSoundEvent12_18 = 0x8031D810; // type:func
 rbSoundEvent19 = 0x8031D8AC; // type:func
 rbSoundSubEvent = 0x8031D8C0; // type:func
 rbSoundEvent13 = 0x8031DAC8; // type:func
-
 func_8032B3D0 = 0x8031DBA0; // type:func
 func_8032B508 = 0x8031DCD8; // type:func
 func_8032B560 = 0x8031DD30; // type:func
 levelGetTotalPoints = 0x8031E4F0; // type:func
 testGetPointCount = 0x8031E5EC; // type:func
+func_8032BE10 = 0x8031E5E0; // type:func
 func_8032BE8C = 0x8031E65C; // type:func
 func_8032C080 = 0x8031E850; // type:func
 levelSetPointsToNextMedal = 0x8031E944; // type:func
@@ -851,6 +857,7 @@ func_8032C27C = 0x8031EA4C; // type:func
 func_8032C3C4 = 0x8031EB94; // type:func
 
 func_8032C540 = 0x8031ED10; // type:func
+func_8032CC44 = 0x8031F414; // type:func
 func_8032CF28 = 0x8031F6E8; // type:func
 func_8032D51C = 0x8031FCDC; // type:func
 func_8032D90C = 0x803200CC; // type:func
@@ -1020,6 +1027,8 @@ splashClear = 0x80334870; // type:func
 textLoadBlock = 0x80334950; // type:func
 textGetDataByName = 0x80334B2C; // type:func
 textGetDataByIdx = 0x80334BD0; // type:func
+textFmtInt = 0x80334C04; // type:func
+textFmtIntAt = 0x80334E28; // type:func
 
 // title_screen
 func_80342630 = 0x80335040; // type:func
@@ -1183,4 +1192,10 @@ gBalls                    = 0x80349C08; // size:0x2170
 
 D_8034F850          = 0x80342280;
 D_8034F854          = 0x80342284;
+
+D_80359AA8          = 0x8034C498; // size:4
+D_80359AAC          = 0x8034C49C; // size:4
+
 D_80362690          = 0x80355080;
+
+D_8037DC84          = 0x80370664;
