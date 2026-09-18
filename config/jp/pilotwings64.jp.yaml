@@ -388,14 +388,14 @@ segments:
     bss_size: 0x293E0
     subsegments:
       - [0x51CA0, c, app/code_51E30]
-      - [0x520A0, asm, app/balls]
-      - [0x53550, asm, app/birdman0]
+      - [0x520A0, c, app/balls]
+      - [0x53550, c, app/birdman0]
       - [0x55530, c, app/birdman1]
-      - [0x55F40, asm, app/birdman2]
-      - [0x57E60, asm, app/bmsound]
-      - [0x58840, asm, app/boats]
-      - [0x59520, asm, app/bonus]
-      - [0x59AC0, asm, app/ball_target]
+      - [0x55F40, asm, app/birdman2] # code diffs @ 0x576a0
+      - [0x57E60, c, app/bmsound]
+      - [0x58840, c, app/boats]
+      - [0x59520, c, app/bonus]
+      - [0x59AC0, c, app/ball_target]
       - [0x5A3E0, asm, app/camera]
       - [0x5CD00, asm, app/cannonball]
       - [0x5FD60, asm, app/code_60020]
@@ -491,17 +491,21 @@ segments:
       - [0xD3C00, asm, app/whale_pod]
       - [0xD4680, asm, app/wind]
       - [0xD59A0, asm, app/wind_objects]
+
       - [0xD6030, .data, app/code_51E30]
-      - [0xD6130, data]
+      - [0xD6130, .data, app/balls]
+      - [0xD6140, data, app/birdman2]
+      - [0xD6300, data]
+
       - [0xD8490, .rodata, app/code_51E30]
-      - [0xD84B0, rodata, app/balls]
-      - [0xD8510, rodata, app/birdman0]
+      - [0xD84B0, .rodata, app/balls]
+      - [0xD8510, .rodata, app/birdman0]
       - [0xD8890, .rodata, app/birdman1]
       - [0xD8900, rodata, app/birdman2]
-      - [0xD89F0, rodata, app/bmsound]
-      - [0xD8AE0, rodata, app/boats]
-      - [0xD8B20, rodata, app/bonus]
-      - [0xD8B60, rodata, app/ball_target]
+      - [0xD89F0, .rodata, app/bmsound]
+      - [0xD8AE0, .rodata, app/boats]
+      - [0xD8B20, .rodata, app/bonus]
+      - [0xD8B60, .rodata, app/ball_target]
       - [0xD8BC0, rodata, app/camera]
       - [0xD8C80, rodata, app/cannonball]
       - [0xD8ED0, rodata, app/code_60020]
@@ -590,8 +594,16 @@ segments:
       - [0xDEB10, rodata, app/whale_pod]
       - [0xDEB50, rodata, app/wind]
       - [0xDEBC0, rodata, app/wind_objects]
+
       - { type: .bss, vram: 0x80349BE0, name: app/code_51E30 }
-      - { type: bss, vram: 0x80349C00 }
+      - { type: .bss, vram: 0x80349C00, name: app/balls }
+      - { type: .bss, vram: 0x8034BD80, name: app/birdman0 }
+      - { type: bss, vram: 0x8034BDE0, name: app/birdman2 }
+      - { type: .bss, vram: 0x8034C030, name: app/bmsound }
+      - { type: .bss, vram: 0x8034C090, name: app/boats }
+      - { type: .bss, vram: 0x8034C120, name: app/bonus }
+      - { type: .bss, vram: 0x8034C1D0, name: app/ball_target }
+      - { type: bss, vram: 0x8034C3C0 }
 
   - name: filetable
     type: bin

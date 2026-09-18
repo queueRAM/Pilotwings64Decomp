@@ -176,6 +176,8 @@ func_802DFA18 = 0x802D2578; // type:func
 
 func_802DFA40 = 0x802D25A0; // type:func
 db_getgnd = 0x802D29A0; // type:func
+func_802E02EC = 0x802D2E1C; // type:func
+func_802E02F8 = 0x802D2E28; // type:func
 db_getstart = 0x802D2E34; // type:func
 func_802E0484 = 0x802D2FB4; // type:func
 func_802E05CC = 0x802D30FC; // type:func
@@ -248,6 +250,7 @@ fdrSetBlen = 0x802D9244; // type:func
 fdr_802E682C = 0x802D937C; // type:func
 fdr_802E6870 = 0x802D93C0; // type:func
 fdr_802E68B0 = 0x802D9400; // type:func
+fdr_802E6B5C = 0x802D96AC; // type:func
 fdr_802E7278 = 0x802D9DC8; // type:func
 
 ferryIsActive = 0x802DA2F0; // type:func
@@ -673,6 +676,7 @@ padsCannonTgtDist = 0x8030A340; // type:func
 padsStripAlignment = 0x8030A41C; // type:func
 
 hudInit = 0x8030A590; // type:func
+hudGetState = 0x8030AA84; // type:func
 hudMainRender = 0x8030AA90; // type:func
 hudDrawHangGlider = 0x8030AEF0; // type:func
 hudDrawRocketPack = 0x8030AFB4; // type:func
@@ -975,6 +979,7 @@ func_8033F62C = 0x80332068; // type:func
 
 sndInit = 0x80332080; // type:func
 func_8033F6F8 = 0x80332138; // type:func
+sndSetMusic = 0x80332188; // type:func
 sndPlaySfxVolPitchPan = 0x80332198; // type:func
 sndPlaySfx = 0x80332238; // type:func
 sndMakeDev = 0x803322A0; // type:func
@@ -1171,6 +1176,10 @@ D_802491E0          = 0x80249090;
 D_802491E4          = 0x80249094;
 D_802491E8          = 0x80249098;
 D_803805E0          = 0x80372FC0;
+
+gBallCount                = 0x80349C00;
+gBallSplitCount           = 0x80349C01;
+gBalls                    = 0x80349C08; // size:0x2170
 
 D_8034F850          = 0x80342280;
 D_8034F854          = 0x80342284;
