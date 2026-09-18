@@ -391,7 +391,7 @@ segments:
       - [0x520A0, c, app/balls]
       - [0x53550, c, app/birdman0]
       - [0x55530, c, app/birdman1]
-      - [0x55F40, asm, app/birdman2] # code diffs @ 0x576a0
+      - [0x55F40, asm, app/birdman2] # code diffs @ 0x576A0
       - [0x57E60, c, app/bmsound]
       - [0x58840, c, app/boats]
       - [0x59520, c, app/bonus]
@@ -400,13 +400,13 @@ segments:
       - [0x5CD00, c, app/cannonball]
       - [0x5FD60, c, app/code_60020]
       - [0x60F20, c, app/cbsound]
-      - [0x617A0, asm, app/code_61A60]
-      - [0x63DB0, asm, app/control_info]
-      - [0x64DB0, asm, app/pilot_select]
+      - [0x617A0, c, app/code_61A60]
+      - [0x63DB0, asm, app/control_info] # code diffs at @ 0x63FF0
+      - [0x64DB0, c, app/pilot_select]
       - [0x667E0, c, app/code_66160]
-      - [0x675F0, asm, app/code_66F70]
-      - [0x68870, asm, app/environment]
-      - [0x6A240, asm, app/env_sound]
+      - [0x675F0, c, app/code_66F70]
+      - [0x68870, c, app/environment]
+      - [0x6A240, c, app/env_sound]
       - [0x6B350, asm, app/falco]
       - [0x6E110, asm, app/fdr]
       - [0x6F340, asm, app/ferry]
@@ -498,7 +498,12 @@ segments:
       - [0xD6300, .data, app/camera]
       - [0xD6310, .data, app/cannonball]
       - [0xD6330, .data, app/code_60020]
-      - [0xD6360, data]
+      - [0xD6360, .data, app/code_61A60]
+      - [0xD6420, data, app/control_info]
+      - [0xD66C0, .data, app/pilot_select]
+      - [0xD6800, .data, app/environment]
+      - [0xD6840, .data, app/env_sound]
+      - [0xD68C0, data]
 
       - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, .rodata, app/balls]
@@ -513,12 +518,12 @@ segments:
       - [0xD8C80, .rodata, app/cannonball]
       - [0xD8ED0, .rodata, app/code_60020]
       - [0xD8F50, .rodata, app/cbsound]
-      - [0xD9050, rodata, app/code_61A60]
+      - [0xD9050, .rodata, app/code_61A60]
       - [0xD90E0, rodata, app/control_info]
-      - [0xD9140, rodata, app/pilot_select]
-      - [0xD9280, rodata, app/code_66F70]
-      - [0xD9370, rodata, app/environment]
-      - [0xD9620, rodata, app/env_sound]
+      - [0xD9140, .rodata, app/pilot_select]
+      - [0xD9280, .rodata, app/code_66F70]
+      - [0xD9370, .rodata, app/environment]
+      - [0xD9620, .rodata, app/env_sound]
       - [0xD9780, rodata, app/falco]
       - [0xD9900, rodata, app/fdr]
       - [0xD9A90, rodata, app/ferry]
@@ -610,7 +615,13 @@ segments:
       - { type: .bss, vram: 0x8034C420, name: app/cannonball }
       - { type: .bss, vram: 0x8034C4C0, name: app/code_60020 }
       - { type: .bss, vram: 0x8034C5D0, name: app/cbsound }
-      - { type: bss, vram: 0x8034C630 }
+      - { type: .bss, vram: 0x8034C630, name: app/code_61A60 }
+      - { type: bss, vram: 0x8034C680, name: app/control_info }
+      - { type: .bss, vram: 0x8034C690, name: app/pilot_select }
+      - { type: .bss, vram: 0x8034C760, name: app/code_66F70 }
+      - { type: .bss, vram: 0x8034C770, name: app/environment }
+      - { type: .bss, vram: 0x8034C7B0, name: app/env_sound }
+      - { type: bss, vram: 0x8034CFE0 }
 
   - name: filetable
     type: bin

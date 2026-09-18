@@ -175,6 +175,7 @@ screenDrawBoxSetup = 0x802D24E8; // type:func
 func_802DFA18 = 0x802D2578; // type:func
 
 func_802DFA40 = 0x802D25A0; // type:func
+func_802DFB48 = 0x802D26A8; // type:func
 db_getgnd = 0x802D29A0; // type:func
 func_802E02EC = 0x802D2E1C; // type:func
 func_802E02F8 = 0x802D2E28; // type:func
@@ -325,6 +326,7 @@ func_802EB5E4 = 0x802DDF34; // type:func
 func_802EB640 = 0x802DDF90; // type:func
 
 gameInit = 0x802DE310; // type:func
+func_802EBBB8 = 0x802DE508; // type:func
 func_802EBBC8 = 0x802DE518; // type:func
 gameUpdate = 0x802DE580; // type:func
 gameUpdateStateTitle = 0x802DE5E4; // type:func
@@ -759,6 +761,8 @@ demoAttPrintRT = 0x80313844; // type:func
 proxAnimInit = 0x803138F0; // type:func
 proxAnimAddCallback = 0x80313A00; // type:func
 proxAnimDeleteCallback = 0x80313ACC; // type:func
+proxAnimDispatchEvent2 = 0x80313BD0; // type:func
+proxAnimDispatchEvent3 = 0x80313BF0; // type:func
 proxAnimGetRange = 0x80313C10; // type:func
 proxAnimDispatchInit = 0x80313CD4; // type:func
 proxAnimUpdate = 0x80313CFC; // type:func
@@ -1195,6 +1199,8 @@ D_8034F854          = 0x80342284;
 
 D_80359AA8          = 0x8034C498; // size:4
 D_80359AAC          = 0x8034C49C; // size:4
+
+D_80359DB4          = 0x8034C7A4;
 
 D_80362690          = 0x80355080;
 
