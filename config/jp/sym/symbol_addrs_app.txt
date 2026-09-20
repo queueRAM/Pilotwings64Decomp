@@ -162,7 +162,9 @@ func_802DCA00 = 0x802CEC20; // type:func
 func_802DCA5C = 0x802CEC7C; // type:func
 
 contInfoMainRender = 0x802CED60; // type:func
+contInfoInit = 0x802CEDC0; // type:func
 contInfoUpdate = 0x802CEF10; // type:func
+contInfoDrawLineSeg = 0x802cefa8; // type:func
 contInfoDrawLineStrip = 0x802CFB28; // type:func
 contInfoDraw = 0x802CFBF0; // type:func
 contInfoDeinit = 0x802CFD28; // type:func
@@ -1196,6 +1198,9 @@ D_803805E0          = 0x80372FC0;
 gBallCount                = 0x80349C00;
 gBallSplitCount           = 0x80349C01;
 gBalls                    = 0x80349C08; // size:0x2170
+
+sControlInfoVeh     = 0x803414EC; // size:0x38
+sControlInfoCount   = 0x8034C680;
 
 D_8034EE84          = 0x803418C4; // size:8
 D_8034EE30          = 0x80341870; // size:0x54

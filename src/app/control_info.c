@@ -176,6 +176,7 @@ void contInfoMainRender(void) {
     contInfoDeinit();
 }
 
+// TODO: differs on JP
 void contInfoInit(void) {
     Unk80362690_Unk0* temp_s7;
     s32 temp_s3;
@@ -228,6 +229,7 @@ s32 contInfoUpdate(void) {
     return 0;
 }
 
+// TODO: differs on JP and more below
 void contInfoDrawLineSeg(s32 x0, s32 y0, s32 x1, s32 y1) {
     f32 x_off, ux, uy, angle, length, y_off;
     s32 x2, y2, x3, y3;
