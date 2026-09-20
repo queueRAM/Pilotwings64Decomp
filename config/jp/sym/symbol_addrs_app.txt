@@ -164,6 +164,7 @@ func_802DCA5C = 0x802CEC7C; // type:func
 contInfoMainRender = 0x802CED60; // type:func
 contInfoUpdate = 0x802CEF10; // type:func
 contInfoDrawLineStrip = 0x802CFB28; // type:func
+contInfoDraw = 0x802CFBF0; // type:func
 contInfoDeinit = 0x802CFD28; // type:func
 
 func_802DD200 = 0x802CFD60; // type:func
@@ -252,6 +253,7 @@ fdr_802E682C = 0x802D937C; // type:func
 fdr_802E6870 = 0x802D93C0; // type:func
 fdr_802E68B0 = 0x802D9400; // type:func
 fdr_802E6B5C = 0x802D96AC; // type:func
+fdr_802E6B68 = 0x802D96B8; // type:func
 fdr_802E7278 = 0x802D9DC8; // type:func
 fdr_802E73BC = 0x802D9F0C; // type:func
 fdr_802E7424 = 0x802D9F74; // type:func
@@ -273,10 +275,11 @@ ferryStateRestore = 0x802DA8BC; // type:func
 // saveFilePack = 0x802DA8D0; // type:func
 // saveBitScramble = 0x802DAAF0; // type:func
 // saveFatalError = 0x802DAD0C; // type:func
-// saveFileInit
+saveModuleInit = 0x802DAD0C; // type:func
 saveFileWrite = 0x802DAD68; // type:func
 saveFileLoad = 0x802DB004; // type:func
 saveFileHasData = 0x802DB2E0; // type:func
+saveFileInit = 0x802DB318; // type:func
 saveFile_802E89D4 = 0x802DB36C; // type:func
 
 fileMenuTopRender = 0x802DB410; // type:func
@@ -1194,14 +1197,23 @@ gBallCount                = 0x80349C00;
 gBallSplitCount           = 0x80349C01;
 gBalls                    = 0x80349C08; // size:0x2170
 
+D_8034EE84          = 0x803418C4; // size:8
+D_8034EE30          = 0x80341870; // size:0x54
+D_8034F7C0          = 0x803421F0;
 D_8034F850          = 0x80342280;
 D_8034F854          = 0x80342284;
+
+gMedalPointRequirements = 0x80342604; // size:0x30
 
 D_80359AA8          = 0x8034C498; // size:4
 D_80359AAC          = 0x8034C49C; // size:4
 
 D_80359DB4          = 0x8034C7A4;
 
+D_8035A5F0          = 0x8034CFE0;
+
 D_80362690          = 0x80355080;
+
+D_80364210          = 0x80356C00; // size:0x34E0
 
 D_8037DC84          = 0x80370664;

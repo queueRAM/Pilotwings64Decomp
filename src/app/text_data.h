@@ -8,15 +8,25 @@ enum TextId {
 #if defined(VERSION_JP)
     TEXT_B_CLR_N          = 0x004, // Balloon cleared
     TEXT_C_TERGET_2       = 0x008, // Target 2
+    TEXT_LARK             = 0x019, // LARK
     TEXT_CANON_2          = 0x024, // Second Shot
+    TEXT_HAWK             = 0x03C, // HAWK
     TEXT_C_TERGET_3       = 0x063, // Target 3
+    TEXT_HOOTER           = 0x092, // ROBIN
     TEXT_C_MISS           = 0x0A2, // Missed
+    TEXT_LEFT_SHT         = 0x0A6, // Shots to go :
+    TEXT_F_HIT_M          = 0x0AB, // H i t
     TEXT_B_SPLIT          = 0x0AF, // Balloon has split
     TEXT_C_PERFECT        = 0x0B0, // Bull's eye !
+    TEXT_F_DIE            = 0x0B3, // Meca Hawk destroyed
     TEXT_C_TERGET_4       = 0x0CC, // Target 4
+    TEXT_IBIS             = 0x0CD, // IBIS
     TEXT_CANON_3          = 0x0CE, // Third Shot
+    TEXT_GOOSE            = 0x126, // GOOSE
     TEXT_CANON_1          = 0x148, // First Shot
     TEXT_C_TERGET_1       = 0x15A, // Target 1
+    TEXT_KIWI             = 0x17C, // KIWI
+    TEXT_PILOT_SEL        = 0x190, // SELECT PILOT
     TEXT_C_POINTS         = 0x1B0, //    pts.
 
     TEXT_RP_1_A           = 0x000, // < Hovering >  ...
@@ -70,7 +80,6 @@ enum TextId {
     TEXT_P_RP_3_N         = 0x032, // Touch & Go 2
     TEXT_HG_B2_S1         = 0x033, // Photo Pts. 060 pts. ...
     TEXT_E_BD_1_H         = 0x034, // There's no test for Birdman. ...
-    TEXT_LARK             = 0x035, // LARK
     TEXT_P_GC_3_N         = 0x036, // Meca Hawk Again
     TEXT_E_HG_1_N         = 0x037, // Albatross Nest
     TEXT_P_EX_3_M         = 0x038, // Jump to the goal area. ...
@@ -149,7 +158,6 @@ enum TextId {
     TEXT_BD_ALL_S1        = 0x082, // Birdman is a free flying stage ...
     TEXT_A_RP_2_M         = 0x083, // Land on each floating pad in ...
     TEXT_GC_A2_S1         = 0x084, // Target 030 pts. ...
-    TEXT_HAWK             = 0x085, // HAWK
     TEXT_YES              = 0x086, // Yes
     TEXT_B_BD_2_H         = 0x087, // Another sunny day with just  ...
     TEXT_A_BD_1_N         = 0x088, // Skywalk 5
@@ -172,7 +180,6 @@ enum TextId {
     TEXT_HG_P3_S1         = 0x099, // Photo Pts. 060 pts. ...
     TEXT_B_BD_2_M         = 0x09A, // Crescent Island | - Sunny Part 2 -
     TEXT_GC_13_A          = 0x09B, // < Fuel > ...
-    TEXT_GOOSE            = 0x09C, // GOOSE
     TEXT_C_ISLANBD        = 0x09D, // Crescent Island
     TEXT_TRANING_ISLAND   = 0x09E, // Holiday Island
     TEXT_B_S3_PERFECT     = 0x09F, // < 300 pts. for perfect score > ...
@@ -309,7 +316,6 @@ enum TextId {
     TEXT_GOLD_QFY         = 0x125, // needed for Gold Badge
     TEXT_NO               = 0x126, // No
     TEXT_GC_B2_S2         = 0x127, // Target 0/30 pts. ...
-    TEXT_HOOTER           = 0x128, // ROBIN
     TEXT_TRY1             = 0x129, // 1 test to go
     TEXT_LAND_OK2         = 0x12A, // Landing accomplished
     TEXT_RP_7_A           = 0x12B, // < Floating Pad >  ...
@@ -345,7 +351,6 @@ enum TextId {
     TEXT_E_GC_1_H         = 0x149, // After flying through the rings, ...
     TEXT_A_BD_3_H         = 0x14A, // There's a lot of snow falling. ...
     TEXT_HG_B3_S2         = 0x14B, // Time Pts. 0/70 pts. ...
-    TEXT_KIWI             = 0x14C, // KIWI
     TEXT_CHECKMAP_SGI     = 0x14E, // Check map
     TEXT_A_BD_2_M         = 0x14F, // Ever-Frost Island | - Starry Night -
     TEXT_P_EX_2_N         = 0x150, // Moonlight Hop
@@ -356,7 +361,6 @@ enum TextId {
     TEXT_HG_B2_S2         = 0x155, // Photo Pts. 0/60 pts. ...
     TEXT_FLAME            = 0x156, // Flame
     TEXT_STALL_WA         = 0x157, // Caution! Speed decreasing
-    TEXT_LEFT_SHT         = 0x158, // Shots to go :
     TEXT_E_GC_1_M         = 0x159, // Fly through 3 rings in order and ...
     TEXT_A_BD_3_M         = 0x15A, // Ever-Frost Island | - Snowing -
     TEXT_P_EX_3_N         = 0x15B, // Go East
@@ -368,7 +372,6 @@ enum TextId {
     TEXT_MUSHI            = 0x161, // Out of course
     TEXT_E_BD_1_N         = 0x162, // Skywalk 1
     TEXT_A_BD_4_M         = 0x163, // Ever-Frost Island | - Sunny Part 2 -
-    TEXT_F_HIT_M          = 0x164, // H i t
     TEXT_HP_L2_S1         = 0x165, // Time Pts. 0100 pts. ...
     TEXT_ANOTHER_TASK_SGI = 0x166, // Another test
     TEXT_E_BD_2_N         = 0x167, // Skywalk 2
@@ -378,11 +381,9 @@ enum TextId {
     TEXT_RP_4_A           = 0x16B, // < Approach > ...
     TEXT_RP_P3_S1         = 0x16D, // Floating Pad 030 pts. ...
     TEXT_BONUS_S3_SILVER  = 0x16E, // < 80 pts. for Silver Badge > ...
-    TEXT_PILOT_SEL        = 0x170, // SELECT PILOT
     TEXT_E_BD_4_N         = 0x171, // Skywalk 4
     TEXT_GREAT_QFY        = 0x172, // Perfect score!  Way to go!
     TEXT_RP_P2_S1         = 0x173, // Time Pts. 0100 pts. ...
-    TEXT_F_DIE            = 0x174, // Meca Hawk destroyed
     TEXT_E_S3_GOLD        = 0x175, // < 90 pts. for Gold Badge > ...
     TEXT_STRIKE           = 0x176, // H i t
     TEXT_GC_P3_S2         = 0x177, // Destroyed 0/30 pts. ...
@@ -432,7 +433,6 @@ enum TextId {
     TEXT_A_EX_2_M         = 0x1A4, // Select a pilot and aim for the ...
     TEXT_B_GC_2_M         = 0x1A5, // Destroy all 10 missile targets, ...
     TEXT_B_BD_1_N         = 0x1A6, // Skywalk 9
-    TEXT_IBIS             = 0x1A7, // IBIS
     TEXT_GC_A1_S2         = 0x1A9, // Ring 0/60 pts. ...
     TEXT_LAND_NOW2        = 0x1AA, // Please land
     TEXT_P_CLR            = 0x1AB, // Landing OK
