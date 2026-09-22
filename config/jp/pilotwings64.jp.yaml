@@ -416,7 +416,7 @@ segments:
       - [0x724D0, c, app/code_72010]
       - [0x72790, asm, app/fountain] # code diffs @ 0x72930
       - [0x72D80, c, app/code_72910]
-      - [0x73360, asm, app/game]
+      - [0x73360, c, app/game]
       - [0x75ED0, asm, app/hang_glider0]
       - [0x76AE0, asm, app/hang_glider1]
       - [0x78A90, asm, app/glider_toys]
@@ -510,7 +510,8 @@ segments:
       - [0xD6BB0, .data, app/fire_effects]
       - [0xD6BC0, data, app/fountain]
       - [0xD6BE0, .data, app/code_72910]
-      - [0xD6BF0, data]
+      - [0xD6BF0, .data, app/game]
+      - [0xD6C40, data]
 
       - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, .rodata, app/balls]
@@ -539,7 +540,7 @@ segments:
       - [0xD9B20, .rodata, app/fire_effects]
       - [0xD9D40, rodata, app/fountain]
       - [0xD9D60, .rodata, app/code_72910]
-      - [0xD9D70, rodata, app/game]
+      - [0xD9D70, .rodata, app/game]
       - [0xD9EF0, rodata, app/hang_glider0]
       - [0xD9F40, rodata, app/hang_glider1]
       - [0xDA220, rodata, app/glider_toys]
@@ -636,7 +637,8 @@ segments:
       - { type: bss, vram: 0x80354ED0, name: app/file_menu }
       - { type: .bss, vram: 0x80354EF0, name: app/fire_effects }
       - { type: bss, vram: 0x80355020, name: app/fountain }
-      - { type: bss, vram: 0x80355080 }
+      - { type: .bss, vram: 0x80355080, name: app/game }
+      - { type: bss, vram: 0x8035A430 }
 
   - name: filetable
     type: bin

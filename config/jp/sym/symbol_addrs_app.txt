@@ -876,7 +876,10 @@ resultListPhoto = 0x803205E4; // type:func
 resultListReplay = 0x80320644; // type:func
 resultGenMenu = 0x803206D8; // type:func
 resultMenuItemLookup = 0x803207D0; // type:func
+resultInit = 0x80320830; // type:func
+resultDeinit = 0x80320E44; // type:func
 resultMenuChoose = 0x80320E64; // type:func
+resultDrawTally = 0x803210EC; // type:func
 resultGenTipText = 0x8032167C; // type:func
 
 func_8032F050 = 0x803217C0; // type:func
@@ -986,6 +989,7 @@ func_8033D3EC = 0x8032FE40; // type:func
 func_8033DCD0 = 0x80330724; // type:func
 func_8033DDD8 = 0x8033082C; // type:func
 func_8033DFD0 = 0x80330A24; // type:func
+func_8033E3A8 = 0x80330DFC; // type:func
 func_8033E784 = 0x803311C0; // type:func
 func_8033E810 = 0x8033124C; // type:func
 func_8033E860 = 0x8033129C; // type:func
@@ -1209,6 +1213,8 @@ D_8034F850          = 0x80342280;
 D_8034F854          = 0x80342284;
 
 gMedalPointRequirements = 0x80342604; // size:0x30
+
+gCurrentMusicId     = 0x80342FE0;
 
 D_80359AA8          = 0x8034C498; // size:4
 D_80359AAC          = 0x8034C49C; // size:4
