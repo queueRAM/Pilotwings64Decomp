@@ -568,6 +568,7 @@ func_8030C1C0 = 0x802FEAF0; // type:func
 func_8030C22C = 0x802FEB5C; // type:func
 func_8030C54C = 0x802FEE7C; // type:func
 func_8030C61C = 0x802FEF4C; // type:func
+func_8030C6A0 = 0x802FEFD0; // type:func
 func_8030CB10 = 0x802FF430; // type:func
 
 credits_8030CB60 = 0x802FF480; // type:func
@@ -602,6 +603,10 @@ mem_init = 0x8030500C; // type:func
 mem_remaining = 0x80305040; // type:func
 
 menuUtilCreate = 0x80305060; // type:func
+menuUtilCheckInputs = 0x80305158; // type:func
+menuUtilDeinit = 0x80305394; // type:func
+menuUtilRender = 0x803053A0; // type:func
+menuUtilGetCurItem = 0x80305720; // type:func
 menuUtilSetCurItem = 0x8030572C; // type:func
 menuUtilSetColors = 0x80305744; // type:func
 menuUtil_80313010 = 0x803057F8; // type:func
@@ -637,8 +642,8 @@ missiUpdate = 0x803074D8; // type:func
 missiEventCbLStates = 0x803076D8; // type:func
 missiAnimCbLStates = 0x80307818; // type:func
 missiLoadLStates = 0x8030799C; // type:func
-// missiDeinitLStates = 0x802DA778; // type:func
-// missiGetInterval = 0x802DA7F0; // type:func
+missiDeinitLStates = 0x80307B0C; // type:func
+missiGetInterval = 0x80307B84; // type:func
 missiGetPos = 0x80307B9C; // type:func
 missiSetInterval = 0x80307C08; // type:func
 missiInit = 0x80307C64; // type:func
@@ -1208,8 +1213,15 @@ gBalls                    = 0x80349C08; // size:0x2170
 sControlInfoVeh     = 0x803414EC; // size:0x38
 sControlInfoCount   = 0x8034C680;
 
-D_8034EE84          = 0x803418C4; // size:8
+D_8034EE84          = 0x803418C4; // size:0x8
 D_8034EE30          = 0x80341870; // size:0x54
+
+D_8034F420          = 0x80341E60; // size:0x1C
+D_8034F43C          = 0x80341E7C; // size:0x4
+D_8034F4BC          = 0x80341EFC; // size:0xA
+D_8034F4C8          = 0x80341F08; // size:0x10
+D_8034F4D8          = 0x80341F18; // size:0x8
+
 D_8034F7C0          = 0x803421F0;
 D_8034F850          = 0x80342280;
 D_8034F854          = 0x80342284;
@@ -1230,5 +1242,7 @@ D_80362690          = 0x80355080;
 D_80364210          = 0x80356C00; // size:0x34E0
 
 gHoverPads          = 0x8035BF78; // size:0x8C
+
+gFcnDrawMenuItem    = 0x8035E7F8;
 
 D_8037DC84          = 0x80370664;

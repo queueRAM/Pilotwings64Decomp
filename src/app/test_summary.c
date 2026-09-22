@@ -40,6 +40,17 @@ Vec3F D_8034F450[] = {
 
 // blitId, x offset
 u16 D_8034F480[][2] = {
+#if defined(VERSION_JP)
+    // TODO: jp blit ID remap
+    { BLIT_ID_27, 220 },
+    { BLIT_ID_25, 220 },
+    { BLIT_ID_26, 220 },
+    { BLIT_ID_28, 220 },
+    { BLIT_ID_29, 220 },
+    { BLIT_ID_2A, 220 },
+    { BLIT_ID_2B, 220 },
+    { BLIT_WAYPOINT_GOAL, 220 }
+#else
     { BLIT_ID_21, 220 },
     { BLIT_ID_1F, 220 },
     { BLIT_ID_20, 220 },
@@ -47,11 +58,22 @@ u16 D_8034F480[][2] = {
     { BLIT_ID_23, 220 },
     { BLIT_ID_24, 220 },
     { BLIT_ID_25, 220 },
-    { BLIT_ID_2D, 220 },
+    { BLIT_ID_2D, 220 }
+#endif
 };
 
 // blitId, x offset
 u16 D_8034F4A0[][2] = {
+#if defined(VERSION_JP)
+    // TODO: jp blit ID remap
+    { BLIT_ID_2D, 220 },
+    { BLIT_WAYPOINT_CURRENT_POSITION, 220 },
+    { BLIT_ID_2C, 220 },
+    { BLIT_WAYPOINT_RUNWAY, 220 },
+    { BLIT_WAYPOINT_TARGET, 220 },
+    { BLIT_WAYPOINT_MECHA_HAWK, 220 },
+    { BLIT_WAYPOINT_LANDING_POINT, 220 }
+#else
     { BLIT_ID_27, 220 },
     { BLIT_ID_28, 220 },
     { BLIT_ID_26, 220 },
@@ -59,6 +81,7 @@ u16 D_8034F4A0[][2] = {
     { BLIT_ID_2B, 220 },
     { BLIT_ID_2C, 220 },
     { BLIT_ID_29, 220 }
+#endif
 };
 
 u16 D_8034F4BC[] = { TEXT_BLONDS_QFY, TEXT_SILVER_QFY, TEXT_GOLD_QFY, TEXT_PERFECT_QFY, TEXT_GREAT_QFY };
@@ -194,6 +217,9 @@ s32 func_8030C61C(void) {
     return ret;
 }
 
+#if defined(VERSION_JP)
+#pragma GLOBAL_ASM("asm/nonmatchings/app/test_summary/func_8030C6A0.s")
+#else
 void func_8030C6A0(void) {
     Unk80362690_Unk0* sp74;
     s16* sp70;
@@ -259,6 +285,7 @@ void func_8030C6A0(void) {
     }
     uvFontGenDlist();
 }
+#endif
 
 void func_8030CB10(void) {
     Camera* camera = D_80362690->unkC[D_80362690->unk9C].unk70;
