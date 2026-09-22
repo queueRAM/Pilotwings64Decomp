@@ -423,8 +423,8 @@ segments:
       - [0x79B30, c, app/hang_glider2]
       - [0x7BE10, c, app/hang_glider_sound]
       - [0x7C930, c, app/code_7C4C0]
-      - [0x7D3A0, asm, app/code_7CF30]
-      - [0x80270, asm, app/code_7FE00]
+      - [0x7D3A0, c, app/code_7CF30]
+      - [0x80270, c, app/code_7FE00]
       - [0x81900, asm, app/jumble_hopper]
       - [0x82920, asm, app/code_82520]
       - [0x83000, asm, app/code_82B90]
@@ -514,7 +514,9 @@ segments:
       - [0xD6C40, .data, app/hang_glider0]
       - [0xD6C50, .data, app/hang_glider2]
       - [0xD6E00, .data, app/code_7C4C0]
-      - [0xD6E10, data]
+      - [0xD6E10, .data, app/code_7CF30]
+      - [0xD6E20, .data, app/code_7FE00]
+      - [0xD6E30, data]
 
       - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, .rodata, app/balls]
@@ -550,8 +552,8 @@ segments:
       - [0xDA320, .rodata, app/hang_glider2]
       - [0xDA450, .rodata, app/hang_glider_sound]
       - [0xDA530, .rodata, app/code_7C4C0]
-      - [0xDA550, rodata, app/code_7CF30]
-      - [0xDAA20, rodata, app/code_7FE00]
+      - [0xDA550, .rodata, app/code_7CF30]
+      - [0xDAA20, .rodata, app/code_7FE00]
       - [0xDAB70, rodata, app/jumble_hopper]
       - [0xDACF0, rodata, app/code_82520]
       - [0xDAD20, rodata, app/code_82B90]
@@ -647,7 +649,9 @@ segments:
       - { type: .bss, vram: 0x8035AA90, name: app/hang_glider2 }
       - { type: .bss, vram: 0x8035AD00, name: app/hang_glider_sound }
       - { type: .bss, vram: 0x8035AD60, name: app/code_7C4C0 }
-      - { type: bss, vram: 0x8035B270 }
+      - { type: .bss, vram: 0x8035B270, name: app/code_7CF30 }
+      - { type: .bss, vram: 0x8035B2D0, name: app/code_7FE00 }
+      - { type: bss, vram: 0x8035B510 }
 
   - name: filetable
     type: bin
