@@ -434,9 +434,9 @@ segments:
       - [0x92C60, c, app/menu]
       - [0x93040, c, app/level]
       - [0x93B40, c, app/test_summary] # code diffs @ 0x94030
-      - [0x944D0, asm, app/credits]
-      - [0x952A0, asm, app/level_select]
-      - [0x976E0, asm, app/map3d]
+      - [0x944D0, c, app/credits]
+      - [0x952A0, asm, app/level_select] # code diffs @ 0x95A00
+      - [0x976E0, c, app/map3d]
       - [0x99FE0, asm, app/mem]
       - [0x9A0B0, asm, app/menu_utils]
       - [0x9AC70, asm, app/code_9A960]
@@ -522,7 +522,10 @@ segments:
       - [0xD6E80, .data, app/hover_pads]
       - [0xD6E90, .data, app/level]
       - [0xD6EB0, .data, app/test_summary]
-      - [0xD6F70, data]
+      - [0xD6F70, .data, app/credits]
+      - [0xD7220, data, app/level_select]
+      - [0xD7270, .data, app/map3d]
+      - [0xD72C0, data]
 
       - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, .rodata, app/balls]
@@ -568,9 +571,9 @@ segments:
       - [0xDB330, rodata, app/gyrocopter_sound]
       - [0xDB430, .rodata, app/menu]
       - [0xDB460, .rodata, app/level]
-      - [0xDB700, rodata, app/credits]
+      - [0xDB700, .rodata, app/credits]
       - [0xDBC70, rodata, app/level_select]
-      - [0xDBC90, rodata, app/map3d]
+      - [0xDBC90, .rodata, app/map3d]
       - [0xDBED0, rodata, app/mem]
       - [0xDBF10, rodata, app/menu_utils]
       - [0xDBF20, rodata, app/code_9A960]
@@ -666,7 +669,10 @@ segments:
       - { type: .bss, vram: 0x8035C900, name: app/menu }
       - { type: .bss, vram: 0x8035C920, name: app/level }
       - { type: .bss, vram: 0x8035D290, name: app/test_summary }
-      - { type: bss, vram: 0x8035D2A0 }
+      - { type: .bss, vram: 0x8035D2A0, name: app/credits }
+      - { type: bss, vram: 0x8035D2B0, name: app/level_select }
+      - { type: .bss, vram: 0x8035D2D0, name: app/map3d }
+      - { type: bss, vram: 0x8035D450 }
 
   - name: filetable
     type: bin

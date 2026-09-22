@@ -629,7 +629,7 @@ func_80313FD0 = 0x803067C0; // type:func
 func_80314114 = 0x80306904; // type:func
 func_80314154 = 0x80306944; // type:func
 func_803141E4 = 0x803069D4; // type:func
-func_8031420C = 0x80207410; // type:func
+func_8031420C = 0x803069FC; // type:func
 
 mistInit = 0x80306C20; // type:func
 mist_803144D0 = 0x80306CC0; // type:func
@@ -1222,6 +1222,10 @@ D_8034F4BC          = 0x80341EFC; // size:0xA
 D_8034F4C8          = 0x80341F08; // size:0x10
 D_8034F4D8          = 0x80341F18; // size:0x8
 
+D_8034F7A0          = 0x803421D0;
+D_8034F7A4          = 0x803421D4;
+D_8034F7B0          = 0x803421E0;
+D_8034F7B8          = 0x803421E8;
 D_8034F7C0          = 0x803421F0;
 D_8034F850          = 0x80342280;
 D_8034F854          = 0x80342284;
@@ -1229,6 +1233,8 @@ D_8034F854          = 0x80342284;
 gMedalPointRequirements = 0x80342604; // size:0x30
 
 gCurrentMusicId     = 0x80342FE0;
+
+D_803507A0          = 0x803431D0;
 
 D_80359AA8          = 0x8034C498; // size:4
 D_80359AAC          = 0x8034C49C; // size:4
@@ -1246,3 +1252,36 @@ gHoverPads          = 0x8035BF78; // size:0x8C
 gFcnDrawMenuItem    = 0x8035E7F8;
 
 D_8037DC84          = 0x80370664;
+
+gRings              = 0x80360468; // size:0x35E8
+
+sMissileTargets     = 0x8036B6E8; // size:0xBE0
+
+gThermReady         = 0x8036D6C8;
+
+sMapDobjId          = 0x80342220;
+sMapObjectCount     = 0x80342224;
+sMapMessageCount    = 0x80342228;
+D_8034F7FC          = 0x8034222C;
+D_8034F800          = 0x80342230;
+D_8034F804          = 0x80342234;
+D_8034F808          = 0x80342238;
+D_8034F80C          = 0x8034223C;
+D_8034F810          = 0x80342240;
+D_8034F814          = 0x80342244;
+D_8034F818          = 0x80342248;
+D_8034F81C          = 0x8034224C;
+D_8034F820          = 0x80342250;
+D_8034F824          = 0x80342254;
+D_8034F828          = 0x80342258;
+D_8034F82C          = 0x8034225C;
+D_8034F830          = 0x80342260;
+D_8034F834          = 0x80342264;
+D_8034F838          = 0x80342268;
+sMapHudFlagsSave    = 0x8034226C;
+
+sMapEmitterDev0     = 0x8035D2D0;
+sMapEmitterDev1     = 0x8035D2D1;
+sMapObjects         = 0x8035D2D8;
+sMapMessages        = 0x8035D350;
+sMapGlobalScale     = 0x8035D440;

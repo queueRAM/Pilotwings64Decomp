@@ -80,6 +80,9 @@ void map3dMain(Unk80362690* arg0, s32 arg1) {
     map3dDeinit(arg0, arg1);
 }
 
+#if defined(VERSION_JP)
+#pragma GLOBAL_ASM("asm/nonmatchings/app/map3d/map3dLoad.s")
+#else
 void map3dLoad(Unk80362690* arg0, s32 arg1) {
     Mtx4F sp148;
     Camera* camera;
@@ -562,6 +565,7 @@ void map3dLoad(Unk80362690* arg0, s32 arg1) {
     sMapEmitterDev0 = sndMakeDev(SFX_UI_MAP_MOVE);
     sMapEmitterDev1 = sndMakeDev(0x03);
 }
+#endif
 
 s32 map3dHandler(u8 arg0, s32 arg1) {
     f32 sp3C;
