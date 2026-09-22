@@ -161,7 +161,7 @@ STATIC_FUNC void hgSoundEvent22(HangGliderData* hg) {
     if (hg->unk8C == 3) {
         if (!(hg->unk318 & 0x2)) {
             hg->unk318 |= 0x2;
-            sndPlaySfx(0x36);
+            sndPlaySfx(SFX_CRASH_LANDING_REVEAL);
             if (!(hg->unk318 & 0x10)) {
 #if defined(VERSION_JP)
                 // TODO: is this enum reuse or reorder?
