@@ -1310,3 +1310,8 @@ sMenuGfxR           = 0x8035E817;
 sMenuGfxG           = 0x8035E818;
 sMenuGfxB           = 0x8035E819;
 sMenuSoundFlags     = 0x8035E81A;
+
+gLandingPadCount    = 0x8035ECA9;
+gLandingStripCount  = 0x8035ECAA;
+gLandingPads        = 0x8035ECD8; // size:0x150
+gLandingStrips      = 0x8035EE28; // size:0x78

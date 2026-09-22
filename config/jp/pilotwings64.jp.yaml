@@ -445,7 +445,7 @@ segments:
       - [0x9CD90, c, app/oil_plant]
       - [0x9D260, c, app/oil]
       - [0x9D6D0, c, app/options]
-      - [0x9E600, asm, app/pads]
+      - [0x9E600, c, app/pads]
       - [0x9F5E0, asm, app/hud]
       - [0xA6310, c, app/code_A6000]
       - [0xA67D0, asm, app/code_A64C0]
@@ -531,7 +531,8 @@ segments:
       - [0xD7310, .data, app/oil_plant]
       - [0xD7330, .data, app/oil]
       - [0xD7350, .data, app/options]
-      - [0xD7380, data]
+      - [0xD7380, .data, app/pads]
+      - [0xD7390, data]
 
       - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, .rodata, app/balls]
@@ -587,7 +588,7 @@ segments:
       - [0xDBF80, .rodata, app/missi]
       - [0xDBFA0, .rodata, app/oil_plant]
       - [0xDBFB0, .rodata, app/options]
-      - [0xDC020, rodata, app/pads]
+      - [0xDC020, .rodata, app/pads]
       - [0xDC180, rodata, app/hud]
       - [0xDC350, .rodata, app/code_A6000]
       - [0xDC380, rodata, app/code_A64C0]
@@ -684,7 +685,8 @@ segments:
       - { type: .bss, vram: 0x8035E9E0, name: app/missi }
       - { type: .bss, vram: 0x8035EAC0, name: app/oil }
       - { type: .bss, vram: 0x8035EB10, name: app/options }
-      - { type: bss, vram: 0x8035EB40 }
+      - { type: .bss, vram: 0x8035EB40, name: app/pads }
+      - { type: bss, vram: 0x8035EF10 }
 
   - name: filetable
     type: bin
