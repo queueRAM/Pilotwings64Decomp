@@ -524,6 +524,7 @@ hoverPad_80309868 = 0x802FC1A8; // type:func
 hoverPadObjSetup = 0x802FC2E8; // type:func
 hoverPadLoad = 0x802FC3A4; // type:func
 hoverPadActivateNext = 0x802FC588; // type:func
+hoverPadFrameUpdate = 0x802FC6A4; // type:func
 hoverPadLanded = 0x802FC6AC; // type:func
 hoverPadGetAltitude = 0x802FC7A8; // type:func
 hoverPadGetFuel = 0x802FC7E8; // type:func
@@ -1227,5 +1228,7 @@ D_8035A5F0          = 0x8034CFE0;
 D_80362690          = 0x80355080;
 
 D_80364210          = 0x80356C00; // size:0x34E0
+
+gHoverPads          = 0x8035BF78; // size:0x8C
 
 D_8037DC84          = 0x80370664;
