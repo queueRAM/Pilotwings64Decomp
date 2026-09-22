@@ -59,6 +59,11 @@ void menuUtilCreate(s32 x, s32 y, s32 font, f32 xScale, f32 yScale, char** menuI
     sMenuSoundFlags = MENU_SOUND_CHANGE | MENU_SOUND_BACK | MENU_SOUND_SELECT;
 }
 
+#if defined(VERSION_JP)
+// US reorderd this function
+// https://decomp.me/scratch/CqJps
+#pragma GLOBAL_ASM("asm/nonmatchings/app/menu_utils/menuUtilCheckInputs.s")
+#else
 s32 menuUtilCheckInputs(void) {
     f32 stickY;
     s32 menuItemChanged;
@@ -117,11 +122,15 @@ s32 menuUtilCheckInputs(void) {
         return -2;
     }
 }
+#endif
 
 void menuUtilDeinit(void) {
     sMenuUtilItems = NULL;
 }
 
+#if defined(VERSION_JP)
+#pragma GLOBAL_ASM("asm/nonmatchings/app/menu_utils/menuUtilRender.s")
+#else
 void menuUtilRender(void) {
     s32 temp_a3;
     s32 var_s1;
@@ -164,6 +173,7 @@ void menuUtilRender(void) {
         var_s1 -= fontHeight + 1;
     }
 }
+#endif
 
 s32 menuUtilGetCurItem(void) {
     return sMenuCurSelect;

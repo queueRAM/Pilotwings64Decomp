@@ -438,7 +438,7 @@ segments:
       - [0x952A0, asm, app/level_select] # code diffs @ 0x95A00
       - [0x976E0, c, app/map3d]
       - [0x99FE0, c, app/mem]
-      - [0x9A0B0, asm, app/menu_utils]
+      - [0x9A0B0, c, app/menu_utils]
       - [0x9AC70, asm, app/code_9A960]
       - [0x9BC70, asm, app/mist]
       - [0x9C390, asm, app/missi]
@@ -576,7 +576,7 @@ segments:
       - [0xDBC70, rodata, app/level_select]
       - [0xDBC90, .rodata, app/map3d]
       - [0xDBED0, .rodata, app/mem]
-      - [0xDBF10, rodata, app/menu_utils]
+      - [0xDBF10, .rodata, app/menu_utils]
       - [0xDBF20, rodata, app/code_9A960]
       - [0xDBF50, rodata, app/mist]
       - [0xDBF80, rodata, app/missi]
@@ -674,7 +674,8 @@ segments:
       - { type: bss, vram: 0x8035D2B0, name: app/level_select }
       - { type: .bss, vram: 0x8035D2D0, name: app/map3d }
       - { type: .bss, vram: 0x8035D450, name: app/mem }
-      - { type: bss, vram: 0x8035E7E0 }
+      - { type: .bss, vram: 0x8035E7E0, name: app/menu_utils }
+      - { type: bss, vram: 0x8035E820 }
 
   - name: filetable
     type: bin
