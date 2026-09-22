@@ -1090,6 +1090,7 @@ taskGet_80345CC0 = 0x80338640; // type:func
 taskLoadCommObj = 0x80338664; // type:func
 taskBirdmanPad = 0x80338C54; // type:func
 taskGetClsVehTest = 0x80338CBC; // type:func
+taskGet_80346364 = 0x80338CE4; // type:func
 task_80346370 = 0x80338CF0; // type:func
 taskGet_80346468 = 0x80338DE8; // type:func
 taskGetHOPD = 0x80338DF4; // type:func

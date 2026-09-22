@@ -80,7 +80,11 @@ STATIC_FUNC void hgSoundEventHandler(s32 event, void* userData, s32 eventData) {
 
         if (hg->unk324 < D_8034F850) {
             temp_v0 = hudGet_8031DA9C();
+#if defined(VERSION_JP)
+            if ((temp_v0 == 0x182) || (temp_v0 == 0x185)) {
+#else
             if ((temp_v0 == 0x157) || (temp_v0 == 0x15C)) {
+#endif
                 hg->unk324 = D_8034F850 + 1.0f;
                 sndPlaySfx(SFX_UI_WARNING);
             }
@@ -159,7 +163,12 @@ STATIC_FUNC void hgSoundEvent22(HangGliderData* hg) {
             hg->unk318 |= 0x2;
             sndPlaySfx(0x36);
             if (!(hg->unk318 & 0x10)) {
+#if defined(VERSION_JP)
+                // TODO: is this enum reuse or reorder?
+                sndSetMusic(BGM_ROCKET_BELT_CRASH);
+#else
                 sndSetMusic(BGM_HANG_GLIDER_CRASH);
+#endif
                 sndSetMusicState(MUS_STATE_PLAY_SEQ);
                 func_8033FCD0(sp34->veh);
             }
