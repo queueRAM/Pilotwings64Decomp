@@ -1205,6 +1205,7 @@ whalePodSetInterval = 0x8033F594; // type:func
 windInit = 0x8033F630; // type:func
 windLoad = 0x8033F638; // type:func
 windDeinit = 0x8033FD7C; // type:func
+wind_8034D548 = 0x8033FE18; // type:func
 wind_8034D550 = 0x8033FE20; // type:func
 
 windObjInit = 0x80340950; // type:func
