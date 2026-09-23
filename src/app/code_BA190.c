@@ -216,6 +216,9 @@ void func_80333384(SkyDivingData* sdData) {
     sdData->unk160.z = func_80313AF4(var_fs0, sdData->unk160.z, 3.0f);
 }
 
+#if defined(VERSION_JP)
+#pragma GLOBAL_ASM("asm/nonmatchings/app/code_BA190/func_803335D0.s")
+#else
 s32 func_803335D0(SkyDivingData* sdData) {
     f32 sp6C;
     f32 temp_fv0;
@@ -291,3 +294,4 @@ s32 func_803335D0(SkyDivingData* sdData) {
     }
     return 1;
 }
+#endif
