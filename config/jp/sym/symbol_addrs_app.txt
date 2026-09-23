@@ -1129,6 +1129,7 @@ therm_80346E04 = 0x80339784; // type:func
 totResult_80346FC0 = 0x80339940; // type:func
 totResultHandler = 0x80339A6C; // type:func
 totResult_80347150 = 0x80339AD0; // type:func
+totResultInit = 0x80339BF0; // type:func
 totResultCreateMenu = 0x80339E6C; // type:func
 totResultMenuChoose = 0x80339FBC; // type:func
 totResultDrawTally = 0x8033A0A0; // type:func
@@ -1359,6 +1360,11 @@ sMainMenuItems      = 0x803430C8;
 
 D_8035078C          = 0x803431BC;
 
+sStageMedalName     = 0x80343310; // size:0x50
+sBonusMedalName     = 0x80343360; // size:0x14
+sTestPtsStr         = 0x80343388; // size:0x10
+D_80343398          = 0x80343398;
+
 sRadarThermCirc     = 0x8035EF10; // size:0x88
 sHudState           = 0x8035EF98; // size:0xC7C
 D_8036D224          = 0x8035FC14;
@@ -1393,3 +1399,17 @@ sTextNameCount      = 0x8036B6C0;
 
 D_80378CE0          = 0x8036B6D0;
 D_80378CE4          = 0x8036B6D4;
+
+sTestPtsStr0        = 0x8036D6D0;
+sTestPtsStr1        = 0x8036D6E0;
+sTestPtsStr2        = 0x8036D6F0;
+sTestPtsStr3        = 0x8036D700;
+sMedalName          = 0x8036D70C;
+sUnused_8037AD20    = 0x8036D710;
+sTotalPtsStr        = 0x8036D718;
+D_8037AD38          = 0x8036D728;
+D_8037AD42          = 0x8036D732;
+sMedalNameCopy      = 0x8036D738;
+
+sToyCount           = 0x8036D750;
+sToys               = 0x8036D758; // size:0x2EE0
