@@ -1368,3 +1368,8 @@ D_80373E10          = 0x80366800;
 D_80373E14          = 0x80366804;
 D_80373E18          = 0x80366808;
 D_80373E1C          = 0x8036680C;
+
+sTextName           = 0x8036A900; // size:0x6E0
+sTextData           = 0x8036AFE0; // size:0x6DC
+sTextDataCount      = 0x8036B6BC;
+sTextNameCount      = 0x8036B6C0;

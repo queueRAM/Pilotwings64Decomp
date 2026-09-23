@@ -475,7 +475,7 @@ segments:
       - [0xC78D0, c, app/snow]
       - [0xC80A0, c, app/spath]
       - [0xC8EF0, c, app/splash]
-      - [0xC99A0, asm, app/text_data]
+      - [0xC99A0, c, app/text_data]
       - [0xCA090, asm, app/title_screen]
       - [0xCBC60, asm, app/targets]
       - [0xCC380, asm, app/task]
@@ -729,7 +729,8 @@ segments:
       - { type: .bss, vram: 0x803668E0, name: app/snow }
       - { type: .bss, vram: 0x80366900, name: app/spath }
       - { type: .bss, vram: 0x803696B0, name: app/splash }
-      - { type: bss, vram: 0x8036A900 }
+      - { type: .bss, vram: 0x8036A900, name: app/text_data }
+      - { type: bss, vram: 0x8036B6D0 }
 
   - name: filetable
     type: bin
