@@ -1022,6 +1022,7 @@ void func_8033A72C(void) {
 }
 
 #if defined(VERSION_JP)
+void func_8033ADD4(s32 arg0, Unk80373060* arg1, s32 arg2, s32 arg3);
 #pragma GLOBAL_ASM("asm/nonmatchings/app/snap/func_8033ADD4.s")
 #else
 void func_8033ADD4(s32 arg0, Unk80373060* arg1, s32 arg2, s32 arg3) {

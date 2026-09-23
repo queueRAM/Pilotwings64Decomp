@@ -1057,6 +1057,16 @@ textFmtIntAt = 0x80334E28; // type:func
 
 // title_screen
 func_80342630 = 0x80335040; // type:func
+func_803427FC = 0x8033520C; // type:func
+func_80342D2C = 0x80335774; // type:func
+func_80343294 = 0x80335CDC; // type:func
+func_803433A4 = 0x80335DEC; // type:func
+func_80343550 = 0x80335F30; // type:func
+introSceneRunner = 0x80336338; // type:func
+func_80343B5C = 0x803364E8; // type:func
+func_80343C44 = 0x803365D0; // type:func
+func_80343E84 = 0x80336810; // type:func
+func_8034411C = 0x80336AA8; // type:func
 func_80344258 = 0x80336BE4; // type:func
 
 targetsInit = 0x80336C10; // type:func
@@ -1342,6 +1352,10 @@ D_80350594          = 0x80342FC4;
 
 gVehShortNames      = 0x803433C8; // size:0x1C
 
+D_80350690          = 0x803430C0;
+D_80350694          = 0x803430C4;
+sMainMenuItems      = 0x803430C8;
+
 sRadarThermCirc     = 0x8035EF10; // size:0x88
 sHudState           = 0x8035EF98; // size:0xC7C
 D_8036D224          = 0x8035FC14;
@@ -1373,3 +1387,6 @@ sTextName           = 0x8036A900; // size:0x6E0
 sTextData           = 0x8036AFE0; // size:0x6DC
 sTextDataCount      = 0x8036B6BC;
 sTextNameCount      = 0x8036B6C0;
+
+D_80378CE0          = 0x8036B6D0;
+D_80378CE4          = 0x8036B6D4;
