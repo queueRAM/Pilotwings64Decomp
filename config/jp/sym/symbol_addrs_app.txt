@@ -977,6 +977,7 @@ smokeCreateTerra = 0x80329C88; // type:func
 
 func_80337D50 = 0x8032A4B0; // type:func
 snapInit = 0x8032A518; // type:func
+snapDeinit = 0x8032AB5C; // type:func
 func_80338404 = 0x8032AB64; // type:func
 func_80338614 = 0x8032AD74; // type:func
 func_803386A4 = 0x8032AE04; // type:func
@@ -986,12 +987,14 @@ func_80339C8C = 0x8032C3EC; // type:func
 func_80339E1C = 0x8032C57C; // type:func
 func_80339F9C = 0x8032C6FC; // type:func
 func_8033A020 = 0x8032C780; // type:func
+func_8033A078 = 0x8032C7D8; // type:func
 func_8033A128 = 0x8032C848; // type:func
 func_8033A244 = 0x8032C964; // type:func
 func_8033A610 = 0x8032CD30; // type:func
-// func_8033A664 = 0x8032CD30; // type:func
+func_8033A664 = 0x8032CD84; // type:func
 func_8033A6B8 = 0x8032CDD8; // type:func
 func_8033A72C = 0x8032CE4C; // type:func
+func_8033ADD4 = 0x8032D4F4; // type:func
 func_8033BF00 = 0x8032E954; // type:func
 func_8033CBD0 = 0x8032F624; // type:func
 func_8033D3EC = 0x8032FE40; // type:func
@@ -1320,6 +1323,23 @@ gLandingStrips      = 0x8035EE28; // size:0x78
 D_8034F910          = 0x80342340;
 D_8034F914          = 0x80342344;
 
+sPtsTallyStr        = 0x803429DC;
+sReplayTipSet       = 0x803429EC;
+sVehTipIsInit       = 0x803429F0;
+
+D_80350510          = 0x80342F40; // size:0x18
+D_80350528          = 0x80342F58;
+D_8035052C          = 0x80342F5C;
+D_80350534          = 0x80342F64;
+D_80350538          = 0x80342F68;
+D_8035053C          = 0x80342F6C;
+D_80350540          = 0x80342F70;
+D_80350544          = 0x80342F74;
+D_80350548          = 0x80342F78;
+D_8035054C          = 0x80342F7C;
+D_80350550          = 0x80342F80;
+D_80350594          = 0x80342FC4;
+
 gVehShortNames      = 0x803433C8; // size:0x1C
 
 sRadarThermCirc     = 0x8035EF10; // size:0x88
@@ -1338,6 +1358,13 @@ sTipTextId          = 0x80364328;
 sPtsDeductedStr     = 0x80364330;
 sTotalPointsStr     = 0x80364340;
 
-sPtsTallyStr  = 0x803429DC;
-sReplayTipSet = 0x803429EC;
-sVehTipIsInit = 0x803429F0;
+D_80373060          = 0x80365A50; // size:0x2A0
+D_80373300          = 0x80365CF0; // size:0x90
+D_80373390          = 0x80365D80; // size:0x2A0
+D_80373630          = 0x80366020; // size:0x2A0
+D_803738D0          = 0x803662C0; // size:0x2A0
+D_80373B70          = 0x80366560; // size:0x2A0
+D_80373E10          = 0x80366800;
+D_80373E14          = 0x80366804;
+D_80373E18          = 0x80366808;
+D_80373E1C          = 0x8036680C;
