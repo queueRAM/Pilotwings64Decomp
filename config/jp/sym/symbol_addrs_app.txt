@@ -735,6 +735,7 @@ hud_8031DAA8 = 0x80310294; // type:func
 hudDrawLowFuel = 0x803102E0; // type:func
 hudDrawStartText = 0x803103EC; // type:func
 hudRadarThermal = 0x803104F8; // type:func
+hudSetCameraState = 0x80310754; // type:func
 hudRadarWaypoint = 0x80310760; // type:func
 hud_8031E628 = 0x80310E14; // type:func
 hudDrawRect = 0x80310E88; // type:func
@@ -1315,3 +1316,13 @@ gLandingPadCount    = 0x8035ECA9;
 gLandingStripCount  = 0x8035ECAA;
 gLandingPads        = 0x8035ECD8; // size:0x150
 gLandingStrips      = 0x8035EE28; // size:0x78
+
+D_8034F910          = 0x80342340;
+D_8034F914          = 0x80342344;
+
+sRadarThermCirc     = 0x8035EF10; // size:0x88
+sHudState           = 0x8035EF98; // size:0xC7C
+D_8036D224          = 0x8035FC14;
+
+gThermalCount       = 0x8036D544;
+gThermals           = 0x8036D548; // size:0x180

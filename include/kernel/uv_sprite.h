@@ -7,6 +7,14 @@
 
 enum SpriteBlitId {
 #if defined(VERSION_JP) // TODO: JP blit IDs
+    BLIT_ID_0B                          = 0x10,
+    BLIT_ID_0C                          = 0x11,
+    BLIT_ID_16                          = 0x1B,
+    BLIT_ID_17                          = 0x1C,
+    BLIT_ID_18                          = 0x1D,
+    BLIT_ID_19                          = 0x1E,
+    BLIT_ID_1A                          = 0x1F,
+    BLIT_ID_1B                          = 0x20,
     BLIT_ID_3D                          = 0x5F,
     BLIT_ID_3E                          = 0x60,
     BLIT_ID_3F                          = 0x61,
@@ -22,8 +30,6 @@ enum SpriteBlitId {
     BLIT_ID_08                          = 0x08,
     BLIT_ID_09                          = 0x09,
     BLIT_ID_0A                          = 0x0A,
-    BLIT_ID_0B                          = 0x0B,
-    BLIT_ID_0C                          = 0x0C,
     BLIT_TEST_MENU_TOP_SCORE            = 0x0D, // "Top Score" box title
     BLIT_TEST_MENU_BUTTON_START         = 0x0E, // "Start" button
     BLIT_TEST_MENU_BUTTON_SCORING       = 0x0F, // "Scoring" button
@@ -33,12 +39,6 @@ enum SpriteBlitId {
     BLIT_TEST_MENU_BUTTON_SAMPLE_PHOTO  = 0x13, // "Sample photo" button
     BLIT_TEST_MENU_BUTTON_RETURN        = 0x14, // "Return" button
     BLIT_TEST_MENU_TEST_TITLE           = 0x15, // "TEST" box title
-    BLIT_ID_16                          = 0x16,
-    BLIT_ID_17                          = 0x17,
-    BLIT_ID_18                          = 0x18,
-    BLIT_ID_19                          = 0x19,
-    BLIT_ID_1A                          = 0x1A,
-    BLIT_ID_1B                          = 0x1B,
     BLIT_ID_1E                          = 0x1E,
     BLIT_ID_1F                          = 0x1F,
     BLIT_ID_20                          = 0x20,
