@@ -480,7 +480,7 @@ segments:
       - [0xCBC60, c, app/targets]
       - [0xCC380, c, app/task]
       - [0xCDE70, c, app/code_CD9D0]
-      - [0xCDFC0, asm, app/thermals]
+      - [0xCDFC0, c, app/thermals]
       - [0xCE990, asm, app/total_results]
       - [0xCF4E0, asm, app/toys]
       - [0xCFF00, asm, app/test_menu]
@@ -554,7 +554,8 @@ segments:
       - [0xD8110, .data, app/title_screen]
       - [0xD8120, .data, app/targets]
       - [0xD8210, .data, app/task]
-      - [0xD8270, data]
+      - [0xD8270, .data, app/thermals]
+      - [0xD8360, data]
 
       - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, .rodata, app/balls]
@@ -642,7 +643,7 @@ segments:
       - [0xDE460, .rodata, app/title_screen]
       - [0xDE4C0, .rodata, app/targets]
       - [0xDE530, .rodata, app/task]
-      - [0xDE720, rodata, app/thermals]
+      - [0xDE720, .rodata, app/thermals]
       - [0xDE760, rodata, app/total_results]
       - [0xDE8F0, rodata, app/toys]
       - [0xDE9B0, rodata, app/test_menu]
@@ -736,7 +737,8 @@ segments:
       - { type: .bss, vram: 0x8036B6D0, name: app/title_screen }
       - { type: .bss, vram: 0x8036B6E0, name: app/targets }
       - { type: .bss, vram: 0x8036C2D0, name: app/task }
-      - { type: bss, vram: 0x8036D540 }
+      - { type: .bss, vram: 0x8036D540, name: app/thermals }
+      - { type: bss, vram: 0x8036D6D0 }
 
   - name: filetable
     type: bin
