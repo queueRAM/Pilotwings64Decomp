@@ -449,7 +449,7 @@ segments:
       - [0x9F5E0, c, app/hud]
       - [0xA6310, c, app/code_A6000]
       - [0xA67D0, c, app/code_A64C0]
-      - [0xA7770, asm, app/planes]
+      - [0xA7770, c, app/planes]
       - [0xA8230, asm, app/demo_attitude]
       - [0xA8940, asm, app/proxanim]
       - [0xA8F40, asm, app/code_A8C30]
@@ -593,7 +593,7 @@ segments:
       - [0xDC180, .rodata, app/hud]
       - [0xDC350, .rodata, app/code_A6000]
       - [0xDC380, .rodata, app/code_A64C0]
-      - [0xDC4F0, rodata, app/planes]
+      - [0xDC4F0, .rodata, app/planes]
       - [0xDC520, rodata, app/demo_attitude]
       - [0xDC580, rodata, app/proxanim]
       - [0xDC770, rodata, app/code_A8C30]
@@ -689,7 +689,8 @@ segments:
       - { type: .bss, vram: 0x8035EB40, name: app/pads }
       - { type: .bss, vram: 0x8035EF10, name: app/hud }
       - { type: .bss, vram: 0x8035FC20, name: app/code_A64C0 }
-      - { type: bss, vram: 0x8035FCA0 }
+      - { type: .bss, vram: 0x8035FCA0, name: app/planes }
+      - { type: bss, vram: 0x8035FD10 }
 
   - name: filetable
     type: bin
