@@ -1269,8 +1269,6 @@ gHoverPads          = 0x8035BF78; // size:0x8C
 
 gFcnDrawMenuItem    = 0x8035E7F8;
 
-D_8037DC84          = 0x80370664;
-
 gRings              = 0x80360468; // size:0x35E8
 
 sMissileTargets     = 0x8036B6E8; // size:0xBE0
@@ -1352,8 +1350,6 @@ D_8035054C          = 0x80342F7C;
 D_80350550          = 0x80342F80;
 D_80350594          = 0x80342FC4;
 
-gVehShortNames      = 0x803433C8; // size:0x1C
-
 D_80350690          = 0x803430C0;
 D_80350694          = 0x803430C4;
 sMainMenuItems      = 0x803430C8;
@@ -1364,6 +1360,17 @@ sStageMedalName     = 0x80343310; // size:0x50
 sBonusMedalName     = 0x80343360; // size:0x14
 sTestPtsStr         = 0x80343388; // size:0x10
 D_80343398          = 0x80343398;
+
+D_80350970          = 0x803433A0;
+sTestMenuState      = 0x803433A4;
+sMenuCurX           = 0x803433A8;
+sMenuCurY           = 0x803433AC;
+D_80350980          = 0x803433B0;
+D_80350984          = 0x803433B4;
+sClassShortNames    = 0x803433B8; // size:0x10
+gVehShortNames      = 0x803433C8; // size:0x1C
+sCurTestIdx         = 0x803433E4;
+D_803509B8          = 0x803433E8;
 
 sRadarThermCirc     = 0x8035EF10; // size:0x88
 sHudState           = 0x8035EF98; // size:0xC7C
@@ -1413,3 +1420,15 @@ sMedalNameCopy      = 0x8036D738;
 
 sToyCount           = 0x8036D750;
 sToys               = 0x8036D758; // size:0x2EE0
+
+sSelMenuScreenX     = 0x80370640;
+sSelMenuScreenY     = 0x80370644;
+sStickDirX          = 0x80370648;
+sStickDirY          = 0x8037064C;
+sStickIsHeld        = 0x80370650;
+sMenuMinY           = 0x80370654;
+sMenuMinX           = 0x80370658;
+sMenuMaxY           = 0x8037065C;
+sMenuMaxX           = 0x80370660;
+D_8037DC84          = 0x80370664;
+sDrawTestPts        = 0x8037067B;
