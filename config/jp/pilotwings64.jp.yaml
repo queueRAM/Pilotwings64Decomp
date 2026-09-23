@@ -471,7 +471,7 @@ segments:
       - [0xBD8F0, c, app/ski_lift]
       - [0xBDD50, c, app/smoke]
       - [0xBF500, c, app/snap]
-      - [0xC70D0, asm, app/snd]
+      - [0xC70D0, c, app/snd]
       - [0xC78D0, asm, app/snow]
       - [0xC80A0, asm, app/spath]
       - [0xC8EF0, asm, app/splash]
@@ -548,7 +548,8 @@ segments:
       - [0xD7F00, .data, app/shuttle]
       - [0xD7F80, .data, app/ski_lift]
       - [0xD7F90, .data, app/snap]
-      - [0xD8030, data]
+      - [0xD8030, .data, app/snd]
+      - [0xD8090, data]
 
       - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, .rodata, app/balls]
@@ -630,7 +631,7 @@ segments:
       - [0xDDC50, .rodata, app/ski_lift]
       - [0xDDC60, .rodata, app/smoke]
       - [0xDDFB0, .rodata, app/snap]
-      - [0xDE1A0, rodata, app/snd]
+      - [0xDE1A0, .rodata, app/snd]
       - [0xDE2C0, rodata, app/spath]
       - [0xDE3C0, rodata, app/splash]
       - [0xDE460, rodata, app/title_screen]
@@ -722,7 +723,8 @@ segments:
       - { type: .bss, vram: 0x803647A0, name: app/ski_lift }
       - { type: .bss, vram: 0x80364850, name: app/smoke }
       - { type: .bss, vram: 0x80365A50, name: app/snap }
-      - { type: bss, vram: 0x80366810 }
+      - { type: .bss, vram: 0x80366810, name: app/snd }
+      - { type: bss, vram: 0x803668E0 }
 
   - name: filetable
     type: bin
