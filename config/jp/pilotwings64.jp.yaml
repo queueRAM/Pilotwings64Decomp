@@ -489,8 +489,8 @@ segments:
       - [0xD2F00, c, app/code_D2B10]
       - [0xD3140, c, app/whale]
       - [0xD3C00, c, app/whale_pod]
-      - [0xD4680, asm, app/wind]
-      - [0xD59A0, asm, app/wind_objects]
+      - [0xD4680, c, app/wind]
+      - [0xD59A0, c, app/wind_objects]
 
       - [0xD6030, .data, app/code_51E30]
       - [0xD6130, .data, app/balls]
@@ -654,8 +654,8 @@ segments:
       - [0xDEAE0, .rodata, app/code_D2B10]
       - [0xDEB00, .rodata, app/whale]
       - [0xDEB10, .rodata, app/whale_pod]
-      - [0xDEB50, rodata, app/wind]
-      - [0xDEBC0, rodata, app/wind_objects]
+      - [0xDEB50, .rodata, app/wind]
+      - [0xDEBC0, .rodata, app/wind_objects]
 
       - { type: .bss, vram: 0x80349BE0, name: app/code_51E30 }
       - { type: .bss, vram: 0x80349C00, name: app/balls }
@@ -746,7 +746,8 @@ segments:
       - { type: .bss, vram: 0x80370680, name: app/user_paths }
       - { type: .bss, vram: 0x80371D60, name: app/whale }
       - { type: .bss, vram: 0x80371E30, name: app/whale_pod }
-      - { type: bss, vram: 0x80371EF0 }
+      - { type: .bss, vram: 0x80371EF0, name: app/wind }
+      - { type: .bss, vram: 0x803722F0, name: app/wind_objects }
 
   - name: filetable
     type: bin
