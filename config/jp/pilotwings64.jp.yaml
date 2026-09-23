@@ -466,10 +466,10 @@ segments:
       - [0xB7270, c, app/skydiving]
       - [0xBA420, c, app/code_BA190]
       - [0xBB060, c, app/sdsound]
-      - [0xBBAA0, asm, app/shadow]
-      - [0xBC470, asm, app/shuttle]
-      - [0xBD8F0, asm, app/ski_lift]
-      - [0xBDD50, asm, app/smoke]
+      - [0xBBAA0, c, app/shadow]
+      - [0xBC470, c, app/shuttle]
+      - [0xBD8F0, c, app/ski_lift]
+      - [0xBDD50, c, app/smoke]
       - [0xBF500, asm, app/snap]
       - [0xC70D0, asm, app/snd]
       - [0xC78D0, asm, app/snow]
@@ -544,7 +544,10 @@ segments:
       - [0xD76C0, .data, app/results]
       - [0xD7A50, .data, app/skydiving]
       - [0xD7ED0, .data, app/code_BA190]
-      - [0xD7EE0, data]
+      - [0xD7EE0, .data, app/shadow]
+      - [0xD7F00, .data, app/shuttle]
+      - [0xD7F80, .data, app/ski_lift]
+      - [0xD7F90, data]
 
       - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, .rodata, app/balls]
@@ -621,10 +624,10 @@ segments:
       - [0xDD780, .rodata, app/skydiving]
       - [0xDDA70, .rodata, app/code_BA190]
       - [0xDDAD0, .rodata, app/sdsound]
-      - [0xDDBA0, rodata, app/shadow]
-      - [0xDDBF0, rodata, app/shuttle]
-      - [0xDDC50, rodata, app/ski_lift]
-      - [0xDDC60, rodata, app/smoke]
+      - [0xDDBA0, .rodata, app/shadow]
+      - [0xDDBF0, .rodata, app/shuttle]
+      - [0xDDC50, .rodata, app/ski_lift]
+      - [0xDDC60, .rodata, app/smoke]
       - [0xDDFB0, rodata, app/snap]
       - [0xDE1A0, rodata, app/snd]
       - [0xDE2C0, rodata, app/spath]
@@ -714,7 +717,10 @@ segments:
       - { type: .bss, vram: 0x80364350, name: app/skydiving }
       - { type: .bss, vram: 0x80364540, name: app/code_BA190 }
       - { type: .bss, vram: 0x803646A0, name: app/sdsound }
-      - { type: bss, vram: 0x80364700 }
+      - { type: .bss, vram: 0x80364700, name: app/shuttle }
+      - { type: .bss, vram: 0x803647A0, name: app/ski_lift }
+      - { type: .bss, vram: 0x80364850, name: app/smoke }
+      - { type: bss, vram: 0x80365A50 }
 
   - name: filetable
     type: bin
