@@ -144,9 +144,9 @@ STATIC_DATA u8 sResultPtTypes[6][4][3][4] = {
 };
 
 STATIC_DATA s32 sResultMenu[] = {
-    0x0E, // "Check photo"
-    0x60, // "Replay"
-    0x5B  // "Next"
+    TEXT_PHOTO_SGI,
+    TEXT_REPLAY_SGI,
+    TEXT_NEXT_SGI
 };
 
 STATIC_DATA s16* sPtsTallyStr[] = {
@@ -226,7 +226,11 @@ void resultGenMenu(void) {
         sResultMenu[idx++] = TEXT_REPLAY_SGI;
     }
     sResultMenu[idx++] = TEXT_NEXT_SGI;
+#if defined(VERSION_JP)
+    menuCreateItems(204, 2, 6, 1.0f, 1.0f, sResultMenu, idx);
+#else
     menuCreateItems(170, 2, 6, 1.0f, 1.0f, sResultMenu, idx);
+#endif
     if (resultListPhoto() && !func_8033F62C()) {
         menu_8030B69C(1);
     }
@@ -360,8 +364,10 @@ void resultInit(s32 arg0) {
             ptsTotal = 0;
         }
         textFmtInt(sTotalPointsStr, ptsTotal, 3);
+#if defined(VERSION_US)
         textId = (ptsTotal == 1) ? TEXT_PT : TEXT_PTS;
         sPtsLabelStr = textGetDataByIdx(textId);
+#endif
     }
     sReplayTipSet = FALSE;
 }
@@ -442,6 +448,9 @@ s32 resultMenuChoose(s32 arg0) {
     return ret;
 }
 
+#if defined(VERSION_JP)
+#pragma GLOBAL_ASM("asm/nonmatchings/app/results/resultDrawTally.s")
+#else
 void resultDrawTally(s32 arg0) {
     Unk80362690_Unk0* unkC;
     s32 alpha;
@@ -528,6 +537,7 @@ void resultDrawTally(s32 arg0) {
     }
     uvFontGenDlist();
 }
+#endif
 
 void resultGenTipText(s32 veh) {
     s16* text;

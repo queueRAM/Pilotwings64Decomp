@@ -1320,6 +1320,8 @@ gLandingStrips      = 0x8035EE28; // size:0x78
 D_8034F910          = 0x80342340;
 D_8034F914          = 0x80342344;
 
+gVehShortNames      = 0x803433C8; // size:0x1C
+
 sRadarThermCirc     = 0x8035EF10; // size:0x88
 sHudState           = 0x8035EF98; // size:0xC7C
 D_8036D224          = 0x8035FC14;
@@ -1328,3 +1330,14 @@ sRbSound_80371898   = 0x80364288; // size:0x54
 
 gThermalCount       = 0x8036D544;
 gThermals           = 0x8036D548; // size:0x180
+
+sScreenFadeDuration = 0x8036431C;
+sReplayTipText      = 0x80364320;
+sTipTextMissing     = 0x80364324;
+sTipTextId          = 0x80364328;
+sPtsDeductedStr     = 0x80364330;
+sTotalPointsStr     = 0x80364340;
+
+sPtsTallyStr  = 0x803429DC;
+sReplayTipSet = 0x803429EC;
+sVehTipIsInit = 0x803429F0;
