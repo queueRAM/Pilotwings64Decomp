@@ -460,7 +460,7 @@ segments:
       - [0xAFC60, asm, app/rocket_belt] # code diffs @ 0xB0730
       - [0xB1E40, c, app/rocket_belt_sound] # code diffs @ 0xB27D0
       - [0xB2BF0, c, app/code_B2900]
-      - [0xB3D60, asm, app/replay_screen]
+      - [0xB3D60, c, app/replay_screen]
       - [0xB5570, asm, app/results]
       - [0xB6810, c, app/code_B6580]
       - [0xB7270, asm, app/skydiving]
@@ -540,7 +540,8 @@ segments:
       - [0xD7620, .data, app/code_AE460]
       - [0xD7630, data, app/rocket_belt]
       - [0xD7650, .data, app/code_B2900]
-      - [0xD7690, data]
+      - [0xD7690, .data, app/replay_screen]
+      - [0xD76C0, data]
 
       - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, .rodata, app/balls]
@@ -611,7 +612,7 @@ segments:
       - [0xDCDE0, rodata, app/rocket_belt]
       - [0xDCF10, .rodata, app/rocket_belt_sound]
       - [0xDD010, .rodata, app/code_B2900]
-      - [0xDD040, rodata, app/replay_screen]
+      - [0xDD040, .rodata, app/replay_screen]
       - [0xDD100, rodata, app/results]
       - [0xDD760, .rodata, app/code_B6580]
       - [0xDD780, rodata, app/skydiving]
