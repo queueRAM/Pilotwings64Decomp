@@ -452,7 +452,7 @@ segments:
       - [0xA7770, c, app/planes]
       - [0xA8230, c, app/demo_attitude]
       - [0xA8940, c, app/proxanim]
-      - [0xA8F40, asm, app/code_A8C30]
+      - [0xA8F40, c, app/code_A8C30]
       - [0xAA010, asm, app/demo]
       - [0xAAB30, asm, app/rings]
       - [0xAC4B0, asm, app/code_AC1A0] # rocket_belt0
@@ -534,7 +534,8 @@ segments:
       - [0xD7380, .data, app/pads]
       - [0xD7390, .data, app/hud]
       - [0xD73F0, .data, app/demo_attitude]
-      - [0xD7400, data]
+      - [0xD7400, .data, app/code_A8C30]
+      - [0xD7550, data]
 
       - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, .rodata, app/balls]
@@ -597,7 +598,7 @@ segments:
       - [0xDC4F0, .rodata, app/planes]
       - [0xDC520, .rodata, app/demo_attitude]
       - [0xDC580, .rodata, app/proxanim]
-      - [0xDC770, rodata, app/code_A8C30]
+      - [0xDC770, .rodata, app/code_A8C30]
       - [0xDC810, rodata, app/demo]
       - [0xDC8E0, rodata, app/rings]
       - [0xDC9F0, rodata, app/code_AC1A0]
@@ -693,7 +694,8 @@ segments:
       - { type: .bss, vram: 0x8035FCA0, name: app/planes }
       - { type: .bss, vram: 0x8035FD10, name: app/demo_attitude }
       - { type: .bss, vram: 0x8035FD30, name: app/proxanim }
-      - { type: bss, vram: 0x803602D0 }
+      - { type: .bss, vram: 0x803602D0, name: app/code_A8C30 }
+      - { type: bss, vram: 0x80360420 }
 
   - name: filetable
     type: bin
