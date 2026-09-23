@@ -450,7 +450,7 @@ segments:
       - [0xA6310, c, app/code_A6000]
       - [0xA67D0, c, app/code_A64C0]
       - [0xA7770, c, app/planes]
-      - [0xA8230, asm, app/demo_attitude]
+      - [0xA8230, c, app/demo_attitude]
       - [0xA8940, asm, app/proxanim]
       - [0xA8F40, asm, app/code_A8C30]
       - [0xAA010, asm, app/demo]
@@ -533,7 +533,8 @@ segments:
       - [0xD7350, .data, app/options]
       - [0xD7380, .data, app/pads]
       - [0xD7390, .data, app/hud]
-      - [0xD73F0, data]
+      - [0xD73F0, .data, app/demo_attitude]
+      - [0xD7400, data]
 
       - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, .rodata, app/balls]
@@ -594,7 +595,7 @@ segments:
       - [0xDC350, .rodata, app/code_A6000]
       - [0xDC380, .rodata, app/code_A64C0]
       - [0xDC4F0, .rodata, app/planes]
-      - [0xDC520, rodata, app/demo_attitude]
+      - [0xDC520, .rodata, app/demo_attitude]
       - [0xDC580, rodata, app/proxanim]
       - [0xDC770, rodata, app/code_A8C30]
       - [0xDC810, rodata, app/demo]
@@ -690,7 +691,8 @@ segments:
       - { type: .bss, vram: 0x8035EF10, name: app/hud }
       - { type: .bss, vram: 0x8035FC20, name: app/code_A64C0 }
       - { type: .bss, vram: 0x8035FCA0, name: app/planes }
-      - { type: bss, vram: 0x8035FD10 }
+      - { type: .bss, vram: 0x8035FD10, name: app/demo_attitude }
+      - { type: bss, vram: 0x8035FD30 }
 
   - name: filetable
     type: bin
