@@ -1356,6 +1356,8 @@ D_80350690          = 0x803430C0;
 D_80350694          = 0x803430C4;
 sMainMenuItems      = 0x803430C8;
 
+D_8035078C          = 0x803431BC;
+
 sRadarThermCirc     = 0x8035EF10; // size:0x88
 sHudState           = 0x8035EF98; // size:0xC7C
 D_8036D224          = 0x8035FC14;

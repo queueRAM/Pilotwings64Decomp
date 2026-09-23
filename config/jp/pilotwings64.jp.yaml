@@ -477,7 +477,7 @@ segments:
       - [0xC8EF0, c, app/splash]
       - [0xC99A0, c, app/text_data]
       - [0xCA090, c, app/title_screen]
-      - [0xCBC60, asm, app/targets]
+      - [0xCBC60, c, app/targets]
       - [0xCC380, asm, app/task]
       - [0xCDE70, c, app/code_CD9D0]
       - [0xCDFC0, asm, app/thermals]
@@ -552,7 +552,8 @@ segments:
       - [0xD8090, .data, app/snow]
       - [0xD80D0, .data, app/spath]
       - [0xD8110, .data, app/title_screen]
-      - [0xD8120, data]
+      - [0xD8120, .data, app/targets]
+      - [0xD8210, data]
 
       - [0xD8490, .rodata, app/code_51E30]
       - [0xD84B0, .rodata, app/balls]
@@ -638,7 +639,7 @@ segments:
       - [0xDE2C0, .rodata, app/spath]
       - [0xDE3C0, .rodata, app/splash]
       - [0xDE460, .rodata, app/title_screen]
-      - [0xDE4C0, rodata, app/targets]
+      - [0xDE4C0, .rodata, app/targets]
       - [0xDE530, rodata, app/task]
       - [0xDE720, rodata, app/thermals]
       - [0xDE760, rodata, app/total_results]
@@ -732,7 +733,8 @@ segments:
       - { type: .bss, vram: 0x803696B0, name: app/splash }
       - { type: .bss, vram: 0x8036A900, name: app/text_data }
       - { type: .bss, vram: 0x8036B6D0, name: app/title_screen }
-      - { type: bss, vram: 0x8036B6E0 }
+      - { type: .bss, vram: 0x8036B6E0, name: app/targets }
+      - { type: bss, vram: 0x8036C2D0 }
 
   - name: filetable
     type: bin
