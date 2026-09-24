@@ -428,7 +428,7 @@ segments:
       - [0x81900, c, app/jumble_hopper]
       - [0x82920, c, app/code_82520]
       - [0x83000, c, app/code_82B90]
-      - [0x8ABD0, asm, app/gyrocopter] # code diffs @ 0x8F9E0
+      - [0x8ABD0, c, app/gyrocopter]
       - [0x91170, c, app/hover_pads]
       - [0x91AD0, c, app/gyrocopter_sound]
       - [0x92C60, c, app/menu]
@@ -518,7 +518,7 @@ segments:
       - [0xD6E20, .data, app/code_7FE00]
       - [0xD6E30, .data, app/code_82520]
       - [0xD6E40, .data, app/code_82B90]
-      - [0xD6E70, data, app/gyrocopter]
+      - [0xD6E70, .data, app/gyrocopter]
       - [0xD6E80, .data, app/hover_pads]
       - [0xD6E90, .data, app/level]
       - [0xD6EB0, .data, app/test_summary]
@@ -598,7 +598,7 @@ segments:
       - [0xDAB70, .rodata, app/jumble_hopper]
       - [0xDACF0, .rodata, app/code_82520]
       - [0xDAD20, .rodata, app/code_82B90]
-      - [0xDB0E0, rodata, app/gyrocopter]
+      - [0xDB0E0, .rodata, app/gyrocopter]
       - [0xDB2E0, .rodata, app/hover_pads]
       - [0xDB330, .rodata, app/gyrocopter_sound]
       - [0xDB430, .rodata, app/menu]
@@ -695,7 +695,7 @@ segments:
       - { type: .bss, vram: 0x8035B510, name: app/jumble_hopper }
       - { type: .bss, vram: 0x8035B570, name: app/code_82520 }
       - { type: .bss, vram: 0x8035B5F0, name: app/code_82B90 }
-      - { type: bss, vram: 0x8035BA60, name: app/gyrocopter }
+      - { type: .bss, vram: 0x8035BA60, name: app/gyrocopter }
       - { type: .bss, vram: 0x8035BF70, name: app/hover_pads }
       - { type: .bss, vram: 0x8035C840, name: app/gyrocopter_sound }
       - { type: .bss, vram: 0x8035C900, name: app/menu }

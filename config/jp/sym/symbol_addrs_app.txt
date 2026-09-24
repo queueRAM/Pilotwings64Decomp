@@ -1272,6 +1272,10 @@ D_80362690          = 0x80355080;
 
 D_80364210          = 0x80356C00; // size:0x34E0
 
+D_803692C0          = 0x8035BCB0; // size:0x54
+D_803694D0          = 0x8035BEC0; // size:0x54
+D_8036957E          = 0x8035BF6E;
+
 gHoverPads          = 0x8035BF78; // size:0x8C
 
 gFcnDrawMenuItem    = 0x8035E7F8;
