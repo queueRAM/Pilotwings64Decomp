@@ -435,7 +435,7 @@ segments:
       - [0x93040, c, app/level]
       - [0x93B40, c, app/test_summary] # code diffs @ 0x94030
       - [0x944D0, c, app/credits]
-      - [0x952A0, asm, app/level_select] # code diffs @ 0x95A00
+      - [0x952A0, c, app/level_select] # code diffs @ 0x95A00
       - [0x976E0, c, app/map3d]
       - [0x99FE0, c, app/mem]
       - [0x9A0B0, c, app/menu_utils]
@@ -457,8 +457,8 @@ segments:
       - [0xAAB30, c, app/rings]
       - [0xAC4B0, c, app/code_AC1A0] # rocket_belt0
       - [0xAE770, c, app/code_AE460] # rocket_belt1
-      - [0xAFC60, c, app/rocket_belt] # code diffs @ 0xB0730
-      - [0xB1E40, c, app/rocket_belt_sound] # code diffs @ 0xB27D0
+      - [0xAFC60, c, app/rocket_belt]
+      - [0xB1E40, c, app/rocket_belt_sound]
       - [0xB2BF0, c, app/code_B2900]
       - [0xB3D60, c, app/replay_screen]
       - [0xB5570, c, app/results]
@@ -523,7 +523,7 @@ segments:
       - [0xD6E90, .data, app/level]
       - [0xD6EB0, .data, app/test_summary]
       - [0xD6F70, .data, app/credits]
-      - [0xD7220, data, app/level_select]
+      - [0xD7220, .data, app/level_select]
       - [0xD7270, .data, app/map3d]
       - [0xD72C0, .data, app/mem]
       - [0xD72D0, .data, app/code_9A960]
@@ -604,7 +604,7 @@ segments:
       - [0xDB430, .rodata, app/menu]
       - [0xDB460, .rodata, app/level]
       - [0xDB700, .rodata, app/credits]
-      - [0xDBC70, rodata, app/level_select]
+      - [0xDBC70, .rodata, app/level_select]
       - [0xDBC90, .rodata, app/map3d]
       - [0xDBED0, .rodata, app/mem]
       - [0xDBF10, .rodata, app/menu_utils]
@@ -702,7 +702,7 @@ segments:
       - { type: .bss, vram: 0x8035C920, name: app/level }
       - { type: .bss, vram: 0x8035D290, name: app/test_summary }
       - { type: .bss, vram: 0x8035D2A0, name: app/credits }
-      - { type: bss, vram: 0x8035D2B0, name: app/level_select }
+      - { type: .bss, vram: 0x8035D2B0, name: app/level_select }
       - { type: .bss, vram: 0x8035D2D0, name: app/map3d }
       - { type: .bss, vram: 0x8035D450, name: app/mem }
       - { type: .bss, vram: 0x8035E7E0, name: app/menu_utils }

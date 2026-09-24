@@ -7,6 +7,11 @@
 
 enum SpriteBlitId {
 #if defined(VERSION_JP) // TODO: JP blit IDs
+    BLIT_ID_04                          = 0x09,
+    BLIT_ID_05                          = 0x0A,
+    BLIT_ID_06                          = 0x0B,
+    BLIT_ID_07                          = 0x0C,
+    BLIT_ID_08                          = 0x0D,
     BLIT_ID_0B                          = 0x10,
     BLIT_ID_0C                          = 0x11,
     BLIT_ID_16                          = 0x1B,
@@ -43,11 +48,6 @@ enum SpriteBlitId {
     BLIT_ID_47                          = 0x69,
     BLIT_ID_48                          = 0x6A,
 
-    BLIT_ID_04                          = 0x04,
-    BLIT_ID_05                          = 0x05,
-    BLIT_ID_06                          = 0x06,
-    BLIT_ID_07                          = 0x07,
-    BLIT_ID_08                          = 0x08,
     BLIT_ID_09                          = 0x09,
     BLIT_ID_0A                          = 0x0A,
     BLIT_TEST_MENU_TOP_SCORE            = 0x0D, // "Top Score" box title

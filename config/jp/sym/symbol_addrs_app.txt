@@ -581,11 +581,13 @@ creditsScene = 0x802FFC10; // type:func
 
 func_8030D930 = 0x80300250; // type:func
 func_8030D9C8 = 0x803002E8; // type:func
+func_8030DED0 = 0x803007F0; // type:func
 func_8030E3EC = 0x80300C80; // type:func
 func_8030E7F4 = 0x80301088; // type:func
 func_8030E860 = 0x803010F4; // type:func
 func_8030E9AC = 0x80301240; // type:func
 func_8030EA54 = 0x803012E8; // type:func
+func_8030F448 = 0x80301CDC; // type:func
 func_8030F818 = 0x80302084; // type:func
 
 app_entrypoint      = 0x80302690; // type:func
@@ -1247,6 +1249,7 @@ D_8034F7A0          = 0x803421D0;
 D_8034F7A4          = 0x803421D4;
 D_8034F7B0          = 0x803421E0;
 D_8034F7B8          = 0x803421E8;
+D_8034F7BC          = 0x803421EC;
 D_8034F7C0          = 0x803421F0;
 D_8034F850          = 0x80342280;
 D_8034F854          = 0x80342284;
@@ -1298,6 +1301,16 @@ D_8034F830          = 0x80342260;
 D_8034F834          = 0x80342264;
 D_8034F838          = 0x80342268;
 sMapHudFlagsSave    = 0x8034226C;
+
+D_8036A8C0          = 0x8035D2B0;
+D_8036A8C4          = 0x8035D2B4;
+D_8036A8C8          = 0x8035D2B8;
+D_8036A8C9          = 0x8035D2B9;
+D_8036A8CA          = 0x8035D2BA;
+D_8036A8CC          = 0x8035D2BC; // size:3
+D_8036A8D0          = 0x8035D2C0; // size:4
+D_8036A8D4          = 0x8035D2C4; // size:4
+D_8036A8D8          = 0x8035D2C8; // size:4
 
 sMapEmitterDev0     = 0x8035D2D0;
 sMapEmitterDev1     = 0x8035D2D1;
