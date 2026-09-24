@@ -433,9 +433,9 @@ segments:
       - [0x91AD0, asm, app/gyrocopter_sound] # code diffs @ 0x926D0
       - [0x92C60, c, app/menu]
       - [0x93040, c, app/level]
-      - [0x93B40, c, app/test_summary] # code diffs @ 0x94030
+      - [0x93B40, c, app/test_summary]
       - [0x944D0, c, app/credits]
-      - [0x952A0, c, app/level_select] # code diffs @ 0x95A00
+      - [0x952A0, c, app/level_select]
       - [0x976E0, c, app/map3d]
       - [0x99FE0, c, app/mem]
       - [0x9A0B0, c, app/menu_utils]
