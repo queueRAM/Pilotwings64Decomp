@@ -726,7 +726,7 @@ s32 falco_802E51E8(s32 arg0, f32 arg1, f32 arg2, f32 arg3) {
                 hudText_8031D8E0(TEXT_F_HIT_M, 1.5f, 8.0f);
 #if defined(VERSION_JP)
                 textFmtIntAt(str16, ((1.0f - curFalco->unkC4) / curFalco->unk250) + 0.5, 2, 2);
-#else
+#else // VERSION_US
                 textFmtIntAt(str16, ((1.0f - curFalco->unkC4) / curFalco->unk250) + 0.5, 1, 14);
 #endif
                 hudWarningText(TEXT_LEFT_SHT, 1.5f, 8.0f);

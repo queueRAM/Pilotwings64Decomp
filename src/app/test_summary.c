@@ -197,7 +197,7 @@ s32 func_8030C61C(void) {
 #if defined(VERSION_JP)
 // https://decomp.me/scratch/JzhI1
 #pragma GLOBAL_ASM("asm/nonmatchings/app/test_summary/func_8030C6A0.s")
-#else
+#else // VERSION_US
 void func_8030C6A0(void) {
     Unk80362690_Unk0* sp74;
     s16* sp70;

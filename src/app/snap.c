@@ -777,7 +777,7 @@ void func_8033A020(s32 arg0) {
 }
 
 void func_8033A078(s32 arg0) {
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
     u8* ptr;
 
     ptr = taskGet_80345CB0();
@@ -909,7 +909,7 @@ void func_8033A244(s32 arg0, Unk80373060* arg1) {
             case 4:
 #if defined(VERSION_JP)
                 missiStateRestore();
-#else
+#else // VERSION_US
                 whaleStateRestore();
 #endif
                 break;
@@ -1022,9 +1022,10 @@ void func_8033A72C(void) {
 }
 
 #if defined(VERSION_JP)
-void func_8033ADD4(s32 arg0, Unk80373060* arg1, s32 arg2, s32 arg3);
+// https://decomp.me/scratch/J88ei
 #pragma GLOBAL_ASM("asm/nonmatchings/app/snap/func_8033ADD4.s")
-#else
+void func_8033ADD4(s32 arg0, Unk80373060* arg1, s32 arg2, s32 arg3);
+#else // VERSION_US
 void func_8033ADD4(s32 arg0, Unk80373060* arg1, s32 arg2, s32 arg3) {
     Mtx4F spA0;
     Mtx4F sp60;
@@ -1226,7 +1227,7 @@ void func_8033ADD4(s32 arg0, Unk80373060* arg1, s32 arg2, s32 arg3) {
 #define POLY_VTX_S_1 0x320
 #define POLY_VTX_S_2 0x320
 #define POLY_VTX_S_3 0x720
-#else
+#else // VERSION_US
 #define POLY_VTX_X_OFF_0 13.0f
 #define POLY_VTX_X_OFF_1 30.0f
 #define POLY_VTX_X_OFF_2 77.0f
@@ -1510,7 +1511,7 @@ s32 func_8033D3EC(s32 arg0, s32 arg1, Unk80373060* arg2, s32* arg3, s32* arg4) {
             uvFontScale(1.0, 1.0);
 #if defined(VERSION_JP)
             uvFontPrintStr16(70, 194, textGetDataByIdx(TEXT_VIEW_PHOTO1), 100, 0xFFE);
-#else
+#else // VERSION_US
             uvFontPrintStr16(70, 190, textGetDataByIdx(TEXT_VIEW_PHOTO1), 100, 0xFFE);
 #endif
             uvFontGenDlist();
@@ -1786,8 +1787,9 @@ void func_8033DFD0(s32 arg0, Unk80373060* arg1, s32 arg2) {
 }
 
 #if defined(VERSION_JP)
+// https://decomp.me/scratch/igj04
 #pragma GLOBAL_ASM("asm/nonmatchings/app/snap/func_8033E3A8.s")
-#else
+#else // VERSION_US
 s32 func_8033E3A8(s32 arg0) {
     s32 spC4;
     s32 var_s0;

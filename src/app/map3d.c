@@ -81,8 +81,9 @@ void map3dMain(Unk80362690* arg0, s32 arg1) {
 }
 
 #if defined(VERSION_JP)
+// https://decomp.me/scratch/0sYkN
 #pragma GLOBAL_ASM("asm/nonmatchings/app/map3d/map3dLoad.s")
-#else
+#else // VERSION_US
 void map3dLoad(Unk80362690* arg0, s32 arg1) {
     Mtx4F sp148;
     Camera* camera;

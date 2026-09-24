@@ -364,7 +364,7 @@ s32 rings_80323FFC(s32 ringIdx) {
                     textStr = textGetDataByIdx(TEXT_LEFT_CNT);
 #if defined(VERSION_JP)
                     textFmtIntAt(textStr, sp54 - 1, 2, 2);
-#else
+#else // VERSION_US
                     textFmtIntAt(textStr, sp54 - 1, 2, 0);
 #endif
                     hudWarningText(TEXT_LEFT_CNT, 3.0f, 8.0f);
@@ -398,7 +398,7 @@ s32 rings_80323FFC(s32 ringIdx) {
             textStr = textGetDataByIdx(TEXT_LEFT_CNT);
 #if defined(VERSION_JP)
             textFmtIntAt(textStr, sp54 - 1, 2, 2);
-#else
+#else // VERSION_US
             textFmtIntAt(textStr, sp54 - 1, 2, 0);
 #endif
             hudWarningText(TEXT_LEFT_CNT, 3.0f, 8.0f);
@@ -411,7 +411,7 @@ s32 rings_80323FFC(s32 ringIdx) {
                 textStr = textGetDataByIdx(TEXT_LEFT_CNT);
 #if defined(VERSION_JP)
                 textFmtIntAt(textStr, sp54 - 1, 2, 2);
-#else
+#else // VERSION_US
                 textFmtIntAt(textStr, sp54 - 1, 2, 0);
 #endif
                 hudWarningText(TEXT_LEFT_CNT, 3.0f, 8.0f);
@@ -423,7 +423,7 @@ s32 rings_80323FFC(s32 ringIdx) {
                 textStr = textGetDataByIdx(TEXT_LEFT_CNT);
 #if defined(VERSION_JP)
                 textFmtIntAt(textStr, sp54 - 1, 2, 2);
-#else
+#else // VERSION_US
                 textFmtIntAt(textStr, sp54 - 1, 2, 0);
 #endif
                 hudWarningText(TEXT_LEFT_CNT, 3.0f, 8.0f);

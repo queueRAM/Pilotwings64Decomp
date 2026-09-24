@@ -228,7 +228,7 @@ void resultGenMenu(void) {
     sResultMenu[idx++] = TEXT_NEXT_SGI;
 #if defined(VERSION_JP)
     menuCreateItems(204, 2, 6, 1.0f, 1.0f, sResultMenu, idx);
-#else
+#else // VERSION_US
     menuCreateItems(170, 2, 6, 1.0f, 1.0f, sResultMenu, idx);
 #endif
     if (resultListPhoto() && !func_8033F62C()) {
@@ -364,7 +364,7 @@ void resultInit(s32 arg0) {
             ptsTotal = 0;
         }
         textFmtInt(sTotalPointsStr, ptsTotal, 3);
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
         textId = (ptsTotal == 1) ? TEXT_PT : TEXT_PTS;
         sPtsLabelStr = textGetDataByIdx(textId);
 #endif
@@ -449,8 +449,9 @@ s32 resultMenuChoose(s32 arg0) {
 }
 
 #if defined(VERSION_JP)
+// https://decomp.me/scratch/0qA3N
 #pragma GLOBAL_ASM("asm/nonmatchings/app/results/resultDrawTally.s")
-#else
+#else // VERSION_US
 void resultDrawTally(s32 arg0) {
     Unk80362690_Unk0* unkC;
     s32 alpha;

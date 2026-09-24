@@ -12,9 +12,10 @@ STATIC_DATA Unk803599D0 sRbSound_80371898;
 
 STATIC_FUNC void rbSoundEventHandler(s32, void*, s32);
 #if defined(VERSION_JP)
+// TODO: make STATIC_FUNC once functions are matched
 void rbSoundEvent12_22(RocketBeltData* rbData);
 void rbSoundSubEvent(RocketBeltData* rbData);
-#else
+#else // VERSION_US
 STATIC_FUNC void rbSoundEvent12_22(RocketBeltData* rbData);
 STATIC_FUNC void rbSoundSubEvent(RocketBeltData* rbData);
 #endif
@@ -181,7 +182,7 @@ STATIC_FUNC void rbSoundEventHandler(s32 event, void* userData, s32 eventData) {
 
 #if defined(VERSION_JP)
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rocket_belt_sound/rbSoundEvent12_22.s")
-#else
+#else // VERSION_US
 STATIC_FUNC void rbSoundEvent12_22(RocketBeltData* rbData) {
     Unk80362690_Unk0* sp34;
     s32 sfxId;
@@ -247,7 +248,7 @@ STATIC_FUNC void rbSoundEvent19(RocketBeltData* rbData) {
 
 #if defined(VERSION_JP)
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rocket_belt_sound/rbSoundSubEvent.s")
-#else
+#else // VERSION_US
 STATIC_FUNC void rbSoundSubEvent(RocketBeltData* rbData) {
     f32 temp_fs0;
     f32 var_fv1;

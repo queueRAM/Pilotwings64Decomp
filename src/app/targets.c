@@ -161,7 +161,7 @@ f32 targets_8034473C(s32 arg0, s32 arg1) {
         if (remaining >= 2) {
 #if defined(VERSION_JP)
             textFmtIntAt(textGetDataByIdx(TEXT_LEFT_CNT), remaining - 1, 2, 2);
-#else
+#else // VERSION_US
             textFmtIntAt(textGetDataByIdx(TEXT_LEFT_CNT), remaining - 1, 2, 0);
 #endif
             hudWarningText(TEXT_LEFT_CNT, 1.5f, 8.0f);

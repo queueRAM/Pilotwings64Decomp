@@ -210,7 +210,7 @@ void func_8030DED0(void) {
             SPRT_PROP_END
         );
     }
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
     for (i = 0; i < 3; i++) {
         uvSprtProps(i + 13,
             SPRT_PROP_ENABLED(TRUE),
@@ -697,7 +697,7 @@ void func_8030F448(void) {
                 uvSprtDraw(i + 9);
             }
         }
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
         for (i = 1; i < 4; i++) {
             if (D_8036A8D8[i] == FALSE) {
                 uvSprtDraw(i + 12);
@@ -759,7 +759,7 @@ void func_8030F818(void) {
     str16 = textGetDataByIdx(TEXT_LEVEL_SEL);
 #if defined(VERSION_JP)
     uvFontPrintStr16((SCREEN_WIDTH / 2) - (uvFontStr16Width(str16) / 2), 208, str16, 20, 0xFFE);
-#else
+#else // VERSION_US
     uvFontPrintStr16((SCREEN_WIDTH / 2) - (uvFontStr16Width(str16) / 2), 206, str16, 40, 0xFFE);
 #endif
     uvFontSet(3);

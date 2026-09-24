@@ -246,7 +246,7 @@ void func_8030ABF8(GyrocopterData* gcData) {
                 gcData->unk678 |= 0x20;
 #if defined(VERSION_JP)
                 if (gcData->unk6C != 0) {
-#else
+#else // VERSION_US
                 if ((gcData->unk6C != 0) && (gcData->unk4 == 0xFFFF)) {
 #endif
                     sndSetMusic(BGM_GYROCOPTER_LAND_OK);

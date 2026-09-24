@@ -169,7 +169,7 @@ void fileMenuSetup(s32 menu) {
     case 0:
 #if defined(VERSION_JP)
         menuCreateItems(fileMenuSetText(), 143, 6, 1.0f, 0.8f, sFileMenuTextIds, 3);
-#else
+#else // VERSION_US
         menuCreateItems(fileMenuSetText(), 135, 6, 1.0f, 1.0f, sFileMenuTextIds, 3);
 #endif
         sFileColorR1 = 44.0f;
@@ -182,7 +182,7 @@ void fileMenuSetup(s32 menu) {
     case 1:
 #if defined(VERSION_JP)
         menuCreateItems(fileMenuEraseFile(), 150, 6, 1.0f, 0.8f, sFileMenuTextIds, 2);
-#else
+#else // VERSION_US
         menuCreateItems(fileMenuEraseFile(), 142, 6, 1.0f, 1.0f, sFileMenuTextIds, 2);
 #endif
         sFileColorR1 = 255.0f;
@@ -195,7 +195,7 @@ void fileMenuSetup(s32 menu) {
     case 2:
 #if defined(VERSION_JP)
         menuCreateItems(fileMenuPrintText(sFileMenuConfirm, 2), 145, 6, 1.0f, 1.0f, sFileMenuConfirm, 2);
-#else
+#else // VERSION_US
         menuCreateItems(fileMenuPrintText(sFileMenuConfirm, 2), 140, 6, 1.0f, 1.0f, sFileMenuConfirm, 2);
 #endif
         sFileColorR1 = 255.0f;
@@ -498,7 +498,7 @@ void fileMenu_802E9AE0(void) {
     }
 #if defined(VERSION_JP)
     uvFontPrintStr16((SCREEN_WIDTH / 2) - (uvFontStr16Width(titleStr) / 2), 208, titleStr, 0x14, 0xFFE);
-#else
+#else // VERSION_US
     uvFontPrintStr16((SCREEN_WIDTH / 2) - (uvFontStr16Width(titleStr) / 2), 206, titleStr, 0x3C, 0xFFE);
 #endif
     uvFontGenDlist();

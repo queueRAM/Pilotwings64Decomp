@@ -163,7 +163,7 @@ STATIC_FUNC void hgSoundEvent22(HangGliderData* hg) {
 #if defined(VERSION_JP)
                 // TODO: is this enum reuse or reorder?
                 sndSetMusic(BGM_ROCKET_BELT_CRASH);
-#else
+#else // VERSION_US
                 sndSetMusic(BGM_HANG_GLIDER_CRASH);
 #endif
                 sndSetMusicState(MUS_STATE_PLAY_SEQ);

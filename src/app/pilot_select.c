@@ -465,7 +465,7 @@ STATIC_FUNC void func_802DE5B0(Camera* camera, Unk80367868* arg1) {
         x = ((SCREEN_WIDTH / 2) - (uvFontStr16Width(selectPilotText) / 2));
 #if defined(VERSION_JP)
         uvFontPrintStr16(x, 208, selectPilotText, 0x14, 0xFFE);
-#else
+#else // VERSION_US
         uvFontPrintStr16(x, 206, selectPilotText, 0x14, 0xFFE);
 #endif
     }

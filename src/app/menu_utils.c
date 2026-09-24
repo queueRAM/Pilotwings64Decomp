@@ -60,10 +60,10 @@ void menuUtilCreate(s32 x, s32 y, s32 font, f32 xScale, f32 yScale, char** menuI
 }
 
 #if defined(VERSION_JP)
-// US reorderd this function
+// US reordered this function
 // https://decomp.me/scratch/CqJps
 #pragma GLOBAL_ASM("asm/nonmatchings/app/menu_utils/menuUtilCheckInputs.s")
-#else
+#else // VERSION_US
 s32 menuUtilCheckInputs(void) {
     f32 stickY;
     s32 menuItemChanged;
@@ -129,8 +129,9 @@ void menuUtilDeinit(void) {
 }
 
 #if defined(VERSION_JP)
+// https://decomp.me/scratch/haaSh
 #pragma GLOBAL_ASM("asm/nonmatchings/app/menu_utils/menuUtilRender.s")
-#else
+#else // VERSION_US
 void menuUtilRender(void) {
     s32 temp_a3;
     s32 var_s1;

@@ -293,7 +293,7 @@ void func_80328D74(RocketBeltData* rbData) {
     rbData->unk214.z = func_80313AF4(0.0f, rbData->unk214.z, rbData->unk310);
 #if defined(VERSION_JP)
     if ((D_8034F850 - rbData->unkF4) > 3.75f) {
-#else
+#else // VERSION_US
     if ((D_8034F850 - rbData->unkF4) >= 3.75f) {
 #endif
         rbData->unk90 = 3;
@@ -312,7 +312,7 @@ void func_80328F44(RocketBeltData* rbData) {
     s32 sp34;
 
     rbData->unkFC = 1000000.0f;
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
     sp5C = 0.0f;
 #endif
     sp34 = rbData->unk380;
@@ -524,7 +524,7 @@ void func_80329628(RocketBeltData* rbData) {
 #if defined(VERSION_JP)
 // https://decomp.me/scratch/AsbPb
 #pragma GLOBAL_ASM("asm/nonmatchings/app/rocket_belt/func_8032975C.s")
-#else
+#else // VERSION_US
 void func_8032975C(RocketBeltData* rbData) {
     Vec3F sp2AC;
     Vec3F sp2A0;

@@ -52,7 +52,7 @@ STATIC_FUNC void saveBitScramble(u8* data, s32* bitOffset, s32 bits, s32 bitCoun
     }
 }
 
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
 // fatal error handler: attempts to render message and infinite loops
 STATIC_FUNC void saveFatalError(char* msg) {
     s32 xScreen;
@@ -87,7 +87,7 @@ void saveModuleInit(void) {
     if (uvFileRead(&sSaveFiles, 0, sizeof(sSaveFiles)) == 0) {
         uvMemSet(&sSaveFiles, 0, sizeof(sSaveFiles));
     }
-#else
+#else // VERSION_US
     if (uvFileRead(sSaveFiles, 0, sizeof(sSaveFiles)) != sizeof(sSaveFiles)) {
         saveFatalError("EEPROM CHECK FAILED");
     } else {

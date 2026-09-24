@@ -24,7 +24,7 @@ STATIC_DATA s16* sTotPtUnitStr;
 STATIC_DATA s16 D_8037AD38[5];
 STATIC_DATA u8 D_8037AD42;
 STATIC_DATA s32 D_8037AD44_pad;
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
 STATIC_DATA s16* sTestPtUnitStr[4];
 #endif
 STATIC_DATA char sMedalNameCopy[24];
@@ -129,11 +129,11 @@ s32 totResult_80347150(s32 arg0) {
 #if defined(VERSION_JP)
 // https://decomp.me/scratch/sDEmP
 #pragma GLOBAL_ASM("asm/nonmatchings/app/total_results/totResultInit.s")
-#else
+#else // VERSION_US
 void totResultInit(void) {
     Unk80362690_Unk0* temp_s4;
     s32 temp_v0;
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
     s32 textId;
 #endif
     s32 var_s5;
@@ -163,7 +163,7 @@ void totResultInit(void) {
             var_s5 += temp_v0;
             textFmtInt(sTestPtsStr[i], temp_v0, 3);
         }
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
         textId = (temp_v0 == 1) ? TEXT_PT : TEXT_PTS;
         sTestPtUnitStr[i] = textGetDataByIdx(textId);
 #endif
@@ -176,7 +176,7 @@ void totResultInit(void) {
     }
     D_8037AD42 = levelSetPointsToNextMedal(&sp50, var_s5, var_v1);
     textFmtInt(sTotalPtsStr, var_s5, 3);
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
     textId = (var_s5 == 1) ? TEXT_PT : TEXT_PTS;
     sTotPtUnitStr = textGetDataByIdx(textId);
 #endif
@@ -203,7 +203,7 @@ void totResultInit(void) {
 void totResultCreateMenu(void) {
 #if defined(VERSION_JP)
   #define TOT_MENU_X 204
-#else
+#else // VERSION_US
   #define TOT_MENU_X 170
 #endif
     Unk80362690_Unk0* temp_a0;
@@ -262,7 +262,7 @@ s32 totResultMenuChoose(void) {
 #if defined(VERSION_JP)
 // https://decomp.me/scratch/QrBod
 #pragma GLOBAL_ASM("asm/nonmatchings/app/total_results/totResultDrawTally.s")
-#else
+#else // VERSION_US
 #if defined(__clang__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsometimes-uninitialized"
@@ -295,7 +295,7 @@ void totResultDrawTally(void) {
     x1 = 34;
     x2 = 272;
     y = 120;
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
     uvGfxClearFlags(0x400000);
 #endif
     uvVtxBeginPoly();
@@ -323,7 +323,7 @@ void totResultDrawTally(void) {
 
     if (sp6C->veh == VEHICLE_CANNONBALL) {
         uvFontPrintStr16(202, 116, sTotalPtsStr, 3, 0xFFE);
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
         uvFontPrintStr16(236, 116, sTotPtUnitStr, 4, 0xFFE);
 #endif
     } else {
@@ -331,7 +331,7 @@ void totResultDrawTally(void) {
         for (i = 0; i < numTests; i++) {
             y = ((numTests * 16) + 100) - 16 * i;
             uvFontPrintStr16(202, y, sTestPtsStr[i], 3, 0xFFE);
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
             uvFontPrintStr16(236, y, sTestPtUnitStr[i], 4, 0xFFE);
 #endif
         }
@@ -339,7 +339,7 @@ void totResultDrawTally(void) {
 
     if ((numTests != 1) && (sp6C->veh != VEHICLE_CANNONBALL)) {
         uvFontPrintStr16(202, 100, sTotalPtsStr, 3, 0xFFE);
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
         uvFontPrintStr16(236, 100, sTotPtUnitStr, 4, 0xFFE);
 #endif
     }

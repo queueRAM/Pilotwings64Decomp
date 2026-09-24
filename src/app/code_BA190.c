@@ -217,8 +217,9 @@ void func_80333384(SkyDivingData* sdData) {
 }
 
 #if defined(VERSION_JP)
+// https://decomp.me/scratch/f2pMX
 #pragma GLOBAL_ASM("asm/nonmatchings/app/code_BA190/func_803335D0.s")
-#else
+#else // VERSION_US
 s32 func_803335D0(SkyDivingData* sdData) {
     f32 sp6C;
     f32 temp_fv0;

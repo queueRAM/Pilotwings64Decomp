@@ -332,7 +332,7 @@ void func_80321760(void) {
     temp2 = 0xA0 - (uvSprtGetWidth(2) / 2);
 #if defined(VERSION_JP)
     uvSprtProps(2, SPRT_PROP_POS(temp2, 75), SPRT_PROP_END);
-#else
+#else // VERSION_US
     uvSprtProps(2, SPRT_PROP_POS(temp2, 98), SPRT_PROP_END);
 #endif
     uvSprtProps(3,

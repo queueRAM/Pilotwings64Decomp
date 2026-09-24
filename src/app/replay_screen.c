@@ -36,7 +36,7 @@
 
 #if defined(VERSION_JP)
   #define CONTROLLER_MSG_LEN 0x14
-#else
+#else // VERSION_US
   #define CONTROLLER_MSG_LEN 0x3C
 #endif
 
@@ -245,9 +245,6 @@ void func_8032C540(Unk80362690* arg0) {
     sndSetMusicState(MUS_STATE_PAUSE_MENU);
 }
 
-#if defined(VERSION_JP)
-#pragma GLOBAL_ASM("asm/nonmatchings/app/replay_screen/func_8032CC44.s")
-#else
 void func_8032CC44(Unk80362690* arg0) {
     Unk80362690_Unk0* sp2C;
     s32 sp28;
@@ -260,7 +257,9 @@ void func_8032CC44(Unk80362690* arg0) {
     sp2C = &arg0->unkC[arg0->unk9C];
     sp1B = 1;
     func_8032D51C(0);
+#if !defined(VERSION_JP)
     whaleStateSave();
+#endif
     level_8030BA60();
     if (arg0->unkA0 == 0) {
         sp1B = 0;
@@ -348,9 +347,10 @@ void func_8032CC44(Unk80362690* arg0) {
     taskLoad();
     cannon_802D8A40(0, (CannonballData*)sp2C->vehicleData);
     hudInit();
+#if !defined(VERSION_JP)
     whaleStateRestore();
-}
 #endif
+}
 
 s32 func_8032CF28(Unk80362690* arg0) {
     Unk80362690_Unk0* sp6C;

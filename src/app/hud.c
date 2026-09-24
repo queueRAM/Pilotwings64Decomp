@@ -85,7 +85,7 @@ void hudInit(void) {
     D_8034F914 = 0;
 #if defined(VERSION_JP)
     D_8036D224 = 0;
-#else
+#else // VERSION_US
     D_8036D224 = 1;
 #endif
     D_8034F910 = 0.0f;
@@ -980,7 +980,7 @@ void hudDrawThrottle(s32 x, s32 y, f32 power) {
 
 #if defined(VERSION_JP)
 #pragma GLOBAL_ASM("asm/nonmatchings/app/hud/hudDrawRadar.s")
-#else
+#else // VERSION_US
 void hudDrawRadar(s32 x, s32 y, f32 xOff, f32 yOff, f32 heading, f32 pitch, HUDRadar* radar) {
     Mtx4F sp108;
     Mtx4F spC8;
@@ -1795,7 +1795,7 @@ void hudDrawLowFuel(HUDState* hud) {
         }
 #if defined(VERSION_JP)
         uvFontPrintStr16((SCREEN_WIDTH / 2) - ((uvFontStr16Width(&hud->unkB40[0]) - 16) / 2), 125, &hud->unkB40[0], 0x14, 0xFFE);
-#else
+#else // VERSION_US
         uvFontPrintStr16((SCREEN_WIDTH / 2) - ((uvFontStr16Width(&hud->unkB40[0]) - 16) / 2), 125, &hud->unkB40[0], 0x28, 0xFFE);
 #endif
     }
@@ -1817,7 +1817,7 @@ void hudDrawStartText(HUDState* hud) {
         }
 #if defined(VERSION_JP)
         uvFontPrintStr16((SCREEN_WIDTH / 2) - ((uvFontStr16Width(&hud->unkBD0[0]) - 16) / 2), 140, &hud->unkBD0[0], 0x14, 0xFFE);
-#else
+#else // VERSION_US
         uvFontPrintStr16((SCREEN_WIDTH / 2) - ((uvFontStr16Width(&hud->unkBD0[0]) - 16) / 2), 140, &hud->unkBD0[0], 0x28, 0xFFE);
 #endif
     }

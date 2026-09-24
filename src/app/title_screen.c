@@ -61,11 +61,13 @@ STATIC_DATA s32 sMainMenuItems[] = { TEXT_GAMESTART, TEXT_OPTION };
 Unk80378CE0* D_80378CE0;
 f32 D_80378CE4;
 
-// forward decls
 #if defined(VERSION_JP)
+// TODO: remove when (J) matches
 #undef STATIC_FUNC
 #define STATIC_FUNC
 #endif
+
+// forward decls
 STATIC_FUNC void func_803427FC(void); // init function
 STATIC_FUNC void func_80343294(void); // deinit function
 STATIC_FUNC s32 func_80343550(void);  // update function
@@ -119,7 +121,7 @@ s32 func_80342630(void) {
 #if defined(VERSION_JP)
 // https://decomp.me/scratch/qvdZR
 #pragma GLOBAL_ASM("asm/nonmatchings/app/title_screen/func_803427FC.s")
-#else
+#else // VERSION_US
 STATIC_FUNC void func_803427FC(void) {
     Mtx4F sp58;
     Camera* camera;
@@ -310,7 +312,7 @@ STATIC_FUNC void func_803433A4(void) {
     }
 }
 
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
 void func_803434E8(void) {
     uvClkReset(UV_CLKID_APP);
     while (uvClkGetSec(UV_CLKID_APP) < 1.0) { }
@@ -320,7 +322,7 @@ void func_803434E8(void) {
 #if defined(VERSION_JP)
 // https://decomp.me/scratch/svW3A
 #pragma GLOBAL_ASM("asm/nonmatchings/app/title_screen/func_80343550.s")
-#else
+#else // VERSION_US
 STATIC_FUNC s32 func_80343550(void) {
     s32 temp_v0;
     s32 gameState;
@@ -460,7 +462,7 @@ STATIC_FUNC void introSceneRunner(void) {
     screenDrawBox(30, 18, 285, 34, 0, 0, 0, sp30);
 #if defined(VERSION_JP)
     screenDrawBox(89, 74, 222, 120, 0, 0, 0, sp30);
-#else
+#else // VERSION_US
     screenDrawBox(97, 76, 202, 118, 0, 0, 0, sp30);
 #endif
     func_802DFA18();

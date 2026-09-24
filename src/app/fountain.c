@@ -54,7 +54,7 @@ STATIC_FUNC void fountainUpdate(void) {
 STATIC_FUNC s32 fountainProxEventCb(UNUSED s32 proxId, s32 eventType, UNUSED s32 clientData) {
     switch (eventType) {
     case 0:
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
         if (sFountainObjId != 0xFFFF) {
             uvDobjState(sFountainObjId, 2);
         }
@@ -185,7 +185,7 @@ void fountainStateRestore(void) {
     sFountainState = sFountainStateCopy;
 }
 
-#if defined(VERSION_US)
+#if !defined(VERSION_JP)
 void fountainInitUpdate(void) {
     fountainStateRestore();
     fountainUpdate();
