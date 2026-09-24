@@ -1278,6 +1278,9 @@ D_80359DB4          = 0x8034C7A4;
 
 D_8035A5F0          = 0x8034CFE0;
 
+sSaveFiles          = 0x80354AD0; // size:0x200
+sSaveFilesMirror    = 0x80354CD0; // size:0x200
+
 sFileMenu_803624E0  = 0x80354ED0;
 sFileMenu_803624E3  = 0x80354ED3;
 sFileColorR1        = 0x80354ED4;

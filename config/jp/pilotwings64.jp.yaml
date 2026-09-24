@@ -410,7 +410,7 @@ segments:
       - [0x6B350, c, app/falco]
       - [0x6E110, c, app/fdr]
       - [0x6F340, c, app/ferry]
-      - [0x6F920, asm, app/save] # code diffs @
+      - [0x6F920, c, app/save]
       - [0x70460, c, app/file_menu]
       - [0x719C0, c, app/fire_effects]
       - [0x724D0, c, app/code_72010]
@@ -581,7 +581,7 @@ segments:
       - [0xD9780, .rodata, app/falco]
       - [0xD9900, .rodata, app/fdr]
       - [0xD9A90, .rodata, app/ferry]
-      - [0xD9AB0, rodata, app/save]
+      - [0xD9AB0, .rodata, app/save]
       - [0xD9AF0, .rodata, app/file_menu]
       - [0xD9B20, .rodata, app/fire_effects]
       - [0xD9D40, .rodata, app/fountain]
@@ -679,7 +679,7 @@ segments:
       - { type: .bss, vram: 0x8034D920, name: app/falco }
       - { type: .bss, vram: 0x8034D950, name: app/fdr }
       - { type: .bss, vram: 0x80354A00, name: app/ferry }
-      - { type: bss, vram: 0x80354AD0, name: app/save }
+      - { type: .bss, vram: 0x80354AD0, name: app/save }
       - { type: .bss, vram: 0x80354ED0, name: app/file_menu }
       - { type: .bss, vram: 0x80354EF0, name: app/fire_effects }
       - { type: .bss, vram: 0x80355020, name: app/fountain }
