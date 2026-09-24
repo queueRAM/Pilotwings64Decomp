@@ -47,6 +47,9 @@ enum SpriteBlitId {
     BLIT_ID_46                          = 0x68,
     BLIT_ID_47                          = 0x69,
     BLIT_ID_48                          = 0x6A,
+    BLIT_ID_49                          = 0x6B,
+    BLIT_ID_4A                          = 0x6C,
+    BLIT_ID_4B                          = 0x6D,
 
     BLIT_ID_09                          = 0x09,
     BLIT_ID_0A                          = 0x0A,
@@ -75,9 +78,6 @@ enum SpriteBlitId {
     BLIT_WAYPOINT_NEXT_JP               = 0x3A, // Japanese "next goal"
     BLIT_N64_CONTROLLER_INFOGRAPHIC     = 0x3B, // N64 controller infographic
     BLIT_TEST_MENU_BUTTON_VIEW_DEMO     = 0x3C, // "View demo" button
-    BLIT_ID_49                          = 0x49,
-    BLIT_ID_4A                          = 0x4A,
-    BLIT_ID_4B                          = 0x4B,
     BLIT_WAYPOINT_NEXT                  = 0x4C, // "Next" waypoint for next ring / hover pad
     BLIT_CONT_INFO_FLARE_LANDING        = 0x4D, // "Flare (use for air brake or landing)"
     BLIT_CONT_INFO_Z_BUTTON             = 0x4E, // "( [Z] )" button callout
@@ -202,6 +202,13 @@ enum SpriteBlitId {
     BLIT_CONT_INFO_FLAP_WINGS           = 0x64, // "Flap the wings"
     BLIT_CONT_INFO_BRAKE_HOVER          = 0x65, // "Brake / Hover"
 #endif
+};
+
+enum TextureId {
+    TEXTURE_NO_MEDAL     = 0x148,
+    TEXTURE_BRONZE_MEDAL = 0x149,
+    TEXTURE_SILVER_MEDAL = 0x14A,
+    TEXTURE_GOLD_MEDAL   = 0x14B,
 };
 
 #define SPRT_PROPID_END             0

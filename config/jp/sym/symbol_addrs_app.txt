@@ -287,7 +287,9 @@ saveFile_802E89D4 = 0x802DB36C; // type:func
 fileMenuTopRender = 0x802DB410; // type:func
 fileMenu_802E8AF0 = 0x802DB480; // type:func
 fileMenu_802E8FF4 = 0x802DB984; // type:func
+fileMenuSetup = 0x802DBA28; // type:func
 fileMenuDeinit = 0x802DBC84; // type:func
+fileMenuPrintText = 0x802DBCD8; // type:func
 fileMenuSetText = 0x802DBD84; // type:func
 fileMenuEraseFile = 0x802DBE50; // type:func
 fileMenu_802E94E0 = 0x802DBE80; // type:func
@@ -1230,15 +1232,19 @@ D_802491E4          = 0x80249094;
 D_802491E8          = 0x80249098;
 D_803805E0          = 0x80372FC0;
 
-gBallCount                = 0x80349C00;
-gBallSplitCount           = 0x80349C01;
-gBalls                    = 0x80349C08; // size:0x2170
+gBallCount          = 0x80349C00;
+gBallSplitCount     = 0x80349C01;
+gBalls              = 0x80349C08; // size:0x2170
 
 sControlInfoVeh     = 0x803414EC; // size:0x38
 sControlInfoCount   = 0x8034C680;
 
 D_8034EE84          = 0x803418C4; // size:0x8
 D_8034EE30          = 0x80341870; // size:0x54
+
+sFileMenuTextIds    = 0x80341B20;
+sFileMenuConfirm    = 0x80341B2C;
+sFileMenuCurMenu    = 0x80341B34;
 
 sFountainObjId      = 0x80341B70;
 sFountainRadarId    = 0x80341B74;
@@ -1271,6 +1277,15 @@ D_80359AAC          = 0x8034C49C; // size:4
 D_80359DB4          = 0x8034C7A4;
 
 D_8035A5F0          = 0x8034CFE0;
+
+sFileMenu_803624E0  = 0x80354ED0;
+sFileMenu_803624E3  = 0x80354ED3;
+sFileColorR1        = 0x80354ED4;
+sFileColorR2        = 0x80354ED8;
+sFileColorG1        = 0x80354EDC;
+sFileColorG2        = 0x80354EE0;
+sFileColorB1        = 0x80354EE4;
+sFileColorB2        = 0x80354EE8;
 
 sFountainPose       = 0x80355020;
 sFountainProxId     = 0x80355060;
