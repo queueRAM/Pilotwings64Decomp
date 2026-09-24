@@ -8,6 +8,7 @@
 #include "hang_glider.h"
 #include "hud.h"
 #include "snd.h"
+#include "text_data.h"
 
 STATIC_DATA EventCallbackInfo sHgSoundEventCbInfo;
 STATIC_DATA Unk803599D0 sHgSound_80368318;
@@ -80,11 +81,7 @@ STATIC_FUNC void hgSoundEventHandler(s32 event, void* userData, s32 eventData) {
 
         if (hg->unk324 < D_8034F850) {
             temp_v0 = hudGet_8031DA9C();
-#if defined(VERSION_JP)
-            if ((temp_v0 == 0x182) || (temp_v0 == 0x185)) {
-#else
-            if ((temp_v0 == 0x157) || (temp_v0 == 0x15C)) {
-#endif
+            if ((temp_v0 == TEXT_STALL_WA) || (temp_v0 == TEXT_STALL_AT)) {
                 hg->unk324 = D_8034F850 + 1.0f;
                 sndPlaySfx(SFX_UI_WARNING);
             }

@@ -535,6 +535,7 @@ hoverPadGetPoints = 0x802FCA1C; // type:func
 
 func_8030A140 = 0x802FCA80; // type:func
 hsound_callback = 0x802FCCD0; // type:func
+func_8030ABF8 = 0x802FD538; // type:func
 func_8030ADCC = 0x802FD6FC; // type:func
 func_8030AEB0 = 0x802FD7E0; // type:func
 func_8030B168 = 0x802FDA98; // type:func
