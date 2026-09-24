@@ -50,6 +50,7 @@ bird_802CF8A4 = 0x802C1BF4; // type:func
 bird_802CFAC8 = 0x802C1E18; // type:func
 bird_802CFEA8 = 0x802C21F8; // type:func
 bird_802CFF74 = 0x802C22C4; // type:func
+bird_802D0080 = 0x802C23D0; // type:func
 bird_802D08F8 = 0x802C2B18; // type:func
 bird_802D0A28 = 0x802C2C48; // type:func
 bird_802D0ABC = 0x802C2CDC; // type:func
@@ -1281,6 +1282,10 @@ gMedalPointRequirements = 0x80342604; // size:0x30
 gCurrentMusicId     = 0x80342FE0;
 
 D_803507A0          = 0x803431D0;
+
+D_803593F0          = 0x8034BDE0; // size:0x108
+D_803594F8          = 0x8034BEE8; // size:0x144
+D_8035963C          = 0x8034C02C;
 
 D_80359AA8          = 0x8034C498; // size:4
 D_80359AAC          = 0x8034C49C; // size:4

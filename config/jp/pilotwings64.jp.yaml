@@ -391,7 +391,7 @@ segments:
       - [0x520A0, c, app/balls]
       - [0x53550, c, app/birdman0]
       - [0x55530, c, app/birdman1]
-      - [0x55F40, asm, app/birdman2] # code diffs @ 0x576A0
+      - [0x55F40, c, app/birdman2]
       - [0x57E60, c, app/bmsound]
       - [0x58840, c, app/boats]
       - [0x59520, c, app/bonus]
@@ -494,7 +494,7 @@ segments:
 
       - [0xD6030, .data, app/code_51E30]
       - [0xD6130, .data, app/balls]
-      - [0xD6140, data, app/birdman2]
+      - [0xD6140, .data, app/birdman2]
       - [0xD6300, .data, app/camera]
       - [0xD6310, .data, app/cannonball]
       - [0xD6330, .data, app/code_60020]
@@ -563,7 +563,7 @@ segments:
       - [0xD84B0, .rodata, app/balls]
       - [0xD8510, .rodata, app/birdman0]
       - [0xD8890, .rodata, app/birdman1]
-      - [0xD8900, rodata, app/birdman2]
+      - [0xD8900, .rodata, app/birdman2]
       - [0xD89F0, .rodata, app/bmsound]
       - [0xD8AE0, .rodata, app/boats]
       - [0xD8B20, .rodata, app/bonus]
@@ -660,7 +660,7 @@ segments:
       - { type: .bss, vram: 0x80349BE0, name: app/code_51E30 }
       - { type: .bss, vram: 0x80349C00, name: app/balls }
       - { type: .bss, vram: 0x8034BD80, name: app/birdman0 }
-      - { type: bss, vram: 0x8034BDE0, name: app/birdman2 }
+      - { type: .bss, vram: 0x8034BDE0, name: app/birdman2 }
       - { type: .bss, vram: 0x8034C030, name: app/bmsound }
       - { type: .bss, vram: 0x8034C090, name: app/boats }
       - { type: .bss, vram: 0x8034C120, name: app/bonus }
