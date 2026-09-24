@@ -210,6 +210,7 @@ envSoundLoad = 0x802D52D8; // type:func
 envSound_802E2904 = 0x802D5434; // type:func
 envSound_802E2A00 = 0x802D5530; // type:func
 envSound_802E3250 = 0x802D5D70; // type:func
+envSound_802E3310 = 0x802D5E30; // type:func
 envSound_802E3398 = 0x802D5EE4; // type:func
 envSoundFrameUpdate = 0x802D5F98; // type:func
 
@@ -1241,6 +1242,10 @@ sControlInfoCount   = 0x8034C680;
 
 D_8034EE84          = 0x803418C4; // size:0x8
 D_8034EE30          = 0x80341870; // size:0x54
+
+D_8034EF20          = 0x80341960;
+D_8034EF24          = 0x80341964;
+D_8034EF28          = 0x80341968;
 
 sFileMenuTextIds    = 0x80341B20;
 sFileMenuConfirm    = 0x80341B2C;
