@@ -849,10 +849,13 @@ func_80328538 = 0x8031AD28; // type:func
 func_8032867C = 0x8031AE6C; // type:func
 func_80328A14 = 0x8031B204; // type:func
 func_80328CA0 = 0x8031B490; // type:func
+func_80328D74 = 0x8031B564; // type:func
+func_80328F44 = 0x8031B734; // type:func
 func_80329120 = 0x8031B908; // type:func
 func_803291A8 = 0x8031B990; // type:func
 func_8032923C = 0x8031BA24; // type:func
 func_80329628 = 0x8031BE10; // type:func
+func_8032975C = 0x8031BF44; // type:func
 func_8032A4A8 = 0x8031CC94; // type:func
 
 rbSoundInit = 0x8031CDF0; // type:func
@@ -1376,10 +1379,12 @@ sRadarThermCirc     = 0x8035EF10; // size:0x88
 sHudState           = 0x8035EF98; // size:0xC7C
 D_8036D224          = 0x8035FC14;
 
-sRbSound_80371898   = 0x80364288; // size:0x54
+D_80371630          = 0x80364020; // size:0x108
+D_80371738          = 0x80364128; // size:0x144
+D_8037187C          = 0x8036426C;
+D_80371880          = 0x80364270;
 
-gThermalCount       = 0x8036D544;
-gThermals           = 0x8036D548; // size:0x180
+sRbSound_80371898   = 0x80364288; // size:0x54
 
 sScreenFadeDuration = 0x8036431C;
 sReplayTipText      = 0x80364320;
@@ -1406,6 +1411,9 @@ sTextNameCount      = 0x8036B6C0;
 
 D_80378CE0          = 0x8036B6D0;
 D_80378CE4          = 0x8036B6D4;
+
+gThermalCount       = 0x8036D544;
+gThermals           = 0x8036D548; // size:0x180
 
 sTestPtsStr0        = 0x8036D6D0;
 sTestPtsStr1        = 0x8036D6E0;
