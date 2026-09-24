@@ -1240,6 +1240,10 @@ sControlInfoCount   = 0x8034C680;
 D_8034EE84          = 0x803418C4; // size:0x8
 D_8034EE30          = 0x80341870; // size:0x54
 
+sFountainObjId      = 0x80341B70;
+sFountainRadarId    = 0x80341B74;
+sFountainActive     = 0x80341B78;
+
 D_8034F420          = 0x80341E60; // size:0x1C
 D_8034F43C          = 0x80341E7C; // size:0x4
 D_8034F4BC          = 0x80341EFC; // size:0xA
@@ -1267,6 +1271,13 @@ D_80359AAC          = 0x8034C49C; // size:4
 D_80359DB4          = 0x8034C7A4;
 
 D_8035A5F0          = 0x8034CFE0;
+
+sFountainPose       = 0x80355020;
+sFountainProxId     = 0x80355060;
+sFountainState      = 0x80355064;
+sFountainScale      = 0x80355068;
+sFountainScaleCopy  = 0x8035506C;
+sFountainStateCopy  = 0x80355070;
 
 D_80362690          = 0x80355080;
 
