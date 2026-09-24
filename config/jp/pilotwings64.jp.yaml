@@ -404,7 +404,7 @@ segments:
       - [0x63DB0, asm, app/control_info] # code diffs @ 0x63FF0
       - [0x64DB0, c, app/pilot_select]
       - [0x667E0, c, app/code_66160]
-      - [0x675F0, asm, app/code_66F70] # code diffs @ 0x676F8
+      - [0x675F0, c, app/code_66F70] # code diffs @ 0x676F8
       - [0x68870, c, app/environment]
       - [0x6A240, c, app/env_sound]
       - [0x6B350, c, app/falco]
@@ -575,7 +575,7 @@ segments:
       - [0xD9050, .rodata, app/code_61A60]
       - [0xD90E0, rodata, app/control_info]
       - [0xD9190, .rodata, app/pilot_select]
-      - [0xD9280, rodata, app/code_66F70]
+      - [0xD9280, .rodata, app/code_66F70]
       - [0xD9370, .rodata, app/environment]
       - [0xD9620, .rodata, app/env_sound]
       - [0xD9780, .rodata, app/falco]
@@ -672,7 +672,7 @@ segments:
       - { type: .bss, vram: 0x8034C630, name: app/code_61A60 }
       - { type: bss, vram: 0x8034C680, name: app/control_info }
       - { type: .bss, vram: 0x8034C690, name: app/pilot_select }
-      - { type: bss, vram: 0x8034C760, name: app/code_66F70 }
+      - { type: .bss, vram: 0x8034C760, name: app/code_66F70 }
       - { type: .bss, vram: 0x8034C770, name: app/environment }
       - { type: .bss, vram: 0x8034C7B0, name: app/env_sound }
       - { type: .bss, vram: 0x8034CFE0, name: app/falco_data }
