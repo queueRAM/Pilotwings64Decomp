@@ -35,6 +35,7 @@ enum SpriteBlitId {
     BLIT_ID_2B                          = 0x31,
     BLIT_ID_2C                          = 0x32,
     BLIT_ID_2D                          = 0x33,
+    BLIT_N64_CONTROLLER_INFOGRAPHIC     = 0x5D, // N64 controller infographic
     BLIT_ID_3D                          = 0x5F,
     BLIT_ID_3E                          = 0x60,
     BLIT_ID_3F                          = 0x61,
@@ -76,7 +77,6 @@ enum SpriteBlitId {
     BLIT_WAYPOINT_FLAME                 = 0x38, // "Flame"
     BLIT_WAYPOINT_MISSI_THE_MONSTER     = 0x39, // "Missi the Monster"
     BLIT_WAYPOINT_NEXT_JP               = 0x3A, // Japanese "next goal"
-    BLIT_N64_CONTROLLER_INFOGRAPHIC     = 0x3B, // N64 controller infographic
     BLIT_TEST_MENU_BUTTON_VIEW_DEMO     = 0x3C, // "View demo" button
     BLIT_WAYPOINT_NEXT                  = 0x4C, // "Next" waypoint for next ring / hover pad
     BLIT_CONT_INFO_FLARE_LANDING        = 0x4D, // "Flare (use for air brake or landing)"
